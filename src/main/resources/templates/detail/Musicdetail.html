@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/detail.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/buildingDteail.js"></script>
+    <title>MOA GUIDE</title>
+</head>
+
+<body>
+<!--<header class="header">-->
+<!--    <div class="header_side">-->
+<!--        <a href="/user/login"><span class="login">로그인/회원가입</span></a>-->
+<!--        <a href="/search"><img src="/image/search.jpeg" width="16" alt="검색"></a>-->
+<!--        &lt;!&ndash; TODO 로그아웃 기능 추가 예정 &ndash;&gt;-->
+<!--        &lt;!&ndash;<a href="/logout" id="logoutlink">로그아웃</a>&ndash;&gt;-->
+<!--    </div>-->
+<!--    <div class="header_side_left">-->
+<!--        <a href="/summary"><span>음악 조각투자상품</span></a>-->
+<!--    </div>-->
+<!--    <div class="mainlogo">-->
+<!--        <a href="/"><img src="/image/MoaGuide.png" width="200" alt="로고"></a>-->
+<!--    </div>-->
+<!--</header>-->
+
+<!--<div class="container">-->
+<!--    <div class="content">-->
+<!--        <img src="image-url-here" alt="musicow">-->
+<!--        <div class="section">-->
+<!--            <div class="detail-name">-->
+<!--                <span th:text="${music.getName()}">여자 대통령</span>-->
+<!--            </div>-->
+<!--            <div class="detail-category">-->
+<!--                <span th:text="${music.getCategory()}">music</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="detail-price">-->
+<!--            <div class="current-price">-->
+<!--                <span class="transaction">현재가</span>-->
+<!--                <span class="price" th:text="${music.price}">5,320원 (+ 0.5%)</span>-->
+<!--                <span th:class="${music.price_rate > 0} ? 'positive' : 'negative'" th:text="'(' + ${music.price_rate} + '%)'">(+0.5%)</span>-->
+<!--            </div>-->
+<!--            <div class="capitalization">-->
+<!--                <span>시가총액</span>-->
+<!--                <span class="capi" th:text="${music.totalprice}">10,000,000원</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="dividend">-->
+<!--            <div class="dividend-latest">-->
+<!--                <span>최신 배당금</span>-->
+<!--                <span class="dl" th:text="${music.dividend}"></span>-->
+<!--            </div>-->
+<!--            <div class="dividend-yield">-->
+<!--                <span>배당수익률</span>-->
+<!--                <span class="dy" th:text="${music.dividendRate}"></span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="nav">-->
+<!--        <div class="wrap">-->
+<!--            <div class="ul">-->
+<!--                <button class="li" th:data-pro="${music.getProduct_id()}" onclick="changeIframeSrc('/summary/detail/frame/Music/' + this.getAttribute('data-pro'))" >기본정보</button>-->
+<!--                <button class="li" th:data-id="${music.getProduct_id()}" onclick="changeIframeSrc('/summary/detail/frame/Music/add/' + this.getAttribute('data-id'))">상세정보</button>-->
+<!--                <button class="li" onclick="changeIframeSrc('/')">아티클</button>-->
+<!--                <button class="li" th:data="${music.getName()}"  onclick="changeIframeSrc('/summary/detail/frame/Music/name/' + this.getAttribute('data'))">뉴스</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<div class="div">
+    <div class="header-login">
+        <div class="frame-1410114919">
+            <div class="frame-1000005037">
+                <a href="/"><img class="logo" src="/figma/logo1.svg"/></a>
+                <div class="frame-1000005035">
+                    <div class="magnifying-glass">
+                        <img class="magnifying-glass2" src="/figma/magnifying-glass1.svg" />
+                    </div>
+                    <div class="bell-active">
+                        <img class="bell" src="/figma/bell0.svg" />
+                        <div class="ellipse-402"></div>
+                    </div>
+                    <img class="component-21" src="/figma/component-210.svg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="frame-1410115180">
+        <div class="frame-1410115003">
+            <img class="rectangle-352" src="/figma/rectangle-352.png" />
+            <div class="frame-1410115016">
+                <div class="frame-1410114996">
+                    <div class="web-tag">
+                        <div class="div6" th:text="${music.getCategory()}">부동산</div>
+                    </div>
+                    <div class="div9" th:text="${music.platform_name}">운영 플랫폼 이름</div>
+                </div>
+                <div class="div10" th:text="${music.getName()}">압구정 커머스 빌딩</div>
+            </div>
+            <div class="frame-1410115013">
+                <div class="frame-1410115011">
+                    <div class="div11">현재가</div>
+                    <div class="_5-320-0-52">
+                <span>
+                  <span class="_5-320-0-52-span" th:text="${music.price}">5,320원</span>
+                  <span class="_5-320-0-52-span2" th:class="${music.price_rate > 0} ? '_5-320-0-52-span2' : '_5-320-0-52-span3'" th:text="${music.price_rate} + '%)'">(+ 0.5%)</span>
+                </span>
+                    </div>
+                </div>
+                <div class="frame-1410115012">
+                    <div class="div11">시가총액</div>
+                    <div class="_10-000-000" th:text="${music.totalprice}">10,000,000원</div>
+                </div>
+                <div class="frame-14101150132">
+                    <div class="div11">최근 배당금</div>
+                    <div class="_10" th:text="${music.dividend}">10원</div>
+                </div>
+                <div class="frame-1410115014">
+                    <div class="div11">배당 수익률</div>
+                    <div class="_2-7" th:text="${music.dividendRate} + '%'">2.7%</div>
+                </div>
+                <div class="frame-1410115015">
+                    <div class="div11">배당 주기</div>
+                    <div class="_3" >1개월</div>
+                </div>
+            </div>
+            <div class="frame-1410115179">
+                <div class="_14-px">
+                    <div class="div12">해당 플랫폼으로 이동</div>
+                    <div class="arrow-icon3">
+                        <img class="caret-right4" src="/figma/caret-right3.svg" />
+                    </div>
+                </div>
+                <div class="div13">
+                    <div class="div12">관심 종목</div>
+                    <div class="default">
+                        <img class="bookmark-simple3" src="/figma/bookmark-simple2.svg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="web-tap">
+            <div class="categories-menu">
+                <div class=" categories-text active" th:data-pro="${music.getProduct_id()}" onclick="changeIframeSrc('/summary/detail/frame/music/' + this.getAttribute('data-pro'))">
+                    <div class="div14">
+                        기본정보
+                    </div>
+                </div>
+                <div class=" categories-text" th:data-id="${music.getProduct_id()}" onclick="changeIframeSrc('/summary/detail/frame/music/add/' + this.getAttribute('data-id'))">
+                    <div class="div15">
+                        상세정보
+                    </div>
+                </div>
+                <div class=" categories-text" onclick="changeIframeSrc('/summary/detail/frame/music/ready')">
+                    <div class="div15">
+                        리포트
+                    </div>
+                </div>
+                <div class=" categories-text" th:data="${keyword}"  onclick="changeIframeSrc('/summary/detail/frame/music/news/' + this.getAttribute('data'))">
+                    <div class="div15">
+                        뉴스
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="iframe-container">
+        <iframe id="contentFrame" th:src="@{/summary/detail/frame/music/{id}(id=${music.getProduct_id()})}" frameborder="0"></iframe>
+    </div>
+</div>
+</div>
+</body>
+
+</html>

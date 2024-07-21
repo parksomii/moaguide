@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="utf-8">
+    <link href="/css/detail.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>기본정보</title>
+    <script>
+        window.addEventListener('load', function() {
+            let message = { height: document.body.scrollHeight };
+            console.log("Sending message:", message);
+            window.top.postMessage(message, "*");
+        });
+    </script>
+    <script src="/js/transaction.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+</head>
+<body>
+<div class="frame-1410115022">
+    <div class="frame-1410115185">
+        <div class="frame-14101150152">
+            <div class="div22">시세</div>
+        </div>
+        <div class="frame-1410115049">
+            <div class="div25 check-time" id="three-timeTab">3개월</div>
+            <div id="three-time" class="ellipse-401"></div>
+            <div class="div25" id="six-timeTab">6개월</div>
+            <div id="six-time" class="ellipse-401 hidden"></div>
+            <div class="div25" id="all-timeTab">전체</div>
+            <div id="all-time" class="ellipse-401 hidden"></div>
+            <div id="product" th:attr="style=${music == null ? 'display:none' : ''}" th:class="${music != null ? music.productId.productId : ''}"></div>
+        </div>
+        <canvas class="image transaction" id="transaction"></canvas>
+    </div>
+    <div class="line-84"></div>
+    <div class="frame-1410115021">
+        <div class="div17">음원 정보</div>
+            <div class="frame-14101150133">
+                <div class="frame-14101150112" th:attr="style=${music == null || music.productId == null || music.productId.name == null ? 'display:none' : ''}">
+                    <div class="div18"  >상품명</div>
+                    <div class="div19" th:text="${music.productId.name}"></div>
+                </div>
+                <div class="frame-14101150122" th:attr="style=${music == null || music.youtubeUrl == null ? 'display:none' : ''}">
+                    <div class="div18" th:text="${music.productId.name}+' 소개 영상'" >소개 영상</div>
+                    <iframe class="youtube-embed image" th:data-src="${music.youtubeUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        <div class="line-84"></div>
+        <div class="div17"></div>
+        <div class="frame-14101150133">
+            <div class="frame-14101150134" th:attr="style=${music == null || music.introduceSong == null ? 'display:none' : ''}">
+                <div class="div18">음원 소개</div>
+                <div class="div19" th:text="${music.introduceSong}"></div>
+            </div>
+            <div class="frame-14101150152" th:attr="style=${music == null || music.genre == null ? 'display:none' : ''}">
+                <div class="div18">장르</div>
+                <div class="yyyy-mm-dd" th:text="${music.genre}"></div>
+            </div>
+            <div class="frame-14101150162" th:attr="style=${music == null || music.singer == null ? 'display:none' : ''}">
+                <div class="div18">가수</div>
+                <div class="_000-0002" th:text="${music.singer}"></div>
+            </div>
+            <div class="frame-1410115017" th:attr="style=${music == null || music.writer == null ? 'display:none' : ''}">
+                <div class="div18">작사</div>
+                <div class="_000" th:text="${music.writer}"></div>
+            </div>
+            <div class="frame-1410115018" th:attr="style=${music == null || music.composing == null ? 'display:none' : ''}">
+                <div class="div18">작곡</div>
+                <div class="_00-00" th:text="${music.composing}"></div>
+            </div>
+            <div class="frame-14101150192" th:attr="style=${music == null || music.arrangements == null ? 'display:none' : ''}">
+                <div class="div18">편곡</div>
+                <div class="_00-m" th:text="${music.arrangements}"></div>
+            </div>
+            <div class="frame-14101150202" th:attr="style=${music == null || music.announcementDate == null ? 'display:none' : ''}">
+                <div class="div18">공표일자</div>
+                <div class="_0-0" th:text="${music.announcementDate}"></div>
+            </div>
+            <div class="frame-14101150212" th:attr="style=${music == null || music.type == null ? 'display:none' : ''}">
+                <div class="div18">저작권</div>
+                <div class="div19" th:text="${music.type}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="line-85"></div>
+    <div class="div16">
+        <div class="frame-1410115021">
+            <div class="div17">배당금 정보</div>
+            <div class="frame-14101150133">
+                <div class="frame-14101150112" th:attr="style=${divide == null || divide.isEmpty() ? 'display:none' : ''}">
+                    <div class="div18">최근 배당금</div>
+                    <div class="_0-000" th:text="${divide != null ? divide.get(divide.size() - 1).dividend+'원' : ''}">0,000원</div>
+                </div>
+                <div class="frame-14101150122">
+                    <div class="div18">배당 주기</div>
+                    <div class="_0">1개월</div>
+                </div>
+                <div class="frame-14101150134" th:attr="style=${divide == null || divide.isEmpty() || divide.get(divide.size() - 1).decisionDay== null ? 'display:none' : ''}">
+                    <div class="div18">배당일</div>
+                    <div class="yyyy-mm-dd" th:text="${#dates.format(divide.get(divide.size() - 1).decisionDay, 'yyyy년 MM월 dd일')}">YYYY년 MM월 DD일</div>
+                </div>
+                <div class="frame-14101150152" th:attr="style=${divide == null || divide.isEmpty() || divide.get(divide.size() - 1).DividendRate == null ? 'display:none' : ''}">
+                    <div class="div18">배당 수익률</div>
+                    <div class="_0-000" th:text="${divide.get(divide.size()-1).dividendRate+'%'}">0,000원</div>
+                </div>
+            </div>
+            <div class="line-92"></div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var transactions = /*[[ ${transaction} ]]*/ [];
+    /*]]>*/
+
+    if (transactions.length === 0) {
+        document.getElementById('transaction').style.display = 'none';
+    } else {
+        var formattedData = transactions.map(data => ({
+            x: new Date(data.tradeDay + 'T' + data.tradeTime),
+            y: data.price
+        }));
+
+        var minDate = new Date(Math.min(...formattedData.map(data => data.x)));
+        var maxDate = new Date(Math.max(...formattedData.map(data => data.x)));
+
+        var ctx = document.getElementById('transaction').getContext('2d');
+
+        var transactionChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Price',
+                    data: formattedData,
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    fill: false,
+                    pointRadius: 0 // 데이터 포인트를 숨깁니다.
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function (context) {
+                                var date = new Date(context.raw.x);
+                                var day = date.toISOString().split('T')[0]; // yyyy-MM-dd 형식
+                                var time = date.toTimeString().split(' ')[0]; // HH:mm:ss 형식
+                                return [
+                                    'Date: ' + day,
+                                    'Time: ' + time,
+                                    'Price: ' + context.raw.y
+                                ];                            }
+                        }
+                    },
+                    crosshair: {
+                        line: {
+                            color: 'red', // 가상선 색상
+                            width: 1      // 가상선 너비
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'month', // 각 월의 1일만 표시
+                            tooltipFormat: 'yyyy-MM-dd',
+                            displayFormats: {
+                                month: 'yyyy-MM' // x축에 월 단위로 표시
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        },
+                        min: minDate,
+                        max: maxDate
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price'
+                        }
+                    }
+                },
+                hover: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            plugins: [{
+                id: 'crosshair',
+                afterDraw: function (chart) {
+                    // 툴팁이 활성화되었는지 확인
+                    if (chart.tooltip && chart.tooltip._active && chart.tooltip._active.length) {
+                        var ctx = chart.ctx;
+                        var x = chart.tooltip._active[0].element.x;
+                        var topY = chart.scales.y.top;
+                        var bottomY = chart.scales.y.bottom;
+
+                        // 세로선을 그립니다.
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(x, topY);
+                        ctx.lineTo(x, bottomY);
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = 'red';
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            }]
+        });
+    }
+</script>
+<script>
+    function convertToEmbedUrl(youtubeUrl) {
+        if (youtubeUrl.includes("youtu.be")) {
+            return youtubeUrl.replace("youtu.be/", "youtube.com/embed/");
+        } else if (youtubeUrl.includes("watch?v=")) {
+            return youtubeUrl.replace("watch?v=", "embed/");
+        }
+        return youtubeUrl;
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        var iframes = document.querySelectorAll("iframe.youtube-embed");
+        iframes.forEach(function(iframe) {
+            var youtubeUrl = iframe.getAttribute("data-src");
+            iframe.src = convertToEmbedUrl(youtubeUrl);
+        });
+    });
+</script>
+</body>
+</html>

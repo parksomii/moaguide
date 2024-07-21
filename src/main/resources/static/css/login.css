@@ -1,0 +1,165 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: #ecf0f1;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-wrapper {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container {
+    margin: 0 auto;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 50px; /* Adjust as per your logo's dimensions */
+    height: auto;
+}
+
+.login-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.login-form .form-group {
+    margin-bottom: 15px;
+}
+
+.login-form input[type='text'],
+.login-form input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.social-buttons {
+    margin: 20px 0;
+}
+
+.social-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.social-button.facebook {
+    background-color: #3b5998;
+}
+
+.social-button.google {
+    background-color: #db4437;
+}
+
+.social-button.naver {
+    background-color: #1ec800;
+}
+
+.extra-links {
+    text-align: center;
+}
+
+.extra-links a {
+    color: #3498db;
+    text-decoration: none;
+}
+/* Existing styles... */
+
+/* 추가된 중복 확인 버튼 스타일링 */
+.check-btn {
+    padding: 10px;
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/* 입력 필드와 중복 확인 버튼을 한 줄에 배치 */
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 다른 스타일은 그대로 유지하고, 아래 코드만 추가/수정합니다. */
+
+/* 입력 필드와 버튼을 갖는 form-group에 대한 스타일 */
+.form-group {
+    display: flex; /* 이제 flex-box를 사용합니다. */
+    margin-bottom: 15px;
+}
+
+/* 모든 텍스트 입력란의 기본 스타일 */
+.login-form input[type='text'],
+.login-form input[type='password'],
+.login-form input[type='email'],
+.login-form input[type='tel'] {
+    flex-grow: 1; /* 입력란이 flex container 내의 남은 공간을 채웁니다. */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px; /* 입력란과 버튼 사이의 공간 */
+}
+
+/* 중복 확인 버튼 스타일 */
+.check-btn {
+    width: 20%; /* 버튼 너비를 20%로 설정 */
+    flex-grow: 0; /* 버튼이 늘어나지 않도록 설정 */
+    /* 나머지 버튼 스타일은 동일하게 유지 */
+}
+
+/* 이메일 입력란이 다른 입력란과 같은 크기를 갖도록 함 */
+.login-form input[type='email'] {
+    margin-right: 0; /* 이메일 입력란과 중복 확인 버튼 사이의 공간 제거 */
+}
+
+
+/* 회원가입 버튼을 로그인 버튼과 동일하게 스타일링 */
+.login-form button[type='submit'] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #2ecc71; /* 가입하기 버튼 색상 변경 */
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 회원가입 폼 내부 요소 간격 조정 */
+.login-form .form-group {
+    margin-bottom: 10px;
+}
+

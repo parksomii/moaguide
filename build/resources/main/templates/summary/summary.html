@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/summary.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/graph.js"></script>
+    <script src="/js/buildingDteail.js"></script>
+    <script src="/js/summary.js"></script>
+    <title>MOA GUIDE</title>
+</head>
+<body>
+<div class="div">
+    <div class="header-login">
+        <div class="frame-1410114919">
+            <div class="frame-1000005037">
+                <a href="/"><img class="logo" src="/figma/logo1.svg" /></a>
+                <div class="frame-1000005035">
+                    <div class="magnifying-glass">
+                        <img class="magnifying-glass2" src="/figma/magnifying-glass1.svg" />
+                    </div>
+                    <div class="bell-active">
+                        <img class="bell" src="/figma/bell0.svg" />
+                        <div class="ellipse-402"></div>
+                    </div>
+                    <img class="component-21" src="/figma/component-210.svg" />
+                </div>
+            </div>
+        </div>
+        <div class="web-tap">
+            <div class="categories-menu">
+                <a class="categories-text" href="/">
+                    <div class="div24">홈</div>
+                </a>
+                <a class="categories-text" href="/news">
+                    <div class="div24">최신이슈</div>
+                </a>
+                <a class="tabmenu" href="/summary">
+                    <div class="div25">상품 현황</div>
+                </a>
+                <a class="categories-text" href="/report">
+                    <div class="div24">리포트</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="frame-1410114889">
+        <div class="frame-14101148893">
+            <div class="frame-1410114887">
+                <div id="all" class="frame-1410114886">
+                    <div class="all" >ALL</div>
+                </div>
+                <div class="div3">전체</div>
+            </div>
+            <div class="frame-14101148892">
+                <div class="frame-14101148862" id="building">
+                    <img class="office-building" src="/figma/office-building0.svg" />
+                </div>
+                <div class="div3" >부동산</div>
+            </div>
+            <div class="frame-1410114888" >
+                <div class="frame-14101148862" id="music">
+                    <img class="musical-note" src="/figma/musical-note0.svg" />
+                </div>
+                <div class="div3" >음악 저작권</div>
+            </div>
+            <div class="frame-1410114891" >
+                <div class="frame-14101148862" id="cow">
+                    <img class="cow-face" src="/figma/cow-face0.svg" />
+                </div>
+                <div class="div3" >한우</div>
+            </div>
+            <div class="frame-1410114892">
+                <div class="frame-14101148862" id="art">
+                    <img class="framed-picture" src="/figma/framed-picture0.svg" />
+                </div>
+                <div class="div3" >미술</div>
+            </div>
+            <div class="frame-1410114890">
+                <div class="frame-14101148862" id="content">
+                    <img class="clapper-board" src="/figma/clapper-board0.svg" />
+                </div>
+                <div class="div3" >콘텐츠</div>
+            </div>
+        </div>
+    </div>
+    <div class="rectangle-73810"></div>
+    <div class="frame-1410114941">
+        <div class="defualt-circle">
+            <div class="ellipse-50"></div>
+            <div class="arrow-icon">
+                <img class="caret-left" src="/figma/caret-left0.svg" />
+            </div>
+        </div>
+        <div class="frame-1410114940">
+            <a class="frame-1410114862" th:each="divide:${divides}" th:href="@{/summary/detail/{category}/{id}(category=${divide.category},id=${divide.productId})}">
+                <div class="frame-1410114861">
+                    <img class="rectangle-2457" src="/figma/rectangle-24570.png" />
+                    <div class="frame-1410114811">
+                        <div class="frame-1410114939">
+                            <div class="div2" th:text="${divide.category}">부동산</div>
+                            <div class="frame-1410114810">
+                                <div class="_1" th:text="${divide.name}">롯데월드타워 시그니엘 1호</div>
+                            </div>
+                        </div>
+                        <div class="_1-112" th:text="'(1주당 '+${divide.dividend}+'원)'">(1주당 112원)</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="defualt-circle">
+            <div class="ellipse-50"></div>
+            <div class="arrow-icon">
+                <img class="caret-right" src="/figma/caret-right0.svg" />
+            </div>
+        </div>
+    </div>
+    <div class="defualt-circle2">
+        <div class="ellipse-50"></div>
+        <div class="arrow-icon">
+            <img class="caret-right2" src="/figma/caret-right1.svg" />
+        </div>
+    </div>
+    <div class="defualt-circle3">
+        <div class="ellipse-50"></div>
+        <div class="arrow-icon">
+            <img class="caret-left2" src="/figma/caret-left1.svg" />
+        </div>
+    </div>
+    <div class="div4">최근 배당금 발표</div>
+    <div class="frame-1410115145">
+        <div class="top-3">
+        <span>
+          <span class="top-3-span">최근 주목 받는 상품</span>
+          <span class="top-3-span2">TOP 3</span>
+        </span>
+        </div>
+    </div>
+    <div class="frame-1410115166">
+        <div class="div5">관련 리포트</div>
+        <div class="arrow-icon2">
+            <img class="caret-right3" src="/figma/caret-right2.svg" />
+        </div>
+    </div>
+    <div class="frame-1410115165">
+        <a class="frame-14101151662" th:each="item, stat:${summaries}" th:href="@{/summary/detail/{category}/{id}(category=${item.category},id=${item.product_id})}">
+            <img class="rectangle-35" src="/figma/rectangle-350.png" />
+            <div class="frame-14101148102">
+                <div class="frame-1410114812">
+                    <div class="frame-14101148112">
+                        <div class="frame-14101148103">
+                            <div class="frame-1410114999">
+                                <div class="web-tag">
+                                    <div class="div6" th:text="${item.category}">부동산</div>
+                                </div>
+                                <div class="div7" th:text="${item.platform_name}">운영 플랫폼 이름</div>
+                            </div>
+                            <div class="div8" th:text="${item.name}">압구정 커머스 빌딩</div>
+                            <div class="frame-1410114998">
+                                <div class="_5-320-0-5">
+                                    <span>
+                                      <span class="_5-320-0-5-span" th:text="${item.price}">5,320원</span>
+                                      <span class="_5-320-0-5-span2" th:text="${item.price_rate}+'%'">(+ 0.5%)</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tag">
+                        <div class="_14-84" th:text="${item.dividendRate}+'%'">2.7%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="w">
+                <img class="bookmark-simple" src="/figma/bookmark-simple0.svg" />
+                <div class="_12" th:text="${stat.index+1}">1</div>
+            </div>
+        </a>
+    </div>
+    <div class="line-35"></div>
+    <div class="frame-1410115171">
+        <div class="defualt-circle">
+            <div class="ellipse-50"></div>
+            <div class="arrow-icon">
+                <img class="caret-left3" src="/figma/caret-left2.svg" />
+            </div>
+        </div>
+        <div class="frame-1410115170">
+            <div class="frame-1410115168">
+                <div class="div9">
+                    <div class="frame-1410114866">
+                        <div class="web-tag">
+                            <div class="div6">부동산</div>
+                        </div>
+                        <div class="div10">한 달 노후생활비 얼마가 적당할까요?</div>
+                        <div class="frame-1410114981">
+                            <div class="_2024-06-06">2024.06.06</div>
+                        </div>
+                    </div>
+                    <img class="rectangle-46" src="/figma/rectangle-460.png" />
+                </div>
+            </div>
+            <div class="frame-1410115169">
+                <div class="div9">
+                    <div class="frame-1410114866">
+                        <div class="web-tag">
+                            <div class="div6">부동산</div>
+                        </div>
+                        <div class="div10">한 달 노후생활비 얼마가 적당할까요?</div>
+                        <div class="frame-1410114981">
+                            <div class="_2024-06-06">2024.06.06</div>
+                        </div>
+                    </div>
+                    <img class="rectangle-46" src="/figma/rectangle-461.png" />
+                </div>
+            </div>
+        </div>
+        <div class="defualt-circle">
+            <div class="ellipse-50"></div>
+            <div class="arrow-icon">
+                <img class="caret-right4" src="/figma/caret-right3.svg" />
+            </div>
+        </div>
+    </div>
+    <div class="frame-1410115120">
+        <div class="div11">정렬</div>
+        <div class="line-41"></div>
+        <div class="frame-1410114833">
+            <div class="web">
+                <div class="frame-1410115000">
+                    <div class="frame-14101149992">
+                        <div class="div12">수익률 순</div>
+                        <div class="check-16-px">
+                            <img class="check" src="/figma/check0.svg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="web2">
+                <div class="div13">조회순</div>
+            </div>
+            <div class="web2">
+                <div class="div13">현재가순</div>
+            </div>
+            <div class="web2">
+                <div class="div13">가나다순</div>
+            </div>
+        </div>
+    </div>
+    <div class="frame-1410115175 iframe-container">
+        <iframe src="/summary/list/all" id="contentFrame" frameborder="0"></iframe>
+    </div>
+</div>
+<!-- 페이징 처리 -->
+<script th:src="@{/js/summary.js}"></script>
+</body>
+</html>

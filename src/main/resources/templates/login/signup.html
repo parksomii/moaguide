@@ -1,0 +1,41 @@
+    <!DOCTYPE html>
+    <html lang="ko" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link  th:href="@{/css/login.css}" rel="stylesheet">
+        <title>MOA GUIDE</title>
+    </head>
+    <body>
+    <div class="login-wrapper">
+        <div class="login-container">
+            <div class="login-header">
+                <img th:src="@{/image/mini_logo.png}" alt="Logo" class="logo">
+                <h1>회원가입</h1>
+            </div>
+            <form th:action="@{/user/signup}" method="post" class="login-form">
+                <div class="form-group">
+                    <input type="text" id="userId" name="userId" placeholder="아이디" required autofocus>
+                    <button type="button" class="check-btn">중복 확인</button>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder="비밀번호" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="name" name="name" placeholder="이름" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="이메일" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="phone_number" name="phone_number" placeholder="전화번호" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">가입하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+    </body>
+    </html>

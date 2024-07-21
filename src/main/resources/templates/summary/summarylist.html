@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>요약페이지 리스트</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/css/summary.css" rel="stylesheet">
+    <script>
+        window.addEventListener('load', function() {
+            let message = { height: document.body.scrollHeight };
+            console.log("Sending message:", message);
+            window.top.postMessage(message, "*");
+        });
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/js/graph.js"></script>
+</head>
+<body>
+<div class="frame-1410115174">
+    <div class="div14">이미지</div>
+    <div class="div15">카테고리</div>
+    <div class="div16">운영 플랫폼</div>
+    <div class="div17">종목명</div>
+    <div class="div18">현재가</div>
+    <div class="div19">시가총액</div>
+    <div class="div20">등락 그래프</div>
+    <div class="div21">배당 수익률</div>
+    <div class="div22">#</div>
+</div>
+<div class="line-45"></div>
+<div th:each="transaction : ${transactions}">
+    <div class="web3">
+        <div class="frame-14101148122">
+            <img class="rectangle-36" src="/figma/rectangle-360.png" /> <!-- TODO: 이미지 추가 필요 -->
+            <div class="frame-1410115173">
+                <div class="web-tag">
+                    <div th:text="${transaction.category}" class="div6">부동산</div> <!-- TODO: 카테고리 (Building -> 부동산으로 나오게 변경) -->
+                </div>
+            </div>
+            <div class="div23">모아 가이드</div> <!-- TODO: 운영 플랫폼 -->
+            <div class="_13"><a th:text="${transaction.name}" th:href="@{/summary/detail/{platform}/{id}(id = ${transaction.product_id},platform = ${transaction.category})}" target="_parent">압구정 커머스 빌딩</a></div>
+            <div class="frame-14101149982">
+                <div class="_8-700" th:text="${transaction.price}">5,320원</div>
+                <div class="_0-5" th:class="${transaction.price_rate > 0} ? '_0-5' : '_0-6'"
+                     th:text="${transaction.price_rate} + '%)'">
+                    (+ 0.5%)
+                </div>
+            </div>
+            <div th:text="${transaction.totalprice}" class="_12-8">10,000,000원</div>
+            <div class="frame-1410115119"> <!-- TODO: 그래프 추가 에정-->
+                <img class="mini-chart" src="/figma/mini-chart0.svg" />
+            </div>
+            <div class="frame-1410115172">
+                <div class="tag2">
+                    <div th:text="${transaction.dividendRate} == null ? '-' : ${transaction.dividendRate} + '%' " class="_14-84">14.84%</div>
+                </div>
+            </div>
+            <div class="default">
+                <img class="bookmark-simple3" src="/figma/bookmark-simple3.svg" />
+            </div>
+        </div>
+    </div>
+    <div class="line-36"></div>
+</div>
+    <div class="pagination">
+        <nav aria-label="...">
+            <ul class="justify-content-end">
+                <!-- 시작 페이지로 이동 -->
+                <li class="page-item" th:if="${pageDTO.startPage > 1} ? 'disabled'">
+                    <a th:href="@{/summary/list/{keyword}(keyword=${keyword},page=1,size=${pageDTO.pageRequestDTO.size})}" class="page-link"
+                       aria-label="Previous"><span aria-hidden="true"><i
+                            class="fa-solid fa-angles-left"></i></span></a>
+                </li>
+                <!-- 이전 페이지로 이동 -->
+                <li class="page-item" th:if="${pageDTO.prev == true} ? 'disabled'">
+                    <a th:href="@{/summary/list/{keyword}(keyword=${keyword},page=${pageDTO.startPage - 1},size=${pageDTO.pageRequestDTO.size})}"
+                       class="page-link" th:data-page="${pageDTO.startPage - 1}" aria-label="Previous"><span
+                            aria-hidden="true"><i class="fa-solid fa-angle-left"></i></span></a>
+                </li>
+                <!-- 페이지 번호 -->
+                <li th:each="page : ${pageDTO.pageNumList}" class="page-item"
+                    th:classappend="${pageDTO.pageRequestDTO.page == page} ? 'active' : ''">
+                    <a th:href="@{/summary/list/{keyword}(keyword=${keyword},page=${page},size=${pageDTO.pageRequestDTO.size})}" class="page-link"
+                       th:data-page="${page}" th:text="${page}"></a>
+                </li>
+                <!-- 다음 페이지로 이동 -->
+                <li class="page-item" th:if="${pageDTO.next == true} ? 'disabled'">
+                    <a th:href="@{/summary/list/{keyword}(keyword=${keyword},page=${pageDTO.endPage + 1},size=${pageDTO.pageRequestDTO.size})}"
+                       class="page-link" th:data-page="${pageDTO.endPage + 1}" aria-label="Next"><span
+                            aria-hidden="true"><i class="fa-solid fa-angle-right"></i></span></a>
+                </li>
+                <!-- 마지막 페이지로 이동 -->
+                <li class="page-item" th:if="${pageDTO.endPage < pageDTO.totalPage}" aria-label="Next">
+                    <a th:href="@{/summary/list/{keyword}(keyword=${keyword},page=${pageDTO.totalPage},size=${pageDTO.pageRequestDTO.size})}"
+                       class="page-link" aria-label="Next"><span aria-hidden="true"><i
+                            class="fa-solid fa-angles-right"></i></span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

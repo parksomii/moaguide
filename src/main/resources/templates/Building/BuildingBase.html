@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="utf-8">
+    <link href="/css/detail.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>기본정보</title>
+    <script>
+        window.addEventListener('load', function() {
+            let message = { height: document.body.scrollHeight };
+            console.log("Sending message:", message);
+            window.top.postMessage(message, "*");
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@latest/dist/chartjs-plugin-dragdata.min.js"></script>
+<!--    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f52ece84a19646acd077912f6230d365&autoload=false&libraries=clusterer"></script>-->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a130cc00d6e244113dc684fd146d2748&autoload=false&libraries=clusterer"></script>
+    <script src="/js/transaction.js"></script>
+</head>
+<body>
+<div class="frame-1410115022">
+    <div>
+        <div class="div17">위치</div>
+        <div id="map" class="image"></div><!-- TODO: css정리 -->
+    </div>
+    <div class="line-92"></div>
+    <div class="frame-1410115185">
+        <div class="frame-14101150152">
+            <div class="div22">시세</div>
+        </div>
+        <div class="frame-1410115049">
+            <div class="div25 check-time" id="three-timeTab">3개월</div>
+            <div id="three-time" class="ellipse-401"></div>
+            <div class="div25" id="six-timeTab">6개월</div>
+            <div id="six-time" class="ellipse-401 hidden"></div>
+            <div class="div25" id="all-timeTab">전체</div>
+            <div id="all-time" class="ellipse-401 hidden"></div>
+            <div id="product" th:attr="style=${building == null ? 'display:none' : ''}" th:class="${building != null ? building.productId.productId : ''}"></div>
+        </div>
+        <canvas class="image transaction" id="transaction"></canvas>
+    </div>
+    <div class="line-84"></div>
+    <div class="div16">
+        <div class="frame-1410115021">
+            <div class="div17">배당금 정보</div>
+            <div class="frame-14101150133">
+                <div class="frame-14101150112" th:attr="style=${divide == null || divide.isEmpty() ? 'display:none' : ''}">
+                    <div class="div18">최근 배당금</div>
+                    <div class="_0-000" th:text="${divide != null ? divide.get(divide.size() - 1).getDividend()+'원' : ''}">0,000원</div>
+                </div>
+                <div class="frame-14101150122" th:attr="style=${building == null || building.dividendCycle == null ? 'display:none' : ''}">
+                    <div class="div18">배당 주기</div>
+                    <div class="_0" th:text="${building.dividendCycle +'개월'}">0개월</div>
+                </div>
+                <div class="frame-14101150134" th:attr="style=${divide == null || divide.isEmpty() || divide.get(divide.size() - 1).getDecisionDay() == null ? 'display:none' : ''}">
+                    <div class="div18">배당 기준일</div>
+                    <div class="yyyy-mm-dd" th:text="${#dates.format(divide.get(divide.size() - 1).getDecisionDay(), 'yyyy년 MM월 dd일')}">YYYY년 MM월 DD일</div>
+                </div>
+                <div class="frame-14101150142" th:attr="style=${divide == null || divide.isEmpty() || divide.get(divide.size() - 1).getPaymentDate() == null ? 'display:none' : ''}">
+                    <div class="div18">배당 지급일</div>
+                    <div class="yyyy-mm-dd" th:text="${#dates.format(divide.get(divide.size() - 1).getPaymentDate(), 'yyyy년 MM월 dd일')}">YYYY년 MM월 DD일</div>
+                </div>
+                <div class="frame-14101150152" th:attr="style=${divide == null || divide.isEmpty() || divide.get(divide.size() - 1).dividendRate == null ? 'display:none' : ''}">
+                    <div class="div18">배당 수익률</div>
+                    <div class="_0-000" th:text="${divide.get(divide.size()-1).dividendRate+'%'}">0,000원</div>
+                </div>
+            </div>
+            <div class="line-92"></div>
+            <div class="div17">배당주기별 배당금 & 시가배당</div>
+            <canvas class="image divide" id="divide"></canvas>
+        </div>
+    </div>
+    <div class="line-84"></div>
+    <div class="div16">
+        <div class="frame-1410115021">
+            <div class="div17">발행정보</div>
+            <div class="frame-14101150133">
+                <div class="frame-14101150112" th:attr="style=${building == null || building.productId == null || building.productId.name == null ? 'display:none' : ''}">
+                    <div class="div18">공모 자산</div>
+                    <div class="div19" th:text="${building.productId.name}"></div>
+                </div>
+                <div class="frame-14101150122" th:attr="style=${building == null || building.Publisher == null ? 'display:none' : ''}">
+                    <div class="div18">증권 종류</div>
+                    <div class="_00" th:text="${building.Publisher}"></div>
+                </div>
+                <div class="frame-14101150134" th:attr="style=${divide == null || divide.isEmpty() || divide.get(divide.size() - 1).dividend == null ? 'display:none' : ''}">
+                    <div class="div18">최근 배당금</div>
+                    <div class="div19" th:text="${divide.get(divide.size() - 1).dividend+'원'}"></div>
+                </div>
+                <div class="frame-14101150142" th:attr="style=${building == null || building.productId == null || building.productId.piece == null ? 'display:none' : ''}">
+                    <div class="div18">발행 증권수</div>
+                    <div class="_000-000" th:text="${building.productId.piece+'주'}"></div>
+                </div>
+                <div class="frame-14101150152" th:attr="style=${building == null || building.issuanceValue == null ? 'display:none' : ''}">
+                    <div class="_13">1주 당 발행 가액</div>
+                    <div class="_0-000" th:text="${building.issuanceValue+'원'}"></div>
+                </div>
+                <div class="frame-14101150162" th:attr="style=${building == null || building.issuanceValue == null || building.productId == null || building.productId.piece == null ? 'display:none' : ''}">
+                    <div class="div18">총 모집액</div>
+                    <div class="_00-000-000-000" th:text="${building.issuanceValue * building.productId.piece+'원'}"></div>
+                </div>
+                <div class="frame-1410115017" th:attr="style=${building == null || building.subscriptionSchedule == null ? 'display:none' : ''}">
+                    <div class="div18">청약 일정</div>
+                    <div class="_2024-06-06-2024-06-07" th:text="${building.subscriptionSchedule}"></div>
+                </div>
+                <div class="frame-1410115018" th:attr="style=${building == null || building.listingDate == null ? 'display:none' : ''}">
+                    <div class="div18">상장일</div>
+                    <div class="_2024-08-12" th:text="${building.listingDate}"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line-84"></div>
+    <div class="div20">
+        <div class="frame-1410115020" th:each="lease : ${leases}">
+            <div class="div17">계약정보</div>
+            <div class="frame-1410115019">
+                <div class="frame-14101150112" th:attr="style=${lease.tenant == null ? 'display:none' : ''}">
+                    <div class="div18">임차인</div>
+                    <div class="div19" th:text="${lease.tenant}">회사명</div>
+                </div>
+                <div class="frame-14101150123" th:attr="style=${lease.tenantIntroduction == null ? 'display:none' : ''}">
+                    <div class="div18">임차인 소개</div>
+                    <div class="div21" th:text="${lease.tenantIntroduction}"></div>
+                    <div class="arrow-icon3">
+                        <img class="caret-down" src="/figma/caret-down0.svg" />
+                    </div>
+                </div>
+                <div class="frame-14101150134" th:attr="style=${lease.leasePeriod == null ? 'display:none' : ''}">
+                    <div class="div18">임대 기간</div>
+                    <div class="yy-mm-dd-yy-mm-dd" th:text="${lease.leasePeriod}"></div>
+                </div>
+                <div class="frame-14101150142" th:attr="style=${lease.leaseArea == null ? 'display:none' : ''}">
+                    <div class="div18">임대 면적</div>
+                    <div class="_000-00" th:utext="${lease.leaseArea} + 'm<sup>2</sup>'"></div>
+                </div>
+                <div class="frame-14101150152" th:attr="style=${lease.deposit == null ? 'display:none' : ''}">
+                    <div class="div18">보증금</div>
+                    <div class="_000-000-000" th:text="${lease.deposit} +'원'"></div>
+                </div>
+                <div class="frame-14101150162" th:attr="style=${lease.rent == null ? 'display:none' : ''}">
+                    <div class="div18">임대료</div>
+                    <div class="_00-000-000-00" th:text="${lease.rent}"></div>
+                </div>
+                <div class="frame-1410115017" th:attr="style=${lease.administrationCost == null ? 'display:none' : ''}">
+                    <div class="div18">관리비</div>
+                    <div class="_00-000-000" th:text="${lease.administrationCost}"></div>
+                </div>
+                <div class="frame-1410115018" th:attr="style=${lease.detailedConditions == null ? 'display:none' : ''}">
+                    <div class="div18">상세 계약조건 및 비고</div>
+                    <div class="_2024-08-12" th:text="${lease.detailedConditions}"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line-85"></div>
+    <div class="div20">
+        <div class="frame-1410115021">
+            <canvas class="image" id="landprice"></canvas>
+        </div>
+        <div class="line-85"></div>
+        <div class="frame-1410115021">
+            <div class="div17">건물 정보</div>
+            <div class="frame-14101150133">
+                <div class="frame-14101150112" th:attr="style=${building == null || building.productId == null || building.productId.name == null ? 'display:none' : ''}">
+                    <div class="div18">상품명</div>
+                    <div class="div19" th:text="${building.productId.name}"></div>
+                </div>
+                <div class="frame-14101150122" th:attr="style=${building == null || building.location == null ? 'display:none' : ''}">
+                    <div class="div18">위치</div>
+                    <div class="div19" th:text="${building.location}"></div>
+                </div>
+                <div class="frame-14101150134" th:attr="style=${building == null || building.useArea == null ? 'display:none' : ''}">
+                    <div class="div18">용도 지역</div>
+                    <div class="div19" th:text="${building.useArea}"></div>
+                </div>
+                <div class="frame-14101150142" th:attr="style=${building == null || building.mainUse == null ? 'display:none' : ''}">
+                    <div class="div18">주용도</div>
+                    <div class="div19" th:text="${building.mainUse}"></div>
+                </div>
+                <div class="frame-14101150152" th:attr="style=${building == null || building.completionDate == null ? 'display:none' : ''}">
+                    <div class="div18">준공일</div>
+                    <div class="yyyy-mm-dd" th:text="${building.completionDate}"></div>
+                </div>
+                <div class="frame-14101150162" th:attr="style=${building == null || building.landArea == null ? 'display:none' : ''}">
+                    <div class="div18">대지면적</div>
+                    <div class="_000-0002" th:text="${building.landArea}">000㎡ / 전체 : 000㎡</div>
+                </div>
+                <div class="frame-1410115017" th:attr="style=${building == null || building.floorAreaRate == null ? 'display:none' : ''}">
+                    <div class="div18">용적률</div>
+                    <div class="_000" th:text="${building.floorAreaRate+'%'}">000%</div>
+                </div>
+                <div class="frame-1410115018" th:attr="style=${building == null || building.dryRatio == null ? 'display:none' : ''}">
+                    <div class="div18">건폐율</div>
+                    <div class="_00-00" th:text="${building.dryRatio+'%'}">00.00%</div>
+                </div>
+                <div class="frame-14101150192" th:attr="style=${building == null || building.height == null ? 'display:none' : ''}">
+                    <div class="div18">건물 높이</div>
+                    <div class="_00-m" th:text="${building.height+'m'}">00m</div>
+                </div>
+                <div class="frame-14101150202" th:attr="style=${building == null || building.scale == null ? 'display:none' : ''}">
+                    <div class="div18">건물 규모</div>
+                    <div class="_0-0" th:text="${building.scale}">지하 0층, 지상 0층</div>
+                </div>
+                <div class="frame-14101150212" th:attr="style=${building == null || building.mainStructure == null ? 'display:none' : ''}">
+                    <div class="div18">주구조</div>
+                    <div class="div19" th:text="${building.mainStructure}">철근콘크리트구조</div>
+                </div>
+                <div class="frame-14101150222" th:attr="style=${building == null || building.parking == null ? 'display:none' : ''}">
+                    <div class="div18">주차대수</div>
+                    <div class="_00" th:text="${building.parking+'대'}">00대</div>
+                </div>
+                <div class="frame-1410115023" th:attr="style=${building == null || building.lift == null ? 'display:none' : ''}">
+                    <div class="div18">승강기</div>
+                    <div class="_0" th:text="${building.lift+'대'}">0대</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line-85"></div>
+    <div class="div20">
+        <div class="frame-1410115021">
+            <div class="div17">토지 정보</div>
+            <div class="frame-14101150133">
+                <div class="frame-14101150112" th:attr="style=${landRegistry == null || landRegistry.landElevation == null ? 'display:none' : ''}">
+                    <div class="div18">지형높이</div>
+                    <div class="div19" th:text="${landRegistry.landElevation}"></div>
+                </div>
+                <div class="frame-14101150122" th:attr="style=${landRegistry == null || landRegistry.landShape == null ? 'display:none' : ''}">
+                    <div class="div18">지형형상</div>
+                    <div class="div19" th:text="${landRegistry.landShape}"></div>
+                </div>
+                <div class="frame-14101150134" th:attr="style=${landRegistry == null || landRegistry.zoningNational == null ? 'display:none' : ''}">
+                    <div class="div18">지역지구 등 지정여부 <br>(국토의 계획 및 이용에 관한 법률)</div>
+                    <div class="div19" th:text="${landRegistry.zoningNational}"></div>
+                </div>
+                <div class="frame-14101150142" th:attr="style=${landRegistry == null || landRegistry.zoningOther == null ? 'display:none' : ''}">
+                    <div class="div18">지역지구 등 지정여부 <br>(기타법률)</div>
+                    <div class="div19" th:text="${landRegistry.zoningOther}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--    </div>-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var transactions = /*[[ ${transactions} ]]*/ [];
+    /*]]>*/
+
+    if (transactions.length === 0) {
+        document.getElementById('transaction').style.display = 'none';
+    } else {
+        var formattedData = transactions.map(data => ({
+            x: new Date(data.tradeDay + 'T' + data.tradeTime),
+            y: data.price
+        }));
+
+        var minDate = new Date(Math.min(...formattedData.map(data => data.x)));
+        var maxDate = new Date(Math.max(...formattedData.map(data => data.x)));
+
+        var ctx = document.getElementById('transaction').getContext('2d');
+
+        var transactionChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Price',
+                    data: formattedData,
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    fill: false,
+                    pointRadius: 0 // 데이터 포인트를 숨깁니다.
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function (context) {
+                                var date = new Date(context.raw.x);
+                                var day = date.toISOString().split('T')[0]; // yyyy-MM-dd 형식
+                                var time = date.toTimeString().split(' ')[0]; // HH:mm:ss 형식
+                                return [
+                                    'Date: ' + day,
+                                    'Time: ' + time,
+                                    'Price: ' + context.raw.y
+                                ];                            }
+                        }
+                    },
+                    crosshair: {
+                        line: {
+                            color: 'red', // 가상선 색상
+                            width: 1      // 가상선 너비
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'month', // 각 월의 1일만 표시
+                            tooltipFormat: 'yyyy-MM-dd',
+                            displayFormats: {
+                                month: 'yyyy-MM' // x축에 월 단위로 표시
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        },
+                        min: minDate,
+                        max: maxDate
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price'
+                        }
+                    }
+                },
+                hover: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            plugins: [{
+                id: 'crosshair',
+                afterDraw: function (chart) {
+                    // 툴팁이 활성화되었는지 확인
+                    if (chart.tooltip && chart.tooltip._active && chart.tooltip._active.length) {
+                        var ctx = chart.ctx;
+                        var x = chart.tooltip._active[0].element.x;
+                        var topY = chart.scales.y.top;
+                        var bottomY = chart.scales.y.bottom;
+
+                        // 세로선을 그립니다.
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(x, topY);
+                        ctx.lineTo(x, bottomY);
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = 'red';
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            }]
+        });
+    }
+</script>
+<script th:inline="javascript">
+    kakao.maps.load(function() {
+        // 지도 부분
+        /*<![CDATA[*/
+        var locations = /*[[${location}]]*/ {};
+        var areas = /*[[${area}]]*/ {};
+        /*]]>*/
+
+        if (Array.isArray(areas) && areas.length !== 0) {
+
+            // POLYGON 문자열을 kakao.maps.LatLng 객체 배열로 변환하는 함수
+            function parsePolygon(polygonStr) {
+                var coordinates = polygonStr.replace('POLYGON ((', '').replace('))', '').split(',').map(function (point) {
+                    var coords = point.trim().split(' ');
+                    return new kakao.maps.LatLng(parseFloat(coords[1]), parseFloat(coords[0]));
+                });
+                return coordinates;
+            }
+
+            // 구멍이 있는 폴리곤 문자열을 kakao.maps.LatLng 객체 배열로 변환하는 함수
+            function parseHolePolygon(polygonStr) {
+                var parts = polygonStr.replace('Hole_POLYGON ((', '').replace('))', '').split('), (');
+                var outerPolygon = parts[0].split(',').map(function(point) {
+                    var coords = point.trim().split(' ');
+                    return new kakao.maps.LatLng(parseFloat(coords[1]), parseFloat(coords[0]));
+                });
+                var holePolygon = parts[1].split(',').map(function(point) {
+                    var coords = point.trim().split(' ');
+                    return new kakao.maps.LatLng(parseFloat(coords[1]), parseFloat(coords[0]));
+                });
+                return [outerPolygon, holePolygon];
+            }
+
+            // 각 폴리곤 데이터를 좌표 배열로 변환하여 새로운 배열에 저장
+            var parsedPolygons = areas.map(function(area) {
+                if (area.polygon.startsWith('Hole')) {
+                    return {
+                        id: area.id,
+                        name: area.productName,
+                        coordinates: parseHolePolygon(area.polygon),
+                        color: area.color, // 색상 순환 적용
+                        size: area.areaSize
+                    };
+                } else {
+                    return {
+                        id: area.id,
+                        name: area.productName,
+                        coordinates: parsePolygon(area.polygon),
+                        color: area.color, // 색상 순환 적용
+                        size: area.areaSize
+                    };
+                }
+            });
+
+            var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 레퍼런스
+            var options = { // 지도를 생성할 때 필요한 기본 옵션
+                center: new kakao.maps.LatLng(locations.latitude, locations.longitude), // 지도의 중심좌표.
+                level: 6 // 지도의 레벨(확대, 축소 정도)
+            };
+
+            var map = new kakao.maps.Map(container, options); // 지도를 생성합니다
+
+            // 마커가 표시될 위치입니다
+            var markerPosition = new kakao.maps.LatLng(locations.latitude, locations.longitude);
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(map);
+
+            // 지도에 표시할 원을 생성합니다
+            var circle = new kakao.maps.Circle({
+                center: new kakao.maps.LatLng(locations.latitude, locations.longitude),  // 원의 중심좌표 입니다
+                radius: 500, // 미터 단위의 원의 반지름입니다
+                strokeWeight: 5, // 선의 두께입니다
+                strokeColor: 'red', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'line', // 선의 스타일 입니다
+                fillColor: 'red', // 채우기 색깔입니다
+                fillOpacity: 0.3  // 채우기 불투명도 입니다
+            });
+
+            // 지도에 원을 표시합니다
+            circle.setMap(map);
+
+            // 인포윈도우를 생성합니다.
+            var infowindow = new kakao.maps.InfoWindow({
+                removable: true // 인포윈도우를 닫을 수 있는 X 버튼을 표시합니다.
+            });
+
+            // 커스텀 오버레이를 생성합니다.
+            var customOverlay = new kakao.maps.CustomOverlay({});
+
+            parsedPolygons.forEach(function (polygonData) {
+                var polygon = new kakao.maps.Polygon({
+                    map: map,
+                    path: polygonData.coordinates,
+                    strokeWeight: 3,
+                    strokeColor: polygonData.color,
+                    strokeOpacity: 0.9,
+                    fillColor: polygonData.color,
+                    fillOpacity: 0.3
+                });
+
+                polygon.setMap(map); // 다각형을 지도에 추가합니다.
+
+                // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이를 표시합니다.
+                kakao.maps.event.addListener(polygon, 'mouseover', function (mouseEvent) {
+                    customOverlay.setContent('<div class="area">' + polygonData.name + '</div>');
+                    customOverlay.setPosition(mouseEvent.latLng);
+                    customOverlay.setMap(map);
+                });
+
+                // 다각형에 mousemove 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이의 위치를 변경합니다.
+                kakao.maps.event.addListener(polygon, 'mousemove', function (mouseEvent) {
+                    customOverlay.setPosition(mouseEvent.latLng);
+                });
+
+                // 다각형에 mouseout 이벤트를 등록하고 이벤트가 발생하면 커스텀 오버레이를 숨깁니다.
+                kakao.maps.event.addListener(polygon, 'mouseout', function () {
+                    customOverlay.setMap(null);
+                });
+
+                // 다각형에 click 이벤트를 등록하고 이벤트가 발생하면 인포윈도우를 표시합니다.
+                kakao.maps.event.addListener(polygon, 'click', function (mouseEvent) {
+                    var content = '<div class="info">' +
+                        '   <div class="title">' + polygonData.name + '</div>' +
+                        '   <div class="size">총 면적 : 약 ' + polygonData.size + ' m<sup>2</sup></div>' +
+                        '</div>';
+
+                    infowindow.setContent(content);
+                    infowindow.setPosition(mouseEvent.latLng);
+                    infowindow.open(map, new kakao.maps.Marker({position: mouseEvent.latLng})); // 여기에서 mouseEvent.latLng를 기반으로 가상의 마커를 생성하여 인포윈도우를 표시합니다.
+                });
+            });
+        } else {
+            var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 레퍼런스
+            var options = { // 지도를 생성할 때 필요한 기본 옵션
+                center: new kakao.maps.LatLng(locations.latitude, locations.longitude), // 지도의 중심좌표.
+                level: 6 // 지도의 레벨(확대, 축소 정도)
+            };
+
+            var map = new kakao.maps.Map(container, options); // 지도를 생성합니다
+
+            // 마커가 표시될 위치입니다
+            var markerPosition = new kakao.maps.LatLng(locations.latitude, locations.longitude);
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(map);
+
+            // 지도에 표시할 원을 생성합니다
+            var circle = new kakao.maps.Circle({
+                center: new kakao.maps.LatLng(locations.latitude, locations.longitude),  // 원의 중심좌표 입니다
+                radius: 500, // 미터 단위의 원의 반지름입니다
+                strokeWeight: 5, // 선의 두께입니다
+                strokeColor: 'red', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'line', // 선의 스타일 입니다
+                fillColor: 'red', // 채우기 색깔입니다
+                fillOpacity: 0.3  // 채우기 불투명도 입니다
+            });
+
+            // 지도에 원을 표시합니다
+            circle.setMap(map);
+        }
+    });
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var divided = /*[[${divide}]]*/ [];
+    /*]]>*/
+
+    if (divided.length === 0) {
+        document.getElementById('divide').style.display = 'none';
+    } else {
+        var divide = [];
+        var divideRate = [];
+        var labels = [];
+
+        divided.forEach(entry => {
+            divide.push(entry.dividend);
+            divideRate.push(entry.dividendRate);
+            labels.push(entry.decisionDay); // 예시로 decisionDay가 x축 라벨
+        });
+
+        var maxDivide = Math.max(...divide);
+        var maxDivideRate = Math.max(...divideRate);
+
+        var dctx = document.getElementById('divide').getContext('2d');
+
+        var chart = new Chart(dctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '배당금',
+                    data: divide,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    yAxisID: 'y-axis-1'
+                }, {
+                    label: '배당률',
+                    data: divideRate,
+                    type: 'line',
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    yAxisID: 'y-axis-2'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    'y-axis-1': {
+                        type: 'linear',
+                        position: 'left',
+                        max: maxDivide * 3,
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    },
+                    'y-axis-2': {
+                        type: 'linear',
+                        position: 'right',
+                        max: maxDivideRate * 2,
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    },
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'month',
+                            tooltipFormat: 'yyyy-MM-dd',
+                            displayFormats: {
+                                month: 'yyyy-MM-dd'
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                if (tooltipItem.datasetIndex === 0) {
+                                    return '배당금: ' + tooltipItem.raw + '원';
+                                } else {
+                                    return '배당률: ' + tooltipItem.raw + '%';
+                                }
+                            }
+                        }
+                    },
+                    hover: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                }
+            }
+        });
+    }
+</script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var landprice = /*[[${landPrice}]]*/ [];
+    /*]]>*/
+
+    if (landprice.length === 0) {
+        document.getElementById('landprice').style.display = 'none';
+    } else {
+        const lctx = document.getElementById('landprice').getContext('2d');
+
+        var formatData = landprice.map(data => ({
+            x: new Date(data.baseYear + '-01-01'),
+            y: data.landPrice
+        }));
+
+        const landPriceChart = new Chart(lctx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: '공시지가',
+                    data: formatData,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 1,
+                    fill: true
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                return '공시지가: ' + context.parsed.y;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'year',
+                            tooltipFormat: 'yyyy-MM-dd',
+                            displayFormats: {
+                                year: 'yyyy'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '공시지가'
+                        }
+                    }
+                },
+                hover: {
+                    mode: 'index',
+                    intersect: false
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

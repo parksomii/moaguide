@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/saleComplet.css" rel="stylesheet">
+    <script>
+        window.addEventListener('load', function() {
+            let message = { height: document.body.scrollHeight };
+            console.log("Sending message:", message);
+            window.top.postMessage(message, "*");
+        });
+    </script>
+    <title>MOA GUIDE</title>
+</head>
+<body>
+    <section class="container">
+        <h1>매각 완료</h1>
+        <p>해당 자산은 현재 매각이 완료되었습니다.</p>
+        <p>관심을 가져주셔서 감사합니다. 다른 투자 기회를 확인하려면 아래 링크를 클릭하세요.</p>
+        <a href="#" class="button" onclick="top.location.href='/summary'; return false;">다른 투자 기회 보기</a>
+    </section>
+</body>
+</html>

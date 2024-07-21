@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/css/detail.css" rel="stylesheet">
+    <title>세부정보</title>
+    <script>
+        window.addEventListener('load', function() {
+            let message = { height: document.body.scrollHeight };
+            console.log("Sending message:", message);
+            window.top.postMessage(message, "*");
+        });
+    </script>
+    <style>
+        div {
+            justify-content: center;
+        }
+        a,
+        input,
+        select,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: none;
+            text-decoration: none;
+            background: none;
+
+            -webkit-font-smoothing: antialiased;
+        }
+
+        menu,
+        ol,
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@latest/dist/chartjs-plugin-dragdata.min.js"></script>
+    <script src="/js/timeAndWeek.js"></script>
+    <script src="/js/date.js"></script>
+    <script src="/js/business.js"></script>
+    <script src="/js/transaction.js"></script>
+</head>
+<body>
+<div class="-frame-1410115022">
+    <div class="div16"><!-- TODO: css 기본정보의 div16과 비교 후 -div16이면 넣기 -->
+        <div class="frame-1410115021">
+            <div class="div17">상권분석</div>
+            <div class="frame-14101150133">
+                <div class="frame-1410115049">
+                    <div id="buttonContainer" class="frame-14101149992" th:each="type : ${Type}">
+                        <button th:attr="style=${type.type == null ? 'display:none' : ''}" th:text="${type.type}" th:id="${type.type}"></button>
+                        <div class="ellipse-430 hidden" th:attr="style=${type.type == null ? 'display:none' : ''}" th:id="${type.type}+'-check'"></div>
+                    </div>
+                </div>
+                <div class="frame-14101150112">
+                    <div class="div18">임대료</div>
+                </div>
+                <div class="frame-14101150112">
+                    <canvas id="Rent" class="image"></canvas>
+                </div>
+                <div class="line-84"></div>
+                <div class="frame-14101150122">
+                    <div class="div18">공실률</div>
+                </div>
+                <div class="frame-14101150112">
+                    <canvas id="VacancyRate" class="image"></canvas>
+                </div>
+                <div class="line-84"></div>
+                <div class="frame-1410115181">
+                    <div class="frame-14101150134">
+                        <div class="div18">주요 업무지구와의 거리</div>
+                    </div>
+                    <div class="frame-1410115024">
+                        <table th:attr="style=${businessArea == null ? 'display:none' : ''}" class="styled-table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th class="grey">&lt;가까운 역까지&gt;</th>
+                                <th class="grey">&lt;차량으로&gt;</th>
+                                <th class="grey">&lt;대중교통으로&gt;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:attr="style=${businessArea == null ? 'display:none' : ''}">
+                                <td class="bold" th:if="${businessArea != null}" th:attr="style=${businessArea.cbd == null ? 'display:none' : ''}" th:text="'CBD('+${businessArea.cbd}+')'">CBD</td>
+                                <td class="blue-text" th:if="${businessArea != null}"  th:attr="style=${businessArea.cbdDistance == null ? 'display:none' : ''}" th:text="${businessArea.cbdDistance}">아직 데이터가 없습니다.</td>
+                                <td class="blue-text" th:if="${businessArea != null}"  th:attr="style=${businessArea.cbdCar == null ? 'display:none' : ''}" th:text="${businessArea.cbdCar}">빠른 시일내에 추가하겠습니다.</td>
+                                <td class="blue-text" th:if="${businessArea != null}"  th:attr="style=${businessArea.cbdSubway == null ? 'display:none' : ''}" th:text="${businessArea.cbdSubway}">죄송합니다.</td>
+                            </tr>
+                            <tr th:attr="style=${businessArea == null ? 'display:none' : ''}">
+                                <td class="bold" th:if="${businessArea != null}"  th:attr="style=${businessArea.gbd == null ? 'display:none' : ''}" th:text="'GBD('+${businessArea.gbd}+')'">GBD</td>
+                                <td class="blue-text" th:if="${businessArea != null}"  th:attr="style=${businessArea.gbdDistance == null ? 'display:none' : ''}" th:text="${businessArea.gbdDistance}">아직 데이터가 없습니다.</td>
+                                <td class="blue-text" th:if="${businessArea != null}"  th:attr="style=${businessArea.gbdCar == null ? 'display:none' : ''}" th:text="${businessArea.gbdCar}">빠른 시일내에 추가하겠습니다.</td>
+                                <td class="blue-text" th:if="${businessArea != null}"  th:attr="style=${businessArea.gbdSubway == null ? 'display:none' : ''}" th:text="${businessArea.gbdSubway}">죄송합니다.</td>
+                            </tr>
+                            <tr th:attr="style=${businessArea == null ? 'display:none' : ''}">
+                                <td class="bold" th:if="${businessArea != null}"  th:attr="style=${businessArea.ybd == null ? 'display:none' : ''}" th:text="'YBD('+${businessArea.ybd}+')'">YBD</td>
+                                <td class="blue-text" th:llsif="${businessArea != null}"  th:attr="style=${businessArea.ybdDistance == null ? 'display:none' : ''}" th:text="${businessArea.ybdDistance}">아직 데이터가 없습니다.</td>
+                                <td class="blue-text" th:if="${businessArea != null}"  th:attr="style=${businessArea.ybdCar == null ? 'display:none' : ''}" th:text="${businessArea.ybdCar}">빠른 시일내에 추가하겠습니다.</td>
+                                <td class="blue-text" th:if="${businessArea != null}"  th:attr="style=${businessArea.ybdSubway == null ? 'display:none' : ''}" th:text="${businessArea.ybdSubway}">죄송합니다.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="frame-1410115181">
+                        <div class="frame-141011501345">
+                            <div class="grey">0.5km 이내 대중교통</div>
+                        </div>
+                        <div  class="flex-box">
+                            <div class="frame-14101150249">
+                                <div class="frame-1410115186" th:attr="style=${subway == null ? 'display:none' : ''}">
+                                    <div   class="-bold">주변 지하철</div>
+                                    <div class="_25_container" th:each="subway : ${nearSubway}">
+                                        <div class="subway-info">
+                                            <div class="left-section" th:attr="style=${subway == null ? 'display:none' : ''}">
+                                                <img th:src="'/image/' + ${subway.route} + '.svg'" alt="Subway Image" th:attr="style=${subway.route == null ? 'display:none' : ''}">
+                                                <span class="station-name" th:text="${subway.station}" th:attr="style=${subway.station == null ? 'display:none' : ''}"></span>
+                                            </div>
+                                            <div class="right-section">
+                                                <span class="distance" th:text="${subway.distance} + 'm'" th:attr="style=${subway.distance == null ? 'display:none' : ''}"></span>
+                                                <span class="time" th:text="'(' + ${subway.time} + '분)'" th:attr="style=${subway.time == null ? 'display:none' : ''}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="frame-14101150249" th:if="${nearBus != null}">
+                                <div class="-bold">주변 버스</div>
+                                <div class="frame-1410115186">
+                                    <div class="_25_container">
+                                        <div class="-div19" th:attr="style=${nearBus.line == null ? 'display:none' : ''}">주변 버스정류장 노선 수</div>
+                                        <div class="_25" th:text="${nearBus.line}+'개의 노선'" th:attr="style=${nearBus.line == null ? 'display:none' : ''}"></div>
+                                        <div class="-div19" th:attr="style=${nearBus.node == null ? 'display:none' : ''}">주변 버스정류장 정류장 수</div>
+                                        <div class="_25" th:text="${nearBus.node}+'개의 정류장'" th:attr="style=${nearBus.node == null ? 'display:none' : ''}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="line-84"></div>
+                <div class="frame-1410115185">
+                    <div class="frame-14101150152">
+                        <div class="div22">지하철 승하차 수</div>
+                    </div>
+                    <div class="frame-1410115049">
+                        <div class="div25 check-graph" id="timeTab">시간별</div>
+                        <div id="time" class="ellipse-401"></div>
+                        <div class="div25" id="weekTab">요일별</div>
+                        <div id="week" class="ellipse-401 hidden"></div>
+                    </div>
+                    <div class="frame-1410115049">
+                        <label for="year">년:</label>
+                        <select id="year" name="year" required></select>
+                        <label for="month">월:</label>
+                        <select id="month" name="month" required></select>
+                        <button type="button" class="subway-submit" th:attr="style=${building == null || building.keyword == null ? 'display:none' : ''}" th:id="${building.keyword}">제출</button>
+                    </div>
+                    <div class="graph-time">
+                        <div class="div23">지하철 시간별 승하차 수</div>
+                        <div class="frame-14101150112">
+                            <canvas class="graph" id="subwayTime"></canvas>
+                        </div>
+                    </div>
+                    <div class="graph-week hidden">
+                        <div class="div23">지하철 요일별 승하차 수</div>
+                        <div class="frame-14101150112">
+                            <canvas class="graph" id="subwayWeek"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="line-85"></div>
+    <div class="div24">
+        <div class="-frame-14101150212">
+            <div class="div17">인구정보</div>
+            <div class="frame-14101150135">
+                <div class="frame-1410115185">
+                    <div class="frame-14101150152">
+                        <div class="div18">생활인구</div>
+                    </div>
+                    <div class="frame-1410115049">
+                        <label for="pop-year">년:</label>
+                        <select id="pop-year" name="pop-year" required></select>
+                        <label for="pop-month">월:</label>
+                        <select id="pop-month" name="pop-month" required></select>
+                        <button type="button" class="population-submit" th:if="${building != null && building.districtsId != null && building.districtsId.districtsId != null}" th:attr="style=${building == null || building.districtsId == null || building.districtsId.districtsId == null ? 'display:none' : ''}" th:id="${building.districtsId.districtsId}">제출</button>
+                    </div>
+                    <div class="frame-14101150112">
+                        <canvas id="dayChart"></canvas>
+                    </div>
+                    <div class="frame-14101150152">
+                        <div class="div18">성별 및 연령대별</div>
+                    </div>
+                    <div class="frame-141011501129">
+                        <div class="frame-14101151869">
+                            <canvas class="graph" id="genderChart"></canvas>
+                        </div>
+                        <div class="frame-14101151869">
+                            <canvas class="graph" id="ageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--</div>-->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var Rent = /*[[ ${rent} ]]*/ [];
+        var VRATE = /*[[ ${vacancyRate} ]]*/ [];
+        var type = /*[[ ${Type} ]]*/ [];
+        /*]]>*/
+        if (type.length === 0) {
+            var elements = document.getElementsByClassName('image');
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.display = 'none';
+            }
+        }else {
+            const parent = document.getElementById('buttonContainer');
+            const firstButton = parent.querySelector('button'); // 첫 번째 버튼
+            const firstDiv = parent.querySelector('div'); // 첫 번째 div
+
+            firstButton.classList.add('check-business');
+            firstDiv.classList.remove('hidden');
+            const ctx = document.getElementById('Rent').getContext('2d');
+            // 날짜 목록 생성
+            var labels = [...new Set(Rent.map(item => item.year + '년 ' + item.quarter + '분기'))];
+
+            // 지역 목록 생성
+            var regions = [...new Set(Rent.map(item => item.region))];
+
+            // 지역별 데이터 그룹화
+            const datasets = regions.map(region => {
+                return {
+                    label: region,
+                    data: labels.map(label => {
+                        var item = Rent.find(data => (data.year + '년 ' + data.quarter + '분기') === label && data.region === region);
+                        return item ? item.rent : 0;
+                    }),
+                    backgroundColor: getRandomColor(),
+                };
+            });
+
+            // 랜덤 색상 생성 함수
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = '#';
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            // 그래프 생성
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return `X: ${tooltipItem.label}, Y: ${tooltipItem.formattedValue}`;
+                                }
+                            }
+                        },
+                        crosshair: {
+                            line: {
+                                color: '#F66',  // crosshair line color
+                                width: 1        // crosshair line width
+                            },
+                            sync: {
+                                enabled: false  // disable trace line syncing with other charts
+                            },
+                            zoom: {
+                                enabled: false  // disable zooming
+                            }
+                        }
+                    },
+                    hover: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+            });
+
+            const vctx = document.getElementById('VacancyRate').getContext('2d');
+
+            // 지역별 데이터 그룹화
+            const Vdatasets = regions.map(region => {
+                return {
+                    label: region,
+                    data: labels.map(label => {
+                        var item = VRATE.find(data => (data.year + '년 ' + data.quarter + '분기') === label && data.region === region);
+                        return item ? item.vacancyRate : 0;
+                    }),
+                    backgroundColor: getRandomColor(),
+                    borderWidth: 1,
+                    borderRadius: 10,  // 막대의 둥근 모서리 설정
+                    barPercentage: 0.5,  // 막대의 두께 조정
+                    categoryPercentage: 0.5 // 막대의 두께 조정
+                };
+            });
+
+            const vacancyRateChart = new Chart(vctx, {
+                type: 'bar',
+                data: {
+                    labels:labels,
+                    datasets: Vdatasets
+
+                },
+                options: {
+                    responsive: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw + '%';
+                                }
+                            }
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            formatter: function(value, context) {
+                                return value + '%';
+                            },
+                            color: 'blue', // 데이터 레이블 색상 설정
+                            font: {
+                                weight: 'bold'
+                            }
+                        },
+                        crosshair: false // crosshair 플러그인 비활성화
+                    }
+                },
+                plugins: [ChartDataLabels] // 플러그인 추가
+            });
+        }
+    </script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    var subwaytime = /*[[ ${subwayTime} ]]*/ [];
+    var subwayweek = /*[[ ${subwayWeek} ]]*/ [];
+    /*]]>*/
+    if (subwaytime === null){
+        var elements = document.getElementsByClassName('graph_subway');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].style.display = 'none';
+        }
+    }else {
+        var time = ['05시', '06시', '07시', '08시', '09시', '10시', '11시', '12시', '13시', '14시', '15시', '16시', '17시', '18시', '19시', '20시', '21시', '22시', '23시'];
+
+        var boarding = [];
+        var alighting = [];
+
+        const minDate = new Date('2023-01-01');
+        const maxDate = new Date(subwaytime.year, subwaytime.month - 1); // -1 because months are 0-indexed in JavaScript
+
+        function populateYearMonth() {
+            const yearSelect = document.getElementById('year');
+            const monthSelect = document.getElementById('month');
+
+            // Populate year dropdown
+            for (let year = minDate.getFullYear(); year <= maxDate.getFullYear(); year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = `${year}년`;
+                yearSelect.appendChild(option);
+            }
+
+            // Populate month dropdown based on selected year
+            yearSelect.addEventListener('change', function() {
+                const selectedYear = parseInt(this.value);
+                populateMonths(selectedYear);
+            });
+
+            // Initial population of months for the minimum year
+            populateMonths(minDate.getFullYear());
+        }
+
+        function populateMonths(selectedYear) {
+            const monthSelect = document.getElementById('month');
+            monthSelect.innerHTML = ''; // Clear existing options
+
+            const startMonth = (selectedYear === minDate.getFullYear()) ? minDate.getMonth() + 1 : 1;
+            const endMonth = (selectedYear === maxDate.getFullYear()) ? maxDate.getMonth() + 1 : 12;
+
+            for (let month = startMonth; month <= endMonth; month++) {
+                const option = document.createElement('option');
+                option.value = month.toString().padStart(2, '0');
+                option.textContent = `${month}월`;
+                monthSelect.appendChild(option);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', populateYearMonth);
+
+        // Extracting boarding and alighting data
+        time.forEach((hour, index) => {
+            var nextHour = (index < 18) ? time[index + 1].slice(0, -1) : '24';
+            var boardingKey = `boarding_${hour.slice(0, -1)}_${nextHour}`;
+            var alightingKey = `alighting_${hour.slice(0, -1)}_${nextHour}`;
+
+            boarding.push(subwaytime[boardingKey] || 0);
+            alighting.push(subwaytime[alightingKey] || 0);
+        });
+
+        var ctx = document.getElementById('subwayTime').getContext('2d');
+        var subwayChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: time,
+                datasets: [
+                    {
+                        label: '승차',
+                        data: boarding,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '하차',
+                        data: alighting,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        // 요일별 데이터 추출
+        var daysOfWeekEng = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var daysOfWeekKor = ['일', '월', '화', '수', '목', '금', '토'];
+        var totalBoarding = new Array(7).fill(0);
+        var totalAlighting = new Array(7).fill(0);
+
+        subwayweek.forEach(entry => {
+            var dayIndex = daysOfWeekEng.indexOf(entry.dayofWeek);
+            if (dayIndex !== -1) {
+                totalBoarding[dayIndex] += entry.totalBoarding;
+                totalAlighting[dayIndex] += entry.totalAlighting;
+            }
+        });
+
+        // Chart.js 설정 - 요일별 그래프
+        var ctxWeek = document.getElementById('subwayWeek').getContext('2d');
+        var subwayWeekChart = new Chart(ctxWeek, {
+            type: 'bar',
+            data: {
+                labels: daysOfWeekKor,
+                datasets: [
+                    {
+                        label: '총 승차',
+                        data: totalBoarding,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '총 하차',
+                        data: totalAlighting,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    </script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var population = /*[[ ${populations} ]]*/ [];
+    /*]]>*/
+
+    const minDate = new Date('2019-07-01');
+    // population 배열의 첫 번째 요소의 day 속성을 사용
+    const firstPopulationDay = population[0].day;
+
+    // day 속성이 문자열 형태의 날짜인 경우 처리
+    if (typeof firstPopulationDay === 'string') {
+        const dateObj = new Date(firstPopulationDay);
+        if (!isNaN(dateObj)) {
+            const maxYear = dateObj.getFullYear();
+            const maxMonth = dateObj.getMonth(); // 월은 0부터 시작
+
+            // 최대 날짜 설정
+            const maxDate = new Date(maxYear, maxMonth);
+
+            function populateYearMonth() {
+                const yearSelect = document.getElementById('pop-year');
+                const monthSelect = document.getElementById('pop-month');
+
+                // Populate year dropdown
+                for (let year = minDate.getFullYear(); year <= maxDate.getFullYear(); year++) {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = `${year}년`;
+                    yearSelect.appendChild(option);
+                }
+
+                // Populate month dropdown based on selected year
+                yearSelect.addEventListener('change', function() {
+                    const selectedYear = parseInt(this.value);
+                    populateMonths(selectedYear);
+                });
+
+                // Initial population of months for the minimum year
+                populateMonths(minDate.getFullYear());
+            }
+
+            function populateMonths(selectedYear) {
+                const monthSelect = document.getElementById('pop-month');
+                monthSelect.innerHTML = ''; // Clear existing options
+
+                const startMonth = (selectedYear === minDate.getFullYear()) ? minDate.getMonth() + 1 : 1;
+                const endMonth = (selectedYear === maxDate.getFullYear()) ? maxDate.getMonth() + 1 : 12;
+
+                for (let month = startMonth; month <= endMonth; month++) {
+                    const option = document.createElement('option');
+                    option.value = month.toString().padStart(2, '0');
+                    option.textContent = `${month}월`;
+                    monthSelect.appendChild(option);
+                }
+            }
+
+            // Ensure the function is called after the DOM is fully loaded
+            document.addEventListener('DOMContentLoaded', populateYearMonth);
+        } else {
+            console.error('첫 번째 요소의 day 속성이 유효한 날짜가 아닙니다.');
+        }
+    } else {
+        console.error('첫 번째 요소의 day 속성이 문자열이 아닙니다.');
+    }
+
+    document.addEventListener('DOMContentLoaded', populateYearMonth);
+
+    const WeekEng = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const WeekKor = ['일', '월', '화', '수', '목', '금', '토'];
+
+    // 요일별 데이터
+    const daysData = new Array(7).fill(0);
+    const genderData = { man: 0, girl: 0 };
+    const ageData = {
+        age0: 0,
+        age10: 0,
+        age20: 0,
+        age30: 0,
+        age40: 0,
+        age50: 0,
+        age60: 0,
+        age70: 0
+    };
+
+    population.forEach(entry => {
+        // 요일별 데이터 집계
+        var dayIndex = WeekEng.indexOf(entry.weekDay);
+        if (dayIndex !== -1) {
+            daysData[dayIndex] += entry.total;
+        }
+
+        // 성별 데이터 집계
+        genderData.man += entry.man;
+        genderData.girl += entry.girl;
+
+        // 나이대별 데이터 집계
+        ageData.age0 += entry.age0;
+        ageData.age10 += entry.age10;
+        ageData.age20 += entry.age20;
+        ageData.age30 += entry.age30;
+        ageData.age40 += entry.age40;
+        ageData.age50 += entry.age50;
+        ageData.age60 += entry.age60;
+        ageData.age70 += entry.age70;
+    });
+
+    // 요일별 차트 생성
+    const dayCtx = document.getElementById('dayChart').getContext('2d');
+    new Chart(dayCtx, {
+        type: 'bar',
+        data: {
+            labels: WeekKor,
+            datasets: [{
+                label: '요일별 생활 인구수',
+                data: Object.values(daysData),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // 성별 차트 생성
+    const genderCtx = document.getElementById('genderChart').getContext('2d');
+    new Chart(genderCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['남성', '여성'],
+            datasets: [{
+                label: '성별 생활인구 수',
+                data: [genderData.man, genderData.girl],
+                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            rotation: -90,
+            circumference: 180,
+            responsive: true
+        }
+    });
+
+    // 나이대별 차트 생성
+    const ageCtx = document.getElementById('ageChart').getContext('2d');
+    new Chart(ageCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['10살이전','10대','20대','30대','40대','50대','60대','70대'],
+            datasets: [{
+                label: '나이대별 인구 수',
+                data: Object.values(ageData),
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.2)',  // Light Yellow
+                    'rgba(75, 192, 192, 0.2)',  // Soft Green
+                    'rgba(153, 102, 255, 0.2)', // Light Purple
+                    'rgba(255, 159, 64, 0.2)',  // Light Orange
+                    'rgba(165, 42, 42, 0.2)',   // Brown
+                    'rgba(128, 0, 128, 0.2)',   // Purple
+                    'rgba(64, 224, 208, 0.2)',  // Turquoise
+                    'rgba(255, 99, 71, 0.2)'    // Tomato
+                ],
+                borderColor: [
+                    'rgba(255, 206, 86, 0.2)',  // Light Yellow
+                    'rgba(75, 192, 192, 0.2)',  // Soft Green
+                    'rgba(153, 102, 255, 0.2)', // Light Purple
+                    'rgba(255, 159, 64, 0.2)',  // Light Orange
+                    'rgba(165, 42, 42, 0.2)',   // Brown
+                    'rgba(128, 0, 128, 0.2)',   // Purple
+                    'rgba(64, 224, 208, 0.2)',  // Turquoise
+                    'rgba(255, 99, 71, 0.2)'    // Tomato
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            rotation: -90,
+            circumference: 180,
+            responsive: true
+        }
+    });
+</script>
+
+</body>
+</html>
