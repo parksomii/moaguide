@@ -27,6 +27,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query("SELECT t FROM Transaction t WHERE t.productId.productId = :productId AND t.tradeDay >= :day order by t.tradeDay,t.tradeTime")
     List<Transaction> findbyday(@Param("productId") String productId, @Param("day")LocalDate date);
 
+    @Query("SELECT t FROM Transaction t WHERE t.productId.productId = :productId order by t.tradeDay desc,t.tradeTime desc")
+    Transaction findbyproductId(String id, Pageable pageable);
+
     /*
     // Pageable을 사용하여 첫 번째 Transaction만 가져오기
     @Query("SELECT t FROM Transaction t WHERE t.productId.productId = :productId ORDER BY t.tradeDay DESC")

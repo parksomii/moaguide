@@ -40,13 +40,6 @@ public class TransactionService {
         return transactions;
     }
 
-    /*for(SummaryDto summary : summaryList){
-        String productId = summary.getProductId();
-        transactions.add(transactionRepository.findFirstByProductId(productId));
-    }
-    log.info(transactions.toString());
-    return transactions;
-}*/
     @Transactional
     public List<List<Transaction>> graph(List<SummaryDto> summaryList) {
         List<List<Transaction>> transactions = new ArrayList<>();
@@ -74,8 +67,9 @@ public class TransactionService {
         return transaction;
     }
 
-    public List<Transaction> findbyday(String id, LocalDate day) {
-        List<Transaction> transaction = transactionRepository.findbyday(id, day);
+    public Transaction findbyproductId(String id) {
+        Pageable pageable = PageRequest.of(0, 1);
+        Transaction transaction = transactionRepository.findbyproductId(id, pageable);
         return transaction;
     }
 

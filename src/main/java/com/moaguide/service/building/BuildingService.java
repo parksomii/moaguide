@@ -1,5 +1,6 @@
 package com.moaguide.service.building;
 
+import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.detail.BuildingDetailRepository;
 import com.moaguide.dto.BuildingDetailDto;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,9 @@ public class BuildingService {
     private final BuildingDetailRepository buildingRepository;
 
 
-    public BuildingDetailDto detail(String id) {
-        BuildingDetailDto buildingDetailDto = buildingRepository.findByproductId(id).toDTO();
-        return buildingDetailDto;
+    public BuildingDetail detail(String id) {
+        BuildingDetail buildingDetail = buildingRepository.findByproductId(id);
+        return buildingDetail;
     }
 
 }

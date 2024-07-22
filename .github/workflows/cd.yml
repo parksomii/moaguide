@@ -1,1 +1,79 @@
+name: CD
 
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add SSH key
+        run: echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/ssh_key && chmod 600 /tmp/ssh_key
+
+      - name: Determine deployment target
+        id: determine-target
+        run: |
+          current_target=$(ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "cat /home/ec2-user/current_target.txt || (echo 'green' > /home/ec2-user/current_target.txt && cat /home/ec2-user/current_target.txt)")
+          if [ "$current_target" = "blue" ]; then
+            new_target="green"
+          else
+            new_target="blue"
+          fi
+          echo "current_target=$current_target" >> $GITHUB_OUTPUT
+          echo "new_target=$new_target" >> $GITHUB_OUTPUT
+          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "echo '$new_target' > /home/ec2-user/current_target.txt"
+
+      - name: Login to Docker Hub on EC2 instance
+        run: |
+          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "echo '${{ secrets.DOCKERHUB_PW }}' | docker login -u '${{ secrets.DOCKERHUB_USERNAME }}' --password-stdin"
+
+      - name: Pull latest image and deploy new version
+        run: |
+          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "
+            docker pull moaguide/moaguide_back:last
+            cd /home/ec2-user
+            docker-compose up -d --no-deps \${new_target}
+          "
+
+      - name: Health check new environment
+        id: health-check
+        run: |
+          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "
+            health_url=''
+            if [ '${{ steps.determine-target.outputs.new_target }}' = 'blue' ]; then
+              health_url='http://${{ secrets.LIVE_SERVER_IP }}:8080/hc'
+            else
+              health_url='http://${{ secrets.LIVE_SERVER_IP }}:8081/hc'
+            fi
+            for i in {1..10}; do
+              http_status=\$(curl -s -o /dev/null -w '%{http_code}' \$health_url)
+              if [ \"\$http_status\" -eq \"200\" ]; then
+                echo 'Health check passed!'
+                exit 0
+              fi
+              echo 'Waiting for healthy status...'
+              sleep 180
+            done
+            echo 'Health check failed!'
+            exit 1
+          "
+
+      - name: Update NGINX configuration and reload
+        if: success()
+        run: |
+          ssh -t -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "
+            sed -i 's/set \\$service_url_backend .*/set \\$service_url_backend ${new_target}_backend;/' /home/ec2-user/nginx.conf
+            docker-compose up -d nginx  # Restart NGINX container if not running.
+            docker-compose exec nginx nginx -s reload
+          "
+      - name: Stop old environment
+        if: success()
+        run: |
+          ssh -t -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "
+            if [ '${{ steps.determine-target.outputs.new_target }}' = 'blue' ]; then
+              docker-compose stop green
+            else

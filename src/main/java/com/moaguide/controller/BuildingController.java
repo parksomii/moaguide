@@ -56,34 +56,7 @@ public class BuildingController {
     private final NearBusService nearBusService;
     private final NearSubwayService nearSubwayService;
 
-    // 빌딩 기본정보 페이지
-    @GetMapping("/frame/building/{id}")
-    public String detalePage(Model model, @PathVariable String id) {
-        Summary summary = summaryService.findById(id);
-        if(summary.getPlatformId().getPlatformId() % 2 == 0){
-            return "saleComplet";
-        }
-        else {
-            BuildingDetailDto buildingDetailDto = buildingService.detail(id);
-            List<Divide> divide = divideService.findAllByproductId(id);
-            List<Lease> lease = leaseService.detail(id);
-            List<LandPriceDto> landPrice = landPriceservice.priceList(id);
-            List<Transaction> transactionList = transactionService.threeMonthgraph(id);
-            String name = buildingDetailDto.getKeyword();
-            LocationDto location = locationService.locate(id);
-            List<Area> area = areaService.findpolygon(name);
-            LandRegistry landRegistry = landRegistryService.fingById(id);
-            model.addAttribute("divide", divide);
-            model.addAttribute("building", buildingDetailDto);
-            model.addAttribute("leases", lease);
-            model.addAttribute("landPrice", landPrice);
-            model.addAttribute("transactions", transactionList);
-            model.addAttribute("location",location);
-            model.addAttribute("area", area);
-            model.addAttribute("landRegistry", landRegistry);
-            return "Building/BuildingBase";
-        }
-    }
+
 
     // 빌딩 뉴스탭 페이지
     @GetMapping("/frame/building/news/{keyword}")
