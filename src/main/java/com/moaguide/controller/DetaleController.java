@@ -39,9 +39,7 @@ public class DetaleController {
         List<Transaction> transaction = transactionService.findtwoByproductId(id);
         Divide divides = divideService.findByproductId(id);
         SummaryListDto summaryListDto = summaryListService.Building(transaction,divides);
-        BuildingDetailDto buildingDetailDto = buildingService.detail(id);
         model.addAttribute("building", summaryListDto);
-        model.addAttribute("buildingDetail", buildingDetailDto);
         return "detail/Buildingdetail";
     }
 
