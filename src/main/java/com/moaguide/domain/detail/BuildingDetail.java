@@ -120,5 +120,6 @@ public class BuildingDetail {
                 this.dividendCycle,
                 this.keyword
         );
+
     }
 }

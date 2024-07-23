@@ -2,6 +2,7 @@ package com.moaguide.domain.detail;
 
 
 import com.moaguide.dto.BuildingDetailDto;
+import com.moaguide.dto.NewDto.DistricIdDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,7 @@ public interface BuildingDetailRepository extends JpaRepository<BuildingDetail, 
 
     @Query("SELECT b FROM BuildingDetail b WHERE b.productId.name = :name")
     BuildingDetail findByProductName(@Param("name") String name);
+
+    @Query("SELECT new com.moaguide.dto.NewDto.DistricIdDto(b.districtsId.districtsId) FROM BuildingDetail b WHERE b.productId.productId = :productId")
+    DistricIdDto findDistricId(@Param("productId") String productId);
 }

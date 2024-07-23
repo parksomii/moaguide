@@ -1,6 +1,5 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.building.area.Area;
 import com.moaguide.domain.building.businessarea.BusinessArea;
 import com.moaguide.domain.building.landregistry.LandRegistry;
 import com.moaguide.domain.building.lease.Lease;
@@ -8,6 +7,7 @@ import com.moaguide.domain.building.location.Location;
 import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.transaction.Transaction;
+import com.moaguide.dto.BuildingDetailDto;
 import com.moaguide.dto.NewDto.*;
 import com.moaguide.service.SummaryService;
 import com.moaguide.service.TransactionService;
@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -37,6 +36,9 @@ public class BuildingRestController {
     private final NearBusService nearBusService;
     private final LandPriceService landPriceService;
     private final AreaService areaService;
+    private final SubwayTimeService subwayTimeService;
+    private final SubwayWeekService subwayWeekService;
+    private final PopulationService populationService;
 
 
     @GetMapping("base/{product_Id}")
@@ -51,11 +53,7 @@ public class BuildingRestController {
     }
 
     @GetMapping("sub/{product_Id}")
-    public ResponseEntity<Object> add(@PathVariable String product_Id) {
-        String keyword = summaryService.findById(product_Id);
-        if( keyword.substring(keyword.length() - 1) == "호"){
-            keyword = keyword.substring(0, keyword.length() - 3);
-        }
+    public ResponseEntity<Object> add(@PathVariable String product_Id,@RequestBody String keyword) {
         List<TypeDto> rent = rentService.findType(product_Id);
         BusinessArea businessArea = businessAreaService.findBase(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(keyword);
@@ -67,16 +65,27 @@ public class BuildingRestController {
     @GetMapping("land/{product_Id}")
     public ResponseEntity<Object> land(@PathVariable String product_Id) {
         List<LandDto> landPrice = landPriceService.priceList(product_Id);
-        return ResponseEntity.ok(landPrice);
+        return ResponseEntity.ok(new BuildingLandResponseDto(landPrice));
     }
 
-    @GetMapping("area/{product_Id}")
-    public ResponseEntity<Object> area(@PathVariable String product_Id) {
-        String keyword = summaryService.findById(product_Id);
-        if( keyword.substring(keyword.length() - 1) == "호"){
-            keyword = keyword.substring(0, keyword.length() - 3);
-        }
+    @GetMapping("area/{keyword}")
+    public ResponseEntity<Object> area(@PathVariable String keyword) {
         List<AreaDto> areas = areaService.findpolygon(keyword);
-        return ResponseEntity.ok(areas);
+        return ResponseEntity.ok(new BuildingAreaResponseDto(areas));
+    }
+
+    @GetMapping("subway/{keyword}")
+    public ResponseEntity<Object> subway(@PathVariable String keyword,@RequestBody DayDto dayDto) {
+        SubwayTimeDto subwayTimeDtos = subwayTimeService.findbydate(keyword,dayDto.getYear(),dayDto.getMonth());
+        List<SubwayWeekDto> subwayWeekDtos = subwayWeekService.findbydate(keyword, dayDto.getYear(), dayDto.getMonth());
+        BuildingSubwayResponseDto subwayResponseDto = new BuildingSubwayResponseDto(subwayTimeDtos,subwayWeekDtos);
+        return ResponseEntity.ok(subwayResponseDto);
+    }
+
+    @GetMapping("population/{product_Id}")
+    public ResponseEntity<Object> population(@PathVariable String product_Id,@RequestBody DayDto dayDto) {
+        DistricIdDto districIdDto = buildingService.detailByDistricId(product_Id);
+        List<PopulationDto> populationDto = populationService.findbydate(districIdDto.getDistricId(),dayDto.getYear(),dayDto.getMonth());
+        return ResponseEntity.ok(new BuildingPopulationDto(populationDto));
     }
 }
