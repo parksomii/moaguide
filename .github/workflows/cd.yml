@@ -18,7 +18,7 @@ jobs:
       - name: Determine deployment target
         id: determine-target
         run: |
-          current_target=$(ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "cat /home/ec2-user/current_target.txt || (echo 'green' > /home/ec2-user/current_target.txt && cat /home/ec2-user/current_target.txt)")
+          current_target=$(ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "cat /home/ec2-user/current_target.txt || (echo 'green' > /home/ec2-user/current_target.txt && cat /home/ec2-user/current_target.txt)")
           if [ "$current_target" = "blue" ]; then
             new_target="green"
           else
@@ -26,24 +26,24 @@ jobs:
           fi
           echo "current_target=$current_target" >> $GITHUB_OUTPUT
           echo "new_target=$new_target" >> $GITHUB_OUTPUT
-          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "echo '$new_target' > /home/ec2-user/current_target.txt"
+          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "echo '$new_target' > /home/ec2-user/current_target.txt"
 
       - name: Login to Docker Hub on EC2 instance
         run: |
-          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "echo '${{ secrets.DOCKERHUB_PW }}' | docker login -u '${{ secrets.DOCKERHUB_USERNAME }}' --password-stdin"
+          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "echo '${{ secrets.DOCKERHUB_PW }}' | docker login -u '${{ secrets.DOCKERHUB_USERNAME }}' --password-stdin"
 
       - name: Pull latest image and deploy new version
         run: |
-          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "
+          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "
             docker pull moaguide/moaguide_back:last
             cd /home/ec2-user
-            docker-compose up -d --no-deps \${new_target}
+            docker-compose up -d --no-deps \${{ steps.determine-target.outputs.new_target }}
           "
 
       - name: Health check new environment
         id: health-check
         run: |
-          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "
+          ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "
             health_url=''
             if [ '${{ steps.determine-target.outputs.new_target }}' = 'blue' ]; then
               health_url='http://${{ secrets.Domain }}:8080/hc'
@@ -66,15 +66,19 @@ jobs:
       - name: Update NGINX configuration and reload
         if: success()
         run: |
-          ssh -t -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "
+          ssh -t -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "
             sed -i 's/set \\$service_url_backend .*/set \\$service_url_backend ${new_target}_backend;/' /home/ec2-user/nginx.conf
             docker-compose up -d nginx  # Restart NGINX container if not running.
             docker-compose exec nginx nginx -s reload
           "
+
       - name: Stop old environment
         if: success()
         run: |
-          ssh -t -i /tmp/ssh_key -o StrictHostKeyChecking=no ec2-user@${{ secrets.LIVE_SERVER_IP }} "
+          ssh -t -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "
             if [ '${{ steps.determine-target.outputs.new_target }}' = 'blue' ]; then
               docker-compose stop green
             else
+              docker-compose stop blue
+            fi
+          "
