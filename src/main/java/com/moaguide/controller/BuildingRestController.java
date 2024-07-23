@@ -7,10 +7,7 @@ import com.moaguide.domain.building.location.Location;
 import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.transaction.Transaction;
-import com.moaguide.dto.NearSubwayDto;
-import com.moaguide.dto.NewDto.BuildingBaseResponseDto;
-import com.moaguide.dto.NewDto.BuildingSubResponseDto;
-import com.moaguide.dto.TypeDto;
+import com.moaguide.dto.NewDto.*;
 import com.moaguide.service.SummaryService;
 import com.moaguide.service.TransactionService;
 import com.moaguide.service.building.*;
@@ -26,11 +23,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/detail/building/")
 public class BuildingRestController {
-    private final SubwayTimeService subwayTimeService;
-    private final SubwayWeekService subwayWeekService;
-    private final PopulationService populationService;
     private final RentService rentService;
-    private final VacancyRateService vacancyRateService;
     private final BuildingService buildingService;
     private final LeaseService leaseService;
     private final LocationService locationService;
@@ -40,6 +33,7 @@ public class BuildingRestController {
     private final NearSubwayService nearSubwayService;
     private final SummaryService summaryService;
     private final NearBusService nearBusService;
+    private final LandPriceService landPriceService;
 
 
     @GetMapping("base/{product_Id}")
@@ -65,6 +59,12 @@ public class BuildingRestController {
         NearBus nearBus = nearBusService.findBykeyword(keyword);
         BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(rent,businessArea,nearSubway,nearBus);
         return ResponseEntity.ok(buildingSubResponseDto);
+    }
+
+    @GetMapping("land/{product_Id}")
+    public ResponseEntity<Object> land(@PathVariable String product_Id) {
+        List<LandDto> landDtos = landPriceService.priceList(product_Id);
+        return ResponseEntity.ok(landDtos);
     }
 
 }

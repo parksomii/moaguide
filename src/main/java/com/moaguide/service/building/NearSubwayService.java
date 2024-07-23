@@ -1,7 +1,7 @@
 package com.moaguide.service.building;
 
 import com.moaguide.domain.building.near.NearSubwayRepository;
-import com.moaguide.dto.NearSubwayDto;
+import com.moaguide.dto.NewDto.NearSubwayDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,11 @@
-package com.moaguide.dto;
+package com.moaguide.dto.NewDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
+@AllArgsConstructor
 @Getter
 @NoArgsConstructor
 public class TypeDto {

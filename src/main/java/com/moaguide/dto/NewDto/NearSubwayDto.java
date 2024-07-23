@@ -1,4 +1,4 @@
-package com.moaguide.dto;
+package com.moaguide.dto.NewDto;
 
 
 import lombok.AllArgsConstructor;

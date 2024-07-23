@@ -1,5 +1,6 @@
 package com.moaguide.domain.building.lnadprice;
 
+import com.moaguide.dto.NewDto.LandDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +11,6 @@ import java.util.List;
 @Repository
 public interface LandPriceRepository extends JpaRepository<LandPrice, Long> {
 
-    @Query("SELECT L from LandPrice L WHERE L.productId.productId = :productId ORDER BY L.baseYear DESC, L.baseDay DESC")
-    List<LandPrice> findAllByproductId(@Param("productId") String Id);
+    @Query("SELECT  new com.moaguide.dto.NewDto.LandDto(L.landPrice, L.baseYear, L.baseDay) from LandPrice L WHERE L.productId.productId = :productId ORDER BY L.baseYear DESC, L.baseDay DESC")
+    List<LandDto> findAllByproductId(@Param("productId") String Id);
 }
