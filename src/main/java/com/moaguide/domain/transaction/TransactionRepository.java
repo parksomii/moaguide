@@ -1,6 +1,7 @@
 package com.moaguide.domain.transaction;
 
 import com.moaguide.dto.TransactionDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,7 +29,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findbyday(@Param("productId") String productId, @Param("day")LocalDate date);
 
     @Query("SELECT t FROM Transaction t WHERE t.productId.productId = :productId order by t.tradeDay desc,t.tradeTime desc")
-    Transaction findbyproductId(String id, Pageable pageable);
+    Page<Transaction> findByProductId(@Param("productId") String productId, Pageable pageable);
 
     /*
     // Pageable을 사용하여 첫 번째 Transaction만 가져오기

@@ -8,6 +8,7 @@ import com.moaguide.dto.SummaryListDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -69,8 +70,8 @@ public class TransactionService {
 
     public Transaction findbyproductId(String id) {
         Pageable pageable = PageRequest.of(0, 1);
-        Transaction transaction = transactionRepository.findbyproductId(id, pageable);
-        return transaction;
+        Page<Transaction> transaction = transactionRepository.findByProductId(id, pageable);
+        return transaction.getContent().get(0); // 첫 번째 Transaction 반환
     }
 
     public  List<SummaryListDto> findByPrdocutId(List<Divide> divide) {
