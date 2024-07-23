@@ -1,5 +1,6 @@
 package com.moaguide.controller;
 
+import com.moaguide.domain.building.area.Area;
 import com.moaguide.domain.building.businessarea.BusinessArea;
 import com.moaguide.domain.building.landregistry.LandRegistry;
 import com.moaguide.domain.building.lease.Lease;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,6 +36,7 @@ public class BuildingRestController {
     private final SummaryService summaryService;
     private final NearBusService nearBusService;
     private final LandPriceService landPriceService;
+    private final AreaService areaService;
 
 
     @GetMapping("base/{product_Id}")
@@ -63,8 +66,17 @@ public class BuildingRestController {
 
     @GetMapping("land/{product_Id}")
     public ResponseEntity<Object> land(@PathVariable String product_Id) {
-        List<LandDto> landDtos = landPriceService.priceList(product_Id);
-        return ResponseEntity.ok(landDtos);
+        List<LandDto> landPrice = landPriceService.priceList(product_Id);
+        return ResponseEntity.ok(landPrice);
     }
 
+    @GetMapping("area/{product_Id}")
+    public ResponseEntity<Object> area(@PathVariable String product_Id) {
+        String keyword = summaryService.findById(product_Id);
+        if( keyword.substring(keyword.length() - 1) == "호"){
+            keyword = keyword.substring(0, keyword.length() - 3);
+        }
+        List<AreaDto> areas = areaService.findpolygon(keyword);
+        return ResponseEntity.ok(areas);
+    }
 }

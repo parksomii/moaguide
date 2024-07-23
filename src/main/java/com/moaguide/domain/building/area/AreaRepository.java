@@ -1,17 +1,15 @@
 package com.moaguide.domain.building.area;
 
 
-import jakarta.transaction.Transactional;
+import com.moaguide.dto.NewDto.AreaDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
 public interface AreaRepository extends JpaRepository<Area, Long> {
-    @Query("SELECT A FROM Area A WHERE A.keyword = :productName")
-    List<Area> findpolygon(@Param("productName")String name);
+    @Query("SELECT new com.moaguide.dto.NewDto.AreaDto(A.areaSize,A.productName,A.polygon,A.latitude,A.longitude,A.color) FROM Area A WHERE A.keyword = :keyword")
+    List<AreaDto> findpolygon(@Param("keyword")String name);
 }

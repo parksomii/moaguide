@@ -2,6 +2,7 @@ package com.moaguide.service.building;
 
 import com.moaguide.domain.building.area.Area;
 import com.moaguide.domain.building.area.AreaRepository;
+import com.moaguide.dto.NewDto.AreaDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,8 @@ public class AreaService {
     private final AreaRepository areaRepository;
 
     @Transactional
-    public List<Area> findpolygon(String name ){
-        List<Area> area = areaRepository.findpolygon(name);
+    public List<AreaDto> findpolygon(String keyword ){
+        List<AreaDto> area = areaRepository.findpolygon(keyword);
         return area;
     }
 }
