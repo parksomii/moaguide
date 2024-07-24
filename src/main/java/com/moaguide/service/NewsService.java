@@ -3,6 +3,7 @@ package com.moaguide.service;
 import com.moaguide.domain.news.News;
 import com.moaguide.domain.news.NewsRepository;
 import com.moaguide.dto.PageRequestDTO;
+import com.moaguide.dto.customDto.NewsCustomDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +14,23 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class NewsService {
     private final NewsRepository newsRepository;
+
+    // 최신 뉴스 조회
+    public List<NewsCustomDto> getMainNews(Pageable pageable) {
+        Page<News> newsList = newsRepository.findLatest(pageable);
+        List<NewsCustomDto> newsData = newsList.
+                stream().
+                map(news -> new NewsCustomDto(news))
+                .collect(Collectors.toList());
+        return newsData;
+    }
 
     // 뉴스 최신순 전체 조회
     public Page<News> getAllByLatest(PageRequestDTO pageRequestDTO) {

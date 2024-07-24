@@ -27,4 +27,8 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     String getNewsLink(@Param("id") Long id);
 
     List<News> findTop2ByOrderByDateDesc(Pageable pageable);
+
+    // 최신 뉴스
+    @Query("SELECT n FROM News n ORDER BY n.date DESC")
+    Page<News> findLatest(Pageable pageable);
 }
