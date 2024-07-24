@@ -40,7 +40,6 @@ public class BuildingRestController {
     private final SubwayWeekService subwayWeekService;
     private final PopulationService populationService;
 
-
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         BuildingDetail buildingDetail = buildingService.detail(product_Id);
@@ -48,6 +47,11 @@ public class BuildingRestController {
         Location location = locationService.locate(product_Id);
         Transaction transaction = transactionService.findbyproductId(product_Id);
         LandRegistry landRegistry = landRegistryService.fingById(product_Id);
+        log.info("BuildingDetail: {}", buildingDetail);
+        log.info("Lease: {}", lease);
+        log.info("Location: {}", location);
+        log.info("Transaction: {}", transaction);
+        log.info("LandRegistry: {}", landRegistry);
         BuildingBaseResponseDto buildingBaseResponseDto = new BuildingBaseResponseDto(buildingDetail, lease, transaction, location, landRegistry);
         return ResponseEntity.ok(buildingBaseResponseDto);
     }
@@ -88,4 +92,6 @@ public class BuildingRestController {
         List<PopulationDto> populationDto = populationService.findbydate(districIdDto.getDistricId(),dayDto.getYear(),dayDto.getMonth());
         return ResponseEntity.ok(new BuildingPopulationDto(populationDto));
     }
+
+
 }
