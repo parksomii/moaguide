@@ -93,5 +93,4 @@ public class BuildingRestController {
         return ResponseEntity.ok(new BuildingPopulationDto(populationDto));
     }
 
-
 }

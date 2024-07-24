@@ -18,8 +18,9 @@ public class SubwayTime {
 
     private String keyword;
 
+    @Column(name = "year")
     private int Year;
-
+    @Column(name = "months")
     private int Month;
 
     @Column(name = "boarding_05_06")
