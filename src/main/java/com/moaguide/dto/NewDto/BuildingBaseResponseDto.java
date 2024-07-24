@@ -44,9 +44,9 @@ public class BuildingBaseResponseDto {
     private String zoningOther; // 지역지구 등 지정여부 (기타법률)
     private double latitude; // 위도
     private double longitude; // 경도
-    private List<Lease> leases;
+    private List<LeaseDto> leases;
 
-    public BuildingBaseResponseDto(BuildingDetail buildingDetail, List<Lease> leaseList, Transaction transaction, Location location, LandRegistry landRegistry) {
+    public BuildingBaseResponseDto(BuildingDetail buildingDetail, List<LeaseDto> leaseList, Transaction transaction, Location location, LandRegistry landRegistry) {
         this.product_Id = buildingDetail.getProductId().getProductId();
         this.name = buildingDetail.getProductId().getName();
         this.publisher = buildingDetail.getPublisher();
