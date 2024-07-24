@@ -12,9 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface RentRepository extends JpaRepository<Rent, Integer> {
-    @Query("SELECT r FROM Rent r where r.keyword = :keyward AND r.type = :type")
-    List<Rent> findBytype(@Param("keyward") String keyword,@Param("type") String type);
+    @Query("SELECT r FROM Rent r where r.keyword = :keyword AND r.type = :type")
+    List<Rent> findBytype(@Param("keyword") String keyword,@Param("type") String type);
 
     @Query("SELECT DISTINCT new com.moaguide.dto.NewDto.TypeDto(r.type) FROM Rent r WHERE r.keyword = :keyword")
-    List<TypeDto> findType(@Param("keyward")String keyword);
+    List<TypeDto> findType(@Param("keyword")String keyword);
 }
