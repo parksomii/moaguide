@@ -1,13 +1,10 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.lnadprice.LandPrice;
 import com.moaguide.domain.building.lnadprice.LandPriceRepository;
-import com.moaguide.dto.LandPriceDto;
-import com.moaguide.dto.NewDto.LandDto;
+import com.moaguide.dto.NewDto.BuildingDto.LandDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor

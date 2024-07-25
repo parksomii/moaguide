@@ -2,18 +2,15 @@ package com.moaguide.dto.NewDto;
 
 
 import com.moaguide.domain.building.landregistry.LandRegistry;
-import com.moaguide.domain.building.lease.Lease;
 import com.moaguide.domain.building.location.Location;
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.transaction.Transaction;
-import lombok.AllArgsConstructor;
+import com.moaguide.dto.NewDto.BuildingDto.LeaseDto;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Getter

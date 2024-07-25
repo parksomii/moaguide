@@ -3,6 +3,7 @@ package com.moaguide.service.building;
 import com.moaguide.domain.building.subway.SubwayTime;
 import com.moaguide.domain.building.vacancyrate.VacancyRate;
 import com.moaguide.domain.building.vacancyrate.VacancyRateRepository;
+import com.moaguide.dto.NewDto.BuildingDto.VacancyrateDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,8 @@ public class VacancyRateService {
     private VacancyRateRepository vacancyRateRepository;
 
 
-    public List<VacancyRate> findBase(String keyword,String type){
-        List<VacancyRate> vacancyRate = vacancyRateRepository.findByLastmonth(keyword,type);
+    public List<VacancyrateDto> findBase(String keyword,String type){
+        List<VacancyrateDto> vacancyRate = vacancyRateRepository.findByLastmonth(keyword,type);
         return vacancyRate;
     }
 }

@@ -2,13 +2,12 @@ package com.moaguide.service.building;
 
 import com.moaguide.domain.building.rent.Rent;
 import com.moaguide.domain.building.rent.RentRepository;
-import com.moaguide.dto.NewDto.TypeDto;
+import com.moaguide.dto.NewDto.BuildingDto.RentDto;
+import com.moaguide.dto.NewDto.BuildingDto.TypeDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -16,8 +15,8 @@ public class RentService {
     private RentRepository rentRepository;
 
 
-    public List<Rent> findBase(String keyword,String type) {
-        List<Rent> rent = rentRepository.findBytype(keyword,type);
+    public List<RentDto> findBase(String keyword, String type) {
+        List<RentDto> rent = rentRepository.findBytype(keyword,type);
         return rent;
     }
 

@@ -2,13 +2,13 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.building.businessarea.BusinessArea;
 import com.moaguide.domain.building.landregistry.LandRegistry;
-import com.moaguide.domain.building.lease.Lease;
 import com.moaguide.domain.building.location.Location;
 import com.moaguide.domain.building.near.NearBus;
+import com.moaguide.domain.building.rent.Rent;
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.transaction.Transaction;
-import com.moaguide.dto.BuildingDetailDto;
 import com.moaguide.dto.NewDto.*;
+import com.moaguide.dto.NewDto.BuildingDto.*;
 import com.moaguide.service.SummaryService;
 import com.moaguide.service.TransactionService;
 import com.moaguide.service.building.*;
@@ -32,13 +32,13 @@ public class BuildingRestController {
     private final LandRegistryService landRegistryService;
     private final BusinessAreaService businessAreaService;
     private final NearSubwayService nearSubwayService;
-    private final SummaryService summaryService;
     private final NearBusService nearBusService;
     private final LandPriceService landPriceService;
     private final AreaService areaService;
     private final SubwayTimeService subwayTimeService;
     private final SubwayWeekService subwayWeekService;
     private final PopulationService populationService;
+    private final VacancyRateService vacancyRateService;
 
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
@@ -93,4 +93,10 @@ public class BuildingRestController {
         return ResponseEntity.ok(new BuildingPopulationDto(populationDto));
     }
 
+    @GetMapping("rate/{keyword}")
+    public ResponseEntity<Object> rate(@PathVariable String keyword, @RequestParam String type) {
+        List<RentDto> rentDtos = rentService.findBase(keyword,type);
+        List<VacancyrateDto> vacancyrateDtos = vacancyRateService.findBase(keyword,type);
+        return ResponseEntity.ok(new BuildingRateResponseDto(rentDtos,vacancyrateDtos));
+    }
 }

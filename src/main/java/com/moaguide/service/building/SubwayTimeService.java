@@ -1,13 +1,9 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.subway.SubwayTime;
 import com.moaguide.domain.building.subway.SubwayTimeRepository;
-import com.moaguide.dto.NewDto.SubwayTimeDto;
+import com.moaguide.dto.NewDto.BuildingDto.SubwayTimeDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 
 @AllArgsConstructor
 @Service

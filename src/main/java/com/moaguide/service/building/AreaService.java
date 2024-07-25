@@ -1,8 +1,7 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.area.Area;
 import com.moaguide.domain.building.area.AreaRepository;
-import com.moaguide.dto.NewDto.AreaDto;
+import com.moaguide.dto.NewDto.BuildingDto.AreaDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
