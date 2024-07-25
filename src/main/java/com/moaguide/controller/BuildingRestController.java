@@ -47,11 +47,6 @@ public class BuildingRestController {
         Location location = locationService.locate(product_Id);
         Transaction transaction = transactionService.findbyproductId(product_Id);
         LandRegistry landRegistry = landRegistryService.fingById(product_Id);
-        log.info("BuildingDetail: {}", buildingDetail);
-        log.info("Lease: {}", lease);
-        log.info("Location: {}", location);
-        log.info("Transaction: {}", transaction);
-        log.info("LandRegistry: {}", landRegistry);
         BuildingBaseResponseDto buildingBaseResponseDto = new BuildingBaseResponseDto(buildingDetail, lease, transaction, location, landRegistry);
         return ResponseEntity.ok(buildingBaseResponseDto);
     }
@@ -62,6 +57,10 @@ public class BuildingRestController {
         BusinessArea businessArea = businessAreaService.findBase(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(keyword);
         NearBus nearBus = nearBusService.findBykeyword(keyword);
+        log.info("Rent Types: {}", rent);
+        log.info("Business Area: {}", businessArea);
+        log.info("Near Subway: {}", nearSubway);
+        log.info("Near Bus: {}", nearBus);
         BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(rent,businessArea,nearSubway,nearBus);
         return ResponseEntity.ok(buildingSubResponseDto);
     }

@@ -21,5 +21,4 @@ public class Rent {
     private int quarter;
     private double rent;
     private String type;
-
 }

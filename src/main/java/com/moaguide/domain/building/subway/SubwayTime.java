@@ -20,7 +20,7 @@ public class SubwayTime {
 
     @Column(name = "year")
     private int Year;
-    @Column(name = "months")
+    @Column(name = "month")
     private int Month;
 
     @Column(name = "boarding_05_06")
