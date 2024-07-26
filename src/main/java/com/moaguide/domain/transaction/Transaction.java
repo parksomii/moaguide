@@ -2,7 +2,6 @@ package com.moaguide.domain.transaction;
 
 
 import com.moaguide.domain.summary.Summary;
-import com.moaguide.dto.TransactionDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,10 +43,6 @@ public class Transaction {
 
     public int getPiece(){
         return productId.getPiece();
-    }
-
-    public TransactionDto toDto(){
-        return new TransactionDto(id, productId, tradeDay, tradeTime, price);
     }
 
     public Integer getViews() {

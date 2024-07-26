@@ -3,6 +3,7 @@ package com.moaguide.service;
 import com.moaguide.domain.divide.Divide;
 import com.moaguide.domain.transaction.Transaction;
 import com.moaguide.domain.transaction.TransactionRepository;
+import com.moaguide.dto.NewDto.customDto.TransactionDto;
 import com.moaguide.dto.SummaryDto;
 import com.moaguide.dto.SummaryListDto;
 import jakarta.transaction.Transactional;
@@ -63,28 +64,16 @@ public class TransactionService {
         return transactions;
     }
 
-    public List<Transaction> threeMonthgraph(String id) {
-        List<Transaction> transaction = transactionRepository.findbyday(id, LocalDate.now().minusMonths(3));
-        return transaction;
-    }
-
     public Transaction findbyproductId(String id) {
         Pageable pageable = PageRequest.of(0, 1);
         Page<Transaction> transaction = transactionRepository.findByProductId(id, pageable);
         return transaction.getContent().get(0); // 첫 번째 Transaction 반환
     }
 
-    public  List<SummaryListDto> findByPrdocutId(List<Divide> divide) {
-        Pageable pageable = PageRequest.of(0, 2);
-        List<SummaryListDto> summaryDtoList = new ArrayList<>();
-        for (int i=0;i<3;i++) {
-            List<Transaction> transactionList = transactionRepository.findTwoByProductId(divide.get(i).getProductId(),pageable);
-            if (!transactionList.isEmpty()) {
-                summaryDtoList.add(new SummaryListDto(transactionList,divide.get(i)));
-            } else {
-                summaryDtoList.add(null);
-            }
-        }
-        return summaryDtoList;
+
+
+    public List<TransactionDto> findbymonth(String productId, int month) {
+        List<TransactionDto> transactionDtos = transactionRepository.findbyday(productId,LocalDate.now().minusMonths(month));
+        return transactionDtos;
     }
 }

@@ -1,4 +1,4 @@
-package com.moaguide.dto;
+package com.moaguide.dto.NewDto.customDto;
 
 
 import com.moaguide.domain.summary.Summary;
@@ -16,14 +16,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionDto {
-    private Long id;
-    private Summary productId;
-    private LocalDate tradeDay;
-    private LocalTime tradeTime;
-    private Long price;
-
-
-    public Transaction toEntity(){
-        return new Transaction(id,productId,tradeDay,tradeTime,price);
-    }
+    private LocalDate date;
+    private LocalTime time;
+    private long price;
 }

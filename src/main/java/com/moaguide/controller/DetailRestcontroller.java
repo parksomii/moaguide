@@ -1,16 +1,14 @@
 package com.moaguide.controller;
 
 import com.moaguide.domain.detail.BuildingDetail;
-import com.moaguide.dto.BuildingDetailDto;
 import com.moaguide.dto.NewDto.DetailDivideResponseDto;
 import com.moaguide.dto.NewDto.DetailReportResponseDto;
-import com.moaguide.dto.NewDto.customDto.DetailNewsResponseDto;
-import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
-import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
-import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
+import com.moaguide.dto.NewDto.DetailTransactionResponseDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.service.DivideService;
 import com.moaguide.service.NewsService;
 import com.moaguide.service.ReportService;
+import com.moaguide.service.TransactionService;
 import com.moaguide.service.building.BuildingService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +29,7 @@ public class DetailRestcontroller {
     private NewsService newsService;
     private DivideService divideService;
     private BuildingService buildingService;
+    private TransactionService transactionService;
 
     @GetMapping("report/{category}")
     public ResponseEntity<Object> report(@PathVariable String category,@RequestParam int page,@RequestParam int size,@RequestParam String subCategory) {
@@ -56,5 +55,10 @@ public class DetailRestcontroller {
         }else{
             return ResponseEntity.ok(new DetailDivideResponseDto(divideDtos,1));
         }
+    }
+    @GetMapping("transaction/{product_Id}")
+    public ResponseEntity<Object> transaction(@PathVariable String product_Id,@RequestParam int month){
+        List<TransactionDto> transactionDtos = transactionService.findbymonth(product_Id,month);
+        return ResponseEntity.ok(new DetailTransactionResponseDto(transactionDtos));
     }
 }
