@@ -4,9 +4,11 @@ import com.moaguide.domain.building.businessarea.BusinessArea;
 import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.dto.NewDto.BuildingDto.NearSubwayDto;
 import com.moaguide.dto.NewDto.BuildingDto.TypeDto;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 public class BuildingSubResponseDto {
     private List<TypeDto> type;
     private String cbd;
@@ -43,4 +45,5 @@ public class BuildingSubResponseDto {
         this.busLine = nearBus.getLine();
         this.busNode = nearBus.getNode();
     }
+
 }

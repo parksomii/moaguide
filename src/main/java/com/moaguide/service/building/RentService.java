@@ -23,6 +23,7 @@ public class RentService {
     }
 
     public List<TypeDto> findType(String keyword) {
+        log.info("키워드 검증: {}", keyword);
         List<TypeDto> rents = rentRepository.findType(keyword);
         log.info("렌트 실험: {}", rents);
         return rents;
