@@ -1,7 +1,6 @@
 package com.moaguide.domain.divide;
 
 import com.moaguide.domain.summary.Summary;
-import com.moaguide.dto.DivideDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,10 +32,6 @@ public class Divide {
 
     @Column(name="dividend_Rate")
     private double dividendRate;
-
-    public DivideDto toDto(){
-        return new DivideDto(divideId, productId, decisionDay, paymentDate, dividend, dividendRate);
-    }
 
     public String getProductId() {
         return productId.getProductId();

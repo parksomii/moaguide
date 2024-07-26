@@ -1,5 +1,6 @@
 package com.moaguide.domain.divide;
 
+import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,8 +17,8 @@ public interface DivideRepository extends JpaRepository<Divide, Long> {
     @Procedure(procedureName = "oneDIvide")
     Divide findByProductId(@Param("productId") String productId);
 
-    @Query("SELECT d FROM Divide d WHERE d.productId.productId = :productId ORDER BY d.decisionDay DESC")
-    List<Divide> findAllById(@Param("productId") String productId);
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.DivideCustomDto(d.decisionDay,d.paymentDate,d.dividend,d.dividendRate) FROM Divide d WHERE d.productId.productId = :productId ORDER BY d.decisionDay DESC")
+    List<DivideCustomDto> findAllById(@Param("productId") String productId);
 
     @Procedure(procedureName = "dividegetlast")
     Divide findlast(@Param("productId") String productId);

@@ -2,6 +2,7 @@ package com.moaguide.service;
 
 import com.moaguide.domain.divide.Divide;
 import com.moaguide.domain.divide.DivideRepository;
+import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
 import com.moaguide.dto.SummaryDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -42,8 +43,8 @@ public class DivideService {
         return divide;
     }
 
-    public List<Divide> findAllByproductId(String id) {
-        List<Divide> divideList = divideRepository.findAllById(id);
+    public List<DivideCustomDto> findAllByproductId(String id) {
+        List<DivideCustomDto> divideList = divideRepository.findAllById(id);
         log.info("*************** 배당금 리스트: {}", divideList);
         return divideList;
     }
