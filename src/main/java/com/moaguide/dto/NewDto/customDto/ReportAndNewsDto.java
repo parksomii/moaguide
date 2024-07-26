@@ -1,7 +1,5 @@
-package com.moaguide.dto.customDto;
+package com.moaguide.dto.NewDto.customDto;
 
-import com.moaguide.dto.customDto.NewsCustomDto;
-import com.moaguide.dto.customDto.ReportCustomDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

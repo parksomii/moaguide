@@ -1,8 +1,8 @@
 package com.moaguide.controller;
 
-import com.moaguide.dto.customDto.NewsCustomDto;
-import com.moaguide.dto.customDto.ReportAndNewsDto;
-import com.moaguide.dto.customDto.ReportCustomDto;
+import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
+import com.moaguide.dto.NewDto.customDto.ReportAndNewsDto;
+import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
 import com.moaguide.service.NewsService;
 import com.moaguide.service.ReportService;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 

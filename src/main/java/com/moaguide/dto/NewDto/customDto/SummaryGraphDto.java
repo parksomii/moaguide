@@ -1,4 +1,4 @@
-package com.moaguide.dto.customDto;
+package com.moaguide.dto.NewDto.customDto;
 
 import java.util.Date;
 

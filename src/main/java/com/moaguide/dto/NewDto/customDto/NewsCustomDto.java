@@ -1,4 +1,4 @@
-package com.moaguide.dto.customDto;
+package com.moaguide.dto.NewDto.customDto;
 
 import com.moaguide.domain.news.News;
 import lombok.AllArgsConstructor;

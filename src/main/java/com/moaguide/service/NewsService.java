@@ -3,7 +3,7 @@ package com.moaguide.service;
 import com.moaguide.domain.news.News;
 import com.moaguide.domain.news.NewsRepository;
 import com.moaguide.dto.PageRequestDTO;
-import com.moaguide.dto.customDto.NewsCustomDto;
+import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,5 +88,10 @@ public class NewsService {
     public List<News> findAllBylast() {
         Pageable pageable = PageRequest.of(0,2);
         return newsRepository.findTop2ByOrderByDateDesc(pageable);
+    }
+
+    public Page<NewsCustomDto> findBydetail(String keyword, Pageable pageable) {
+        Page<NewsCustomDto> newsCustomDtos = newsRepository.findBydetail(keyword,pageable);
+        return newsCustomDtos;
     }
 }

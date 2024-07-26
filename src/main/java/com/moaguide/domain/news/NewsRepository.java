@@ -1,5 +1,6 @@
 package com.moaguide.domain.news;
 
+import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,4 +32,8 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     // 최신 뉴스
     @Query("SELECT n FROM News n ORDER BY n.date DESC")
     Page<News> findLatest(Pageable pageable);
+
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.NewsCustomDto(n.id,n.title,n.category,n.link,n.date) FROM News n where n.keyword=:keyword ORDER BY n.date DESC")
+    Page<NewsCustomDto> findBydetail(@Param("keyword") String keyword, Pageable pageable);
+
 }
