@@ -59,4 +59,8 @@ public class Divide {
         this.dividend = dividend;
         this.dividendRate = dividendRate;
     }
+
+    public String getPlatform() {
+        return productId.getPlatformId().getPlatform();
+    }
 }

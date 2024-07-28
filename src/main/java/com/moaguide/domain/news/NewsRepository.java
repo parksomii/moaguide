@@ -36,4 +36,5 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.NewsCustomDto(n.id,n.title,n.category,n.link,n.date) FROM News n where n.keyword=:keyword  ORDER BY n.date DESC")
     Page<NewsCustomDto> findBydetail(@Param("keyword") String keyword, Pageable pageable);
 
+    News findById(String newsId);
 }

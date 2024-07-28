@@ -107,9 +107,9 @@ public class SummaryService {
         return pageResponseDTO;
     }
 
-    public String findById(String id) {
+    public Summary findById(String id) {
         Summary summary = summaryRepository.findByProductId(id);
-        return summary.getName();
+        return summary;
     }
 
     public List<Summary> findByViews() {

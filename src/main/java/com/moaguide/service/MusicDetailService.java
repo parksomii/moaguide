@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Slf4j
 @Service
-public class MusicService {
+public class MusicDetailService {
     private final MusicDetailRepository musicRepository;
 
     public MusicDetailDto detail(String id) {

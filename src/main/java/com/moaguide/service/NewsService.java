@@ -94,4 +94,8 @@ public class NewsService {
         Page<NewsCustomDto> newsCustomDtos = newsRepository.findBydetail(keyword,pageable);
         return newsCustomDtos;
     }
+
+    public News findById(String newsId) {
+        return newsRepository.findById(newsId);
+    }
 }
