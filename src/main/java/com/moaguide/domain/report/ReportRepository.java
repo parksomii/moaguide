@@ -16,4 +16,6 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ReportCustomDto(r.id,r.title,r.category,r.date) FROM Report r WHERE r.category = :category AND (r.subCategory = 'situation' OR r.subCategory = 'guide' OR r.subCategory = :subcategory) ORDER BY r.date DESC")
     Page<ReportCustomDto> findBydetail(@Param("category") String category, @Param("subcategory") String subCategory, Pageable pageable);
+
+    Report findById(int reportId);
 }

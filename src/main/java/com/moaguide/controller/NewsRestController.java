@@ -17,7 +17,7 @@ public class NewsRestController {
     private final NewsViewService newsViewService;
 
     @PostMapping("{news_Id}")
-    public ResponseEntity<Object> detail_check(@PathVariable String news_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
+    public ResponseEntity<Object> detail_check(@PathVariable int news_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
         News news = newsService.findById(news_Id);
         String response = newsViewService.insert(news,localStorageKey,date);
         return ResponseEntity.ok(response);

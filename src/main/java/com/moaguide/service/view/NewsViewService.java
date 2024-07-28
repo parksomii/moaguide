@@ -2,6 +2,7 @@ package com.moaguide.service.view;
 
 import com.moaguide.domain.news.News;
 import com.moaguide.domain.view.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class NewsViewService {
     NewsViewRepository newsViewRepository;
 
+    @Transactional
     public String insert(News news, String localStorageKey, String date) {
         try {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);

@@ -1,5 +1,6 @@
 package com.moaguide.service;
 
+import com.moaguide.domain.report.Report;
 import com.moaguide.domain.report.ReportRepository;
 import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
 import lombok.AllArgsConstructor;
@@ -24,5 +25,9 @@ public class ReportService {
     public List<ReportCustomDto> getMainReport(Pageable pageable) {
         List<ReportCustomDto> reportCustomDtos = reportRepository.findLatest(pageable);
         return reportCustomDtos;
+    }
+
+    public Report findById(int reportId) {
+        return reportRepository.findById(reportId);
     }
 }
