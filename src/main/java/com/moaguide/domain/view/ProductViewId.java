@@ -1,6 +1,7 @@
 package com.moaguide.domain.view;
 
 import com.moaguide.domain.summary.Summary;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Embeddable
 public class ProductViewId {
+    @Column(name="Local_key")
     private String localKey;
     private LocalDate day;
     @ManyToOne

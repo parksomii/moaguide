@@ -95,7 +95,7 @@ public class NewsService {
         return newsCustomDtos;
     }
 
-    public News findById(int newsId) {
-        return newsRepository.findById(newsId);
+    public News findById(Long newsId) {
+        return newsRepository.findById(newsId).orElse(null);
     }
 }

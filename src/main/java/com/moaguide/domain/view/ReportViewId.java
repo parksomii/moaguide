@@ -20,6 +20,6 @@ public class ReportViewId {
     private LocalDate day;
 
     @ManyToOne
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "report_Id", referencedColumnName = "id", nullable = false)
     private Report reportId;
 }

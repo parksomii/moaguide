@@ -13,9 +13,8 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class NewsViewService {
-    NewsViewRepository newsViewRepository;
+    private final NewsViewRepository newsViewRepository;
 
     @Transactional
     public String insert(News news, String localStorageKey, String date) {

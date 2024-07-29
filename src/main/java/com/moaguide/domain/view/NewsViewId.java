@@ -20,6 +20,6 @@ public class NewsViewId {
     private LocalDate day;
 
     @ManyToOne
-    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "news_id", referencedColumnName = "id", nullable = false)
     private News newsId;
 }

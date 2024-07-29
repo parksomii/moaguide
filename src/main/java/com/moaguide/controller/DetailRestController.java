@@ -96,9 +96,13 @@ public class DetailRestController {
     }
 
     @PostMapping("{product_Id}")
-    public ResponseEntity<Object> detail_check(@PathVariable String product_Id,@RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
+    public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable String product_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
         Summary summary = summaryService.findById(product_Id);
         String response = productViewService.insert(summary,localStorageKey,date);
-        return ResponseEntity.ok(response);
+        if(response != null) {
+            return ResponseEntity.ok();
+        }else{
+            return ResponseEntity.badRequest();
+        }
     }
 }

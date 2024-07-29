@@ -16,9 +16,13 @@ public class ReportRestController {
     private ReportViewService reportViewService;
 
     @PostMapping("{report_Id}")
-    public ResponseEntity<Object> detail_check(@PathVariable int report_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
+    public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable int report_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
         Report report = reportService.findById(report_Id);
         String response = reportViewService.insert(report,localStorageKey,date);
-        return ResponseEntity.ok(response);
+        if(response != null) {
+            return ResponseEntity.ok();
+        }else{
+            return ResponseEntity.badRequest();
+        }
     }
 }
