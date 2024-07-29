@@ -16,5 +16,4 @@ import java.time.LocalDate;
 public class ReportView {
     @EmbeddedId
     private ReportViewId id;
-
 }
