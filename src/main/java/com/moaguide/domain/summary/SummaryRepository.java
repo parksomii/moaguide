@@ -24,4 +24,5 @@ public interface SummaryRepository extends JpaRepository<Summary, String> {
 
     @Query("select s from Summary s join Platform p ON s.PlatformId = p where p.category = :category")
     Page<Summary> findAllByCategory(@Param("category")String category, Pageable pageable);
+
 }

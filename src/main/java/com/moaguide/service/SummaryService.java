@@ -133,7 +133,7 @@ public class SummaryService {
 
     // 카테고리별 상품현황
     public List<SummaryCustomDto> getSummary(Pageable pageable, String category) {
-        Page<Summary> result = summaryRepository.findCategoryBySummary(category, pageable);
+        Page<Summary> result = summaryRepository.findAllByCategory(category, pageable);
         List<SummaryDto> summaryCustomDtos = result.getContent()
                 .stream()
                 .map(summary -> summary.toDto())
