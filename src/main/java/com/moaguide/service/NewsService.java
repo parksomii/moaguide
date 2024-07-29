@@ -20,9 +20,17 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Slf4j
 public class NewsService {
-    private final NewsRepository newsRepository;
+    private final  NewsRepository newsRepository;
+    // 많이 본 뉴스
+    public List<NewsCustomDto> findNews() {
+        Pageable pageable = PageRequest.of(0, 3);
+        return newsRepository.findTop2ByOrderByDateDesc(pageable)
+                .stream()
+                .map(NewsCustomDto::new)
+                .collect(Collectors.toList());
+    }
 
-    // 최신 뉴스 조회
+    // 메인 최신 뉴스 조회
     public List<NewsCustomDto> getMainNews(Pageable pageable) {
         Page<News> newsList = newsRepository.findLatest(pageable);
         List<NewsCustomDto> newsData = newsList.
@@ -33,12 +41,12 @@ public class NewsService {
     }
 
     // 뉴스 최신순 전체 조회
-    public Page<News> getAllByLatest(PageRequestDTO pageRequestDTO) {
+    public Page<News> getAllByLatest(PageRequestDTO pageRequestDTO, String category) {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("date").descending());
-        Page<News> findNewsByLatest = newsRepository.findAll(pageable);
+        Page<News> findNewsByLatest = newsRepository.findAllByCategory(pageable, category);
         log.info("NewsService findAllByLatest - result : {}", findNewsByLatest);
         log.info("NewsService findAllByLatest - result.getContent() : {}", findNewsByLatest.getContent());
         return findNewsByLatest;
@@ -88,11 +96,6 @@ public class NewsService {
     public List<News> findAllBylast() {
         Pageable pageable = PageRequest.of(0,2);
         return newsRepository.findTop2ByOrderByDateDesc(pageable);
-    }
-
-    public Page<NewsCustomDto> findBydetail(String keyword, Pageable pageable) {
-        Page<NewsCustomDto> newsCustomDtos = newsRepository.findBydetail(keyword,pageable);
-        return newsCustomDtos;
     }
 
     public News findById(Long newsId) {

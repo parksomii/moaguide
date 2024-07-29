@@ -29,10 +29,17 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     List<News> findTop2ByOrderByDateDesc(Pageable pageable);
 
+    // 많이 본 뉴스
+    @Query("SELECT n FROM News n ORDER BY n.views DESC")
+    Page<News> findTop3ByOrderByViewsDesc(Pageable pageable);
+
     // 최신 뉴스
     @Query("SELECT n FROM News n ORDER BY n.date DESC")
     Page<News> findLatest(Pageable pageable);
 
+    // 카테고리별 뉴스 조회 + 최신순, 인기순
+    @Query("SELECT n FROM News n WHERE n.category = :category ORDER BY n.date DESC")
+    Page<News> findAllByCategory(Pageable pageable, @Param("category") String category);
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.NewsCustomDto(n.id,n.title,n.category,n.link,n.date) FROM News n where n.keyword=:keyword  ORDER BY n.date DESC")
     Page<NewsCustomDto> findBydetail(@Param("keyword") String keyword, Pageable pageable);
 }

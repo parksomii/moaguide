@@ -3,6 +3,7 @@ package com.moaguide.service;
 import com.moaguide.domain.divide.Divide;
 import com.moaguide.domain.divide.MusicDivide;
 import com.moaguide.domain.transaction.Transaction;
+import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.SummaryDto;
 import com.moaguide.dto.SummaryListDto;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class SummaryListService {
+
 
     public List<SummaryListDto> getSummaryListDto(List<Transaction> transactions, List<Divide> divide,List<List<Transaction>> graph) {
         List<SummaryListDto> summaryListDtos = new ArrayList<>();
@@ -36,5 +38,17 @@ public class SummaryListService {
         return summaryListDtos;
     }
 
+    public List<SummaryCustomDto> getSummaryCustomDto(List<Transaction> transactions, List<Divide> divide) {
+        List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
+        int i = 0;
+        for(i=0;i<transactions.size();i++){
+            if(divide.isEmpty()){
+                summaryCustomDtos.add(new SummaryCustomDto(transactions.get(i)));
+            }else{
+                summaryCustomDtos.add(new SummaryCustomDto(transactions.get(i),divide.get(i)));
+            }
 
+        }
+        return summaryCustomDtos;
+    }
  }

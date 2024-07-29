@@ -5,6 +5,7 @@ import com.moaguide.domain.summary.Summary;
 import com.moaguide.domain.summary.SummaryRepository;
 import com.moaguide.domain.transaction.Transaction;
 import com.moaguide.dto.*;
+import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -127,5 +128,19 @@ public class SummaryService {
         log.info("summaryAll : {}", summaryDtoList);
         log.info("summaryID : {}", summaryDtoList.get());
         return summaryDtoList;
+    }
+
+
+    // 카테고리별 상품현황
+    public List<SummaryCustomDto> getSummary(Pageable pageable, String category) {
+        Page<Summary> result = summaryRepository.findCategoryBySummary(category, pageable);
+        List<SummaryDto> summaryCustomDtos = result.getContent()
+                .stream()
+                .map(summary -> summary.toDto())
+                .toList();
+        List<Transaction> transactions = transactionService.findAllByid(summaryCustomDtos);
+        List<Divide> divides = divideService.findByID(summaryCustomDtos);
+        List<SummaryCustomDto> summaryListDtos = summaryListService.getSummaryCustomDto(transactions, divides);
+        return summaryListDtos;
     }
 }
