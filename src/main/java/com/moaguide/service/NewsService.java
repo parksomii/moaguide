@@ -23,7 +23,7 @@ public class NewsService {
     private final  NewsRepository newsRepository;
     // 많이 본 뉴스
     public List<NewsCustomDto> findNews() {
-        Pageable pageable = PageRequest.of(0, 3);
+        Pageable pageable = PageRequest.of(0, 3, Sort.by("views").descending());
         return newsRepository.findTop3ByOrderByViewsDesc(pageable)
                 .stream()
                 .map(NewsCustomDto::new)
@@ -52,14 +52,14 @@ public class NewsService {
         return findNewsByLatest;
     }
 
-    // 뉴스 조회수 순 전체 조회
+    // 뉴스 인기순 전체 조회
     public Page<News> getAllByViews(PageRequestDTO pageRequestDTO) {
-/*        Pageable pageable = PageRequest.of(
+        Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
-                Sort.by("views").descending());*/
-        // 1페이지 3개만 보이기
-        Pageable pageable = PageRequest.of(0, 3, Sort.by("views").descending());
+                Sort.by("views").descending());
+        /*// 1페이지 3개만 보이기
+        Pageable pageable = PageRequest.of(0, 3, Sort.by("views").descending());*/
         Page<News> findNewsByViews = newsRepository.findAll(pageable);
         log.info("NewsService findAllByViews - result : {}", findNewsByViews);
         log.info("NewsService findAllByViews - result.getContent() : {}", findNewsByViews.getContent());

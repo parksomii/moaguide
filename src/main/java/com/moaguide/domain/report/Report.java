@@ -1,6 +1,7 @@
 package com.moaguide.domain.report;
 
 import com.moaguide.domain.summary.Summary;
+import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,13 @@ public class Report {
     private String category;
     @Column(name="sub_category")
     private String subCategory;
+    private int view;
+
+    public ReportCustomDto toCustomDto() {
+        id = this.id;
+        title = this.title;
+        category = this.category;
+        date = this.date;
+        return new ReportCustomDto(id, title, category, date);
+    }
 }
