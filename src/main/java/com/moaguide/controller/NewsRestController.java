@@ -37,17 +37,17 @@ public class NewsRestController {
     // 카테고리별 뉴스 조회
     @GetMapping("/{category}")
     public ResponseEntity<List<NewsCustomDto>> newsListByCategory(@PathVariable String category, @RequestParam String sort, PageRequestDTO pageRequestDTO ) {
-        // 최신순
-        if (sort.equals("latest")) {
-            Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1, pageRequestDTO.getSize(), Sort.by("date").descending());
-            Page<News> newsList = newsService.getAllByLatest(pageRequestDTO, category);
+        // 인기순
+        if (sort.equals("popular")) {
+            Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1, pageRequestDTO.getSize(), Sort.by("views").descending());
+            Page<News> newsList = newsService.getAllByViews(pageRequestDTO);
             List<NewsCustomDto> newsData = newsList.stream().map(news -> new NewsCustomDto(news)).collect(Collectors.toList());
             return ResponseEntity.ok().body(newsData);
         }
-        // 인기순
+        // 최신순
         else {
-            Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1, pageRequestDTO.getSize(), Sort.by("views").descending());
-            Page<News> newsList = newsService.getAllByViews(pageRequestDTO);
+            Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1, pageRequestDTO.getSize(), Sort.by("date").descending());
+            Page<News> newsList = newsService.getAllByLatest(pageRequestDTO, category);
             List<NewsCustomDto> newsData = newsList.stream().map(news -> new NewsCustomDto(news)).collect(Collectors.toList());
             return ResponseEntity.ok().body(newsData);
         }

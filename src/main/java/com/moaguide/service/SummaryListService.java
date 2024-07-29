@@ -45,7 +45,7 @@ public class SummaryListService {
             if(divide.isEmpty()){
                 summaryCustomDtos.add(new SummaryCustomDto(transactions.get(i)));
             }else{
-                summaryCustomDtos.add(new SummaryCustomDto(transactions.get(i),divide.get(i)));
+                summaryCustomDtos.add(new SummaryCustomDto((List<Transaction>) transactions.get(i),divide.get(i)));
             }
 
         }

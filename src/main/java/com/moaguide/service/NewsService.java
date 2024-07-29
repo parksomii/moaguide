@@ -24,7 +24,7 @@ public class NewsService {
     // 많이 본 뉴스
     public List<NewsCustomDto> findNews() {
         Pageable pageable = PageRequest.of(0, 3);
-        return newsRepository.findTop2ByOrderByDateDesc(pageable)
+        return newsRepository.findTop3ByOrderByViewsDesc(pageable)
                 .stream()
                 .map(NewsCustomDto::new)
                 .collect(Collectors.toList());
@@ -100,5 +100,11 @@ public class NewsService {
 
     public News findById(Long newsId) {
         return newsRepository.findById(newsId).orElse(null);
+    }
+
+    // 빌딩 뉴스 전체 조회
+    public Page<NewsCustomDto> findBydetail(String keyword, Pageable pageable) {
+        Page<NewsCustomDto> bydetail = newsRepository.findBydetail(keyword, pageable);
+        return bydetail;
     }
 }

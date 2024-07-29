@@ -15,4 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/summary/")
 public class SummaryRestController {
 
+    @GetMapping("/list/{category}")
+    public ResponseEntity<Object> summary(@PathVariable String category, @RequestParam int page, @RequestParam int size) {
+        return null;
+    }
 }
