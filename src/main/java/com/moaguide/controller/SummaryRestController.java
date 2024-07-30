@@ -1,16 +1,14 @@
 package com.moaguide.controller;
 
 
+import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.PageRequestDTO;
 import com.moaguide.service.SummaryService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +25,22 @@ public class SummaryRestController {
     @GetMapping("/list/{category}")
     public ResponseEntity<Object> summary(@PathVariable("category") String category,
                                           @RequestParam(required = false, defaultValue = "views") String sort,
-                                          PageRequestDTO pageRequestDTO) {
-        Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() - 1,
-                pageRequestDTO.getSize());
+                                          @RequestParam int page,@RequestParam int size) {
         log.info("category: " + category);
-        List<SummaryCustomDto> summary = summaryService.getSummaryList(pageable, category, sort);
-        log.info("controller - summary: " + summary);
-        return ResponseEntity.ok(summary);
+        if(sort.equals("views")) {
+            List<SummaryCustomDto> summary = summaryService.getSummaryView(page,size, category);
+            return ResponseEntity.ok(new SummaryResponseDto());
+        } else if (sort.equals("price")) {
+            List<SummaryCustomDto> summary = summaryService.getSummaryPrice(page,size, category);
+            return ResponseEntity.ok(new SummaryResponseDto());
+        } else if(sort.equals("name")) {
+            List<SummaryCustomDto> summary = summaryService.getSummaryName(page,size, category);
+            return ResponseEntity.ok(new SummaryResponseDto());
+        } else if(sort.equals("divide")) {
+            List<SummaryCustomDto> summary = summaryService.getSummaryDvide(page,size, category);
+            return ResponseEntity.ok(new SummaryResponseDto());
+        } else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
