@@ -1,12 +1,15 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.divide.Divide;
+import com.moaguide.domain.divide.DivideRepository;
 import com.moaguide.domain.summary.Summary;
 import com.moaguide.domain.summary.SummaryRepository;
 import com.moaguide.domain.transaction.Transaction;
 import com.moaguide.domain.transaction.TransactionRepository;
 import com.moaguide.dto.*;
+import com.moaguide.dto.NewDto.BuildingDto.IdDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -25,7 +29,7 @@ public class SummaryService {
     private final SummaryRepository summaryRepository;
     private final TransactionService transactionService;
     private final TransactionRepository transactionRepository;
-    private final DivideService divideService;
+    private final DivideRepository divideRepository;
     private final SummaryListService summaryListService;
 
 
@@ -57,14 +61,21 @@ public class SummaryService {
     }
     // 카테고리별 상품 목록
     public List<SummaryCustomDto> getSummaryView(int page,int size, String category) {
-
+        List<IdDto> findViews = summaryRepository.findListByCategory(category, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "views")));
+        List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
+        for(IdDto idDto : findViews) {
+            List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
+            Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
+            if (findDivide != null) {
+                summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
+            } else {
+                summaryListDtos.add(new SummaryCustomDto(transactionList));
+            }
+        }
+        return summaryListDtos;
     }
 
     public List<SummaryCustomDto> getSummaryName(int page,int size, String category) {
-
-    }
-
-    public List<SummaryCustomDto> getSummaryPrice(int page,int size, String category) {
 
     }
 

@@ -2,7 +2,7 @@ package com.moaguide.service.building;
 
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.detail.BuildingDetailRepository;
-import com.moaguide.dto.NewDto.BuildingDto.DistricIdDto;
+import com.moaguide.dto.NewDto.BuildingDto.IdDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,8 @@ public class BuildingService {
         return buildingDetail;
     }
 
-    public DistricIdDto detailByDistricId(String productId) {
-        DistricIdDto buildingDetail = buildingRepository.findDistricId(productId);
+    public IdDto detailByDistricId(String productId) {
+        IdDto buildingDetail = buildingRepository.findDistricId(productId);
         return buildingDetail;
     }
 }

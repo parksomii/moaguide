@@ -1,6 +1,7 @@
 package com.moaguide.domain.summary;
 
 import com.moaguide.domain.platform.Platform;
+import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.SummaryDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,4 +37,7 @@ public class Summary {
         return new SummaryDto(productId, PlatformId, name, piece, views,nowPiece);
     }
 
+    public SummaryCustomDto toCustomDto() {
+        return new SummaryCustomDto(productId, PlatformId.getCategory(), PlatformId.getPlatform(), name, piece, views, nowPiece);
+    }
 }

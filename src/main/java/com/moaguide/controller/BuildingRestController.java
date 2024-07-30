@@ -4,12 +4,10 @@ import com.moaguide.domain.building.businessarea.BusinessArea;
 import com.moaguide.domain.building.landregistry.LandRegistry;
 import com.moaguide.domain.building.location.Location;
 import com.moaguide.domain.building.near.NearBus;
-import com.moaguide.domain.building.rent.Rent;
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.transaction.Transaction;
 import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.BuildingDto.*;
-import com.moaguide.service.SummaryService;
 import com.moaguide.service.TransactionService;
 import com.moaguide.service.building.*;
 import lombok.AllArgsConstructor;
@@ -87,8 +85,8 @@ public class BuildingRestController {
 
     @GetMapping("population/{product_Id}")
     public ResponseEntity<Object> population(@PathVariable String product_Id, @RequestParam int year,@RequestParam int month) {
-        DistricIdDto districIdDto = buildingService.detailByDistricId(product_Id);
-        List<PopulationDto> populationDto = populationService.findbydate(districIdDto.getDistricId(),year,month);
+        IdDto idDto = buildingService.detailByDistricId(product_Id);
+        List<PopulationDto> populationDto = populationService.findbydate(idDto.getDistricId(),year,month);
         return ResponseEntity.ok(new BuildingPopulationDto(populationDto));
     }
 

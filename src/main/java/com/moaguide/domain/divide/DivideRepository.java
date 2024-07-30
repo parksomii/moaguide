@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface DivideRepository extends JpaRepository<Divide, Long> {
     @Query("SELECT d FROM Divide d WHERE d.productId.productId = :productId ORDER BY d.decisionDay DESC")

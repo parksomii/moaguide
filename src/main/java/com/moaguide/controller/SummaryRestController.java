@@ -25,13 +25,10 @@ public class SummaryRestController {
     @GetMapping("/list/{category}")
     public ResponseEntity<Object> summary(@PathVariable("category") String category,
                                           @RequestParam(required = false, defaultValue = "views") String sort,
-                                          @RequestParam int page,@RequestParam int size) {
+                                          @RequestParam int page, @RequestParam int size) {
         log.info("category: " + category);
         if(sort.equals("views")) {
             List<SummaryCustomDto> summary = summaryService.getSummaryView(page,size, category);
-            return ResponseEntity.ok(new SummaryResponseDto());
-        } else if (sort.equals("price")) {
-            List<SummaryCustomDto> summary = summaryService.getSummaryPrice(page,size, category);
             return ResponseEntity.ok(new SummaryResponseDto());
         } else if(sort.equals("name")) {
             List<SummaryCustomDto> summary = summaryService.getSummaryName(page,size, category);

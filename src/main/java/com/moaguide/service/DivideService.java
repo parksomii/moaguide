@@ -37,11 +37,11 @@ public class DivideService {
         return divides;
     }
 
-    @Transactional
+/*    @Transactional
     public Divide findByproductId(String id) {
         Divide divide =divideRepository.findByProductId(id);
         return divide;
-    }
+    }*/
 
     public List<DivideCustomDto> findAllByproductId(String id) {
         List<DivideCustomDto> divideList = divideRepository.findAllById(id);
