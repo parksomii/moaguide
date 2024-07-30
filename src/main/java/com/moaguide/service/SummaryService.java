@@ -67,7 +67,7 @@ public class SummaryService {
         Page<Divide> divides = divideRepository.findLatestByProductIdAfterDate(date,pageable);
         List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
         for(Divide divide : divides.getContent()) {
-            List<Transaction> transactions = transactionRepository.findTwoByProductId(divide.getProductId(), pageable);
+            List<Transaction> transactions = transactionRepository.findAllByProductIdAndTradeDayAfter(divide.getProductId());
             summaryCustomDtos.add(new SummaryCustomDto(transactions,divide));
         }
         return summaryCustomDtos;
