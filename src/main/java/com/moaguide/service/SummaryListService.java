@@ -38,14 +38,14 @@ public class SummaryListService {
         return summaryListDtos;
     }
 
-    public List<SummaryCustomDto> getSummaryCustomDto(List<Transaction> transactions, List<Divide> divide) {
+    public List<SummaryCustomDto> getSummaryCustomDto(List<List<Transaction>> transactions, List<Divide> divide) {
         List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
         int i = 0;
         for(i=0;i<transactions.size();i++){
             if(divide.isEmpty()){
                 summaryCustomDtos.add(new SummaryCustomDto(transactions.get(i)));
             }else{
-                summaryCustomDtos.add(new SummaryCustomDto((List<Transaction>) transactions.get(i),divide.get(i)));
+                summaryCustomDtos.add(new SummaryCustomDto(transactions.get(i),divide.get(i)));
             }
 
         }
