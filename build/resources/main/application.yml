@@ -29,6 +29,16 @@ spring:
     username: moaguide
     password: ahdkrkdlem1!
     driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      repositories:
+        enabled: false
+      coolsms:
+        apiKey: ${NCSWQH3WPYQU2TVY}
+        apiSecret: ${RHEUOXJKZGPJP9K8C3GFMZW9RNLSCPPX}
+        senderNumber: 01047309863
 
 server:
   port: 8080
@@ -41,6 +51,8 @@ spring:
   config:
     activate:
       on-profile: blue
+  data:
+
 
 server:
   port: 8080
@@ -53,6 +65,10 @@ spring:
   config:
     activate:
       on-profile: green
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
 server:
   port: 8081
