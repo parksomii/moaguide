@@ -36,8 +36,4 @@ public class Summary {
     public SummaryDto toDto(){
         return new SummaryDto(productId, PlatformId, name, piece, views,nowPiece);
     }
-
-    public SummaryCustomDto toCustomDto() {
-        return new SummaryCustomDto(productId, PlatformId.getCategory(), PlatformId.getPlatform(), name, piece, views, nowPiece);
-    }
 }

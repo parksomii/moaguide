@@ -1,6 +1,5 @@
 package com.moaguide.controller;
 
-
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.PageRequestDTO;
@@ -24,7 +23,7 @@ public class SummaryRestController {
 
     @GetMapping("/list/{category}")
     public ResponseEntity<Object> summary(@PathVariable("category") String category,
-                                          @RequestParam(required = false, defaultValue = "views") String sort,
+                                          @RequestParam String sort,
                                           @RequestParam int page, @RequestParam int size) {
         log.info("category: " + category);
         if(sort.equals("views")) {

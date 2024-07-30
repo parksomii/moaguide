@@ -9,6 +9,7 @@ import com.moaguide.domain.transaction.TransactionRepository;
 import com.moaguide.dto.*;
 import com.moaguide.dto.NewDto.BuildingDto.IdDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,29 +43,26 @@ public class SummaryService {
     }
 
     // 카테고리별 상품현황
+    @Transactional
     public List<SummaryCustomDto> getSummary(Pageable pageable, String category) {
-        Page<Summary> result = summaryRepository.findAllByCategory(category, pageable);
-        List<SummaryDto> summaryCustomDtos = result.getContent()
-                .stream()
-                .map(summary -> summary.toDto())
-                .toList();
+        List<IdDto> findSummary = summaryRepository.findAllByCategory(category, pageable);
         List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
-            pageable = PageRequest.of(0, 2);
-        for(SummaryDto summaryDto : summaryCustomDtos) {
-            List<Transaction> transactions = transactionRepository.findTwoByProductId(summaryDto.getProductId(), pageable);
-            Divide divides = divideService.findByproductId(summaryDto.getProductId());
-            if(divides == null) {
-                summaryListDtos.add(new SummaryCustomDto(transactions));
+        for(IdDto idDto : findSummary) {
+            List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
+            Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
+            if (findDivide == null) {
+                summaryListDtos.add(new SummaryCustomDto(transactionList));
             } else {
-                summaryListDtos.add(new SummaryCustomDto(transactions, divides));
+                summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
             }
         }
-
         return summaryListDtos;
     }
 
+
+    @Transactional
     public List<SummaryCustomDto> getSummaryDvide(int page,int size, String category) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         Date date = Date.valueOf(LocalDate.now().minusMonths(6).with(TemporalAdjusters.firstDayOfMonth()));
         Page<Divide> divides = divideRepository.findLatestByProductIdAfterDate(date,pageable,category);
         List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
@@ -76,23 +74,36 @@ public class SummaryService {
     }
 
     // 카테고리별 상품 목록
+    @Transactional
     public List<SummaryCustomDto> getSummaryView(int page,int size, String category) {
-        List<IdDto> findViews = summaryRepository.findListByCategory(category, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "views")));
+        List<IdDto> findViews = summaryRepository.findListByCategory(category, PageRequest.of(page-1, size, Sort.by(Sort.Direction.DESC, "views")));
         List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
         for(IdDto idDto : findViews) {
             List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
             Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
-            if (findDivide != null) {
-                summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
-            } else {
+            if (findDivide == null) {
                 summaryListDtos.add(new SummaryCustomDto(transactionList));
+            } else {
+                summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
             }
         }
         return summaryListDtos;
     }
 
+    @Transactional
     public List<SummaryCustomDto> getSummaryName(int page, int size, String category) {
-
+        List<IdDto> findNames = summaryRepository.findListByCategoryAndName(category, PageRequest.of(page-1, size, Sort.by(Sort.Direction.ASC, "name")));
+        List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
+        for(IdDto idDto : findNames) {
+            List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
+            Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
+            if (findDivide == null) {
+                summaryListDtos.add(new SummaryCustomDto(transactionList));
+            } else {
+                summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
+            }
+        }
+        return summaryListDtos;
     }
 
 }

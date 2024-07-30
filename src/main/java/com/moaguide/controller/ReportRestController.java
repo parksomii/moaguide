@@ -35,7 +35,7 @@ public class ReportRestController {
     }
 
     // 카테고리별 리포트 조회
-    @GetMapping("/{category}")
+    @GetMapping("/list/{category}")
     public ResponseEntity<Object> reportListCategory(@PathVariable String category,
                                                      @RequestParam(required = false, defaultValue = "guide") String subcategory,
                                                      @RequestParam(required = false, defaultValue = "latest") String sort,
@@ -67,9 +67,19 @@ public class ReportRestController {
     }
 
     // 리포트 상세
+/*    @GetMapping("/{report_Id}")
+    public ResponseEntity<Object> reportDetail(@PathVariable int report_Id) {
+        Report report = reportService.findById(report_Id);
+        return ResponseEntity.ok(report);
+    }*/
+    @GetMapping("/{report_Id}")
+    public ResponseEntity<Object> reportDetail(@PathVariable int report_Id) {
+        ReportCustomDto report = reportService.getReportDetail(report_Id);
+        return ResponseEntity.ok(report);
+    }
 
     // 리포트 조회수
-    @PostMapping("/view/{report_Id}")
+    @PostMapping("/{report_Id}")
     public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable int report_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
         Report report = reportService.findById(report_Id);
         String response = reportViewService.insert(report,localStorageKey,date);

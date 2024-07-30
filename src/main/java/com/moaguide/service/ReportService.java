@@ -35,6 +35,10 @@ public class ReportService {
         return reportRepository.findById(reportId);
     }
 
+    public ReportCustomDto getReportDetail(int reportId) {
+        return reportRepository.findReportDetail(reportId);
+    }
+
     // 인기순
     public Page<ReportCustomDto> getAllPopularBySubCategory(String category, String subcategory, Pageable pageable) {
         return reportRepository.findAllByViews(category, subcategory, pageable);

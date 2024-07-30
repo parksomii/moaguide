@@ -1,6 +1,5 @@
 package com.moaguide.dto.NewDto.customDto;
 
-import com.moaguide.domain.report.Report;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

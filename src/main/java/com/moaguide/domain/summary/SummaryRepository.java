@@ -16,7 +16,12 @@ public interface SummaryRepository extends JpaRepository<Summary, String> {
 
     Summary findByProductId(String Id);
 
-    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s join Platform p ON s.PlatformId = p where p.category = :category ORDER BY s.views DESC")
-    List<IdDto> findListByCategory(@Param("category")String category, Pageable pageable);
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.productId DESC")
+    List<IdDto> findAllByCategory(@Param("category") String category, Pageable pageable);
 
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s join Platform p ON s.PlatformId = p where p.category = :category ORDER BY s.views DESC")
+    List<IdDto>  findListByCategory(@Param("category")String category, Pageable pageable);
+
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s join Platform p ON s.PlatformId = p where p.category = :category ORDER BY s.name DESC")
+    List<IdDto> findListByCategoryAndName(@Param("category")String category, Pageable pageable);
 }

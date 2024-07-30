@@ -18,6 +18,10 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     Page<ReportCustomDto> findBydetail(@Param("category") String category, @Param("subcategory") String subCategory, Pageable pageable);
 
     Report findById(int reportId);
+    // 리포트 상세
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ReportCustomDto(r.id, r.title, r.category, r.date) " +
+            "FROM Report r WHERE r.id = :reportId")
+    ReportCustomDto findReportDetail(@Param("reportId") int reportId);
 
     // 인기순
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ReportCustomDto(r.id, r.title, r.category, r.date) " +
