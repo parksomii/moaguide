@@ -58,6 +58,14 @@ public class TransactionService {
         return transactions;
     }
 
+    @Transactional
+    public List<Transaction> findLatestTransactionsByPrice(String id, Pageable pageable) {
+        log.info("*************** TransactionService findLatestTransactionsByPrice");
+        List<Transaction> transactions = transactionRepository.findLatestTransactionsByPrice(id, pageable);
+        log.info("Transactions found: {}", transactions);
+        return transactions;
+    }
+
     public List<Transaction> findtwoByproductId(String id) {
         Pageable pageable = PageRequest.of(0, 2);
         List<Transaction> transactions = transactionRepository.findTwoByProductId(id,pageable);

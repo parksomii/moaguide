@@ -37,18 +37,4 @@ public class SummaryListService {
         SummaryListDto summaryListDtos = new SummaryListDto(transactions,divide);
         return summaryListDtos;
     }
-
-    public List<SummaryCustomDto> getSummaryCustomDto(List<List<Transaction>> transactions, List<Divide> divide) {
-        List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
-        int i = 0;
-        for(i=0;i<transactions.size();i++){
-            if(divide.isEmpty()){
-                summaryCustomDtos.add(new SummaryCustomDto(transactions.get(i)));
-            }else{
-                summaryCustomDtos.add(new SummaryCustomDto(transactions.get(i),divide.get(i)));
-            }
-
-        }
-        return summaryCustomDtos;
-    }
  }

@@ -28,7 +28,7 @@ public class HomeController {
     @GetMapping("summary/{category}")
     public ResponseEntity<Object> summary(@RequestParam(value = "page", defaultValue = "1") int page,
                                           @RequestParam(value = "size", defaultValue = "3") int size,
-                                          @PathVariable String category) {
+                                          @PathVariable("category") String category) {
         Pageable pageable = PageRequest.of(page - 1, size);
         List<SummaryCustomDto> summary = summaryService.getSummary(pageable, category);
         return ResponseEntity.ok(summary);
@@ -36,7 +36,7 @@ public class HomeController {
 
     // 상품현황 북마크 처리
     @PostMapping("summary/{category}/{productId}/BkMark")
-    public String addBookMark (@PathVariable String category, @PathVariable String productId, @RequestHeader("Authorization") String token) {
+    public String addBookMark (@PathVariable("category") String category, @PathVariable("productId") String productId, @RequestHeader("Authorization") String token) {
         // 북마크 추가
         return null;
     }
@@ -50,5 +50,4 @@ public class HomeController {
         ReportAndNewsDto reportAndNewsDto = new ReportAndNewsDto(mainReport, mainNews);
         return ResponseEntity.ok(reportAndNewsDto);
     }
-
 }
