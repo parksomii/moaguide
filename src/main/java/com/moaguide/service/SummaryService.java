@@ -1,6 +1,7 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.divide.Divide;
+import com.moaguide.domain.divide.DivideRepository;
 import com.moaguide.domain.summary.Summary;
 import com.moaguide.domain.summary.SummaryRepository;
 import com.moaguide.domain.transaction.Transaction;
@@ -15,6 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +31,7 @@ public class SummaryService {
     private final TransactionRepository transactionRepository;
     private final DivideService divideService;
     private final SummaryListService summaryListService;
+    private final DivideRepository divideRepository;
 
 
     public Summary findById(String id) {
@@ -55,20 +60,22 @@ public class SummaryService {
 
         return summaryListDtos;
     }
-    // 카테고리별 상품 목록
-    public List<SummaryCustomDto> getSummaryView(int page,int size, String category) {
-
-    }
-
-    public List<SummaryCustomDto> getSummaryName(int page,int size, String category) {
-
-    }
-
-    public List<SummaryCustomDto> getSummaryPrice(int page,int size, String category) {
-
-    }
 
     public List<SummaryCustomDto> getSummaryDvide(int page,int size, String category) {
+        Pageable pageable = PageRequest.of(page, size);
+        Date date = Date.valueOf(LocalDate.now().minusMonths(6).with(TemporalAdjusters.firstDayOfMonth()));
+        Page<Divide> divides = divideRepository.findLatestByProductIdAfterDate(date,pageable);
+        List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
+        for(Divide divide : divides.getContent()) {
+            List<Transaction> transactions = transactionRepository.findTwoByProductId(divide.getProductId(), pageable);
+            summaryCustomDtos.add(new SummaryCustomDto(transactions,divide));
+        }
+        return summaryCustomDtos;
+    }
 
+    public List<SummaryCustomDto> getSummaryView(int page, int size, String category) {
+    }
+
+    public List<SummaryCustomDto> getSummaryName(int page, int size, String category) {
     }
 }

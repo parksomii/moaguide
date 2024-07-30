@@ -30,9 +30,6 @@ public class SummaryRestController {
         if(sort.equals("views")) {
             List<SummaryCustomDto> summary = summaryService.getSummaryView(page,size, category);
             return ResponseEntity.ok(new SummaryResponseDto());
-        } else if (sort.equals("price")) {
-            List<SummaryCustomDto> summary = summaryService.getSummaryPrice(page,size, category);
-            return ResponseEntity.ok(new SummaryResponseDto());
         } else if(sort.equals("name")) {
             List<SummaryCustomDto> summary = summaryService.getSummaryName(page,size, category);
             return ResponseEntity.ok(new SummaryResponseDto());

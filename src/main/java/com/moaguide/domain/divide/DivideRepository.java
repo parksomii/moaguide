@@ -1,6 +1,7 @@
 package com.moaguide.domain.divide;
 
 import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -34,4 +35,11 @@ public interface DivideRepository extends JpaRepository<Divide, Long> {
 
     @Query("SELECT d FROM Divide d WHERE d.productId.productId = :productId AND d.decisionDay>:date")
     List<Divide> findAllByProductIdANDDAY(@Param("productId")String id,@Param("date") Date date);
+
+    @Query("SELECT d FROM Divide d " +
+            "WHERE d.decisionDay >= :specificDate AND " +
+            "d.decisionDay = (SELECT MAX(d2.decisionDay) FROM Divide d2 WHERE d2.productId = d.productId AND d2.decisionDay > :specificDate) " +
+            "ORDER BY d.dividendRate DESC")
+    Page<Divide> findLatestByProductIdAfterDate(@Param("specificDate") Date specificDate, Pageable pageable);
+
 }
