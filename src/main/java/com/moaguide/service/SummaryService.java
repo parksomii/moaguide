@@ -34,7 +34,6 @@ public class SummaryService {
     private final TransactionRepository transactionRepository;
     private final DivideRepository divideRepository;
     private final SummaryListService summaryListService;
-    private final DivideRepository divideRepository;
 
 
     public Summary findById(String id) {
@@ -67,7 +66,7 @@ public class SummaryService {
     public List<SummaryCustomDto> getSummaryDvide(int page,int size, String category) {
         Pageable pageable = PageRequest.of(page, size);
         Date date = Date.valueOf(LocalDate.now().minusMonths(6).with(TemporalAdjusters.firstDayOfMonth()));
-        Page<Divide> divides = divideRepository.findLatestByProductIdAfterDate(date,pageable);
+        Page<Divide> divides = divideRepository.findLatestByProductIdAfterDate(date,pageable,category);
         List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
         for(Divide divide : divides.getContent()) {
             List<Transaction> transactions = transactionRepository.findAllByProductIdAndTradeDayAfter(divide.getProductId());
@@ -76,7 +75,6 @@ public class SummaryService {
         return summaryCustomDtos;
     }
 
-    public List<SummaryCustomDto> getSummaryView(int page, int size, String category) {
     // 카테고리별 상품 목록
     public List<SummaryCustomDto> getSummaryView(int page,int size, String category) {
         List<IdDto> findViews = summaryRepository.findListByCategory(category, PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "views")));
@@ -94,11 +92,7 @@ public class SummaryService {
     }
 
     public List<SummaryCustomDto> getSummaryName(int page, int size, String category) {
-    public List<SummaryCustomDto> getSummaryName(int page,int size, String category) {
 
     }
 
-    public List<SummaryCustomDto> getSummaryDvide(int page,int size, String category) {
-
-    }
 }
