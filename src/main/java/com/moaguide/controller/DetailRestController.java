@@ -68,7 +68,7 @@ public class DetailRestController {
         return ResponseEntity.ok(new DetailTransactionResponseDto(transactionDtos));
     }
 
-    @GetMapping("notice/{product_Id}")
+    @GetMapping("notice/list/{product_Id}")
     public ResponseEntity<Object> notice(@PathVariable String product_Id,@RequestParam int page,@RequestParam int size){
         Pageable pageable = PageRequest.of(page-1, size);
         Page<NoticeDto> noticeDtos = noticeService.findbyProductId(product_Id,pageable);

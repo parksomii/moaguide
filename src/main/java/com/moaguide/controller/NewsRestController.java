@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/content/news/")
+@RequestMapping("/content/news")
 @AllArgsConstructor
 @Slf4j
 public class NewsRestController {
@@ -28,7 +28,7 @@ public class NewsRestController {
     private final NewsViewService newsViewService;
 
     // 뉴스 홈페이지
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<NewsCustomDto>> newsHome() {
         List<NewsCustomDto> newsData = newsService.findNews();
         return ResponseEntity.ok().body(newsData);
