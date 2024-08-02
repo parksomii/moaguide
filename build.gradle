@@ -29,6 +29,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // coolSMS 라이브러리
+    implementation 'net.nurigo:javaSDK:2.2'
+    // json 라이브러리
+    implementation 'org.json:json:20210307'
     // 데브툴은 개발환경에서만 사용, 실제 운영환경 빌드에서는 제외함.
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java:8.0.27'
