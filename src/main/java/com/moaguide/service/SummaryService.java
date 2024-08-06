@@ -9,6 +9,8 @@ import com.moaguide.domain.transaction.TransactionRepository;
 import com.moaguide.dto.*;
 import com.moaguide.dto.NewDto.BuildingDto.IdDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.SummaryDivideCustomDto;
+import com.moaguide.dto.NewDto.customDto.SummaryRecentDto;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
@@ -40,6 +42,20 @@ public class SummaryService {
     public Summary findById(String id) {
         Summary summary = summaryRepository.findByProductId(id);
         return summary;
+    }
+
+    // 최근 배당금 발표
+    @Transactional
+    public List<SummaryDivideCustomDto> getDivide(Pageable pageable, String category) {
+        List<IdDto> findDivide = summaryRepository.findAllByCategory(category, pageable);
+        List<SummaryDivideCustomDto> summaryDivideListDtos = new ArrayList<>();
+        for(IdDto idDto : findDivide) {
+            Divide findDivide1 = divideRepository.findByProductId(idDto.getProduct_Id());
+            if (findDivide1 != null) {
+                summaryDivideListDtos.add(new SummaryDivideCustomDto(findDivide1));
+            }
+        }
+        return summaryDivideListDtos;
     }
 
     // 카테고리별 상품현황

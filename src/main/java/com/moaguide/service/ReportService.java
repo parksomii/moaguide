@@ -31,6 +31,11 @@ public class ReportService {
         return reportCustomDtos;
     }
 
+    public List<ReportCustomDto> getSummary(String category, Pageable pageable) {
+        List<ReportCustomDto> reportCustomDtos = reportRepository.findCategoryLatest(category, pageable);
+        return reportCustomDtos;
+    }
+
     public Report findById(int reportId) {
         return reportRepository.findById(reportId);
     }
