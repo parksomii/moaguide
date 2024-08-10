@@ -1,9 +1,11 @@
 package com.moaguide.security;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -19,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class MessageService {
+    @Autowired
     private final RedisTemplate<String, String> redisTemplate;
 
     // coolSMS API 키 및 시크릭 키
