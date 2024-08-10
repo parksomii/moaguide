@@ -3,6 +3,7 @@ package com.moaguide.controller;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.UserDto;
+import com.moaguide.dto.VerifyDto;
 import com.moaguide.security.CustomSMSException;
 import com.moaguide.security.MessageService;
 import com.moaguide.service.UserService;
@@ -26,7 +27,7 @@ public class SignUpRestController {
 
     // 인증 코드 전송 요청 처리
     @PostMapping("/send/code")
-    public ResponseEntity<String> sendCode(@RequestParam String phone) {
+    public ResponseEntity<String> sendCode(@RequestBody String phone) {
         // 인증 코드 생성 및 전송
         String code = messageService.generateVerificationCode();
         messageService.saveCodeToRedis(phone, code);
@@ -36,10 +37,10 @@ public class SignUpRestController {
 
     // 인증 코드 검증 요청 처리
     @PostMapping("/verify/code")
-    public ResponseEntity<String> verifyCode(@RequestParam String phone, @RequestParam String code) {
+    public ResponseEntity<String> verifyCode(@RequestBody VerifyDto verifyDto) {
         try {
             // 인증 코드 검증
-            messageService.verifyCode(phone, code);
+            messageService.verifyCode(verifyDto.getPhone(), verifyDto.getCode());
             // 인증 성공 처리
             return ResponseEntity.ok("인증에 성공했습니다.");
         } catch (CustomSMSException e) {
