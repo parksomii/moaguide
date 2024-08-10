@@ -21,7 +21,7 @@ public class TokenRestController {
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
 
-    @PostMapping("/refesh")
+    @PostMapping("/refresh")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
         //get refresh token
         String refresh = null;
