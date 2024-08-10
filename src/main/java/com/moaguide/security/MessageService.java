@@ -35,6 +35,7 @@ public class MessageService {
     @Value("${spring.data.redis.coolsms.senderNumber}")
     private String sender_Number;
 
+
     private static final long CODE_EXPIRATION_TIME = 180L; // 인증 코드 유효 시간 3분
 
     // 인증 코드 생성
@@ -42,19 +43,7 @@ public class MessageService {
         // 6자리 인증 코드 생성
         return String.valueOf((int) ((Math.random() * 899999) + 100000));
     }
-/*  public String createMessage(String phone) {
-        String authCode = "";
-        for (int i = 0; i < 6; i++) {
-            authCode += (int) (Math.random() * 10);
-        }
-        redisTemplate.opsForValue().set(phone, authCode);
-        return authCode;
-    }*/
-/*    public String generateVerificationCode() {
-        Random random = new Random();
-        int code = 100000 + random.nextInt(900000); // 6자리 코드 생성
-        return String.valueOf(code);
-    }*/
+
 
     // Redis에 인증 코드 저장
     public void saveCodeToRedis(String phoneNumber, String code) {
@@ -64,11 +53,6 @@ public class MessageService {
         // 생성 시간 저장
         ops.set(phoneNumber + ":timestamp", String.valueOf(Instant.now().getEpochSecond()), CODE_EXPIRATION_TIME, TimeUnit.SECONDS);
     }
-    /*public void saveCodeToRedis(String phone, String code) {
-        String key = "authCode:" + phone;
-        redisTemplate.opsForValue().set(key, code, Duration.ofMinutes(3)); // 3분간 유효
-    }*/
-
     // CoolSMS API로 인증번호 전송
     public void sendSms(String phone, String code) {
         // API 키 또는 시크릿 키가 설정되지 않았을 경우 예외 처리
