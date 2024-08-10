@@ -13,7 +13,8 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException {
-        // 홈페이지로 리다이렉트
-        response.sendRedirect("/?error=accessDenied");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403 상태 코드 설정
+        response.setContentType("application/json"); // 응답의 Content-Type을 JSON으로 설정
+        response.getWriter().write("{\"error\": \"Access Denied\", \"message\": \"권한이 부족합니다.\"}"); // 메시지 작성
     }
 }
