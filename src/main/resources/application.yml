@@ -1,107 +1,107 @@
-spring:
-  profiles:
-    active: local  # 기본값으로 local 설정
-    group:
-      local: local
-      blue: blue,common,secret
-      green: green,common,secret
+  spring:
+    profiles:
+      active: local  # 기본값으로 local 설정
+      group:
+        local: local
+        blue: blue,common,secret
+        green: green,common,secret
 
-server:
-  env: local # 기본값으로 local 설정
+  server:
+    env: local # 기본값으로 local 설정
 
----
+  ---
 
-spring:
-  config:
-    activate:
-      on-profile: local
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-    properties:
+  spring:
+    config:
+      activate:
+        on-profile: local
+    jpa:
       hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        auto_quote_keyword: true
-  datasource:
-    url: jdbc:mysql://localhost:3305/moaguide?serverTimezone=UTC
-    username: moaguide
-    password: ahdkrkdlem1!
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      repositories:
-        enabled: false
-      coolsms:
-        apiKey: ${COOLSMS_API_KEY:NCSWQH3WPYQU2TVY}
-        apiSecret: ${COOLSMS_API_SECRET:RHEUOXJKZGPJP9K8C3GFMZW9RNLSCPPX}
-        senderNumber: ${COOLSMS_SENDER_NUMBER:01047309863}
-  jwt:
-    secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
+        ddl-auto: none
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
+          dialect: org.hibernate.dialect.MySQL8Dialect
+          auto_quote_keyword: true
+    datasource:
+      url: jdbc:mysql://localhost:3305/moaguide?serverTimezone=UTC
+      username: moaguide
+      password: ahdkrkdlem1!
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    data:
+      redis:
+        host: localhost
+        port: 6379
+        repositories:
+          enabled: false
+        coolsms:
+          apiKey: ${COOLSMS_API_KEY:NCSWQH3WPYQU2TVY}
+          apiSecret: ${COOLSMS_API_SECRET:RHEUOXJKZGPJP9K8C3GFMZW9RNLSCPPX}
+          senderNumber: ${COOLSMS_SENDER_NUMBER:01047309863}
+    jwt:
+      secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
 
-server:
-  port: 8080
+  server:
+    port: 8080
 
-serverName: local_server
+  serverName: local_server
 
----
+  ---
 
-spring:
-  config:
-    activate:
-      on-profile: blue
-  data:
+  spring:
+    config:
+      activate:
+        on-profile: blue
+    data:
 
 
-server:
-  port: 8080
+  server:
+    port: 8080
 
-serverName: blue_server
+  serverName: blue_server
 
----
+  ---
 
-spring:
-  config:
-    activate:
-      on-profile: green
-  data:
-    redis:
-      host: localhost
-      port: 6379
+  spring:
+    config:
+      activate:
+        on-profile: green
+    data:
+      redis:
+        host: localhost
+        port: 6379
 
-server:
-  port: 8081
+  server:
+    port: 8081
 
-serverName: green_server
+  serverName: green_server
 
----
+  ---
 
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-    properties:
+  spring:
+    jpa:
       hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        auto_quote_keyword: true
-  open-in-view: false  # 중요: Hibernate의 Open Session In View를 비활성화합니다.
-  jwt:
-    secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
+        ddl-auto: none
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
+          dialect: org.hibernate.dialect.MySQL8Dialect
+          auto_quote_keyword: true
+    open-in-view: false  # 중요: Hibernate의 Open Session In View를 비활성화합니다.
+    jwt:
+      secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
 
-logging:
-  level:
-    root: DEBUG
+  logging:
+    level:
+      root: DEBUG
 
-server:
-  servlet:
-    session:
-      timeout: 3600
+  server:
+    servlet:
+      session:
+        timeout: 3600
 
 
