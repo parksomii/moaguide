@@ -3,7 +3,7 @@ package com.moaguide.controller;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.UserDto;
-import com.moaguide.dto.VerifyDto;
+import com.moaguide.dto.codeDto;
 import com.moaguide.security.CustomSMSException;
 import com.moaguide.security.MessageService;
 import com.moaguide.service.UserService;
@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,20 +26,20 @@ public class SignUpRestController {
 
     // 인증 코드 전송 요청 처리
     @PostMapping("/send/code")
-    public ResponseEntity<String> sendCode(@RequestBody String phone) {
+    public ResponseEntity<String> sendCode(@RequestBody codeDto codeDto) {
         // 인증 코드 생성 및 전송
         String code = messageService.generateVerificationCode();
-        messageService.saveCodeToRedis(phone, code);
-        messageService.sendSms(phone, code);
+        messageService.saveCodeToRedis(codeDto.getPhone(), code);
+        messageService.sendSms(codeDto.getPhone(), code);
         return ResponseEntity.ok("인증 코드가 전송되었습니다.");
     }
 
     // 인증 코드 검증 요청 처리
     @PostMapping("/verify/code")
-    public ResponseEntity<String> verifyCode(@RequestBody VerifyDto verifyDto) {
+    public ResponseEntity<String> verifyCode(@RequestBody codeDto codeDto) {
         try {
             // 인증 코드 검증
-            messageService.verifyCode(verifyDto.getPhone(), verifyDto.getCode());
+            messageService.verifyCode(codeDto.getPhone(), codeDto.getCode());
             // 인증 성공 처리
             return ResponseEntity.ok("인증에 성공했습니다.");
         } catch (CustomSMSException e) {

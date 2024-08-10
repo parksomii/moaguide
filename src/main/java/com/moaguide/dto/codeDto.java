@@ -7,7 +7,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor
-public class VerifyDto {
+public class codeDto {
     private String phone;
     private String code;
+
+    public codeDto(String phone) {
+        this.phone = phone;
+    }
 }
