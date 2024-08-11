@@ -1,6 +1,5 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.user.User;
 import com.moaguide.dto.ProfileDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.UserService;
@@ -11,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/User")
+@RequestMapping("/user")
 @AllArgsConstructor
 public class UserRestController {
     private final UserService userService;
