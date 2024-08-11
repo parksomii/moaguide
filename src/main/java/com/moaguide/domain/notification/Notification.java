@@ -18,7 +18,7 @@ public class Notification {
     @Id
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false,referencedColumnName="user_nickname",name="user_nickname")
+    @JoinColumn(nullable = false,referencedColumnName="nickname",name="nickname")
     private User nickName;
     @ManyToOne
     @JoinColumn(referencedColumnName="product_Id",name="product_Id")
