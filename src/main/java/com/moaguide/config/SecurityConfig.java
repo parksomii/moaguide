@@ -5,6 +5,7 @@ import com.moaguide.config.handler.CustomAccessDeniedHandler;
 import com.moaguide.config.handler.CustomAuthenticationEntryPointHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.moaguide.config.handler.CustomLogoutSuccessHandler;
 import com.moaguide.jwt.JWTFilter;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.security.LoginFilter;
@@ -51,6 +52,7 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
         http.
                 authorizeHttpRequests(request -> request
+                        .requestMatchers("/logout").authenticated() // 로그아웃 요청도 인증 필요
                         .anyRequest().permitAll())
                 .exceptionHandling(auth -> auth
                 .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
@@ -62,7 +64,13 @@ public class SecurityConfig {
         http.
                 sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http
+                .logout(logout -> logout
+                .logoutUrl("/logout") // 로그아웃 요청 URL
+                .deleteCookies("JSESSIONID", "refresh", "rememberMe")
+                .logoutSuccessHandler(new CustomLogoutSuccessHandler()) // 로그아웃 성공 후 메시지 반환
 
+        );
         return http.build();
     }
 

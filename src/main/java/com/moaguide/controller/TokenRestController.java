@@ -78,7 +78,7 @@ public class TokenRestController {
     }
 
 
-    @PostMapping("/logout")
+    @PostMapping("logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
         // 리프레시 토큰 쿠키 만료
         Cookie refreshTokenCookie = new Cookie("refresh", null);
