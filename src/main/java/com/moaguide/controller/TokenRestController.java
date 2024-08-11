@@ -76,4 +76,26 @@ public class TokenRestController {
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
+
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        // 리프레시 토큰 쿠키 만료
+        Cookie refreshTokenCookie = new Cookie("refresh", null);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setSecure(true); // HTTPS 사용 시
+        refreshTokenCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
+        refreshTokenCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
+        response.addCookie(refreshTokenCookie);
+
+        // rememberMe 쿠키 만료
+        Cookie rememberMeCookie = new Cookie("rememberMe", null);
+        rememberMeCookie.setHttpOnly(true);
+        rememberMeCookie.setSecure(true); // HTTPS 사용 시
+        rememberMeCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
+        rememberMeCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
+        response.addCookie(rememberMeCookie);
+
+        return ResponseEntity.ok("Logged out successfully");
+    }
 }
