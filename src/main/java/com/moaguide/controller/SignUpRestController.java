@@ -50,8 +50,9 @@ public class SignUpRestController {
     }
 
     @PostMapping("/verify/nickname")
-    public ResponseEntity<String> verifyName(@RequestBody String nickName){
-        Optional<User> user = userService.check(nickName);
+    public ResponseEntity<String> verifyName(@RequestBody UserDto userDto){
+        String nickname = userDto.getNickname();
+        Optional<User> user = userService.check(nickname);
         if(user.isPresent()){
             return ResponseEntity.badRequest().body("중복된 닉네임이 있습니다.");
         }else{
