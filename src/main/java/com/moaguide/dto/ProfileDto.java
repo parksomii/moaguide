@@ -10,5 +10,5 @@ import lombok.*;
 public class ProfileDto {
     public String nickname;
     public String email;
-    public int BKCount;
+    public int bkCount;
 }

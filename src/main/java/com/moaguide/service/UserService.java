@@ -50,7 +50,7 @@ public class UserService {
         ProfileDto profileDto = new ProfileDto();
         profileDto.setNickname(user.getNickname());
         profileDto.setEmail(user.getEmail());
-        profileDto.setBKCount(bookmarkCount);
+        profileDto.setBkCount(bookmarkCount);
         return profileDto;
     }
 }

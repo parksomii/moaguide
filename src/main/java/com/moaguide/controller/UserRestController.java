@@ -17,7 +17,7 @@ public class UserRestController {
     private final UserService userService;
     private final JWTUtil jwtUtil;
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<?> profile(@RequestHeader("Authorization") String auth) {
         String nickname = jwtUtil.getNickname(auth.substring(7));
         ProfileDto userProfile = userService.getUserNickName(nickname);

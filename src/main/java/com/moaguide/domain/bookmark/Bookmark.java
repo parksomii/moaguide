@@ -21,6 +21,6 @@ public class Bookmark {
     private Summary productId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private User userId;
+    @JoinColumn(nullable = false,referencedColumnName="nickname",name="nickname")
+    private User nickName;
 }

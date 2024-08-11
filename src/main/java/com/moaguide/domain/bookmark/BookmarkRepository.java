@@ -1,7 +1,11 @@
 package com.moaguide.domain.bookmark;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
-    int countByUser(String nickname);
+
+    @Query("SELECT count(b) from Bookmark b where b.nickName.nickname=:nickname")
+    int countByUser(@Param("nickname") String nickname);
 }
