@@ -4,6 +4,7 @@ import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.UserDto;
 import com.moaguide.dto.codeDto;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.security.MessageService;
 import com.moaguide.service.UserService;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class SignUpRestController {
     private final MessageService messageService;
     private final UserService userService;
+    private final JWTUtil jwtUtil;
 
     // 인증 코드 전송 요청 처리
     @PostMapping("/send/code")
@@ -37,9 +39,10 @@ public class SignUpRestController {
     @PostMapping("/verify/code")
     public ResponseEntity<String> verifyCode(@RequestBody codeDto codeDto) {
         boolean success = messageService.verifyCode(codeDto.getPhone(), codeDto.getCode());
-
         if (success) {
-            return ResponseEntity.ok("인증에 성공했습니다.");
+            // 인증 성공 시 JWT 토큰 발급
+            String token = jwtUtil.createJwt("access", codeDto.getPhone(), "USER", 1000 * 60 * 10L);
+            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body("인증에 성공했습니다.");
         } else {
             return ResponseEntity.badRequest().body("인증에 실패했습니다.");
         }
@@ -57,8 +60,14 @@ public class SignUpRestController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> signup(@RequestBody UserDto userDto){
+    public ResponseEntity<String> signup(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto){
+        String token = auth.substring(7);
+
         try {
+            // JWT 토큰 검증
+            if (!jwtUtil.isExpired(token)) {
+                return ResponseEntity.badRequest().body("회원가입 실패");
+            }
             userDto.setRole(Role.USER);
             int res = userService.save(userDto);
             if(res == 1){
