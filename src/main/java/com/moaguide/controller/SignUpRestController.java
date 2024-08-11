@@ -44,6 +44,7 @@ public class SignUpRestController {
             return ResponseEntity.ok("인증에 성공했습니다.");
         } catch (CustomSMSException e) {
             // 인증 실패 시 예외 메시지와 상태 코드 반환
+
             return ResponseEntity.status(e.getStatus()).body(e.getMessage());
         }
     }

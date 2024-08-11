@@ -71,7 +71,7 @@ public class TokenRestController {
         String refreshToken = jwtUtil.createJwt("refresh", username, role, refreshTokenValidity);
 
         //response
-        response.setHeader("access", newAccess);
+        response.setHeader("Authorization", "Bearer " + newAccess);
         response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         return new ResponseEntity<>("success", HttpStatus.OK);
