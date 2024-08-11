@@ -4,7 +4,6 @@ import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.UserDto;
 import com.moaguide.dto.codeDto;
-import com.moaguide.security.CustomSMSException;
 import com.moaguide.security.MessageService;
 import com.moaguide.service.UserService;
 import lombok.AllArgsConstructor;
@@ -37,15 +36,12 @@ public class SignUpRestController {
     // 인증 코드 검증 요청 처리
     @PostMapping("/verify/code")
     public ResponseEntity<String> verifyCode(@RequestBody codeDto codeDto) {
-        try {
-            // 인증 코드 검증
-            messageService.verifyCode(codeDto.getPhone(), codeDto.getCode());
-            // 인증 성공 처리
-            return ResponseEntity.ok("인증에 성공했습니다.");
-        } catch (CustomSMSException e) {
-            // 인증 실패 시 예외 메시지와 상태 코드 반환
+        boolean success = messageService.verifyCode(codeDto.getPhone(), codeDto.getCode());
 
-            return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+        if (success) {
+            return ResponseEntity.ok("인증에 성공했습니다.");
+        } else {
+            return ResponseEntity.badRequest().body("인증에 실패했습니다.");
         }
     }
 

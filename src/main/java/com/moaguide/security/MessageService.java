@@ -1,6 +1,5 @@
 package com.moaguide.security;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -12,10 +11,8 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -36,7 +33,8 @@ public class MessageService {
     private String sender_Number;
 
 
-    private static final long CODE_EXPIRATION_TIME = 180L; // 인증 코드 유효 시간 3분
+    private static final long CODE_EXPIRATION_TIME = 7200L;  // 인증 코드 유효 시간 (초) 2시간
+    private static final long CODE_VALIDATION_TIME = 180;  // 인증 코드 검증 유효 시간 (초) 3분
 
     // 인증 코드 생성
     public String generateVerificationCode() {
@@ -48,10 +46,11 @@ public class MessageService {
     // Redis에 인증 코드 저장
     public void saveCodeToRedis(String phoneNumber, String code) {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
+        long currentTimestamp = Instant.now().getEpochSecond();
         // 인증 코드 저장
         ops.set(phoneNumber + ":code", code, CODE_EXPIRATION_TIME, TimeUnit.SECONDS);
         // 생성 시간 저장
-        ops.set(phoneNumber + ":timestamp", String.valueOf(Instant.now().getEpochSecond()), CODE_EXPIRATION_TIME, TimeUnit.SECONDS);
+        ops.set(phoneNumber + ":timestamp", String.valueOf(currentTimestamp), CODE_EXPIRATION_TIME, TimeUnit.SECONDS);
     }
     // CoolSMS API로 인증번호 전송
     public void sendSms(String phone, String code) {
@@ -79,7 +78,7 @@ public class MessageService {
     }
 
     // Redis에 저장된 인증 코드 확인
-    public void verifyCode(String phone, String code) {
+    public boolean verifyCode(String phone, String code) {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
 
         // Redis에서 저장된 인증 코드 및 타임스탬프 가져오기
@@ -87,22 +86,16 @@ public class MessageService {
         String timestampStr = ops.get(phone + ":timestamp");
 
         if (storedCode == null || timestampStr == null) {
-            throw new CustomSMSException("인증 코드가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+            return false;
         }
 
         long timestamp = Long.parseLong(timestampStr);
         long currentTimestamp = Instant.now().getEpochSecond();
 
-        // 유효 시간 초과 여부 확인
-        if (currentTimestamp - timestamp > CODE_EXPIRATION_TIME) {
-            throw new CustomSMSException("인증 코드의 유효 시간이 초과되었습니다.", HttpStatus.BAD_REQUEST);
+        // 유효 시간 초과 또는 인증 코드 불일치 시 인증 실패
+        if (currentTimestamp - timestamp > CODE_VALIDATION_TIME || !storedCode.equals(code)) {
+            return false;
         }
-
-        // 인증 코드 일치 여부 확인
-        if (!storedCode.equals(code)) {
-            throw new CustomSMSException("잘못된 인증 코드입니다.", HttpStatus.BAD_REQUEST);
-        }
-
-        // 인증 성공 시 추가 작업 (예: 사용자 정보 저장, JWT 토큰 발급 등) 수행 가능
+        return true; // 인증 성공
     }
 }
