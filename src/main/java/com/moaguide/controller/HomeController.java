@@ -4,6 +4,7 @@ import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
 import com.moaguide.dto.NewDto.customDto.ReportAndNewsDto;
 import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
+import com.moaguide.dto.SearchRankDto;
 import com.moaguide.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -49,5 +52,23 @@ public class HomeController {
         List<NewsCustomDto> mainNews = newsService.getMainNews(pageable);
         ReportAndNewsDto reportAndNewsDto = new ReportAndNewsDto(mainReport, mainNews);
         return ResponseEntity.ok(reportAndNewsDto);
+    }
+
+    // 검색 순위
+    @GetMapping("searchRank")
+    public ResponseEntity<Object> searchRank() {
+        List<String> names = Arrays.asList(
+                "소액 부동산 투자",
+                "롯데월드타워 청약",
+                "부동산 투자 가이드",
+                "한우 투자",
+                "소액 투자 방법"
+        );
+
+        List<SearchRankDto> searchRank = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            searchRank.add(new SearchRankDto(names.get(i), i + 1));
+        }
+        return ResponseEntity.ok(searchRank);
     }
 }
