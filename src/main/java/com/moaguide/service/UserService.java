@@ -1,7 +1,9 @@
 package com.moaguide.service;
 
+import com.moaguide.domain.bookmark.BookmarkRepository;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
+import com.moaguide.dto.ProfileDto;
 import com.moaguide.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import java.util.Optional;
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
+    private final BookmarkRepository bookmarkRepository;
     private final PasswordEncoder passwordEncoder;
 
     public Optional<User> check(String nickName) {
@@ -37,5 +40,17 @@ public class UserService {
             log.info(e.getMessage());
             return 0;
         }
+    }
+
+    public ProfileDto getUserNickName(String nickname) {
+        User user = userRepository.findUserByNickName(nickname);
+
+        int bookmarkCount = bookmarkRepository.countByUser(user.getNickname());
+
+        ProfileDto profileDto = new ProfileDto();
+        profileDto.setNickname(user.getNickname());
+        profileDto.setEmail(user.getEmail());
+        profileDto.setBKCount(bookmarkCount);
+        return profileDto;
     }
 }
