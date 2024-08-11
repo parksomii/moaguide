@@ -20,9 +20,7 @@ public class Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false,referencedColumnName="nickname",name="nickname")
     private User nickName;
-    @ManyToOne
-    @JoinColumn(referencedColumnName="product_Id",name="product_Id")
-    private Summary productId;
+    private String productId;
     private String message;
     private LocalTime nowDate;
 }
