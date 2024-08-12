@@ -67,7 +67,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         response.setStatus(HttpStatus.OK.value());
         try (PrintWriter writer = response.getWriter()) {
-            writer.write("{\"message\": \"Login successful\", \"accessToken\": \"" + accessToken + "\", \"refreshToken\": \"" + refreshToken + "\"}");
+            writer.write("{\"message\": \"Login successful\"");
             writer.flush();
         }catch (IOException e){
             e.printStackTrace();
