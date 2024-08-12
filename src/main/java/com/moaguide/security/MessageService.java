@@ -66,7 +66,7 @@ public class MessageService {
         params.put("to", phone);
         params.put("from", sender_Number);  // 발신 번호
         params.put("type", "SMS");
-        params.put("text", "[모아가이드(주)]본인인증 번호는 " + code + "입니다. 정확히 입력해주세요.");
+        params.put("text", "[모아가이드(주)]\n본인인증 번호는 [" + code + "]입니다. 정확히 입력해주세요.");
         params.put("app_version", "Java SDK 2.2");
 
         try {
