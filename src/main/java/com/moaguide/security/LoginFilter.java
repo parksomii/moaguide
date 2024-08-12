@@ -16,6 +16,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -64,6 +66,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         response.setStatus(HttpStatus.OK.value());
+        response.setContentType("application/json");
+        try (PrintWriter writer = response.getWriter()) {
+            writer.write("{\"message\": \"Login successful\", \"accessToken\": \"" + accessToken + "\", \"refreshToken\": \"" + refreshToken + "\"}");
+            writer.flush();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     //로그인 실패시 실행하는 메소드

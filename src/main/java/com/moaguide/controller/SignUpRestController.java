@@ -41,7 +41,7 @@ public class SignUpRestController {
         boolean success = messageService.verifyCode(codeDto.getPhone(), codeDto.getCode());
         if (success) {
             // 인증 성공 시 JWT 토큰 발급
-            String token = jwtUtil.createJwt("access", codeDto.getPhone(), "USER", 1000 * 60 * 10L);
+            String token = jwtUtil.createJwt("access", codeDto.getPhone(), "USER", 1000 * 60 * 30L);
             return ResponseEntity.ok().header("Authorization", "Bearer " + token).body("인증에 성공했습니다.");
         } else {
             return ResponseEntity.badRequest().body("인증에 실패했습니다.");
