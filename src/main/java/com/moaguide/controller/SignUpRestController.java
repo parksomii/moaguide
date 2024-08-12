@@ -65,7 +65,7 @@ public class SignUpRestController {
 
         try {
             // JWT 토큰 검증
-            if (!jwtUtil.isExpired(token)) {
+            if (jwtUtil.isExpired(token)) {
                 return ResponseEntity.badRequest().body("회원가입 실패");
             }
             userDto.setRole(Role.USER);
