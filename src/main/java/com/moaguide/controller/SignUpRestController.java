@@ -7,6 +7,7 @@ import com.moaguide.dto.codeDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.security.MessageService;
 import com.moaguide.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,13 +38,18 @@ public class SignUpRestController {
 
     // 인증 코드 검증 요청 처리
     @PostMapping("/verify/code")
-    public ResponseEntity<String> verifyCode(@RequestBody codeDto codeDto) {
+    public ResponseEntity<String> verifyCode(@RequestBody codeDto codeDto, HttpServletRequest request) {
         boolean success = messageService.verifyCode(codeDto.getPhone(), codeDto.getCode());
         if (success) {
             // 인증 성공 시 JWT 토큰 발급
-            String token = jwtUtil.createJwt("access", codeDto.getPhone(), "USER", 1000 * 60 * 30L);
-            return ResponseEntity.ok().header("Authorization", "Bearer " + token).body("인증에 성공했습니다.");
-        } else {
+            if(request.getHeader("Authorization") == null) {
+                String token = jwtUtil.createJwt("access", codeDto.getPhone(), "USER", 1000 * 60 * 30L);
+                return ResponseEntity.ok().header("Authorization", "Bearer " + token).body("인증에 성공했습니다.");
+            }else{
+                return ResponseEntity.ok("인증에 성공했습니다.");
+            }
+        }
+        else {
             return ResponseEntity.badRequest().body("인증에 실패했습니다.");
         }
     }

@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
         http.
                 authorizeHttpRequests(request -> request
-                        .requestMatchers("/logout").authenticated() // 로그아웃 요청도 인증 필요
+                        .requestMatchers("/logout","/update/phone").authenticated() // 로그아웃 요청도 인증 필요
                         .anyRequest().permitAll())
                 .exceptionHandling(auth -> auth
                 .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
