@@ -60,4 +60,25 @@ public class UserService {
         User user = userRepository.findUserByNickName(changeNickname);
         return user;
     }
+
+    public boolean checkPassword(String nickname, String password) {
+        log.info("Service *************** nickname : {}", nickname);
+        User user = userRepository.findUserByNickName(nickname);
+        log.info("Service *************** user : {}", user.getNickname());
+        log.info("Service *************** password : {}", password);
+        log.info("Service *************** password {} : userPassword {}", password, user.getPassword());
+        // 만약 비밀번호가 맞다면
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return true;
+        }
+        return false;
+    }
+
+    public void updatePassword(String nickname, String changePassword) {
+        userRepository.updatePassword(nickname, passwordEncoder.encode(changePassword));
+    }
+
+    public void updatePhone(String nickname, String changePhone) {
+        userRepository.updatePhone(nickname, changePhone);
+    }
 }

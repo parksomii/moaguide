@@ -29,12 +29,12 @@ public class UserRestController {
         return ResponseEntity.ok(userProfile);
     }
 
-    // 마이페이지 수정
+    // 마이페이지 수정 (닉네임, 비밀번호, 전화번호)
     // 닉네임 수정
     @PutMapping("/update/nickname")
-    public ResponseEntity<?> updateNickname(@RequestHeader("Authorization") String auth, @RequestBody codeDto codeDto,HttpServletResponse response) {
+    public ResponseEntity<?> updateNickname(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto,HttpServletResponse response) {
         String findNickname = jwtUtil.getNickname(auth.substring(7));
-        String changeNickname = codeDto.getNickname();
+        String changeNickname = userDto.getNickname();
         User changeuser = userService.updateNickname(findNickname, changeNickname);
 
         //make new JWT
@@ -48,9 +48,31 @@ public class UserRestController {
         return new ResponseEntity<>(changeuser.getNickname(), HttpStatus.OK);
     }
     // 비밀번호 인증
-
+    @PostMapping("/check/password")
+    public ResponseEntity<?> checkPassword(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
+        String nickname = jwtUtil.getNickname(auth.substring(7));
+        String password = userDto.getPassword();
+        boolean check = userService.checkPassword(nickname, password);
+        if (check) {
+            return ResponseEntity.ok("success");
+        } else {
+            return ResponseEntity.badRequest().body("fail");
+        }
+    }
     // 비밀번호 변경
-
+    @PutMapping("/update/password")
+    public ResponseEntity<?> updatePassword(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
+        String nickname = jwtUtil.getNickname(auth.substring(7));
+        String password = userDto.getPassword();
+        userService.updatePassword(nickname, password);
+        return ResponseEntity.ok("success");
+    }
     // 전화번호 변경
-
+    @PutMapping("/update/phone")
+    public ResponseEntity<?> updatePhone(@RequestHeader("Authorization") String auth, @RequestBody codeDto codeDto) {
+        String nickname = jwtUtil.getNickname(auth.substring(7));
+        String phone = codeDto.getPhone();
+        userService.updatePhone(nickname, phone);
+        return ResponseEntity.ok("success");
+    }
 }
