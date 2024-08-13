@@ -55,12 +55,9 @@ public class UserService {
         return profileDto;
     }
 
-    public codeDto updateNickname(String findNickname, String changeNickname) {
-        User user = userRepository.findUserByNickName(findNickname);
-        user.setNickname(changeNickname);
-        userRepository.save(user);
-        codeDto userDto = new codeDto();
-        userDto.setNickname(user.getNickname());
-        return userDto;
+    public User updateNickname(String findNickname, String changeNickname) {
+        userRepository.updateNickname(findNickname, changeNickname);
+        User user = userRepository.findUserByNickName(changeNickname);
+        return user;
     }
 }
