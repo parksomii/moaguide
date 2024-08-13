@@ -6,6 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    @Query("SELECT count(b) from Bookmark b where b.nickName.nickname=:nickname")
-    int countByUser(@Param("nickname") String nickname);
+    @Query("SELECT count(b) from Bookmark b where b.userId.customNumber=:customNumber")
+    int countByUser(@Param("customNumber") Long customNumber);
 }

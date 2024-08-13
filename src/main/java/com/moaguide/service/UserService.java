@@ -5,6 +5,7 @@ import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.ProfileDto;
 import com.moaguide.dto.UserDto;
+import com.moaguide.dto.codeDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -44,13 +45,22 @@ public class UserService {
 
     public ProfileDto getUserNickName(String nickname) {
         User user = userRepository.findUserByNickName(nickname);
-
-        int bookmarkCount = bookmarkRepository.countByUser(user.getNickname());
-
+        log.info("user : " + user.getCustomNumber());
+        int bookmarkCount = bookmarkRepository.countByUser(user.getCustomNumber());
+        log.info("bookmarkCount : " + bookmarkCount);
         ProfileDto profileDto = new ProfileDto();
         profileDto.setNickname(user.getNickname());
         profileDto.setEmail(user.getEmail());
         profileDto.setBkCount(bookmarkCount);
         return profileDto;
+    }
+
+    public codeDto updateNickname(String findNickname, String changeNickname) {
+        User user = userRepository.findUserByNickName(findNickname);
+        user.setNickname(changeNickname);
+        userRepository.save(user);
+        codeDto userDto = new codeDto();
+        userDto.setNickname(user.getNickname());
+        return userDto;
     }
 }
