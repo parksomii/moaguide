@@ -45,9 +45,9 @@ public class UserService {
 
     public ProfileDto getUserNickName(String nickname) {
         User user = userRepository.findUserByNickName(nickname);
-        log.info("user : " + user.getCustomNumber());
-        int bookmarkCount = bookmarkRepository.countByUser(user.getCustomNumber());
-        log.info("bookmarkCount : " + bookmarkCount);
+
+        int bookmarkCount = bookmarkRepository.countByUser(user.getNickname());
+
         ProfileDto profileDto = new ProfileDto();
         profileDto.setNickname(user.getNickname());
         profileDto.setEmail(user.getEmail());
