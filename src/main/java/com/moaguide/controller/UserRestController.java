@@ -31,12 +31,14 @@ public class UserRestController {
 
     // 마이페이지 수정 (닉네임, 비밀번호, 전화번호)
     // 닉네임 수정
-    @PutMapping("/update/nickname")
+    @PatchMapping("/update/nickname")
     public ResponseEntity<?> updateNickname(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto,HttpServletResponse response) {
         String findNickname = jwtUtil.getNickname(auth.substring(7));
         String changeNickname = userDto.getNickname();
         User changeuser = userService.updateNickname(findNickname, changeNickname);
-
+        if(changeuser == null){
+            return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
+        }
         //make new JWT
         String newAccess = jwtUtil.createJwt("access", changeuser.getNickname(), changeuser.getRole().name(), 30 * 60 * 1000L); // 30분
         long refreshTokenValidity = 6 * 30 * 24 * 60 * 60 * 1000L; // 6달 또는 5시간
@@ -60,7 +62,7 @@ public class UserRestController {
         }
     }
     // 비밀번호 변경
-    @PutMapping("/update/password")
+    @PatchMapping("/update/password")
     public ResponseEntity<?> updatePassword(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
         String nickname = jwtUtil.getNickname(auth.substring(7));
         String password = userDto.getPassword();
@@ -68,7 +70,7 @@ public class UserRestController {
         return ResponseEntity.ok("success");
     }
     // 전화번호 변경
-    @PutMapping("/update/phone")
+    @PatchMapping("/update/phone")
     public ResponseEntity<?> updatePhone(@RequestHeader("Authorization") String auth, @RequestBody codeDto codeDto) {
         String nickname = jwtUtil.getNickname(auth.substring(7));
         String phone = codeDto.getPhone();

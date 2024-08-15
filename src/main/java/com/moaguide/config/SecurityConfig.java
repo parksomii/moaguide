@@ -104,9 +104,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "OPTIONS")); // 허용 메서드
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type")); // 허용 헤더
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "https://moaguide.vercel.app/"
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용 메서드
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // 허용 헤더
         configuration.setAllowCredentials(true); // 자격증명 허용
         // 위 설정정보를 토대로 url 전체 경로에 적용하는 CORS 설정 소스 생성해 리턴
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
