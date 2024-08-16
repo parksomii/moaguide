@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchRestController {
     private SearchService searchService;
 
-//    @GetMapping("/search")
-//    public String search(@RequestParam String keyword) {
-//
-//    }
+    @GetMapping("/search")
+    public String search(@RequestParam String keyword) {
+
+        return "아직 안됐습니다.";
+    }
 }
