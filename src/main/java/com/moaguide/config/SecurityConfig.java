@@ -13,6 +13,7 @@ import com.moaguide.service.CookieService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,8 +48,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
-
+                .cors(cors -> {
+                    cors.configurationSource(corsConfigurationSource());
+                });
         //csrf disable
         http
                 .csrf((auth) -> auth.disable());
@@ -61,6 +63,7 @@ public class SecurityConfig {
         http.
                 authorizeHttpRequests(request -> request
                         .requestMatchers("/logout","/update/phone", "/user/update/nickname").authenticated() // 로그아웃 요청도 인증 필요
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().permitAll())
                 .exceptionHandling(auth -> auth
                 .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
@@ -101,29 +104,15 @@ public class SecurityConfig {
         return mapper;
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList(
-//                "http://localhost:3000",
-//                "https://moaguide.vercel.app/"
-//        ));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용 메서드
-//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // 허용 헤더
-//        configuration.setAllowCredentials(true); // 자격증명 허용
-//        // 위 설정정보를 토대로 url 전체 경로에 적용하는 CORS 설정 소스 생성해 리턴
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*")); // 모든 도메인 패턴 허용
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용 메서드
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // 허용 헤더
+        configuration.setAllowedOrigins(Arrays.asList("*")); // 모든 출처 허용
+        configuration.setAllowedMethods(Arrays.asList("*")); // 모든 메서드 허용
+        configuration.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더 허용
         configuration.setAllowCredentials(true); // 자격증명 허용
+
+// 위 설정정보를 토대로 url 전체 경로에 적용하는 CORS 설정 소스 생성해 리턴
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
