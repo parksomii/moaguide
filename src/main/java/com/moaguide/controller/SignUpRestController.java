@@ -30,10 +30,18 @@ public class SignUpRestController {
     @PostMapping("/send/code")
     public ResponseEntity<String> sendCode(@RequestBody codeDto codeDto) {
         // 인증 코드 생성 및 전송
-        String code = messageService.generateVerificationCode();
-        messageService.saveCodeToRedis(codeDto.getPhone(), code);
-        messageService.sendSms(codeDto.getPhone(), code);
-        return ResponseEntity.ok("인증 코드가 전송되었습니다.");
+        try {
+            if (codeDto.getPhone() == null) {
+                return ResponseEntity.badRequest().body("인증 코드 전송에 실패하였습니다.");
+            }
+            String code = messageService.generateVerificationCode();
+            messageService.saveCodeToRedis(codeDto.getPhone(), code);
+            messageService.sendSms(codeDto.getPhone(), code);
+            return ResponseEntity.ok("인증 코드가 전송되었습니다.");
+        } catch (Exception e) {
+            // 모든 예외에 대해 "실패" 반환
+            return ResponseEntity.badRequest().body("인증 코드 전송에 실패하였습니다.");
+        }
     }
 
     // 인증 코드 검증 요청 처리
