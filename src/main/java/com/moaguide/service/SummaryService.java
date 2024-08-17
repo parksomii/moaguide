@@ -92,20 +92,30 @@ public class SummaryService {
     // 카테고리별 상품 목록
     @Transactional
     public List<SummaryCustomDto> getSummaryView(int page,int size, String category) {
+        log.info("섬머리 카테고리 " + category);
         List<IdDto> findViews;
         List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
+        log.info("섬머리 리스트 " + summaryListDtos);
         if(category.equals("all")){
             findViews = summaryRepository.findListByAllbyViews(PageRequest.of(page - 1, size));
+            log.info("섬머리 all findViews" + findViews);
         } else {
             findViews = summaryRepository.findListByCategory(category, PageRequest.of(page - 1, size));
+            log.info("섬머리" + category, "findViews" + findViews);
         }
         for(IdDto idDto : findViews) {
             List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
+            log.info("섬머리 트랜잭션 리스트" + transactionList);
             Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
+            log.info("섬머리 디바이드" + findDivide);
             if (findDivide == null) {
+                log.info("섬머리 디바이드 없음");
                 summaryListDtos.add(new SummaryCustomDto(transactionList));
+                log.info("섬머리 리스트" + summaryListDtos);
             } else {
+                log.info("섬머리 디바이드 있음");
                 summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
+                log.info("섬머리 리스트" + summaryListDtos);
             }
         }
         return summaryListDtos;
