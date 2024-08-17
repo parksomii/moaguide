@@ -92,8 +92,13 @@ public class SummaryService {
     // 카테고리별 상품 목록
     @Transactional
     public List<SummaryCustomDto> getSummaryView(int page,int size, String category) {
-        List<IdDto> findViews = summaryRepository.findListByCategory(category, PageRequest.of(page-1, size, Sort.by(Sort.Direction.DESC, "views")));
+        List<IdDto> findViews;
         List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
+        if(category.equals("all")){
+            findViews = summaryRepository.findListByAllbyViews(PageRequest.of(page - 1, size));
+        } else {
+            findViews = summaryRepository.findListByCategory(category, PageRequest.of(page - 1, size));
+        }
         for(IdDto idDto : findViews) {
             List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
             Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());

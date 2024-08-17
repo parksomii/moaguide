@@ -3,6 +3,7 @@ package com.moaguide.domain.summary;
 import com.moaguide.dto.NewDto.BuildingDto.IdDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,9 +20,12 @@ public interface SummaryRepository extends JpaRepository<Summary, String> {
     @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.productId DESC")
     List<IdDto> findAllByCategory(@Param("category") String category, Pageable pageable);
 
-    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s join Platform p ON s.PlatformId = p where p.category = :category ORDER BY s.views DESC")
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.views DESC")
     List<IdDto>  findListByCategory(@Param("category")String category, Pageable pageable);
 
     @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s join Platform p ON s.PlatformId = p where p.category = :category ORDER BY s.name DESC")
     List<IdDto> findListByCategoryAndName(@Param("category")String category, Pageable pageable);
+
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s ORDER BY s.views DESC")
+    List<IdDto> findListByAllbyViews(PageRequest views);
 }
