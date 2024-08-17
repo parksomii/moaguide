@@ -17,7 +17,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query("SELECT t FROM Transaction t WHERE t.productId.productId = :productId ORDER BY t.tradeDay DESC")
     List<Transaction> findFirstByProductId(@Param("productId") String productId, Pageable pageable);
 
-    @Procedure(procedureName = "GetLatestPrices")
+    @Procedure(procedureName = "getRecentTransactions")
     List<Transaction> findAllByProductIdAndTradeDayAfter(@Param("productId") String productId);
 
     @Query("SELECT t FROM Transaction t WHERE t.productId.productId = :productId order by t.tradeDay desc,t.tradeTime desc")
