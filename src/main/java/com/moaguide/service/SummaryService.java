@@ -60,8 +60,8 @@ public class SummaryService {
 
     // 카테고리별 상품현황
     @Transactional
-    public List<SummaryCustomDto> getSummary(Pageable pageable, String category) {
-        List<IdDto> findSummary = summaryRepository.findAllByCategory(category, pageable);
+    public List<SummaryCustomDto> getSummary(int page,int size, String category) {
+        List<IdDto> findSummary = summaryRepository.findAllByCategory(category, PageRequest.of(page - 1, size));
         List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
         for(IdDto idDto : findSummary) {
             List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());

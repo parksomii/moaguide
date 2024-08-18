@@ -29,22 +29,11 @@ public class HomeController {
 
     // 주요 상품 현황
     @GetMapping("summary/{category}")
-    public ResponseEntity<Object> summary(@PathVariable("category") String category,
-                                          @RequestParam String sort,
-                                          @RequestParam int page, @RequestParam int size) {
-        log.info("category: " + category);
-        if(sort.equals("views")) {
-            List<SummaryCustomDto> summary = summaryService.getSummaryView(page,size, category);
-            return ResponseEntity.ok(summary);
-        } else if(sort.equals("name")) {
-            List<SummaryCustomDto> summary = summaryService.getSummaryName(page,size, category);
-            return ResponseEntity.ok(summary);
-        } else if(sort.equals("divide")) {
-            List<SummaryCustomDto> summary = summaryService.getSummaryDvide(page,size, category);
-            return ResponseEntity.ok(summary);
-        } else{
-            return ResponseEntity.badRequest().build();
-        }
+    public ResponseEntity<Object> summary(@RequestParam int page,
+                                          @RequestParam int size,
+                                          @PathVariable("category") String category) {
+        List<SummaryCustomDto> summary = summaryService.getSummary(page, size, category);
+        return ResponseEntity.ok(summary);
     }
 
     // 상품현황 북마크 처리

@@ -29,11 +29,10 @@ public class SummaryRestController {
     public ResponseEntity<Object> summaryRecent(@PathVariable("category") String category,
                                                 @RequestParam(value = "page", defaultValue = "1") int page,
                                                 @RequestParam(value = "size", defaultValue = "3") int size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
         // 최근 배당금 발표
-        List<SummaryDivideCustomDto> divideList = summaryService.getDivide(pageable, category);
+        List<SummaryDivideCustomDto> divideList = summaryService.getDivide(page, size, category);
         // 주목 상품현황
-        List<SummaryCustomDto> summaryList = summaryService.getSummary(pageable, category);
+        List<SummaryCustomDto> summaryList = summaryService.getSummary(page, size, category);
         // 최근 배당금 + 주목 상품현황
         SummaryRecentDto summaryRecentDto = new SummaryRecentDto(divideList, summaryList);
         return ResponseEntity.ok(summaryRecentDto);
