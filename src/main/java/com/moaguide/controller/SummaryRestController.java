@@ -47,13 +47,13 @@ public class SummaryRestController {
         log.info("category: " + category);
         if(sort.equals("views")) {
             List<SummaryCustomDto> summary = summaryService.getSummaryView(page,size, category);
-            return ResponseEntity.ok(new SummaryResponseDto());
+            return ResponseEntity.ok(summary);
         } else if(sort.equals("name")) {
             List<SummaryCustomDto> summary = summaryService.getSummaryName(page,size, category);
-            return ResponseEntity.ok(new SummaryResponseDto());
+            return ResponseEntity.ok(summary);
         } else if(sort.equals("divide")) {
             List<SummaryCustomDto> summary = summaryService.getSummaryDvide(page,size, category);
-            return ResponseEntity.ok(new SummaryResponseDto());
+            return ResponseEntity.ok(summary);
         } else{
             return ResponseEntity.badRequest().build();
         }

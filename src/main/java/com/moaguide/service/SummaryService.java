@@ -130,8 +130,13 @@ public class SummaryService {
 
     @Transactional
     public List<SummaryCustomDto> getSummaryName(int page, int size, String category) {
-        List<IdDto> findNames = summaryRepository.findListByCategoryAndName(category, PageRequest.of(page - 1, size));
+        List<IdDto> findNames;
         List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
+        if(category.equals("all")){
+            findNames = summaryRepository.findListByAllbyName(PageRequest.of(page - 1, size));
+        } else {
+            findNames = summaryRepository.findListByCategoryAndName(category, PageRequest.of(page - 1, size));
+        }
         for (IdDto idDto : findNames) {
             List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
             if (!transactionList.isEmpty()) {
@@ -141,11 +146,10 @@ public class SummaryService {
                 } else {
                     summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
                 }
-            } else {
+            }else {
                 log.warn("섬머리 트랜잭션 리스트가 비어 있음: " + idDto.getProduct_Id());
             }
         }
-
         return summaryListDtos;
     }
 
