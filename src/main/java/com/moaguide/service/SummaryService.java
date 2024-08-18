@@ -103,37 +103,49 @@ public class SummaryService {
             findViews = summaryRepository.findListByCategory(category, PageRequest.of(page - 1, size));
             log.info("섬머리" + category, "findViews" + findViews);
         }
-        for(IdDto idDto : findViews) {
+        for (IdDto idDto : findViews) {
             List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
-            log.info("섬머리 트랜잭션 리스트" + transactionList);
-            Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
-            log.info("섬머리 디바이드" + findDivide);
-            if (findDivide == null) {
-                log.info("섬머리 디바이드 없음");
-                summaryListDtos.add(new SummaryCustomDto(transactionList));
-                log.info("섬머리 리스트" + summaryListDtos);
+            log.info("섬머리 트랜잭션 리스트 " + transactionList);
+
+            if (!transactionList.isEmpty()) {  // 트랜잭션 리스트가 비어 있지 않은 경우에만 처리
+                Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
+                log.info("섬머리 디바이드 " + findDivide);
+
+                if (findDivide == null) {
+                    log.info("섬머리 디바이드 없음");
+                    summaryListDtos.add(new SummaryCustomDto(transactionList));
+                } else {
+                    log.info("섬머리 디바이드 있음");
+                    summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
+                }
             } else {
-                log.info("섬머리 디바이드 있음");
-                summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
-                log.info("섬머리 리스트" + summaryListDtos);
+                log.warn("섬머리 트랜잭션 리스트가 비어 있음: " + idDto.getProduct_Id());
             }
+
+            log.info("섬머리 리스트 " + summaryListDtos);
         }
+
         return summaryListDtos;
     }
 
     @Transactional
     public List<SummaryCustomDto> getSummaryName(int page, int size, String category) {
-        List<IdDto> findNames = summaryRepository.findListByCategoryAndName(category, PageRequest.of(page-1, size, Sort.by(Sort.Direction.ASC, "name")));
+        List<IdDto> findNames = summaryRepository.findListByCategoryAndName(category, PageRequest.of(page - 1, size));
         List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
-        for(IdDto idDto : findNames) {
+        for (IdDto idDto : findNames) {
             List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
-            Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
-            if (findDivide == null) {
-                summaryListDtos.add(new SummaryCustomDto(transactionList));
+            if (!transactionList.isEmpty()) {
+                Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
+                if (findDivide == null) {
+                    summaryListDtos.add(new SummaryCustomDto(transactionList));
+                } else {
+                    summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
+                }
             } else {
-                summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
+                log.warn("섬머리 트랜잭션 리스트가 비어 있음: " + idDto.getProduct_Id());
             }
         }
+
         return summaryListDtos;
     }
 
