@@ -25,9 +25,9 @@ public class SearchRestController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/search/log")
-    public ResponseEntity<?> searchLog(){
-        List<SearchLogDto> dto = searchService.searchrank();
-        return ResponseEntity.ok(dto);
-    }
+//    @GetMapping("/search/log")
+//    public ResponseEntity<?> searchLog(){
+//        List<SearchLogDto> dto = searchService.searchrank();
+//        return ResponseEntity.ok(dto);
+//    }
 }
