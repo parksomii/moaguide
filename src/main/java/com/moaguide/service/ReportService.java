@@ -27,7 +27,7 @@ public class ReportService {
         return reportCustomDtos;
     }
 
-    // 메인 리포트
+    // 메인 주요 리포트
     public List<ReportCustomDto> getMainReport(Pageable pageable) {
         List<ReportCustomDto> reportCustomDtos = reportRepository.findLatest(pageable);
         return reportCustomDtos;
@@ -50,7 +50,7 @@ public class ReportService {
     }
 
     // 인기순
-    public List<ReportCustomDto> getAllPopularBySubCategory(String category, String subcategory, int page, int size) {
+    public Page<ReportCustomDto> getAllPopularBySubCategory(String category, String subcategory, int page, int size) {
         if (category.equals("all")) {
             return reportRepository.findAllByViews(subcategory, PageRequest.of(page - 1, size));
         }
@@ -58,7 +58,7 @@ public class ReportService {
     }
 
     // 최신순
-    public List<ReportCustomDto> getAllLatestBySubCategory(String category, String subcategory, int page, int size) {
+    public Page<ReportCustomDto> getAllLatestBySubCategory(String category, String subcategory, int page, int size) {
         if (category.equals("all")) {
             return reportRepository.findAllbyLatest(subcategory, PageRequest.of(page - 1, size, Sort.by("date").descending()));
         }

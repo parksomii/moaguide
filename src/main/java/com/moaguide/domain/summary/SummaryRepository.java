@@ -1,7 +1,6 @@
 package com.moaguide.domain.summary;
 
 import com.moaguide.dto.NewDto.BuildingDto.IdDto;
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,19 +15,22 @@ import java.util.List;
 public interface SummaryRepository extends JpaRepository<Summary, String> {
 
     Summary findByProductId(String Id);
-
+    // 상품현황
     @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.productId DESC")
     List<IdDto> findAllByCategory(@Param("category") String category, Pageable pageable);
 
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s ORDER BY s.productId DESC")
+    List<IdDto> findAllByList(PageRequest pageRequest);
+
     @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.views DESC")
-    List<IdDto>  findListByCategory(@Param("category")String category, Pageable pageable);
+    Page<IdDto>  findListByCategory(@Param("category")String category, Pageable pageable);
 
     @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.name ASC")
-    List<IdDto> findListByCategoryAndName(@Param("category")String category, Pageable pageable);
+    Page<IdDto> findListByCategoryAndName(@Param("category")String category, Pageable pageable);
 
     @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s ORDER BY s.views DESC")
-    List<IdDto> findListByAllbyViews(PageRequest views);
+    Page<IdDto> findListByAllbyViews(Pageable views);
 
     @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s ORDER BY s.name ASC")
-    List<IdDto> findListByAllbyName(PageRequest name);
+    Page<IdDto> findListByAllbyName(Pageable name);
 }

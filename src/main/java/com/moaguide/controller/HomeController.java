@@ -26,7 +26,6 @@ public class HomeController {
     private final ReportService reportService;
     private final SummaryService summaryService;
 
-
     // 주요 상품 현황
     @GetMapping("summary/{category}")
     public ResponseEntity<Object> summary(@RequestParam int page,
@@ -42,7 +41,8 @@ public class HomeController {
         // 북마크 추가
         return null;
     }
-    //페이지 1 사이즈 3
+
+    // 주요 리포트와 최신 이슈
     @GetMapping
     public ResponseEntity<Object> home(@RequestParam(value = "page", defaultValue = "1") int page,
                                        @RequestParam(value = "size", defaultValue = "3") int size) {

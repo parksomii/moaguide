@@ -37,10 +37,10 @@ public class NewsRestController {
     // 카테고리별 뉴스 조회
     @GetMapping("/{category}")
     public ResponseEntity<?> newsListByCategory(@PathVariable String category,
-                                                                  @RequestParam String sort,
-                                                                  @RequestParam int page,
-                                                                  @RequestParam int size) {
-        Page<News> newsList;
+                                                @RequestParam String sort,
+                                                @RequestParam int page,
+                                                @RequestParam int size) {
+        Page<NewsCustomDto> newsList;
         // 인기순
         if (sort.equals("popular")) {
             newsList = newsService.getAllByViews(page, size, category);
@@ -51,6 +51,7 @@ public class NewsRestController {
         }
         return ResponseEntity.ok().body(newsList);
     }
+
     @PostMapping("{news_Id}")
     public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable Long news_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
         News news = newsService.findById(news_Id);
