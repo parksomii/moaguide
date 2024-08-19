@@ -40,7 +40,7 @@ public class NewsRestController {
         // 인기순
         if (sort.equals("popular")) {
             Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1, pageRequestDTO.getSize(), Sort.by("views").descending());
-            Page<News> newsList = newsService.getAllByViews(pageRequestDTO);
+            Page<News> newsList = newsService.getAllByViews(pageRequestDTO, category);
             List<NewsCustomDto> newsData = newsList.stream().map(news -> new NewsCustomDto(news)).collect(Collectors.toList());
             return ResponseEntity.ok().body(newsData);
         }

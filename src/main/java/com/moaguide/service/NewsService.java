@@ -53,14 +53,14 @@ public class NewsService {
     }
 
     // 뉴스 인기순 전체 조회
-    public Page<News> getAllByViews(PageRequestDTO pageRequestDTO) {
+    public Page<News> getAllByViews(PageRequestDTO pageRequestDTO, String category) {
         Pageable pageable = PageRequest.of(
                 pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("views").descending());
         /*// 1페이지 3개만 보이기
         Pageable pageable = PageRequest.of(0, 3, Sort.by("views").descending());*/
-        Page<News> findNewsByViews = newsRepository.findAll(pageable);
+        Page<News> findNewsByViews = newsRepository.findAllByCategory(pageable, category);
         log.info("NewsService findAllByViews - result : {}", findNewsByViews);
         log.info("NewsService findAllByViews - result.getContent() : {}", findNewsByViews.getContent());
         return findNewsByViews;
