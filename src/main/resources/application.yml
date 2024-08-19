@@ -94,6 +94,8 @@ spring:
   open-in-view: false  # 중요: Hibernate의 Open Session In View를 비활성화합니다.
   jwt:
     secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
+  jackson:
+    time-zone: Asia/Seoul
 
 logging:
   level:
