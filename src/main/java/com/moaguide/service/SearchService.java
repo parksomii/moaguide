@@ -1,12 +1,17 @@
 package com.moaguide.service;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+import co.elastic.clients.elasticsearch._types.aggregations.*;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.json.JsonData;
 import com.moaguide.domain.elasticsearch.searchlog.SearchLog;
 import com.moaguide.domain.elasticsearch.searchlog.SearchLogRepository;
+import com.moaguide.dto.SearchLogDto;
 import com.moaguide.dto.SearchResponseDto;
 import com.moaguide.dto.searchCategoryDto;
 import com.moaguide.dto.searchNewsDto;
 import lombok.AllArgsConstructor;
+import org.elasticsearch.client.RequestOptions;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
@@ -15,19 +20,20 @@ import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class SearchService {
     private final SearchLogRepository searchLogRepository;
-    private ElasticsearchOperations elasticsearchOperations;
-
+    private ElasticsearchOperations elasticsearchClient;
 
     public void savekeyword(String keyword) {
         LocalDate localDate = LocalDate.now();
-        searchLogRepository.save(new SearchLog(keyword,localDate));
+        searchLogRepository.save(new SearchLog(keyword, localDate));
     }
 
     public SearchResponseDto searchAll(String keyword) {
@@ -41,7 +47,7 @@ public class SearchService {
                 .build();
 
         // 검색 수행: org.springframework.data.elasticsearch.core.SearchHits 사용
-        SearchHits<searchCategoryDto> searchHits = elasticsearchOperations.search(searchQuery, searchCategoryDto.class);
+        SearchHits<searchCategoryDto> searchHits = elasticsearchClient.search(searchQuery, searchCategoryDto.class);
 
         // 함수형 인터페이스로 multiMatchQuery 작성
         Query NewssearchQuery = NativeQuery.builder()
@@ -52,7 +58,7 @@ public class SearchService {
                 .build();
 
         // 검색 수행
-        SearchHits<searchNewsDto> newssearchHits = elasticsearchOperations.search(searchQuery, searchNewsDto.class);
+        SearchHits<searchNewsDto> newssearchHits = elasticsearchClient.search(searchQuery, searchNewsDto.class);
 
         // 검색 결과를 리스트로 변환 및 병합
         List<searchCategoryDto> categoryResults = searchHits.getSearchHits().stream()
@@ -63,6 +69,7 @@ public class SearchService {
                 .map(hit -> hit.getContent())
                 .collect(Collectors.toList());
 
-        return new SearchResponseDto(categoryResults,newsResults);
+        return new SearchResponseDto(categoryResults, newsResults);
     }
+
 }
