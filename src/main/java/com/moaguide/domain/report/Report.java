@@ -28,8 +28,9 @@ public class Report {
     public ReportCustomDto toCustomDto() {
         id = this.id;
         title = this.title;
+        content = this.content;
         category = this.category;
         date = this.date;
-        return new ReportCustomDto(id, title, category, date);
+        return new ReportCustomDto(id, title,content, category, date);
     }
 }
