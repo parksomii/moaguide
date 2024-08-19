@@ -35,6 +35,10 @@ public class ReportService {
 
     // 요약 관련 리포트
     public List<ReportCustomDto> getSummary(String category, Pageable pageable) {
+        if (category.equals("all")) {
+            List<ReportCustomDto> reportCustomDtos = reportRepository.findLatest(pageable);
+            return reportCustomDtos;
+        }
         List<ReportCustomDto> reportCustomDtos = reportRepository.findCategoryLatest(category, pageable);
         return reportCustomDtos;
     }

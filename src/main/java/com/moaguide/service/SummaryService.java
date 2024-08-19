@@ -47,8 +47,13 @@ public class SummaryService {
     // 최근 배당금 발표
     @Transactional
     public List<SummaryDivideCustomDto> getDivide(int page,int size, String category) {
-        List<IdDto> findDivide = summaryRepository.findAllByCategory(category, PageRequest.of(page - 1, size));
+        List<IdDto> findDivide;
         List<SummaryDivideCustomDto> summaryDivideListDtos = new ArrayList<>();
+        if(category.equals("all")){
+            findDivide = summaryRepository.findAllByList(PageRequest.of(page - 1, size));
+        } else {
+            findDivide = summaryRepository.findAllByCategory(category, PageRequest.of(page - 1, size));
+        }
         for(IdDto idDto : findDivide) {
             Divide findDivide1 = divideRepository.findByProductId(idDto.getProduct_Id());
             if (findDivide1 != null) {
