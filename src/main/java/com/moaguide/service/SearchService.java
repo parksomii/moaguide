@@ -18,11 +18,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
 @AllArgsConstructor
+
+@Service
 public class SearchService {
     private final SearchLogRepository searchLogRepository;
-    private ElasticsearchOperations elasticsearchClient;
+    private final ElasticsearchOperations elasticsearchClient;
 
     public void savekeyword(String keyword) {
         LocalDate localDate = LocalDate.now();
