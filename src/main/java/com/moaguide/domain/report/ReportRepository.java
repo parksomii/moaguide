@@ -33,20 +33,20 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     // 전체 카테고리 인기순
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ReportCustomDto(r.id, r.title, r.content, r.category, r.date) " +
             "FROM Report r WHERE r.subCategory = :subcategory ORDER BY r.view DESC")
-    Page<ReportCustomDto> findAllByViews(@Param("subcategory") String subcategory, Pageable pageable);
+    List<ReportCustomDto> findAllByViews(@Param("subcategory") String subcategory, Pageable pageable);
     // 카테고리별 인기순
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ReportCustomDto(r.id, r.title, r.content, r.category, r.date) " +
             "FROM Report r WHERE r.category = :category AND r.subCategory = :subcategory " +
             "ORDER BY r.view DESC")
-    Page<ReportCustomDto> findListByAllbyViews(@Param("category") String category, @Param("subcategory") String subcategory, Pageable pageable);
+    List<ReportCustomDto> findListByAllbyViews(@Param("category") String category, @Param("subcategory") String subcategory, Pageable pageable);
 
     // 전체 카테고리 최신순
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ReportCustomDto(r.id, r.title, r.content, r.category, r.date) " +
             "FROM Report r WHERE r.subCategory = :subcategory ORDER BY r.date DESC")
-    Page<ReportCustomDto> findAllbyLatest(@Param("subcategory") String subcategory, Pageable pageable);
+    List<ReportCustomDto> findAllbyLatest(@Param("subcategory") String subcategory, Pageable pageable);
     // 카테고리별 최신순
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ReportCustomDto(r.id, r.title, r.content, r.category, r.date) " +
             "FROM Report r WHERE r.category = :category AND r.subCategory = :subcategory " +
             "ORDER BY r.date DESC")
-    Page<ReportCustomDto> findListByAllbyLatest(@Param("category") String category, @Param("subcategory") String subcategory, Pageable pageable);
+    List<ReportCustomDto> findListByAllbyLatest(@Param("category") String category, @Param("subcategory") String subcategory, Pageable pageable);
 }

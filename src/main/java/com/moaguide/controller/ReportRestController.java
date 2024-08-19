@@ -42,7 +42,7 @@ public class ReportRestController {
                                                      @RequestParam int size,
                                                      @RequestParam String subcategory,
                                                      @RequestParam String sort) {
-        Page<ReportCustomDto> reportList;
+        List<ReportCustomDto> reportList;
         if (sort.equals("popular")) {
             reportList = reportService.getAllPopularBySubCategory(category, subcategory, page, size);
         } else {

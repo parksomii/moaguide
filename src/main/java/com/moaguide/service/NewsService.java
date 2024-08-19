@@ -41,11 +41,8 @@ public class NewsService {
     }
 
     // 뉴스 최신순 전체 조회
-    public Page<News> getAllByLatest(PageRequestDTO pageRequestDTO, String category) {
-        Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() - 1,
-                pageRequestDTO.getSize(),
-                Sort.by("date").descending());
+    public Page<News> getAllByLatest(int page, int size, String category) {
+        Pageable pageable = PageRequest.of(page - 1, size);
         Page<News> findNewsByLatest = newsRepository.findAllByCategory(pageable, category);
         log.info("NewsService findAllByLatest - result : {}", findNewsByLatest);
         log.info("NewsService findAllByLatest - result.getContent() : {}", findNewsByLatest.getContent());
@@ -53,13 +50,8 @@ public class NewsService {
     }
 
     // 뉴스 인기순 전체 조회
-    public Page<News> getAllByViews(PageRequestDTO pageRequestDTO, String category) {
-        Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() - 1,
-                pageRequestDTO.getSize(),
-                Sort.by("views").descending());
-        /*// 1페이지 3개만 보이기
-        Pageable pageable = PageRequest.of(0, 3, Sort.by("views").descending());*/
+    public Page<News> getAllByViews(int page, int size, String category) {
+        Pageable pageable = PageRequest.of(page - 1, size);
         Page<News> findNewsByViews = newsRepository.findAllByCategory(pageable, category);
         log.info("NewsService findAllByViews - result : {}", findNewsByViews);
         log.info("NewsService findAllByViews - result.getContent() : {}", findNewsByViews.getContent());

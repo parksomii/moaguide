@@ -36,21 +36,20 @@ public class NewsRestController {
 
     // 카테고리별 뉴스 조회
     @GetMapping("/{category}")
-    public ResponseEntity<List<NewsCustomDto>> newsListByCategory(@PathVariable String category, @RequestParam String sort, PageRequestDTO pageRequestDTO ) {
+    public ResponseEntity<?> newsListByCategory(@PathVariable String category,
+                                                                  @RequestParam String sort,
+                                                                  @RequestParam int page,
+                                                                  @RequestParam int size) {
+        Page<News> newsList;
         // 인기순
         if (sort.equals("popular")) {
-            Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1, pageRequestDTO.getSize(), Sort.by("views").descending());
-            Page<News> newsList = newsService.getAllByViews(pageRequestDTO, category);
-            List<NewsCustomDto> newsData = newsList.stream().map(news -> new NewsCustomDto(news)).collect(Collectors.toList());
-            return ResponseEntity.ok().body(newsData);
+            newsList = newsService.getAllByViews(page, size, category);
         }
         // 최신순
         else {
-            Pageable pageable = PageRequest.of(pageRequestDTO.getPage() - 1, pageRequestDTO.getSize(), Sort.by("date").descending());
-            Page<News> newsList = newsService.getAllByLatest(pageRequestDTO, category);
-            List<NewsCustomDto> newsData = newsList.stream().map(news -> new NewsCustomDto(news)).collect(Collectors.toList());
-            return ResponseEntity.ok().body(newsData);
+            newsList = newsService.getAllByLatest(page, size, category);
         }
+        return ResponseEntity.ok().body(newsList);
     }
     @PostMapping("{news_Id}")
     public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable Long news_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
