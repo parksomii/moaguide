@@ -59,12 +59,9 @@ spring:
       port: 6379
     elasticsearch:
       ssl:
-        trust-store:
-          type: PEM
-          path: /certs/ca/ca.pem
-        key-store:
-          type: PEM
-          path: /certs/blue/blue.pem
+        enabled: true
+        trust-store-location: classpath:certs/ca/ca.pem
+        trust-store-password: moaguide1!
 
 
 server:
@@ -84,13 +81,9 @@ spring:
       port: 6379
     elasticsearch:
       ssl:
-        trust-store:
-          type: PEM
-          path: /certs/ca/ca.pem
-        key-store:
-          type: PEM
-          path: /certs/green/green.pem
-
+        enabled: true
+        trust-store-location: classpath:certs/ca/ca.pem
+        trust-store-password: moaguide1!
 server:
   port: 8081
 
