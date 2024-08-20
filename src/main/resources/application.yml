@@ -54,6 +54,17 @@ spring:
     activate:
       on-profile: blue
   data:
+    redis:
+      host: localhost
+      port: 6379
+    elasticsearch:
+      ssl:
+        trust-store:
+          type: PEM
+          path: /certs/ca/ca.pem
+        key-store:
+          type: PEM
+          path: /certs/blue/blue.pem
 
 
 server:
@@ -71,6 +82,14 @@ spring:
     redis:
       host: localhost
       port: 6379
+    elasticsearch:
+      ssl:
+        trust-store:
+          type: PEM
+          path: /certs/ca/ca.pem
+        key-store:
+          type: PEM
+          path: /certs/green/green.pem
 
 server:
   port: 8081
