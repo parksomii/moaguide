@@ -26,34 +26,27 @@ public class ReportRestController {
     private ReportViewService reportViewService;
 
     // 리포트 홈페이지
-    @GetMapping("/")
+    // todo: 임시로 이미지 넣음.
+/*    @GetMapping("/")
     public ResponseEntity<Object> reportList() {
         // 1개만 가져오기
         Pageable pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "date"));
         List<ReportCustomDto> reportList = reportService.getMainReport(pageable);
         return ResponseEntity.ok(reportList);
-    }
+    }*/
 
     // 카테고리별 리포트 조회
     @GetMapping("/list/{category}")
     public ResponseEntity<Object> reportListCategory(@PathVariable String category,
-                                                     @RequestParam(required = false, defaultValue = "guide") String subcategory,
-                                                     @RequestParam(required = false, defaultValue = "latest") String sort,
-                                                     PageRequestDTO pageRequestDTO) {
-        // 유효한 서브 카테고리 목록
-        if (!isValidSubcategory(subcategory)) {
-            return ResponseEntity.badRequest().body(null);
-        }
-
-        // 정렬 방향 설정
-        Pageable pageable = PageRequest.of(pageRequestDTO.getPage() -1, pageRequestDTO.getSize(),
-                sort.equals("popular") ? Sort.by(Sort.Direction.DESC, "view") : Sort.by(Sort.Direction.DESC, "date"));
-
+                                                     @RequestParam int page,
+                                                     @RequestParam int size,
+                                                     @RequestParam String subcategory,
+                                                     @RequestParam String sort) {
         Page<ReportCustomDto> reportList;
         if (sort.equals("popular")) {
-            reportList = reportService.getAllPopularBySubCategory(category, subcategory, pageable);
+            reportList = reportService.getAllPopularBySubCategory(category, subcategory, page, size);
         } else {
-            reportList = reportService.getAllLatestBySubCategory(category, subcategory, pageable);
+            reportList = reportService.getAllLatestBySubCategory(category, subcategory, page, size);
             log.info("reportList: {}", reportList);
         }
         log.info("******reportList: {}", reportList);
@@ -61,17 +54,7 @@ public class ReportRestController {
         return ResponseEntity.ok(reportList);
     }
 
-    // 서브 카테고리 유효성 검사
-    private boolean isValidSubcategory(String subcategory) {
-        return "analysis".equals(subcategory) || "situation".equals(subcategory) || "guide".equals(subcategory);
-    }
-
     // 리포트 상세
-/*    @GetMapping("/{report_Id}")
-    public ResponseEntity<Object> reportDetail(@PathVariable int report_Id) {
-        Report report = reportService.findById(report_Id);
-        return ResponseEntity.ok(report);
-    }*/
     @GetMapping("/{report_Id}")
     public ResponseEntity<Object> reportDetail(@PathVariable int report_Id) {
         ReportCustomDto report = reportService.getReportDetail(report_Id);

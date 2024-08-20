@@ -8,6 +8,7 @@ import com.moaguide.service.ReportService;
 import com.moaguide.service.SummaryService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -42,16 +43,18 @@ public class SummaryRestController {
     @GetMapping("/list/{category}")
     public ResponseEntity<Object> summary(@PathVariable("category") String category,
                                           @RequestParam String sort,
-                                          @RequestParam int page, @RequestParam int size) {
+                                          @RequestParam int page,
+                                          @RequestParam int size) {
         log.info("category: " + category);
+        Page<SummaryCustomDto> summary;
         if(sort.equals("views")) {
-            List<SummaryCustomDto> summary = summaryService.getSummaryView(page,size, category);
+            summary = summaryService.getSummaryView(page,size, category);
             return ResponseEntity.ok(summary);
         } else if(sort.equals("name")) {
-            List<SummaryCustomDto> summary = summaryService.getSummaryName(page,size, category);
+            summary = summaryService.getSummaryName(page,size, category);
             return ResponseEntity.ok(summary);
         } else if(sort.equals("divide")) {
-            List<SummaryCustomDto> summary = summaryService.getSummaryDvide(page,size, category);
+            summary = summaryService.getSummaryDvide(page,size, category);
             return ResponseEntity.ok(summary);
         } else{
             return ResponseEntity.badRequest().build();

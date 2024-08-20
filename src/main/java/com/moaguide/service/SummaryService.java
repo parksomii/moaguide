@@ -47,8 +47,13 @@ public class SummaryService {
     // 최근 배당금 발표
     @Transactional
     public List<SummaryDivideCustomDto> getDivide(int page,int size, String category) {
-        List<IdDto> findDivide = summaryRepository.findAllByCategory(category, PageRequest.of(page - 1, size));
+        List<IdDto> findDivide;
         List<SummaryDivideCustomDto> summaryDivideListDtos = new ArrayList<>();
+        if(category.equals("all")){
+            findDivide = summaryRepository.findAllByList(PageRequest.of(page - 1, size));
+        } else {
+            findDivide = summaryRepository.findAllByCategory(category, PageRequest.of(page - 1, size));
+        }
         for(IdDto idDto : findDivide) {
             Divide findDivide1 = divideRepository.findByProductId(idDto.getProduct_Id());
             if (findDivide1 != null) {
@@ -61,83 +66,14 @@ public class SummaryService {
     // 카테고리별 상품현황
     @Transactional
     public List<SummaryCustomDto> getSummary(int page,int size, String category) {
-        List<IdDto> findSummary = summaryRepository.findAllByCategory(category, PageRequest.of(page - 1, size));
-        List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
-        for(IdDto idDto : findSummary) {
-            List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
-            Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
-            if (findDivide == null) {
-                summaryListDtos.add(new SummaryCustomDto(transactionList));
-            } else {
-                summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
-            }
-        }
-        return summaryListDtos;
-    }
-
-
-    @Transactional
-    public List<SummaryCustomDto> getSummaryDvide(int page,int size, String category) {
-        Pageable pageable = PageRequest.of(page-1, size);
-        Date date = Date.valueOf(LocalDate.now().minusMonths(6).with(TemporalAdjusters.firstDayOfMonth()));
-        Page<Divide> divides = divideRepository.findLatestByProductIdAfterDate(date,pageable,category);
-        List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
-        for(Divide divide : divides.getContent()) {
-            List<Transaction> transactions = transactionRepository.findAllByProductIdAndTradeDayAfter(divide.getProductId());
-            summaryCustomDtos.add(new SummaryCustomDto(transactions,divide));
-        }
-        return summaryCustomDtos;
-    }
-
-    // 카테고리별 상품 목록
-    @Transactional
-    public List<SummaryCustomDto> getSummaryView(int page,int size, String category) {
-        log.info("섬머리 카테고리 " + category);
-        List<IdDto> findViews;
-        List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
-        log.info("섬머리 리스트 " + summaryListDtos);
-        if(category.equals("all")){
-            findViews = summaryRepository.findListByAllbyViews(PageRequest.of(page - 1, size));
-            log.info("섬머리 all findViews" + findViews);
-        } else {
-            findViews = summaryRepository.findListByCategory(category, PageRequest.of(page - 1, size));
-            log.info("섬머리" + category, "findViews" + findViews);
-        }
-        for (IdDto idDto : findViews) {
-            List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
-            log.info("섬머리 트랜잭션 리스트 " + transactionList);
-
-            if (!transactionList.isEmpty()) {  // 트랜잭션 리스트가 비어 있지 않은 경우에만 처리
-                Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
-                log.info("섬머리 디바이드 " + findDivide);
-
-                if (findDivide == null) {
-                    log.info("섬머리 디바이드 없음");
-                    summaryListDtos.add(new SummaryCustomDto(transactionList));
-                } else {
-                    log.info("섬머리 디바이드 있음");
-                    summaryListDtos.add(new SummaryCustomDto(transactionList, findDivide));
-                }
-            } else {
-                log.warn("섬머리 트랜잭션 리스트가 비어 있음: " + idDto.getProduct_Id());
-            }
-
-            log.info("섬머리 리스트 " + summaryListDtos);
-        }
-
-        return summaryListDtos;
-    }
-
-    @Transactional
-    public List<SummaryCustomDto> getSummaryName(int page, int size, String category) {
-        List<IdDto> findNames;
+        List<IdDto> findSummary;
         List<SummaryCustomDto> summaryListDtos = new ArrayList<>();
         if(category.equals("all")){
-            findNames = summaryRepository.findListByAllbyName(PageRequest.of(page - 1, size));
+            findSummary = summaryRepository.findAllByList(PageRequest.of(page - 1, size));
         } else {
-            findNames = summaryRepository.findListByCategoryAndName(category, PageRequest.of(page - 1, size));
+            findSummary = summaryRepository.findAllByCategory(category, PageRequest.of(page - 1, size));
         }
-        for (IdDto idDto : findNames) {
+        for (IdDto idDto : findSummary) {
             List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
             if (!transactionList.isEmpty()) {
                 Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
@@ -153,4 +89,78 @@ public class SummaryService {
         return summaryListDtos;
     }
 
+    @Transactional
+    public Page<SummaryCustomDto> getSummaryDvide(int page,int size, String category) {
+        Pageable pageable = PageRequest.of(page-1, size);
+        Date date = Date.valueOf(LocalDate.now().minusMonths(6).with(TemporalAdjusters.firstDayOfMonth()));
+        Page<Divide> divides = divideRepository.findLatestByProductIdAfterDate(date,pageable,category);
+        /*List<SummaryCustomDto> summaryCustomDtos = new ArrayList<>();
+        for(Divide divide : divides.getContent()) {
+            List<Transaction> transactions = transactionRepository.findAllByProductIdAndTradeDayAfter(divide.getProductId());
+            summaryCustomDtos.add(new SummaryCustomDto(transactions,divide));
+        }*/
+        Page<SummaryCustomDto> summaryCustomDtos = divides.map(divide -> {
+            List<Transaction> transactions = transactionRepository.findAllByProductIdAndTradeDayAfter(divide.getProductId());
+            return new SummaryCustomDto(transactions,divide);
+        });
+        return summaryCustomDtos;
+    }
+
+    // 카테고리별 상품 목록
+    @Transactional
+    public Page<SummaryCustomDto> getSummaryView(int page,int size, String category) {
+        log.info("섬머리 카테고리 " + category);
+        Page<IdDto> findViews;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        if (category.equals("all")) {
+            findViews = summaryRepository.findListByAllbyViews(pageable);
+        } else {
+            findViews = summaryRepository.findListByCategory(category, pageable);
+        }
+        // Page<IdDto>를 Page<SummaryCustomDto>로 변환
+        Page<SummaryCustomDto> summaryCustomDtos = findViews.map(idDto -> {
+            List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
+
+            if (!transactionList.isEmpty()) {
+                Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
+
+                if (findDivide == null) {
+                    return new SummaryCustomDto(transactionList);
+                } else {
+                    return new SummaryCustomDto(transactionList, findDivide);
+                }
+            } else {
+                return null;  // transactionList가 비어 있을 때 null 반환
+            }
+        });
+        return summaryCustomDtos;
+    }
+
+    @Transactional
+    public Page<SummaryCustomDto> getSummaryName(int page, int size, String category) {
+        Page<IdDto> findNames;
+        Pageable pageable = PageRequest.of(page - 1, size);
+        if(category.equals("all")){
+            findNames = summaryRepository.findListByAllbyName(PageRequest.of(page - 1, size));
+        } else {
+            findNames = summaryRepository.findListByCategoryAndName(category, PageRequest.of(page - 1, size));
+        }
+        // Page<IdDto>를 Page<SummaryCustomDto>로 변환
+        Page<SummaryCustomDto> summaryCustomDtos = findNames.map(idDto -> {
+            List<Transaction> transactionList = transactionRepository.findAllByProductIdAndTradeDayAfter(idDto.getProduct_Id());
+
+            if (!transactionList.isEmpty()) {
+                Divide findDivide = divideRepository.findByProductId(idDto.getProduct_Id());
+
+                if (findDivide == null) {
+                    return new SummaryCustomDto(transactionList);
+                } else {
+                    return new SummaryCustomDto(transactionList, findDivide);
+                }
+            } else {
+                return null;  // transactionList가 비어 있을 때 null 반환
+            }
+        });
+        return summaryCustomDtos;
+    }
 }

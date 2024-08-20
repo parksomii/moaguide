@@ -41,28 +41,30 @@ public class NewsService {
     }
 
     // 뉴스 최신순 전체 조회
-    public Page<News> getAllByLatest(PageRequestDTO pageRequestDTO, String category) {
-        Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() - 1,
-                pageRequestDTO.getSize(),
-                Sort.by("date").descending());
-        Page<News> findNewsByLatest = newsRepository.findAllByCategory(pageable, category);
-        log.info("NewsService findAllByLatest - result : {}", findNewsByLatest);
-        log.info("NewsService findAllByLatest - result.getContent() : {}", findNewsByLatest.getContent());
+    public Page<NewsCustomDto> getAllByLatest(int page, int size, String category) {
+        if (category.equals("all")) {
+            Pageable pageable = PageRequest.of(page - 1, size, Sort.by("date").descending());
+            Page<News> newsData = newsRepository.findAll(pageable);
+            Page<NewsCustomDto> findNewsByLatest = newsData.map(news -> new NewsCustomDto(news));
+            return findNewsByLatest;
+        }
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<News> newsData = newsRepository.findAllByCategory(pageable, category);
+        Page<NewsCustomDto> findNewsByLatest = newsData.map(news -> new NewsCustomDto(news));
         return findNewsByLatest;
     }
 
     // 뉴스 인기순 전체 조회
-    public Page<News> getAllByViews(PageRequestDTO pageRequestDTO, String category) {
-        Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() - 1,
-                pageRequestDTO.getSize(),
-                Sort.by("views").descending());
-        /*// 1페이지 3개만 보이기
-        Pageable pageable = PageRequest.of(0, 3, Sort.by("views").descending());*/
-        Page<News> findNewsByViews = newsRepository.findAllByCategory(pageable, category);
-        log.info("NewsService findAllByViews - result : {}", findNewsByViews);
-        log.info("NewsService findAllByViews - result.getContent() : {}", findNewsByViews.getContent());
+    public Page<NewsCustomDto> getAllByViews(int page, int size, String category) {
+        if (category.equals("all")) {
+            Pageable pageable = PageRequest.of(page - 1, size, Sort.by("views").descending());
+            Page<News> newsData = newsRepository.findAll(pageable);
+            Page<NewsCustomDto> findNewsByViews = newsData.map(news -> new NewsCustomDto(news));
+            return findNewsByViews;
+        }
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<News> newsData = newsRepository.findAllByCategory(pageable, category);
+        Page<NewsCustomDto> findNewsByViews = newsData.map(news -> new NewsCustomDto(news));
         return findNewsByViews;
     }
 
