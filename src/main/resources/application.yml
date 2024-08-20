@@ -57,15 +57,7 @@ spring:
     redis:
       host: localhost
       port: 6379
-    elasticsearch:
-      ssl:
-        enabled: true
-        key-store: classpath:/certs/blue/blue.p12
-        key-store-password: moaguide1!
-        key-store-type: PKCS12
-        trust-store: classpath:/usr/local/share/ca-certificates/ca.p12
-        trust-store-password: moaguide1!
-        trust-store-type: PKCS12
+
 
 server:
   port: 8080
@@ -82,15 +74,7 @@ spring:
     redis:
       host: localhost
       port: 6379
-    elasticsearch:
-      ssl:
-        enabled: true
-        key-store: classpath:/certs/green/green.p12
-        key-store-password: moaguide1!
-        key-store-type: PKCS12
-        trust-store: classpath:/usr/local/share/ca-certificates/ca.p12
-        trust-store-password: moaguide1!
-        trust-store-type: PKCS12
+
 server:
   port: 8081
 
