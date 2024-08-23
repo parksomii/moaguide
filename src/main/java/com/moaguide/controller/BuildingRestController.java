@@ -86,7 +86,7 @@ public class BuildingRestController {
         BuildingDetail buildingDetail = buildingService.findkeyword(keyword);
         Location location = locationService.locate(buildingDetail.getProductId().getProductId());
         List<AreaDto> areas = areaService.findpolygon(keyword);
-        return ResponseEntity.ok(new BuildingAreaResponseDto(areas));
+        return ResponseEntity.ok(new BuildingAreaResponseDto(buildingDetail.getProductId().getName(),location,areas));
     }
 
     @GetMapping("subway")
