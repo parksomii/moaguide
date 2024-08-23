@@ -23,4 +23,8 @@ public class BuildingService {
         IdDto buildingDetail = buildingRepository.findDistricId(productId);
         return buildingDetail;
     }
+
+    public BuildingDetail findkeyword(String keyword) {
+        return buildingRepository.findByKeyword(keyword);
+    }
 }

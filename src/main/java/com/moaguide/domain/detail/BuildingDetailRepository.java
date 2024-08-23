@@ -18,4 +18,7 @@ public interface BuildingDetailRepository extends JpaRepository<BuildingDetail, 
 
     @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.IdDto(b.districtsId.districtsId) FROM BuildingDetail b WHERE b.productId.productId = :productId")
     IdDto findDistricId(@Param("productId") String productId);
+
+    @Query("SELECT b FROM BuildingDetail b where b.keyword = :keyword")
+    BuildingDetail findByKeyword(@Param("keyword")String keyword);
 }
