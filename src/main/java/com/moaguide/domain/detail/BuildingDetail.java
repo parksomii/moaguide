@@ -2,7 +2,6 @@ package com.moaguide.domain.detail;
 
 import com.moaguide.domain.building.districts.Districts;
 import com.moaguide.domain.summary.Summary;
-import com.moaguide.dto.BuildingDetailDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -92,34 +91,4 @@ public class BuildingDetail {
     private Integer dividendCycle;
 
     private String keyword;
-
-    public BuildingDetailDto toDTO() {
-        return new BuildingDetailDto(
-                this.id,
-                this.productId, // Summary 객체가 올바르게 처리될 수 있도록 이에 대한 처리가 필요할 수 있습니다.
-                this.districtsId, // Districts 객체가 올바르게 처리될 수 있도록 이에 대한 처리가 필요할 수 있습니다.
-                this.useArea,
-                this.mainUse,
-                this.completionDate,
-                this.landArea,
-                this.floorArea,
-                this.floorAreaRate,
-                this.dryRatio,
-                this.height,
-                this.scale,
-                this.mainStructure,
-                this.parking,
-                this.lift,
-                this.location,
-                this.securities,
-                this.publisher,
-                this.issuanceValue,
-                this.subscriptionSchedule,
-                this.listingDate,
-                this.initialDividendBaseDate,
-                this.dividendCycle,
-                this.keyword
-        );
-
-    }
 }

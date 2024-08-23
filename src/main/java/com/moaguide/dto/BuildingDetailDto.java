@@ -1,6 +1,7 @@
 package com.moaguide.dto;
 
 import com.moaguide.domain.building.districts.Districts;
+import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.summary.Summary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,11 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class BuildingDetailDto {
 
-    private Integer id;
-
     private Summary productId;
-
-    private Districts districtsId;
 
     private String useArea;
 
@@ -45,50 +42,21 @@ public class BuildingDetailDto {
 
     private String location;
 
-    private String securities;
 
-    private String publisher;
-
-    private Integer issuanceValue;
-
-    private String subscriptionSchedule;
-
-    private Date listingDate;
-
-    private Date initialDividendBaseDate;
-
-    private Integer dividendCycle;
-
-    private String keyword;
-
-    public BuildingDetailDto(Summary productId, Districts districtsId, String useArea, String mainUse,
-                             String completionDate, String landArea, String floorArea, Double floorAreaRate,
-                             Double dryRatio, Double height, String scale, String mainStructure, Integer parking,
-                             Integer lift, String location, String securities, String publisher, Integer issuanceValue,
-                             String subscriptionSchedule, Date listingDate, Date initialDividendBaseDate, Integer dividendCycle,
-                             String keyword) {
-        this.productId = productId;
-        this.districtsId = districtsId;
-        this.useArea = useArea;
-        this.mainUse = mainUse;
-        this.completionDate = completionDate;
-        this.landArea = landArea;
-        this.floorArea = floorArea;
-        this.floorAreaRate = floorAreaRate;
-        this.dryRatio = dryRatio;
-        this.height = height;
-        this.scale = scale;
-        this.mainStructure = mainStructure;
-        this.parking = parking;
-        this.lift = lift;
-        this.location = location;
-        this.securities = securities;
-        this.publisher = publisher;
-        this.issuanceValue = issuanceValue;
-        this.subscriptionSchedule = subscriptionSchedule;
-        this.listingDate = listingDate;
-        this.initialDividendBaseDate = initialDividendBaseDate;
-        this.dividendCycle = dividendCycle;
-        this.keyword = keyword;
+    public BuildingDetailDto(BuildingDetail buildingDetail) {
+        this.productId = buildingDetail.getProductId();
+        this.useArea = buildingDetail.getUseArea();
+        this.mainUse = buildingDetail.getMainUse();
+        this.completionDate = buildingDetail.getCompletionDate();
+        this.landArea = buildingDetail.getLandArea();
+        this.floorArea = buildingDetail.getFloorArea();
+        this.floorAreaRate = buildingDetail.getFloorAreaRate();
+        this.dryRatio = buildingDetail.getDryRatio();
+        this.height = buildingDetail.getHeight();
+        this.scale = buildingDetail.getScale();
+        this.mainStructure = buildingDetail.getMainStructure();
+        this.parking = buildingDetail.getParking();
+        this.lift = buildingDetail.getLift();
+        this.location = buildingDetail.getLocation();
     }
 }

@@ -6,6 +6,7 @@ import com.moaguide.domain.building.location.Location;
 import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.transaction.Transaction;
+import com.moaguide.dto.BuildingDetailDto;
 import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.BuildingDto.*;
 import com.moaguide.service.TransactionService;
@@ -42,10 +43,9 @@ public class BuildingRestController {
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         BuildingDetail buildingDetail = buildingService.detail(product_Id);
         List<LeaseDto> lease = leaseService.detail(product_Id);
-        Location location = locationService.locate(product_Id);
-        Transaction transaction = transactionService.findbyproductId(product_Id);
         LandRegistry landRegistry = landRegistryService.fingById(product_Id);
-        BuildingBaseResponseDto buildingBaseResponseDto = new BuildingBaseResponseDto(buildingDetail, lease, transaction, location, landRegistry);
+        BuildingBaseResponseDto buildingBaseResponseDto = new BuildingBaseResponseDto(buildingDetail.getProductId().getProductId(),new PublishDto(buildingDetail) ,new BuildingDetailDto(buildingDetail),landRegistry,lease);
+
         return ResponseEntity.ok(buildingBaseResponseDto);
     }
 

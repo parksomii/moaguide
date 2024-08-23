@@ -1,8 +1,13 @@
 package com.moaguide.security;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.moaguide.domain.user.User;
+import com.moaguide.domain.user.UserRepository;
+import com.moaguide.dto.ProfileDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CookieService;
+import com.moaguide.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +31,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
+    private final UserService userService;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
@@ -45,6 +51,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
         //유저 정보
         String username = authentication.getName();
+        ProfileDto user = userService.getUserNickName(username);
 
         // rememberMe 여부 확인
         boolean rememberMe = Boolean.parseBoolean(request.getParameter("rememberMe"));
@@ -65,10 +72,16 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         response.setStatus(HttpStatus.OK.value());
-        try (PrintWriter writer = response.getWriter()) {
-            writer.write("{\"message\": \"Login successful\"}");
+        try {
+            // ObjectMapper를 사용하여 ProfileDto 객체를 JSON으로 변환
+            ObjectMapper objectMapper = new ObjectMapper();
+            String userJson = objectMapper.writeValueAsString(user);
+
+            // JSON 응답 작성
+            PrintWriter writer = response.getWriter();
+            writer.write("{\"message\": \"Login successful\", \"user\": " + userJson + "}");
             writer.flush();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
