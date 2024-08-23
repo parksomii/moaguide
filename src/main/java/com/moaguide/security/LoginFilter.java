@@ -31,8 +31,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
-    private final UserService userService;
-
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
@@ -51,7 +49,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
         //유저 정보
         String username = authentication.getName();
-        ProfileDto user = userService.getUserNickName(username);
+        ProfileDto user = UserService.getUserNickName(username);
 
         // rememberMe 여부 확인
         boolean rememberMe = Boolean.parseBoolean(request.getParameter("rememberMe"));

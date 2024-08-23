@@ -5,10 +5,13 @@ import com.moaguide.domain.building.landregistry.LandRegistry;
 import com.moaguide.domain.building.location.Location;
 import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.domain.detail.BuildingDetail;
+import com.moaguide.domain.divide.Divide;
 import com.moaguide.domain.transaction.Transaction;
 import com.moaguide.dto.BuildingDetailDto;
 import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.BuildingDto.*;
+import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
+import com.moaguide.service.DivideService;
 import com.moaguide.service.TransactionService;
 import com.moaguide.service.building.*;
 import lombok.AllArgsConstructor;
@@ -38,13 +41,23 @@ public class BuildingRestController {
     private final SubwayWeekService subwayWeekService;
     private final PopulationService populationService;
     private final VacancyRateService vacancyRateService;
+    private final DivideService divideService;
+
+    @GetMapping("{product_Id}")
+    public ResponseEntity<?> product(@PathVariable String product_Id) {
+        BuildingDetail buildingDetail = buildingService.detail(product_Id);
+        List<Transaction> transaction = transactionService.findtwoByproductId(product_Id);
+        Divide divide = divideService.findOne(product_Id);
+        return ResponseEntity.ok(new BuildingReponseDto(transaction,divide,buildingDetail.getDividendCycle()));
+    }
 
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         BuildingDetail buildingDetail = buildingService.detail(product_Id);
         List<LeaseDto> lease = leaseService.detail(product_Id);
         LandRegistry landRegistry = landRegistryService.fingById(product_Id);
-        BuildingBaseResponseDto buildingBaseResponseDto = new BuildingBaseResponseDto(buildingDetail.getProductId().getProductId(),new PublishDto(buildingDetail) ,new BuildingDetailDto(buildingDetail),landRegistry,lease);
+        Divide divide = divideService.findOne(product_Id);
+        BuildingBaseResponseDto buildingBaseResponseDto = new BuildingBaseResponseDto(buildingDetail.getProductId().getProductId(),new PublishDto(buildingDetail,divide.getDividend()) ,new BuildingDetailDto(buildingDetail),landRegistry,lease);
         return ResponseEntity.ok(buildingBaseResponseDto);
     }
 

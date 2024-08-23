@@ -6,6 +6,7 @@ import com.moaguide.config.handler.CustomAuthenticationEntryPointHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.moaguide.config.handler.CustomLogoutSuccessHandler;
+import com.moaguide.domain.user.User;
 import com.moaguide.jwt.JWTFilter;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.security.LoginFilter;

@@ -43,7 +43,7 @@ public class UserService {
         }
     }
 
-    public ProfileDto getUserNickName(String nickname) {
+    public static ProfileDto getUserNickName(String nickname) {
         User user = userRepository.findUserByNickName(nickname);
 
         int bookmarkCount = bookmarkRepository.countByUser(user.getNickname());
