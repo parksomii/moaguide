@@ -21,13 +21,6 @@ public class UserRestController {
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
 
-    // 마이페이지
-    @GetMapping()
-    public ResponseEntity<?> profile(@RequestHeader("Authorization") String auth) {
-        String nickname = jwtUtil.getNickname(auth.substring(7));
-        ProfileDto userProfile = userService.getUserNickName(nickname);
-        return ResponseEntity.ok(userProfile);
-    }
 
     // 마이페이지 수정 (닉네임, 비밀번호, 전화번호)
     // 닉네임 수정

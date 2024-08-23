@@ -48,4 +48,11 @@ public class CustomUserDetails implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
+    public String getemail(){
+        return user.getEmail();
+    }
+
+    public String getphone(){
+        return user.getPhoneNumber();
+    }
 }

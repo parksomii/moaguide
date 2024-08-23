@@ -43,18 +43,6 @@ public class UserService {
         }
     }
 
-    public static ProfileDto getUserNickName(String nickname) {
-        User user = userRepository.findUserByNickName(nickname);
-
-        int bookmarkCount = bookmarkRepository.countByUser(user.getNickname());
-
-        ProfileDto profileDto = new ProfileDto();
-        profileDto.setNickname(user.getNickname());
-        profileDto.setEmail(user.getEmail());
-        profileDto.setBkCount(bookmarkCount);
-        return profileDto;
-    }
-
     public User updateNickname(String findNickname, String changeNickname) {
         userRepository.updateNickname(findNickname, changeNickname);
         User user = userRepository.findUserByNickName(changeNickname);

@@ -2,16 +2,14 @@ package com.moaguide.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moaguide.domain.user.User;
-import com.moaguide.domain.user.UserRepository;
+import com.moaguide.dto.CustomUserDetails;
 import com.moaguide.dto.ProfileDto;
 import com.moaguide.jwt.JWTUtil;
+import com.moaguide.service.BookmarkService;
 import com.moaguide.service.CookieService;
-import com.moaguide.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,12 +23,18 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Iterator;
 
-@AllArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
+
+    public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, CookieService cookieService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+        this.cookieService = cookieService;
+    }
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
@@ -47,9 +51,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
+
         //유저 정보
         String username = authentication.getName();
-        ProfileDto user = UserService.getUserNickName(username);
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        ProfileDto user = new ProfileDto(userDetails.getUsername(),userDetails.getemail(),userDetails.getphone());
 
         // rememberMe 여부 확인
         boolean rememberMe = Boolean.parseBoolean(request.getParameter("rememberMe"));
