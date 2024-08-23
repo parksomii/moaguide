@@ -45,7 +45,6 @@ public class BuildingRestController {
         List<LeaseDto> lease = leaseService.detail(product_Id);
         LandRegistry landRegistry = landRegistryService.fingById(product_Id);
         BuildingBaseResponseDto buildingBaseResponseDto = new BuildingBaseResponseDto(buildingDetail.getProductId().getProductId(),new PublishDto(buildingDetail) ,new BuildingDetailDto(buildingDetail),landRegistry,lease);
-
         return ResponseEntity.ok(buildingBaseResponseDto);
     }
 
