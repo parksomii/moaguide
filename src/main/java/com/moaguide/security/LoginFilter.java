@@ -76,6 +76,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         response.setStatus(HttpStatus.OK.value());
+        response.setContentType("application/json;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try {
             // ObjectMapper를 사용하여 ProfileDto 객체를 JSON으로 변환
             ObjectMapper objectMapper = new ObjectMapper();
