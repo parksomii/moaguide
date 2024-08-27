@@ -14,9 +14,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@NoArgsConstructor
 public class SearchRestController {
-    private SearchService searchService;
+    private final SearchService searchService;
 
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String keyword) {
