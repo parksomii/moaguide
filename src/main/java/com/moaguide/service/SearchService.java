@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-
 @Service
 public class SearchService {
     private final SearchLogRepository searchLogRepository;
@@ -33,37 +32,38 @@ public class SearchService {
     public SearchResponseDto searchAll(String keyword) {
         PageRequest pageRequest = PageRequest.of(0, 10);
 
+        // building과 music 인덱스에서 검색을 동시에 수행
         Query searchQuery = NativeQuery.builder()
                 .withQuery(q -> q.multiMatch(m -> m
                         .query(keyword)
-                        .fields("name", "product_Id")))
+                        .fields("name", "product_Id"))) // name과 product_Id 필드를 검색
+                .withIndices("building", "music") // 두 인덱스를 지정
                 .withPageable(pageRequest)
                 .build();
 
         // 검색 수행: org.springframework.data.elasticsearch.core.SearchHits 사용
         SearchHits<searchCategoryDto> searchHits = elasticsearchClient.search(searchQuery, searchCategoryDto.class);
 
-        // 함수형 인터페이스로 multiMatchQuery 작성
-        Query NewssearchQuery = NativeQuery.builder()
+        // 뉴스 검색 쿼리 작성
+        Query newsSearchQuery = NativeQuery.builder()
                 .withQuery(q -> q.multiMatch(m -> m
                         .query(keyword)
                         .fields("title", "content")))  // title과 content 필드에서 검색
                 .withPageable(pageRequest)
                 .build();
 
-        // 검색 수행
-        SearchHits<searchNewsDto> newssearchHits = elasticsearchClient.search(searchQuery, searchNewsDto.class);
+        // 뉴스 검색 수행
+        SearchHits<searchNewsDto> newsSearchHits = elasticsearchClient.search(newsSearchQuery, searchNewsDto.class);
 
-        // 검색 결과를 리스트로 변환 및 병합
+        // 검색 결과를 리스트로 변환
         List<searchCategoryDto> categoryResults = searchHits.getSearchHits().stream()
                 .map(hit -> hit.getContent())
                 .collect(Collectors.toList());
 
-        List<searchNewsDto> newsResults = newssearchHits.getSearchHits().stream()
+        List<searchNewsDto> newsResults = newsSearchHits.getSearchHits().stream()
                 .map(hit -> hit.getContent())
                 .collect(Collectors.toList());
 
         return new SearchResponseDto(categoryResults, newsResults);
     }
-
 }
