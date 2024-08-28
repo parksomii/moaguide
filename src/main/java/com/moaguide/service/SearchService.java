@@ -37,14 +37,18 @@ public class SearchService {
         // building과 music 인덱스에서 동시에 검색 쿼리 생성
         SearchRequest searchRequest = new SearchRequest("building", "music");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "name", "product_Id"));
+
+        // 키워드로 모든 필드에서 검색하지만 _source 필터링으로 name과 product_Id만 반환
+        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "name", "address", "song", "singer", "lyricist", "composer", "arranger", "description"));
+        searchSourceBuilder.fetchSource(new String[]{"name", "product_Id"}, null); // 이 부분에서 원하는 필드만 반환
+
         searchRequest.source(searchSourceBuilder);
 
         // 검색 수행
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            // 검색 결과를 searchCategoryDto로 변환 (필요에 따라 변환 로직 추가)
+            // 검색 결과를 searchCategoryDto로 변환
             searchCategoryDto result = new searchCategoryDto(
                     (String) hit.getSourceAsMap().get("product_Id"),
                     (String) hit.getSourceAsMap().get("name")
