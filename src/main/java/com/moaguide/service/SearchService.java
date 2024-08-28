@@ -53,7 +53,7 @@ public class SearchService {
                 .field("composer", 1.0f)
                 .field("arranger", 1.0f)
                 .field("description", 1.0f)
-                .field("platform", 2.0f)).size(30);
+                .field("platform", 4.0f)).size(30);
         searchSourceBuilder.fetchSource(new String[]{"name", "product_Id","platform","category"}, null);  // name과 product_Id만 반환
 
 
