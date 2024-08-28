@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +53,7 @@ public class SearchService {
                 .field("composer", 1.0f)
                 .field("arranger", 1.0f)
                 .field("description", 1.0f)
-                .field("platform", 2.0f)
-                .field("category", 1.0f)).size(30);
+                .field("platform", 2.0f)).size(30);
         searchSourceBuilder.fetchSource(new String[]{"name", "product_Id","platform","category"}, null);  // name과 product_Id만 반환
 
 
@@ -103,15 +104,14 @@ public class SearchService {
         SearchRequest searchRequest = new SearchRequest("search-logs");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        // 현재 시간에서 24시간 전으로 설정
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime last24Hours = now.minusHours(24);
+        // 현재 시간에서 24시간 전으로 설정 (ZonedDateTime을 사용하여 시간대 정보 포함)
+        ZonedDateTime now = ZonedDateTime.now();
+        ZonedDateTime last24Hours = now.minusHours(24);
 
         // timestamp 필드에 대해 최근 24시간 범위를 설정하는 range 쿼리 추가
         searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp")
-                .gte(last24Hours.toString())  // 24시간 전부터
-                .lte(now.toString())          // 현재 시간까지
-                .format("yyyy-MM-dd'T'HH:mm:ss")); // Elasticsearch가 인식할 수 있는 시간 형식으로 지정
+                .gte(last24Hours.format(DateTimeFormatter.ISO_DATE_TIME))  // 24시간 전부터
+                .lte(now.format(DateTimeFormatter.ISO_DATE_TIME)));        // 현재 시간까지
 
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
