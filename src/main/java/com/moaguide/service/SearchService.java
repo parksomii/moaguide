@@ -92,18 +92,18 @@ public class SearchService {
         SearchRequest searchRequest = new SearchRequest("search-logs");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        // 현재 시간에서 24시간 전으로 설정
-        ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-        ZonedDateTime last24Hours = now.minusHours(24);
+        LocalDateTime now = LocalDateTime.now(); // 현재 시스템 기본 시간대
+        LocalDateTime last24Hours = now.minusHours(24);
 
-        // ZonedDateTime을 Date로 변환
-        Date nowDate = Date.from(now.toInstant());
-        Date last24HoursDate = Date.from(last24Hours.toInstant());
+        // `LocalDateTime`을 ISO 8601 형식으로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        String nowString = now.format(formatter);
+        String last24HoursString = last24Hours.format(formatter);
 
         // timestamp 필드에 대해 최근 24시간 범위를 설정하는 range 쿼리 추가
         searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp")
-                .gte(last24HoursDate)
-                .lte(nowDate));
+                .gte(last24HoursString)
+                .lte(nowString));
 
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
