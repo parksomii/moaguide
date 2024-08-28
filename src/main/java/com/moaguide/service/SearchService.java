@@ -52,11 +52,9 @@ public class SearchService {
                 .field("arranger", 1.0f)
                 .field("description", 1.0f)
                 .field("platform", 2.0f)
-                .field("category", 1.0f));
+                .field("category", 1.0f)).size(30);
         searchSourceBuilder.fetchSource(new String[]{"name", "product_Id","platform","category"}, null);  // name과 product_Id만 반환
 
-        // 결과 개수 20개로 제한
-        searchSourceBuilder.size(30);
 
         searchRequest.source(searchSourceBuilder);
 
