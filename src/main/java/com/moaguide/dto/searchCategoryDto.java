@@ -6,4 +6,6 @@ import lombok.AllArgsConstructor;
 public class searchCategoryDto {
     private String productId;
     private String name;
+    private String platform;
+    private String category;
 }

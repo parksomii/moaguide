@@ -40,8 +40,8 @@ public class SearchService {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         // 키워드로 여러 필드를 대상으로 검색, _source에서 name과 product_Id만 반환
-        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "name", "address", "song", "singer", "lyricist", "composer", "arranger", "description","flatform"));
-        searchSourceBuilder.fetchSource(new String[]{"name", "product_Id"}, null);  // name과 product_Id만 반환
+        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "name", "address", "song", "singer", "lyricist", "composer", "arranger", "description","platform","category"));
+        searchSourceBuilder.fetchSource(new String[]{"name", "product_Id","platform","category"}, null);  // name과 product_Id만 반환
 
         searchRequest.source(searchSourceBuilder);
 
@@ -55,9 +55,11 @@ public class SearchService {
 
             String productId = (String) hit.getSourceAsMap().get("product_Id");
             String name = (String) hit.getSourceAsMap().get("name");
+            String platform = (String) hit.getSourceAsMap().get("platform");
+            String category = (String) hit.getSourceAsMap().get("category");
 
             if (productId != null && name != null) {
-                searchCategoryDto result = new searchCategoryDto(productId, name);
+                searchCategoryDto result = new searchCategoryDto(productId, name,platform,category);
                 results.add(result);
             } else {
                 // 필드가 비어있는 경우 처리 (디버깅용)
