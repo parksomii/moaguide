@@ -43,7 +43,16 @@ public class SearchService {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         // 키워드로 여러 필드를 대상으로 검색, _source에서 name과 product_Id만 반환
-        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "name", "address", "song", "singer", "lyricist", "composer", "arranger", "description","platform","category"));
+        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword)
+                .field("name", 1.0f)  // 기본 가중치 1.0
+                .field("address", 1.0f)
+                .field("singer", 1.0f)
+                .field("lyricist", 1.0f)
+                .field("composer", 1.0f)
+                .field("arranger", 1.0f)
+                .field("description", 1.0f)
+                .field("platform", 2.0f)
+                .field("category", 1.0f));
         searchSourceBuilder.fetchSource(new String[]{"name", "product_Id","platform","category"}, null);  // name과 product_Id만 반환
 
         // 결과 개수 20개로 제한
