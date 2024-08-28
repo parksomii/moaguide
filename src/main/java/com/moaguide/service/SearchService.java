@@ -44,16 +44,20 @@ public class SearchService {
         SearchRequest searchRequest = new SearchRequest("product");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        // MultiMatchQuery로 여러 필드에서 검색, 플랫폼에 가중치 1.5배 적용
+// MultiMatchQuery로 검색 가능한 필드에 대해 검색, 플랫폼에 가중치 1.5배 적용
         searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword)
                 .field("name", 1.0f)
                 .field("platform", 1.5f)  // 플랫폼에 가중치 1.5배
                 .field("address", 1.0f)
-                .field("singer", 1.0f)
-                .field("lyricist", 1.0f)
-                .field("composer", 1.0f)
-                .field("arranger", 1.0f)
-                .field("introduction", 1.0f)).size(30);
+                .field("Director", 1.0f)
+                .field("Cast", 1.0f)
+                .field("Writer", 1.0f)
+                .field("Singer", 1.0f)
+                .field("Lyricist", 1.0f)
+                .field("Composer", 1.0f)
+                .field("Arranger", 1.0f)
+                .field("Farm", 1.0f)
+                .field("Introduction", 1.0f)).size(30);
 
         // 필요한 필드만 반환
         searchSourceBuilder.fetchSource(new String[]{"name", "product_Id", "platform", "category"}, null);
