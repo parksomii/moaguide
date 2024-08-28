@@ -1,6 +1,7 @@
 package com.moaguide.controller;
 
 import com.moaguide.dto.SearchLogDto;
+import com.moaguide.dto.SearchRankDto;
 import com.moaguide.dto.SearchResponseDto;
 import com.moaguide.dto.searchCategoryDto;
 import com.moaguide.service.SearchService;
@@ -33,9 +34,15 @@ public class SearchRestController {
             return ResponseEntity.status(500).body("알 수 없는 오류가 발생했습니다.");
         }
     }
-//    @GetMapping("/search/log")
-//    public ResponseEntity<?> searchLog(){
-//        List<SearchLogDto> dto = searchService.searchrank();
-//        return ResponseEntity.ok(dto);
-//    }
+
+    // 검색어 순위 API
+    @GetMapping("/search/log")
+    public ResponseEntity<?> getSearchRank() {
+        try {
+            List<SearchRankDto> searchRankList = searchService.getSearchRank();
+            return ResponseEntity.ok(searchRankList);
+        } catch (IOException e) {
+            return ResponseEntity.status(500).body("검색 순위를 가져오는 중 오류가 발생했습니다.");
+        }
+    }
 }
