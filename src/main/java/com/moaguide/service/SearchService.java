@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,8 +36,7 @@ public class SearchService {
 
     // 검색어 저장 메서드
     public void saveKeyword(String keyword) {
-        ZonedDateTime now = ZonedDateTime.now();
-        searchLogRepository.save(new SearchLog(keyword, now));
+        searchLogRepository.save(new SearchLog(keyword, new Date()));
     }
 
     // 검색 수행 메서드 (product 인덱스에 대한 검색)
@@ -92,19 +92,23 @@ public class SearchService {
         SearchRequest searchRequest = new SearchRequest("search-logs");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        // 현재 시간에서 24시간 전으로 설정 (ZonedDateTime을 사용하여 시간대 정보 포함)
-        ZonedDateTime now = ZonedDateTime.now();
+        // 현재 시간에서 24시간 전으로 설정
+        ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
         ZonedDateTime last24Hours = now.minusHours(24);
+
+        // ZonedDateTime을 Date로 변환
+        Date nowDate = Date.from(now.toInstant());
+        Date last24HoursDate = Date.from(last24Hours.toInstant());
 
         // timestamp 필드에 대해 최근 24시간 범위를 설정하는 range 쿼리 추가
         searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp")
-                .gte(last24Hours.format(DateTimeFormatter.ISO_DATE_TIME))  // 24시간 전부터
-                .lte(now.format(DateTimeFormatter.ISO_DATE_TIME)));        // 현재 시간까지
+                .gte(last24HoursDate)
+                .lte(nowDate));
 
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
                 AggregationBuilders.terms("search_terms")
-                        .field("search_term.keyword")  // 검색어 집계
+                        .field("searchTerm.keyword")  // 검색어 집계 (필드명 수정)
                         .size(5)  // 상위 5개의 검색어만 가져옴
         );
 

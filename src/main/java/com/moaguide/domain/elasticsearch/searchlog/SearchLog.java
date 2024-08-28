@@ -25,17 +25,11 @@ public class SearchLog {
     @Field(type = FieldType.Text)
     private String searchTerm;
 
-    @Field(type = FieldType.Date)
-    private ZonedDateTime timestamp;
+    private Date timestamp;
 
-    public SearchLog(String searchTerm, ZonedDateTime timestamp) {
+    public SearchLog(String searchTerm, Date timestamp) {
         this.searchTerm = searchTerm;
         this.timestamp = timestamp;
     }
 
-    // 현재 UTC 시간을 사용해 생성하는 메서드
-    public static SearchLog createWithCurrentTimestamp(String searchTerm) {
-        ZonedDateTime nowUtc = ZonedDateTime.now().withZoneSameInstant(java.time.ZoneOffset.UTC);
-        return new SearchLog(searchTerm, nowUtc);
-    }
 }
