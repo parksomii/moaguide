@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor  // 기본 생성자 추가
+@NoArgsConstructor    // 기본 생성자 추가
 @AllArgsConstructor
 public class SearchRankDto {
     private String keyword;

@@ -9,6 +9,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -24,9 +25,9 @@ public class SearchLog {
     private String searchTerm;
 
     @Field(type = FieldType.Date)
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
 
-    public SearchLog(String searchTerm, LocalDate timestamp) {
+    public SearchLog(String searchTerm, LocalDateTime timestamp) {
         this.searchTerm = searchTerm;
         this.timestamp = timestamp;
     }

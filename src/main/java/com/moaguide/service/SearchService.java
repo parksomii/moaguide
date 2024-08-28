@@ -18,7 +18,7 @@ import org.elasticsearch.search.SearchHit;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class SearchService {
     private final SearchLogRepository searchLogRepository;
 
     public void savekeyword(String keyword) {
-        LocalDate localDate = LocalDate.now();
+        LocalDateTime localDate = LocalDateTime.now();
         searchLogRepository.save(new SearchLog(keyword, localDate));
     }
 
@@ -54,18 +54,27 @@ public class SearchService {
         // 검색 요청 실행
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
+        // 디버깅: 응답 상태 및 메타데이터 출력
+        System.out.println("검색 요청 완료: took = " + searchResponse.getTook() + ", 총 검색 결과: " + searchResponse.getHits().getTotalHits().value);
+
         // 검색 결과 처리
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            // 디버깅을 위해 전체 응답 출력
-            System.out.println(hit.getSourceAsMap());
+            // 디버깅: 각 결과의 전체 응답 출력
+            System.out.println("검색 결과 문서: " + hit.getSourceAsMap());
 
-            String productId = (String) hit.getSourceAsMap().get("product_Id");
-            String name = (String) hit.getSourceAsMap().get("name");
-            String platform = (String) hit.getSourceAsMap().get("platform");
-            String category = (String) hit.getSourceAsMap().get("category");
+            // 필드 값 추출
+            String productId = (String) hit.getSourceAsMap().getOrDefault("product_Id", "N/A");
+            String name = (String) hit.getSourceAsMap().getOrDefault("name", "N/A");
+            String platform = (String) hit.getSourceAsMap().getOrDefault("platform", "N/A");
+            String category = (String) hit.getSourceAsMap().getOrDefault("category", "N/A");
+
+            // 디버깅: 각 필드의 값 확인
+            System.out.println("추출된 필드 - productId: " + productId + ", name: " + name + ", platform: " + platform + ", category: " + category);
 
             if (productId != null && name != null) {
-                searchCategoryDto result = new searchCategoryDto(productId, name,platform,category);
+                // 디버깅: 결과가 정상적으로 추가됨을 로그로 확인
+                System.out.println("결과 추가 - productId: " + productId + ", name: " + name);
+                searchCategoryDto result = new searchCategoryDto(productId, name, platform, category);
                 results.add(result);
             } else {
                 // 필드가 비어있는 경우 처리 (디버깅용)
@@ -73,16 +82,29 @@ public class SearchService {
             }
         }
 
+        // 디버깅: 최종적으로 반환되는 결과 리스트 출력
+        System.out.println("최종 반환되는 결과 수: " + results.size());
         return results;
     }
 
-    // 검색어 순위 집계 메서드
+
+    // 검색어 순위 집계 메서드 (최근 24시간 기준)
     public List<SearchRankDto> getSearchRank() throws IOException {
         List<SearchRankDto> ranks = new ArrayList<>();
 
         // Elasticsearch에서 집계를 위한 검색 요청 생성
         SearchRequest searchRequest = new SearchRequest("search-logs");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        // 현재 시간에서 24시간 전으로 설정
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime last24Hours = now.minusHours(24);
+
+        // timestamp 필드에 대해 최근 24시간 범위를 설정하는 range 쿼리 추가
+        searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp")
+                .gte(last24Hours.toString())  // 24시간 전부터
+                .lte(now.toString())          // 현재 시간까지
+                .format("yyyy-MM-dd'T'HH:mm:ss")); // Elasticsearch가 인식할 수 있는 시간 형식으로 지정
 
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
