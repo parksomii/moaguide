@@ -31,29 +31,38 @@ public class SearchService {
         searchLogRepository.save(new SearchLog(keyword, localDate));
     }
 
+    // 검색 수행 메서드
     public List<searchCategoryDto> searchAll(String keyword) throws IOException {
         List<searchCategoryDto> results = new ArrayList<>();
 
-        // building과 music 인덱스에서 동시에 검색 쿼리 생성
+        // building과 music 인덱스에서 동시에 검색
         SearchRequest searchRequest = new SearchRequest("building", "music");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        // 키워드로 모든 필드에서 검색하지만 _source 필터링으로 name과 product_Id만 반환
+        // 키워드로 여러 필드를 대상으로 검색, _source에서 name과 product_Id만 반환
         searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "name", "address", "song", "singer", "lyricist", "composer", "arranger", "description"));
-        searchSourceBuilder.fetchSource(new String[]{"name", "product_Id"}, null); // 이 부분에서 원하는 필드만 반환
+        searchSourceBuilder.fetchSource(new String[]{"name", "product_Id"}, null);  // name과 product_Id만 반환
 
         searchRequest.source(searchSourceBuilder);
 
-        // 검색 수행
+        // 검색 요청 실행
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
+        // 검색 결과 처리
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            // 검색 결과를 searchCategoryDto로 변환
-            searchCategoryDto result = new searchCategoryDto(
-                    (String) hit.getSourceAsMap().get("product_Id"),
-                    (String) hit.getSourceAsMap().get("name")
-            );
-            results.add(result);
+            // 디버깅을 위해 전체 응답 출력
+            System.out.println(hit.getSourceAsMap());
+
+            String productId = (String) hit.getSourceAsMap().get("product_Id");
+            String name = (String) hit.getSourceAsMap().get("name");
+
+            if (productId != null && name != null) {
+                searchCategoryDto result = new searchCategoryDto(productId, name);
+                results.add(result);
+            } else {
+                // 필드가 비어있는 경우 처리 (디버깅용)
+                System.out.println("필드가 비어 있습니다: " + hit.getSourceAsMap());
+            }
         }
 
         return results;
