@@ -35,8 +35,8 @@ public class SearchService {
 
     // 검색어 저장 메서드
     public void saveKeyword(String keyword) {
-        LocalDateTime localDate = LocalDateTime.now().withNano(0); // 나노초 제거
-        searchLogRepository.save(new SearchLog(keyword, localDate));
+        ZonedDateTime now = ZonedDateTime.now();
+        searchLogRepository.save(new SearchLog(keyword, now));
     }
 
     // 검색 수행 메서드 (product 인덱스에 대한 검색)
