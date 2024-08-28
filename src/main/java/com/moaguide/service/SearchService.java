@@ -112,8 +112,6 @@ public class SearchService {
                         .size(5)  // 상위 5개의 검색어만 가져옴
         );
 
-        searchRequest.source(searchSourceBuilder);
-
         // 검색 요청 실행
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 

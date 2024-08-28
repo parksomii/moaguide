@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class SearchRankDto {
     private String keyword;
     private int rank;
-
 }
