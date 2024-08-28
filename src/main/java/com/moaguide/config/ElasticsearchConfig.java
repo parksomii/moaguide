@@ -22,7 +22,7 @@ public class ElasticsearchConfig {
                 .build();
 
         RestClientBuilder builder = RestClient.builder(
-                        new HttpHost("localhost", 9201, "https"))
+                        new HttpHost("172.23.0.3", 9200, "https"))
                 .setHttpClientConfigCallback(httpAsyncClientBuilder ->
                         httpAsyncClientBuilder.setSSLContext(sslContext)
                 );
