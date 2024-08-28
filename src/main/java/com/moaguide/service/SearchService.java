@@ -1,20 +1,21 @@
 package com.moaguide.service;
 
-
+import com.moaguide.domain.elasticsearch.product.ProductEntity;
+import com.moaguide.domain.elasticsearch.product.ProductRepository;
 import com.moaguide.domain.elasticsearch.searchlog.SearchLog;
 import com.moaguide.domain.elasticsearch.searchlog.SearchLogRepository;
 import com.moaguide.dto.SearchRankDto;
-import com.moaguide.dto.searchCategoryDto;
+import com.moaguide.dto.searchProductDto;
 import lombok.AllArgsConstructor;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.SearchHit;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -30,71 +31,54 @@ public class SearchService {
 
     private final RestHighLevelClient restHighLevelClient;
     private final SearchLogRepository searchLogRepository;
+    private final ProductRepository productRepository;
 
-    public void savekeyword(String keyword) {
+    // 검색어 저장 메서드
+    public void saveKeyword(String keyword) {
         LocalDateTime localDate = LocalDateTime.now().withNano(0); // 나노초 제거
         searchLogRepository.save(new SearchLog(keyword, localDate));
     }
 
-    // 검색 수행 메서드
-    public List<searchCategoryDto> searchAll(String keyword) throws IOException {
-        List<searchCategoryDto> results = new ArrayList<>();
-
-        // building과 music 인덱스에서 동시에 검색
-        SearchRequest searchRequest = new SearchRequest("building", "music");
+    // 검색 수행 메서드 (product 인덱스에 대한 검색)
+    public List<searchProductDto> searchProducts(String keyword) throws IOException {
+        SearchRequest searchRequest = new SearchRequest("product");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        // 키워드로 여러 필드를 대상으로 검색, _source에서 name과 product_Id만 반환
+        // MultiMatchQuery로 여러 필드에서 검색, 플랫폼에 가중치 1.5배 적용
         searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword)
-                .field("name", 1.0f)  // 기본 가중치 1.0
+                .field("name", 1.0f)
+                .field("platform", 1.5f)  // 플랫폼에 가중치 1.5배
                 .field("address", 1.0f)
                 .field("singer", 1.0f)
                 .field("lyricist", 1.0f)
                 .field("composer", 1.0f)
                 .field("arranger", 1.0f)
-                .field("description", 1.0f)
-                .field("platform", 4.0f)).size(30);
-        searchSourceBuilder.fetchSource(new String[]{"name", "product_Id","platform","category"}, null);  // name과 product_Id만 반환
+                .field("introduction", 1.0f)).size(30);
 
+        // 필요한 필드만 반환
+        searchSourceBuilder.fetchSource(new String[]{"name", "product_Id", "platform", "category"}, null);
 
         searchRequest.source(searchSourceBuilder);
 
         // 검색 요청 실행
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
-        // 디버깅: 응답 상태 및 메타데이터 출력
-        System.out.println("검색 요청 완료: took = " + searchResponse.getTook() + ", 총 검색 결과: " + searchResponse.getHits().getTotalHits().value);
-
         // 검색 결과 처리
+        List<searchProductDto> results = new ArrayList<>();
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            // 디버깅: 각 결과의 전체 응답 출력
-            System.out.println("검색 결과 문서: " + hit.getSourceAsMap());
+            // 필드 값 추출 및 DTO 생성
+            searchProductDto productDto = new searchProductDto(
+                    (String) hit.getSourceAsMap().getOrDefault("product_Id", "N/A"),
+                    (String) hit.getSourceAsMap().getOrDefault("name", "N/A"),
+                    (String) hit.getSourceAsMap().getOrDefault("platform", "N/A"),
+                    (String) hit.getSourceAsMap().getOrDefault("category", "N/A")
+            );
 
-            // 필드 값 추출
-            String productId = (String) hit.getSourceAsMap().getOrDefault("product_Id", "N/A");
-            String name = (String) hit.getSourceAsMap().getOrDefault("name", "N/A");
-            String platform = (String) hit.getSourceAsMap().getOrDefault("platform", "N/A");
-            String category = (String) hit.getSourceAsMap().getOrDefault("category", "N/A");
-
-            // 디버깅: 각 필드의 값 확인
-            System.out.println("추출된 필드 - productId: " + productId + ", name: " + name + ", platform: " + platform + ", category: " + category);
-
-            if (productId != null && name != null) {
-                // 디버깅: 결과가 정상적으로 추가됨을 로그로 확인
-                System.out.println("결과 추가 - productId: " + productId + ", name: " + name);
-                searchCategoryDto result = new searchCategoryDto(productId, name, platform, category);
-                results.add(result);
-            } else {
-                // 필드가 비어있는 경우 처리 (디버깅용)
-                System.out.println("필드가 비어 있습니다: " + hit.getSourceAsMap());
-            }
+            results.add(productDto);
         }
 
-        // 디버깅: 최종적으로 반환되는 결과 리스트 출력
-        System.out.println("최종 반환되는 결과 수: " + results.size());
         return results;
     }
-
 
     // 검색어 순위 집계 메서드 (최근 24시간 기준)
     public List<SearchRankDto> getSearchRank() throws IOException {
@@ -117,7 +101,7 @@ public class SearchService {
         searchSourceBuilder.aggregation(
                 AggregationBuilders.terms("search_terms")
                         .field("search_term.keyword")  // 검색어 집계
-                        .size(10)  // 상위 10개의 검색어만 가져옴
+                        .size(5)  // 상위 5개의 검색어만 가져옴
         );
 
         searchRequest.source(searchSourceBuilder);

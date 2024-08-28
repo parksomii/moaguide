@@ -1,12 +1,9 @@
 package com.moaguide.controller;
 
-import com.moaguide.dto.SearchLogDto;
 import com.moaguide.dto.SearchRankDto;
-import com.moaguide.dto.SearchResponseDto;
-import com.moaguide.dto.searchCategoryDto;
+import com.moaguide.dto.searchProductDto;
 import com.moaguide.service.SearchService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +20,8 @@ public class SearchRestController {
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String keyword) {
         try {
-            searchService.savekeyword(keyword);  // 키워드 저장
-            List<searchCategoryDto> dto = searchService.searchAll(keyword);  // 검색 수행
+            searchService.saveKeyword(keyword);  // 키워드 저장
+            List<searchProductDto> dto = searchService.searchProducts(keyword);  // 검색 수행
             return ResponseEntity.ok(dto);  // 성공 응답
         } catch (IOException e) {
             // IOException이 발생하면 적절한 에러 메시지와 함께 500 에러를 반환

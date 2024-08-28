@@ -1,12 +1,12 @@
 package com.moaguide.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 
-@Data
 @AllArgsConstructor
-public class searchCategoryDto {
+@NoArgsConstructor
+@Getter
+@Setter
+public class searchProductDto {
     private String productId;
     private String name;
     private String platform;

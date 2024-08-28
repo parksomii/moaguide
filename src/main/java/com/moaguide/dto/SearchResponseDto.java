@@ -6,6 +6,5 @@ import java.util.List;
 
 @AllArgsConstructor
 public class SearchResponseDto {
-    private List<searchCategoryDto> categoryDtos;
-    private List<searchNewsDto> newsDtos;
+    private List<searchProductDto> categoryDtos;
 }
