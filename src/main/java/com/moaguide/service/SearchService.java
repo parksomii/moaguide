@@ -40,7 +40,7 @@ public class SearchService {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         // 키워드로 여러 필드를 대상으로 검색, _source에서 name과 product_Id만 반환
-        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "name", "address", "song", "singer", "lyricist", "composer", "arranger", "description"));
+        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword, "name", "address", "song", "singer", "lyricist", "composer", "arranger", "description","flatform"));
         searchSourceBuilder.fetchSource(new String[]{"name", "product_Id"}, null);  // name과 product_Id만 반환
 
         searchRequest.source(searchSourceBuilder);
