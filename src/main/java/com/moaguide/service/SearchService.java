@@ -30,7 +30,7 @@ public class SearchService {
     private final SearchLogRepository searchLogRepository;
 
     public void savekeyword(String keyword) {
-        LocalDateTime localDate = LocalDateTime.now();
+        LocalDateTime localDate = LocalDateTime.now().withNano(0); // 나노초 제거
         searchLogRepository.save(new SearchLog(keyword, localDate));
     }
 
