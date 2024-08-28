@@ -56,7 +56,7 @@ public class SearchService {
         searchSourceBuilder.fetchSource(new String[]{"name", "product_Id","platform","category"}, null);  // name과 product_Id만 반환
 
         // 결과 개수 20개로 제한
-        searchSourceBuilder.size(20);
+        searchSourceBuilder.size(30);
 
         searchRequest.source(searchSourceBuilder);
 
