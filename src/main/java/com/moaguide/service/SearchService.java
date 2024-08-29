@@ -13,6 +13,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,6 @@ public class SearchService {
 
     private final RestHighLevelClient restHighLevelClient;
     private final SearchLogRepository searchLogRepository;
-    private final ProductRepository productRepository;
 
     // 검색어 저장 메서드
     public void saveKeyword(String keyword) {
@@ -102,8 +102,9 @@ public class SearchService {
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
                 AggregationBuilders.terms("search_terms")
-                        .field("searchTerm.keyword")  // 검색어 집계 (필드명 수정)
+                        .field("searchTerm")  // 검색어 집계 (필드명 수정)
                         .size(5)  // 상위 5개의 검색어만 가져옴
+                        .order(BucketOrder.count(false))  // 내림차순으로 정렬
         );
 
         // searchSourceBuilder를 searchRequest에 설정
