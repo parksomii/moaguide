@@ -18,8 +18,8 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -90,18 +90,14 @@ public class SearchService {
         SearchRequest searchRequest = new SearchRequest("search-logs");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        // 현재 시스템 기본 시간대를 사용한 현재 시간
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime last24Hours = now.minusHours(24);
-
-        // LocalDateTime을 Date로 변환
-        Date nowDate = Date.from(Instant.from(now));
-        Date last24HoursDate = Date.from(Instant.from(last24Hours));
+        // 현재 UTC 시간을 OffsetDateTime으로 설정
+        OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
+        OffsetDateTime last24Hours = now.minusHours(24);
 
         // timestamp 필드에 대해 최근 24시간 범위를 설정하는 range 쿼리 추가
         searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp")
-                .gte(last24HoursDate.getTime())
-                .lte(nowDate.getTime()));
+                .gte(last24Hours.toInstant().toEpochMilli())
+                .lte(now.toInstant().toEpochMilli()));
 
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
