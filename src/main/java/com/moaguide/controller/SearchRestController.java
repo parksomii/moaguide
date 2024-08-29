@@ -33,7 +33,7 @@ public class SearchRestController {
     }
 
     // 검색어 순위 API
-    @GetMapping("/search/log")
+    @GetMapping("/searchRank")
     public ResponseEntity<?> getSearchRank() {
         try {
             List<SearchRankDto> searchRankList = searchService.getSearchRank();
