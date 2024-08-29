@@ -1,6 +1,5 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.elasticsearch.product.ProductEntity;
 import com.moaguide.domain.elasticsearch.product.ProductRepository;
 import com.moaguide.domain.elasticsearch.searchlog.SearchLog;
 import com.moaguide.domain.elasticsearch.searchlog.SearchLogRepository;
@@ -20,8 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -93,17 +90,18 @@ public class SearchService {
         SearchRequest searchRequest = new SearchRequest("search-logs");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC); // 현재 UTC 시간 사용
+        LocalDateTime now = LocalDateTime.now(); // 현재 시스템 기본 시간대
         LocalDateTime last24Hours = now.minusHours(24);
 
-        // `LocalDateTime`을 epoch millis 형식으로 변환
-        long nowMillis = now.toInstant(ZoneOffset.UTC).toEpochMilli();
-        long last24HoursMillis = last24Hours.toInstant(ZoneOffset.UTC).toEpochMilli();
+        // `LocalDateTime`을 ISO 8601 형식으로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        String nowString = now.format(formatter);
+        String last24HoursString = last24Hours.format(formatter);
 
         // timestamp 필드에 대해 최근 24시간 범위를 설정하는 range 쿼리 추가
         searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp")
-                .gte(last24HoursMillis)
-                .lte(nowMillis));
+                .gte(last24HoursString)
+                .lte(nowString));
 
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
@@ -140,4 +138,5 @@ public class SearchService {
 
         return ranks;
     }
+
 }
