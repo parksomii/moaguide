@@ -20,9 +20,9 @@ public class SummaryCustomDto {
     private String category;
     private String platform;
     private String name;
-    private String price;
+    private long price;
     private double priceRate;
-    private String totalPrice;
+    private long totalPrice;
     private double dividend;
     private double lastDivide_rate;
 
@@ -32,23 +32,8 @@ public class SummaryCustomDto {
         this.platform= transactions.get(0).getPlatform();
         this.category = transactions.get(0).getCategory();
         this.name =  transactions.get(0).getName();
-        Long total = (long) ( transactions.get(0).getPiece() *  transactions.get(0).getPrice());
-        if (total >= 100000000) {
-            BigDecimal totalPrice = new BigDecimal(total / 100000000.0).setScale(2, RoundingMode.HALF_UP);
-            this.totalPrice = totalPrice + "억원";
-        } else if (total >= 10000) {
-            BigDecimal totalPrice = new BigDecimal(total / 10000.0).setScale(2, RoundingMode.HALF_UP);
-            this.totalPrice = totalPrice + "만원";
-        } else {
-            this.totalPrice = total + "원";
-        }
-        long oneprice =  transactions.get(0).getPrice();
-        if (oneprice >= 10000) {
-            BigDecimal price = new BigDecimal(oneprice / 10000.0).setScale(2, RoundingMode.HALF_UP);
-            this.price = price + "만원";
-        } else {
-            this.price = oneprice + "원";
-        }
+        this.totalPrice = transactions.get(0).getPiece() *  transactions.get(0).getPrice();
+        this.price =  transactions.get(0).getPrice();
         if ( transactions != null &&  transactions.size() >= 2) {
             int size =  transactions.size();
             double lastPrice =  transactions.get(size - 1).getPrice();
@@ -70,23 +55,8 @@ public class SummaryCustomDto {
         this.platform= transactions.get(0).getPlatform();
         this.category = transactions.get(0).getCategory();
         this.name =  transactions.get(0).getName();
-        Long total = (long) ( transactions.get(0).getPiece() *  transactions.get(0).getPrice());
-        if (total >= 100000000) {
-            BigDecimal totalPrice = new BigDecimal(total / 100000000.0).setScale(2, RoundingMode.HALF_UP);
-            this.totalPrice = totalPrice + "억원";
-        } else if (total >= 10000) {
-            BigDecimal totalPrice = new BigDecimal(total / 10000.0).setScale(2, RoundingMode.HALF_UP);
-            this.totalPrice = totalPrice + "만원";
-        } else {
-            this.totalPrice = total + "원";
-        }
-        long oneprice =  transactions.get(0).getPrice();
-        if (oneprice >= 10000) {
-            BigDecimal price = new BigDecimal(oneprice / 10000.0).setScale(2, RoundingMode.HALF_UP);
-            this.price = price + "만원";
-        } else {
-            this.price = oneprice + "원";
-        }
+        this.totalPrice = transactions.get(0).getPiece() *  transactions.get(0).getPrice();
+        this.price =  transactions.get(0).getPrice();
         if ( transactions != null &&  transactions.size() >= 2) {
             int size =  transactions.size();
             double lastPrice =  transactions.get(size - 1).getPrice();
