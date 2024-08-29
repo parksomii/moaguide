@@ -6,7 +6,6 @@ import com.moaguide.config.handler.CustomAuthenticationEntryPointHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.moaguide.config.handler.CustomLogoutSuccessHandler;
-import com.moaguide.domain.user.User;
 import com.moaguide.jwt.JWTFilter;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.security.LoginFilter;
@@ -28,6 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
@@ -63,12 +63,14 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
         http.
                 authorizeHttpRequests(request -> request
-                        .requestMatchers("/logout","/update/phone", "/user/update/nickname").authenticated() // 로그아웃 요청도 인증 필요
+                            .requestMatchers("/logout","/update/phone", "/user/update/nickname").authenticated() // 로그아웃 요청도 인증 필요
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().permitAll())
                 .exceptionHandling(auth -> auth
                 .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
                 .accessDeniedHandler(accessDeniedHandler())); // 접근 거부 핸들러
+        http.
+                addFilterBefore(new CorsFilter(corsConfigurationSource()), JWTFilter.class);
         http.
                 addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         http.

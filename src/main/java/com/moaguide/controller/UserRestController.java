@@ -22,7 +22,6 @@ public class UserRestController {
     private final CookieService cookieService;
 
 
-    // 마이페이지 수정 (닉네임, 비밀번호, 전화번호)
     // 닉네임 수정
     @PatchMapping("/update/nickname")
     public ResponseEntity<?> updateNickname(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto,HttpServletResponse response) {
@@ -42,6 +41,8 @@ public class UserRestController {
         response .addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
         return new ResponseEntity<>(changeuser.getNickname(), HttpStatus.OK);
     }
+
+
     // 비밀번호 인증
     @PostMapping("/check/password")
     public ResponseEntity<?> checkPassword(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
@@ -54,6 +55,7 @@ public class UserRestController {
             return ResponseEntity.badRequest().body("fail");
         }
     }
+
     // 비밀번호 변경
     @PatchMapping("/update/password")
     public ResponseEntity<?> updatePassword(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
