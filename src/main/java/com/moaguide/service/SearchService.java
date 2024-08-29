@@ -113,26 +113,20 @@ public class SearchService {
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
         // Elasticsearch 응답에서 집계 결과를 안전하게 추출
-        if (searchResponse.getAggregations() != null) {
-            Terms searchTermsAgg = searchResponse.getAggregations().get("search_terms");
-            if (searchTermsAgg != null) {
-                int rank = 1;
-                for (Terms.Bucket bucket : searchTermsAgg.getBuckets()) {
-                    SearchRankDto searchRankDto = new SearchRankDto();
-                    searchRankDto.setKeyword(bucket.getKeyAsString());
-                    searchRankDto.setRank(rank++);
-                    ranks.add(searchRankDto);
-                }
-            } else {
-                // search_terms 집계가 없는 경우
-                System.out.println("No aggregation found for 'search_terms'.");
+        Terms searchTermsAgg = searchResponse.getAggregations().get("search_terms");
+
+        if (searchTermsAgg != null) {
+            int rank = 1;
+            for (Terms.Bucket bucket : searchTermsAgg.getBuckets()) {
+                SearchRankDto searchRankDto = new SearchRankDto();
+                searchRankDto.setKeyword(bucket.getKeyAsString());
+                searchRankDto.setRank(rank++);
+                ranks.add(searchRankDto);
             }
         } else {
-            // Aggregations가 null인 경우
-            System.out.println("No aggregations found in the search response.");
+            System.out.println("No aggregation found for 'search_terms'.");
         }
 
         return ranks;
     }
-
 }
