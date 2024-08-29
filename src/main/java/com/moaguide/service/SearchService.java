@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -92,18 +93,17 @@ public class SearchService {
         SearchRequest searchRequest = new SearchRequest("search-logs");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        LocalDateTime now = LocalDateTime.now(); // 현재 시스템 기본 시간대
+        LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC); // 현재 UTC 시간 사용
         LocalDateTime last24Hours = now.minusHours(24);
 
-        // `LocalDateTime`을 ISO 8601 형식으로 변환
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        String nowString = now.format(formatter);
-        String last24HoursString = last24Hours.format(formatter);
+        // `LocalDateTime`을 epoch millis 형식으로 변환
+        long nowMillis = now.toInstant(ZoneOffset.UTC).toEpochMilli();
+        long last24HoursMillis = last24Hours.toInstant(ZoneOffset.UTC).toEpochMilli();
 
         // timestamp 필드에 대해 최근 24시간 범위를 설정하는 range 쿼리 추가
         searchSourceBuilder.query(QueryBuilders.rangeQuery("timestamp")
-                .gte(last24HoursString)
-                .lte(nowString));
+                .gte(last24HoursMillis)
+                .lte(nowMillis));
 
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
@@ -112,17 +112,30 @@ public class SearchService {
                         .size(5)  // 상위 5개의 검색어만 가져옴
         );
 
+        // searchSourceBuilder를 searchRequest에 설정
+        searchRequest.source(searchSourceBuilder);
+
         // 검색 요청 실행
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
 
-        // 집계 결과에서 검색어와 빈도 추출
-        Terms searchTermsAgg = searchResponse.getAggregations().get("search_terms");
-        int rank = 1;
-        for (Terms.Bucket bucket : searchTermsAgg.getBuckets()) {
-            SearchRankDto searchRankDto = new SearchRankDto();
-            searchRankDto.setKeyword(bucket.getKeyAsString());
-            searchRankDto.setRank(rank++);
-            ranks.add(searchRankDto);
+        // Elasticsearch 응답에서 집계 결과를 안전하게 추출
+        if (searchResponse.getAggregations() != null) {
+            Terms searchTermsAgg = searchResponse.getAggregations().get("search_terms");
+            if (searchTermsAgg != null) {
+                int rank = 1;
+                for (Terms.Bucket bucket : searchTermsAgg.getBuckets()) {
+                    SearchRankDto searchRankDto = new SearchRankDto();
+                    searchRankDto.setKeyword(bucket.getKeyAsString());
+                    searchRankDto.setRank(rank++);
+                    ranks.add(searchRankDto);
+                }
+            } else {
+                // search_terms 집계가 없는 경우
+                System.out.println("No aggregation found for 'search_terms'.");
+            }
+        } else {
+            // Aggregations가 null인 경우
+            System.out.println("No aggregations found in the search response.");
         }
 
         return ranks;
