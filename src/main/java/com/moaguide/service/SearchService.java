@@ -100,15 +100,10 @@ public class SearchService {
                 .lte(now.toInstant().toEpochMilli()));
 
         searchSourceBuilder.aggregation(
-                AggregationBuilders.filter("filtered_search_terms",
-                                QueryBuilders.existsQuery("searchTerm")  // 단순화된 필터 조건
-                        )
-                        .subAggregation(
                                 AggregationBuilders.terms("search_terms")
                                         .field("searchTerm")
                                         .size(5)
                                         .order(BucketOrder.count(false))
-                        )
         );
 
 
