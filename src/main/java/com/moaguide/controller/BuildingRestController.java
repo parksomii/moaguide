@@ -82,8 +82,8 @@ public class BuildingRestController {
     }
 
     @GetMapping("area/{product_Id}")
-    public ResponseEntity<Object> area(@PathVariable String productId) {
-        BuildingDetail buildingDetail = buildingService.findkeyword(productId);
+    public ResponseEntity<Object> area(@PathVariable String product_Id) {
+        BuildingDetail buildingDetail = buildingService.findkeyword(product_Id);
         Location location = locationService.locate(buildingDetail.getProductId().getProductId());
         List<AreaDto> areas = areaService.findpolygon(buildingDetail.getKeyword());
         return ResponseEntity.ok(new BuildingAreaResponseDto(buildingDetail.getProductId().getName(),location,areas));
