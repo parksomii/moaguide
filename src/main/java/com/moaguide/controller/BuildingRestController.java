@@ -91,8 +91,10 @@ public class BuildingRestController {
         return ResponseEntity.ok(new BuildingAreaResponseDto(buildingDetail.getProductId().getName(),location,areas));
     }
 
-    @GetMapping("subway")
-    public ResponseEntity<Object> subway(@RequestParam String keyword,@RequestParam int year,@RequestParam int month) {
+    @GetMapping("subway/{product_Id}")
+    public ResponseEntity<Object> subway(@PathVariable String product_Id,@RequestParam int year,@RequestParam int month) {
+        BuildingDetail buildingDetail = buildingService.findkeyword(product_Id);
+        String keyword = buildingDetail.getKeyword();
         SubwayTimeDto subwayTimeDtos = subwayTimeService.findbydate(keyword,year,month);
         List<SubwayWeekDto> subwayWeekDtos = subwayWeekService.findbydate(keyword,year,month);;
         BuildingSubwayResponseDto subwayResponseDto = new BuildingSubwayResponseDto(subwayTimeDtos,subwayWeekDtos);
@@ -106,8 +108,10 @@ public class BuildingRestController {
         return ResponseEntity.ok(new BuildingPopulationDto(populationDto));
     }
 
-    @GetMapping("rate")
-    public ResponseEntity<Object> rate(@RequestParam String keyword, @RequestParam String type) {
+    @GetMapping("rate/{product_Id}")
+    public ResponseEntity<Object> rate(@PathVariable String product_Id, @RequestParam String type) {
+        BuildingDetail buildingDetail = buildingService.findkeyword(product_Id);
+        String keyword = buildingDetail.getKeyword();
         List<RentDto> rentDtos = rentService.findBase(keyword,type);
         List<VacancyrateDto> vacancyrateDtos = vacancyRateService.findBase(keyword,type);
         return ResponseEntity.ok(new BuildingRateResponseDto(rentDtos,vacancyrateDtos));
