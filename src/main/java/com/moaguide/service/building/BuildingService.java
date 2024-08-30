@@ -24,7 +24,7 @@ public class BuildingService {
         return buildingDetail;
     }
 
-    public BuildingDetail findkeyword(String keyword) {
-        return buildingRepository.findByKeyword(keyword);
+    public BuildingDetail findkeyword(String productId) {
+        return buildingRepository.findByKeyword(productId);
     }
 }

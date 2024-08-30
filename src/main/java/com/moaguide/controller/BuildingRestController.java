@@ -81,11 +81,11 @@ public class BuildingRestController {
         return ResponseEntity.ok(new BuildingLandResponseDto(landPrice));
     }
 
-    @GetMapping("area")
-    public ResponseEntity<Object> area(@RequestParam String keyword) {
-        BuildingDetail buildingDetail = buildingService.findkeyword(keyword);
+    @GetMapping("area/{product_Id}")
+    public ResponseEntity<Object> area(@RequestParam String productId) {
+        BuildingDetail buildingDetail = buildingService.findkeyword(productId);
         Location location = locationService.locate(buildingDetail.getProductId().getProductId());
-        List<AreaDto> areas = areaService.findpolygon(keyword);
+        List<AreaDto> areas = areaService.findpolygon(buildingDetail.getKeyword());
         return ResponseEntity.ok(new BuildingAreaResponseDto(buildingDetail.getProductId().getName(),location,areas));
     }
 
