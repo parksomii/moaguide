@@ -101,9 +101,7 @@ public class SearchService {
 
         searchSourceBuilder.aggregation(
                 AggregationBuilders.filter("filtered_search_terms",
-                                QueryBuilders.boolQuery()
-                                        .must(QueryBuilders.existsQuery("searchTerm"))
-                                        .mustNot(QueryBuilders.termQuery("searchTerm", ""))
+                                QueryBuilders.existsQuery("searchTerm")  // 단순화된 필터 조건
                         )
                         .subAggregation(
                                 AggregationBuilders.terms("search_terms")
@@ -112,6 +110,7 @@ public class SearchService {
                                         .order(BucketOrder.count(false))
                         )
         );
+
 
         // searchSourceBuilder를 searchRequest에 설정
         searchRequest.source(searchSourceBuilder);
