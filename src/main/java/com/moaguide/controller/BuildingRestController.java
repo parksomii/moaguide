@@ -62,7 +62,9 @@ public class BuildingRestController {
     }
 
     @GetMapping("sub/{product_Id}")
-    public ResponseEntity<Object> add(@PathVariable String product_Id,@RequestParam String keyword) {
+    public ResponseEntity<Object> add(@PathVariable String product_Id) {
+        BuildingDetail buildingDetail = buildingService.findkeyword(product_Id);
+        String keyword = buildingDetail.getKeyword();
         List<TypeDto> rent = rentService.findType(keyword);
         BusinessArea businessArea = businessAreaService.findBase(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(keyword);
