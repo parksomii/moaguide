@@ -29,6 +29,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    //이메일 인증용
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     // coolSMS 라이브러리
     implementation 'net.nurigo:javaSDK:2.2'
     // json 라이브러리

@@ -6,6 +6,7 @@ import com.moaguide.dto.UserDto;
 import com.moaguide.dto.codeDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CookieService;
+import com.moaguide.service.EmailService;
 import com.moaguide.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class UserRestController {
     private final UserService userService;
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
-
+    private final EmailService emailService;
 
     // 닉네임 수정
     @PatchMapping("/update/nickname")
@@ -64,6 +65,7 @@ public class UserRestController {
         userService.updatePassword(nickname, password);
         return ResponseEntity.ok("success");
     }
+
     // 전화번호 변경
     @PatchMapping("/update/phone")
     public ResponseEntity<?> updatePhone(@RequestHeader("Authorization") String auth, @RequestBody codeDto codeDto) {
@@ -71,5 +73,25 @@ public class UserRestController {
         String phone = codeDto.getPhone();
         userService.updatePhone(nickname, phone);
         return ResponseEntity.ok("success");
+    }
+
+    @PostMapping("/sendmail")
+    public ResponseEntity<?> sendMail(@RequestHeader("Authorization") String auth, @RequestBody String email) {
+        String code = emailService.generateVerificationCode();
+        emailService.saveCodeToRedis(email, code);
+        String response = emailService.sendmail(email,code);
+        // 예외 처리에 따라 적절한 HTTP 상태 코드 반환
+        if (response.equals("이메일 전송 완료")) {
+            return ResponseEntity.ok(response);  // 200 OK
+        } else if (response.equals("이메일 메시지를 생성하는 중 오류가 발생했습니다.")) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error
+        } else if (response.equals("HTML 템플릿 파일을 읽는 중 오류가 발생했습니다.")) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error
+        } else if (response.equals("이메일을 전송하는 중 오류가 발생했습니다.")) {
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);  // 503 Service Unavailable
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error for unexpected errors
+        }
+
     }
 }
