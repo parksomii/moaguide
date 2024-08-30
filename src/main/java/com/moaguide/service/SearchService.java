@@ -34,7 +34,11 @@ public class SearchService {
 
     // 검색어 저장 메서드
     public void saveKeyword(String keyword) {
-        searchLogRepository.save(new SearchLog(keyword, new Date()));
+        if(keyword.isEmpty()){
+            return;
+        }else{
+            searchLogRepository.save(new SearchLog(keyword, new Date()));
+        }
     }
 
     // 검색 수행 메서드 (product 인덱스에 대한 검색)
