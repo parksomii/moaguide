@@ -44,8 +44,8 @@ public class SearchService {
 
 // MultiMatchQuery로 검색 가능한 필드에 대해 검색, 플랫폼에 가중치 1.5배 적용
         searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword)
-                .field("name", 1.0f)
-                .field("platform", 1.5f)  // 플랫폼에 가중치 1.5배
+                .field("name", 3.0f)
+                .field("platform", 2.0f)  // 플랫폼에 가중치 1.5배
                 .field("address", 1.0f)
                 .field("Director", 1.0f)
                 .field("Cast", 1.0f)
@@ -55,7 +55,7 @@ public class SearchService {
                 .field("Composer", 1.0f)
                 .field("Arranger", 1.0f)
                 .field("Farm", 1.0f)
-                .field("Introduction", 1.0f)).size(30);
+                .field("Introduction", 1.0f)).size(10);
 
         // 필요한 필드만 반환
         searchSourceBuilder.fetchSource(new String[]{"name", "product_Id", "platform", "category"}, null);
@@ -101,12 +101,14 @@ public class SearchService {
 
         // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
-                AggregationBuilders.terms("search_terms")
-                        .field("searchTerm")  // 검색어 집계 (필드명 수정)
-                        .size(5)  // 상위 5개의 검색어만 가져옴
-                        .order(BucketOrder.count(false))  // 내림차순으로 정렬
+                AggregationBuilders.filter("filtered_search_terms", QueryBuilders.existsQuery("searchTerm"))
+                        .subAggregation(
+                                AggregationBuilders.terms("search_terms")
+                                        .field("searchTerm")
+                                        .size(5)
+                                        .order(BucketOrder.count(false))
+                        )
         );
-
         // searchSourceBuilder를 searchRequest에 설정
         searchRequest.source(searchSourceBuilder);
 

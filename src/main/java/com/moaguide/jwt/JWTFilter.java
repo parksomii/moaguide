@@ -9,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +30,12 @@ public class JWTFilter extends OncePerRequestFilter {
         // 헤더에서 Authorization 키에 담긴 토큰을 꺼냄
         String authorizationHeader = request.getHeader("Authorization");
 
+        // 프리플라이트 요청에 대해 모든 요청을 허용
+        if (StringUtils.equals(request.getMethod(), "OPTIONS")) {
+            logger.debug("if request method is OPTIONS, allowing request");
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
+        }
         // Authorization 헤더가 없거나 값이 비어있다면 다음 필터로 넘김
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
