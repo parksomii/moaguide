@@ -82,7 +82,7 @@ public class BuildingRestController {
     }
 
     @GetMapping("area/{product_Id}")
-    public ResponseEntity<Object> area(@RequestParam String productId) {
+    public ResponseEntity<Object> area(@PathVariable String productId) {
         BuildingDetail buildingDetail = buildingService.findkeyword(productId);
         Location location = locationService.locate(buildingDetail.getProductId().getProductId());
         List<AreaDto> areas = areaService.findpolygon(buildingDetail.getKeyword());
