@@ -99,9 +99,12 @@ public class SearchService {
                 .gte(last24Hours.toInstant().toEpochMilli())
                 .lte(now.toInstant().toEpochMilli()));
 
-        // 검색어별로 발생 빈도를 집계
         searchSourceBuilder.aggregation(
-                AggregationBuilders.filter("filtered_search_terms", QueryBuilders.existsQuery("searchTerm"))
+                AggregationBuilders.filter("filtered_search_terms",
+                                QueryBuilders.boolQuery()
+                                        .must(QueryBuilders.existsQuery("searchTerm"))
+                                        .mustNot(QueryBuilders.termQuery("searchTerm", ""))
+                        )
                         .subAggregation(
                                 AggregationBuilders.terms("search_terms")
                                         .field("searchTerm")
@@ -109,6 +112,7 @@ public class SearchService {
                                         .order(BucketOrder.count(false))
                         )
         );
+
         // searchSourceBuilder를 searchRequest에 설정
         searchRequest.source(searchSourceBuilder);
 
