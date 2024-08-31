@@ -120,6 +120,17 @@ spring:
     secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
   jackson:
     time-zone: Asia/Seoul
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: moaguide.develop@gmail.com
+    password: nuwz lxmc kyfj wliw
+    properties:
+      mail:
+        smtp:
+          auth: true
+        starttls:
+          enable: true
 
 logging:
   level:

@@ -1,6 +1,7 @@
 package com.moaguide.controller;
 
 import com.moaguide.domain.user.User;
+import com.moaguide.dto.NewDto.customDto.mailDto;
 import com.moaguide.dto.ProfileDto;
 import com.moaguide.dto.UserDto;
 import com.moaguide.dto.codeDto;
@@ -15,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+    @RequestMapping("/user")
 @AllArgsConstructor
 public class UserRestController {
     private final UserService userService;
@@ -76,7 +77,7 @@ public class UserRestController {
     }
 
     @PostMapping("/sendmail")
-    public ResponseEntity<?> sendMail(@RequestHeader("Authorization") String auth, @RequestBody String email) {
+    public ResponseEntity<?> sendMail(@RequestBody String email) {
         String code = emailService.generateVerificationCode();
         emailService.saveCodeToRedis(email, code);
         String response = emailService.sendmail(email,code);
@@ -92,6 +93,10 @@ public class UserRestController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error for unexpected errors
         }
+    }
+
+    @PostMapping("verifymail")
+    public ResponseEntity<?> verifyMail(@RequestBody mailDto mailDto) {
 
     }
 }

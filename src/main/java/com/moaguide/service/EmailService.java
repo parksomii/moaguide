@@ -69,7 +69,6 @@ public class EmailService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setFrom("moaugide.develop@gmail.com");
             helper.setTo(email);
             helper.setSubject("모아가이드 이메일 인증");
 
