@@ -94,9 +94,4 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error for unexpected errors
         }
     }
-
-    @PostMapping("verifymail")
-    public ResponseEntity<?> verifyMail(@RequestBody mailDto mailDto) {
-
-    }
 }

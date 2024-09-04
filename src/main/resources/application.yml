@@ -124,7 +124,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: moaguide.develop@gmail.com
-    password: nuwz lxmc kyfj wliw
+    password: oqejkdjvepvxplrp
     properties:
       mail:
         smtp:
