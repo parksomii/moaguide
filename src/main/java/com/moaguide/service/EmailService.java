@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
@@ -68,8 +69,9 @@ public class EmailService {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            String decodedEmail = URLDecoder.decode(email, StandardCharsets.UTF_8);
 
-            helper.setTo(email);
+            helper.setTo(decodedEmail);
             helper.setSubject("모아가이드 이메일 인증");
 
             ClassPathResource resource = new ClassPathResource("/templates/email/sendmail.html");
