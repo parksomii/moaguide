@@ -76,8 +76,8 @@ public class UserRestController {
         return ResponseEntity.ok("success");
     }
 
-    @PostMapping("/sendmail")
-    public ResponseEntity<?> sendMail(@RequestBody String email) {
+    @PostMapping("/sendmail?email")
+    public ResponseEntity<?> sendMail(@RequestParam String email) {
         String code = emailService.generateVerificationCode();
         emailService.saveCodeToRedis(email, code);
         String response = emailService.sendmail(email,code);
