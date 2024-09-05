@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class mailDto {
     private String eamil;
-    private int code;
+    private String code;
 }

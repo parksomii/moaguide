@@ -7,6 +7,7 @@ import com.moaguide.dto.codeDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.security.MessageService;
 import com.moaguide.service.UserService;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,16 +47,12 @@ public class SignUpRestController {
 
     // 인증 코드 검증 요청 처리
     @PostMapping("/verify/code")
-    public ResponseEntity<String> verifyCode(@RequestBody codeDto codeDto, HttpServletRequest request) {
+    public ResponseEntity<String> verifyCode(@RequestBody codeDto codeDto) {
         boolean success = messageService.verifyCode(codeDto.getPhone(), codeDto.getCode());
         if (success) {
             // 인증 성공 시 JWT 토큰 발급
-            if(request.getHeader("Authorization") == null) {
-                String token = jwtUtil.createJwt("access", codeDto.getPhone(), "USER", 1000 * 60 * 30L);
-                return ResponseEntity.ok().header("Authorization", "Bearer " + token).body("인증에 성공했습니다.");
-            }else{
-                return ResponseEntity.ok("인증에 성공했습니다.");
-            }
+            String token = jwtUtil.createJwt("verify", codeDto.getPhone(), "pass", 1000 * 60 * 30L);
+            return ResponseEntity.ok().header("verify",  token).body("인증에 성공했습니다.");
         }
         else {
             return ResponseEntity.badRequest().body("인증에 실패했습니다.");
@@ -74,12 +71,11 @@ public class SignUpRestController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> signup(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto){
-        String token = auth.substring(7);
-
+    public ResponseEntity<String> signup(HttpServletRequest request, @RequestBody UserDto userDto){
         try {
+            String verifyToken = request.getHeader("verify");
             // JWT 토큰 검증
-            if (jwtUtil.isExpired(token)) {
+            if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
                 return ResponseEntity.badRequest().body("회원가입 실패");
             }
             userDto.setRole(Role.USER);

@@ -33,7 +33,6 @@ public class MessageService {
     private String sender_Number;
 
 
-    private static final long CODE_EXPIRATION_TIME = 7200L;  // 인증 코드 유효 시간 (초) 2시간
     private static final long CODE_VALIDATION_TIME = 180;  // 인증 코드 검증 유효 시간 (초) 3분
 
     // 인증 코드 생성
@@ -48,9 +47,9 @@ public class MessageService {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
         long currentTimestamp = Instant.now().getEpochSecond();
         // 인증 코드 저장
-        ops.set(phoneNumber + ":code", code, CODE_EXPIRATION_TIME, TimeUnit.SECONDS);
+        ops.set(phoneNumber + ":code", code, CODE_VALIDATION_TIME, TimeUnit.SECONDS);
         // 생성 시간 저장
-        ops.set(phoneNumber + ":timestamp", String.valueOf(currentTimestamp), CODE_EXPIRATION_TIME, TimeUnit.SECONDS);
+        ops.set(phoneNumber + ":timestamp", String.valueOf(currentTimestamp), CODE_VALIDATION_TIME, TimeUnit.SECONDS);
     }
     // CoolSMS API로 인증번호 전송
     public void sendSms(String phone, String code) {

@@ -69,4 +69,9 @@ public class UserService {
     public void updatePhone(String nickname, String changePhone) {
         userRepository.updatePhone(nickname, changePhone);
     }
+
+    public void updatePasswordbyEmail(String email, String changePassword) {
+        userRepository.updatePasswordbyEmail(email, passwordEncoder.encode(changePassword));
+
+    }
 }

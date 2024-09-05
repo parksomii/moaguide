@@ -32,7 +32,6 @@ public class EmailService {
     }
 
     private static final long CODE_VALIDATION_TIME = 180;  // 인증 코드 검증 유효 시간 (초) 3분
-
     // Redis에 인증 코드 저장
     public void saveCodeToRedis(String email, String code) {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();

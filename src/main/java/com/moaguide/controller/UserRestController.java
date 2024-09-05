@@ -2,13 +2,13 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.NewDto.customDto.mailDto;
-import com.moaguide.dto.ProfileDto;
 import com.moaguide.dto.UserDto;
 import com.moaguide.dto.codeDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CookieService;
 import com.moaguide.service.EmailService;
 import com.moaguide.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,7 +52,9 @@ public class UserRestController {
         String password = userDto.getPassword();
         boolean check = userService.checkPassword(nickname, password);
         if (check) {
-            return ResponseEntity.ok("success");
+            String token = jwtUtil.createJwt("verify",nickname,"pass", 1000 * 60 * 30L);
+            return ResponseEntity.ok().header("verify",  token).body("인증에 성공했습니다.");
+
         } else {
             return ResponseEntity.badRequest().body("fail");
         }
@@ -60,23 +62,39 @@ public class UserRestController {
 
     // 비밀번호 변경
     @PatchMapping("/update/password")
-    public ResponseEntity<?> updatePassword(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
-        String nickname = jwtUtil.getNickname(auth.substring(7));
-        String password = userDto.getPassword();
-        userService.updatePassword(nickname, password);
-        return ResponseEntity.ok("success");
+    public ResponseEntity<?> updatePassword(HttpServletRequest request, @RequestBody UserDto userDto) {
+        String verifyToken = request.getHeader("verify");
+        // JWT 토큰 검증
+        if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
+            return new ResponseEntity<>("앞선 인증을 완료해주세요", HttpStatus.BAD_REQUEST);
+        }else{
+            if(userDto.getNickname().isEmpty()) {
+                userService.updatePasswordbyEmail(userDto.getEmail(), userDto.getPassword());
+                return ResponseEntity.ok("success");
+
+            }else {
+                userService.updatePassword(userDto.getNickname(), userDto.getPassword());
+                return ResponseEntity.ok("success");
+            }
+        }
     }
 
     // 전화번호 변경
     @PatchMapping("/update/phone")
-    public ResponseEntity<?> updatePhone(@RequestHeader("Authorization") String auth, @RequestBody codeDto codeDto) {
-        String nickname = jwtUtil.getNickname(auth.substring(7));
-        String phone = codeDto.getPhone();
-        userService.updatePhone(nickname, phone);
-        return ResponseEntity.ok("success");
+    public ResponseEntity<?> updatePhone(HttpServletRequest request , @RequestBody codeDto codeDto) {
+        String verifyToken = request.getHeader("verify");
+        // JWT 토큰 검증
+        if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
+            return new ResponseEntity<>("앞선 인증을 완료해주세요", HttpStatus.BAD_REQUEST);
+        }else{
+            String nickname = jwtUtil.getNickname(request.getHeader("Authorization").substring(7));
+            String phone = codeDto.getPhone();
+            userService.updatePhone(nickname, phone);
+            return ResponseEntity.ok("success");
+        }
     }
 
-    @PostMapping("/sendmail")
+    @PostMapping("/send/mail")
     public ResponseEntity<?> sendMail(@RequestParam String email) {
         String code = emailService.generateVerificationCode();
         emailService.saveCodeToRedis(email, code);
@@ -94,4 +112,18 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error for unexpected errors
         }
     }
+
+    @PostMapping("/verify/mail")
+    public ResponseEntity<?> verifyMail(@RequestBody mailDto mailDto) {
+        boolean success = emailService.verifyCode(mailDto.getEamil(),mailDto.getCode());
+        if (success) {
+            // 인증 성공 시 JWT 토큰 발급
+            String token = jwtUtil.createJwt("verify", mailDto.getEamil(),"pass", 1000 * 60 * 30L);
+            return ResponseEntity.ok().header("verify",  token).body("인증에 성공했습니다.");
+        }
+        else {
+            return ResponseEntity.badRequest().body("인증에 실패했습니다.");
+        }
+    }
+
 }
