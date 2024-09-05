@@ -1,6 +1,6 @@
 package com.moaguide.domain.detail;
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import com.moaguide.dto.MusicDetailDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class MusicDetail {
 
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", nullable = false)
-    private Summary productId;
+    private Product productId;
 
     @Column(name = "introduce_song")
     private String introduceSong;
@@ -46,8 +46,6 @@ public class MusicDetail {
     @Temporal(TemporalType.DATE)
     private Date announcementDate;
 
-    @Column(name = "issue_price")
-    private Integer issuePrice;
 
     @Column(name = "issuance_date")
     @Temporal(TemporalType.DATE)
@@ -72,7 +70,6 @@ public class MusicDetail {
                 this.composing,
                 this.arrangements,
                 this.announcementDate,
-                this.issuePrice,
                 this.issuanceDate,
                 this.type,
                 this.youtubeUrl,

@@ -2,23 +2,19 @@ package com.moaguide.service;
 
 import com.moaguide.domain.divide.Divide;
 import com.moaguide.domain.divide.DivideRepository;
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import com.moaguide.domain.summary.SummaryRepository;
 import com.moaguide.domain.transaction.Transaction;
 import com.moaguide.domain.transaction.TransactionRepository;
-import com.moaguide.dto.*;
 import com.moaguide.dto.NewDto.BuildingDto.IdDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryDivideCustomDto;
-import com.moaguide.dto.NewDto.customDto.SummaryRecentDto;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -26,7 +22,6 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -39,9 +34,9 @@ public class SummaryService {
     private final SummaryListService summaryListService;
 
 
-    public Summary findById(String id) {
-        Summary summary = summaryRepository.findByProductId(id);
-        return summary;
+    public Product findById(String id) {
+        Product product = summaryRepository.findByProductId(id);
+        return product;
     }
 
     // 최근 배당금 발표

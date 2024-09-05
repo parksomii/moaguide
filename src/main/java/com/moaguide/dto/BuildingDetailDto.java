@@ -1,20 +1,17 @@
 package com.moaguide.dto;
 
-import com.moaguide.domain.building.districts.Districts;
 import com.moaguide.domain.detail.BuildingDetail;
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BuildingDetailDto {
 
-    private Summary productId;
+    private Product productId;
 
     private String useArea;
 

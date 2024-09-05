@@ -12,25 +12,25 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SummaryRepository extends JpaRepository<Summary, String> {
+public interface SummaryRepository extends JpaRepository<Product, String> {
 
-    Summary findByProductId(String Id);
+    Product findByProductId(String Id);
     // 상품현황
-    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.productId DESC")
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Product s where s.PlatformId.category = :category ORDER BY s.productId DESC")
     List<IdDto> findAllByCategory(@Param("category") String category, Pageable pageable);
 
-    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s ORDER BY s.productId DESC")
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Product s ORDER BY s.productId DESC")
     List<IdDto> findAllByList(PageRequest pageRequest);
 
-    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.views DESC")
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Product s where s.PlatformId.category = :category ORDER BY s.views DESC")
     Page<IdDto>  findListByCategory(@Param("category")String category, Pageable pageable);
 
-    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s where s.PlatformId.category = :category ORDER BY s.name ASC")
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Product s where s.PlatformId.category = :category ORDER BY s.name ASC")
     Page<IdDto> findListByCategoryAndName(@Param("category")String category, Pageable pageable);
 
-    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s ORDER BY s.views DESC")
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Product s ORDER BY s.views DESC")
     Page<IdDto> findListByAllbyViews(Pageable views);
 
-    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Summary s ORDER BY s.name ASC")
+    @Query("select new com.moaguide.dto.NewDto.BuildingDto.IdDto(s.productId) from Product s ORDER BY s.name ASC")
     Page<IdDto> findListByAllbyName(Pageable name);
 }

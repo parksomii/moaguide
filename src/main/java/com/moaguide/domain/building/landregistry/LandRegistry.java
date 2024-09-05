@@ -1,6 +1,6 @@
 package com.moaguide.domain.building.landregistry;
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class LandRegistry {
 
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", nullable = false)
-    private Summary productId;
+    private Product productId;
 
     @Column(name = "Land_Elevation", length = 50)
     private String landElevation;

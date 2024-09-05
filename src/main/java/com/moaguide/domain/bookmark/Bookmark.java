@@ -1,6 +1,6 @@
 package com.moaguide.domain.bookmark;
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import com.moaguide.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ public class Bookmark {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName="product_Id",name="product_Id")
-    private Summary productId;
+    private Product productId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false,referencedColumnName="nickname",name="nickname")

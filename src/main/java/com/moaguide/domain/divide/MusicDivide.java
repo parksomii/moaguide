@@ -1,12 +1,11 @@
 package com.moaguide.domain.divide;
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -22,7 +21,7 @@ public class MusicDivide {
 
     @ManyToOne
     @JoinColumn(referencedColumnName="product_Id",name="product_Id")
-    private Summary productId;
+    private Product productId;
 
     @Column(name="divide_day")
     private Date divideDay;

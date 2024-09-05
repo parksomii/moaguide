@@ -1,6 +1,6 @@
 package com.moaguide.domain.building.lease;
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ public class Lease {
 
     @ManyToOne
     @JoinColumn(name = "product_Id", nullable = false)
-    private Summary productId;
+    private Product productId;
 
     private String tenant;
     @Column(name="Tenant_Introduction")

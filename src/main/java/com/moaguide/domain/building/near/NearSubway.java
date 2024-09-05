@@ -1,7 +1,6 @@
 package com.moaguide.domain.building.near;
 
 
-import com.moaguide.domain.summary.Summary;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.moaguide.domain.divide;
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class Divide {
 
     @ManyToOne
     @JoinColumn(referencedColumnName="product_Id",name="product_Id")
-    private Summary productId;
+    private Product productId;
 
     @Column(name="Decision_Day")
     private Date decisionDay;
@@ -53,7 +53,7 @@ public class Divide {
         return dividendRate;
     }
 
-    public Divide (Summary productId,Date decisionDay,double dividend,double dividendRate){
+    public Divide (Product productId, Date decisionDay, double dividend, double dividendRate){
         this.productId = productId;
         this.decisionDay = decisionDay;
         this.dividend = dividend;

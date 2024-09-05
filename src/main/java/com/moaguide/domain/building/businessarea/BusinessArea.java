@@ -1,7 +1,7 @@
 package com.moaguide.domain.building.businessarea;
 
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class BusinessArea {
 
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", nullable = false)
-    private Summary productId;
+    private Product productId;
 
     @Column(name = "CBD")
     private String cbd;

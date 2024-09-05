@@ -1,7 +1,7 @@
 package com.moaguide.domain.building.lnadprice;
 
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import com.moaguide.dto.LandPriceDto;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class LandPrice {
 
     @ManyToOne
     @JoinColumn(referencedColumnName="product_Id",name="product_Id")
-    private Summary productId;
+    private Product productId;
 
     @Column(name="land_price ")
     private int landPrice;

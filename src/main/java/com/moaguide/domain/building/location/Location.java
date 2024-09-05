@@ -1,7 +1,6 @@
 package com.moaguide.domain.building.location;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import com.moaguide.dto.LocationDto;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -24,7 +23,7 @@ public class Location {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Summary productId;
+    private Product productId;
 
     @Column(name = "longitude")
     private double longitude;

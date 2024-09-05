@@ -1,7 +1,7 @@
 package com.moaguide.domain.detail;
 
 import com.moaguide.domain.building.districts.Districts;
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class BuildingDetail {
 
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", nullable = false)
-    private Summary productId;
+    private Product productId;
 
     @ManyToOne
     @JoinColumn(name = "districts_id", referencedColumnName = "districts_Id")
@@ -72,9 +72,6 @@ public class BuildingDetail {
 
     @Column(name = "Publisher", length = 30)
     private String publisher;
-
-    @Column(name = "Issuance_value")
-    private Integer issuanceValue;
 
     @Column(name = "subscription_schedule", length = 50)
     private String subscriptionSchedule;

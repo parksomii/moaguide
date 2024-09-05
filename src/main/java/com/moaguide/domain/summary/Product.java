@@ -1,7 +1,6 @@
 package com.moaguide.domain.summary;
 
 import com.moaguide.domain.platform.Platform;
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.SummaryDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Summary")
+@Table(name = "Product")
 @Entity
-public class Summary {
+public class Product {
     @Id
     @Column(name = "Product_Id")
     private String productId;

@@ -2,22 +2,16 @@ package com.moaguide.controller;
 
 
 import com.moaguide.domain.news.News;
-import com.moaguide.domain.summary.Summary;
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
-import com.moaguide.dto.PageRequestDTO;
 import com.moaguide.service.NewsService;
 import com.moaguide.service.view.NewsViewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/content/news/")

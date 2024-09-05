@@ -1,14 +1,11 @@
 package com.moaguide.dto;
 
 import com.moaguide.domain.platform.Platform;
-import com.moaguide.domain.summary.Summary;
-import com.moaguide.domain.transaction.Transaction;
+import com.moaguide.domain.summary.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.util.List;
 
 
 @Getter
@@ -30,7 +27,7 @@ public class SummaryDto {
         return platformId.getPlatform();
     };
 
-    public Summary toEntity(){
-        return new Summary(productId, platformId, name, piece, recruitmentRate,nowPiece);
+    public Product toEntity(){
+        return new Product(productId, platformId, name, piece, recruitmentRate,nowPiece);
     }
 }

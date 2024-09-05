@@ -1,6 +1,5 @@
 package com.moaguide.domain.notification;
 
-import com.moaguide.domain.summary.Summary;
 import com.moaguide.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor

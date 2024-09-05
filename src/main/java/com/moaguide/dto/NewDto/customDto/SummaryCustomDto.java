@@ -1,7 +1,6 @@
 package com.moaguide.dto.NewDto.customDto;
 
 import com.moaguide.domain.divide.Divide;
-import com.moaguide.domain.summary.Summary;
 import com.moaguide.domain.transaction.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

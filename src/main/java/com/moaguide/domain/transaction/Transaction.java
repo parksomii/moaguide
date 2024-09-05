@@ -1,14 +1,13 @@
 package com.moaguide.domain.transaction;
 
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Getter
 @NoArgsConstructor
@@ -22,16 +21,15 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(referencedColumnName="product_Id",name="product_Id")
-    private Summary productId;
+    private Product productId;
 
     @Column(name = "trade_Day",nullable = false)
     private LocalDate tradeDay;
 
-    @Column(name = "trade_Time")
-    private LocalTime tradeTime;
-
     @Column(nullable = false)
     private long price;
+
+    private double price_rate;
 
     public String getProductId() {
         return productId.getProductId();

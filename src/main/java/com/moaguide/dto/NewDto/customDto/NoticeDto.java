@@ -1,9 +1,6 @@
 package com.moaguide.dto.NewDto.customDto;
 
 
-import com.moaguide.domain.notice.Notice;
-import com.moaguide.domain.summary.Summary;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

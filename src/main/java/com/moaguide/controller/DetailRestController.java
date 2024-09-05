@@ -2,7 +2,7 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.divide.Divide;
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import com.moaguide.domain.transaction.Transaction;
 import com.moaguide.dto.MusicDetailDto;
 import com.moaguide.dto.NewDto.*;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -97,8 +96,8 @@ public class DetailRestController {
 
     @PostMapping("{product_Id}")
     public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable String product_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
-        Summary summary = summaryService.findById(product_Id);
-        String response = productViewService.insert(summary,localStorageKey,date);
+        Product product = summaryService.findById(product_Id);
+        String response = productViewService.insert(product,localStorageKey,date);
         if(response != null) {
             return ResponseEntity.ok();
         }else{

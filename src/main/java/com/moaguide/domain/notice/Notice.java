@@ -1,6 +1,6 @@
 package com.moaguide.domain.notice;
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -15,7 +15,7 @@ public class Notice {
 
     @ManyToOne
     @JoinColumn(referencedColumnName="product_Id",name="product_Id")
-    private Summary productId;
+    private Product productId;
     private String title;
     private String content;
     private LocalDate date;

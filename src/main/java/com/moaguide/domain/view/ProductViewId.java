@@ -1,6 +1,6 @@
 package com.moaguide.domain.view;
 
-import com.moaguide.domain.summary.Summary;
+import com.moaguide.domain.summary.Product;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
@@ -19,5 +19,5 @@ public class ProductViewId {
     private LocalDate day;
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", nullable = false)
-    private Summary productId;
+    private Product productId;
 }
