@@ -1,6 +1,6 @@
 package com.moaguide.domain.notice;
 
-import com.moaguide.domain.summary.Product;
+import com.moaguide.domain.product.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 

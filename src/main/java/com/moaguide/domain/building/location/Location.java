@@ -1,6 +1,6 @@
 package com.moaguide.domain.building.location;
 
-import com.moaguide.domain.summary.Product;
+import com.moaguide.domain.product.Product;
 import com.moaguide.dto.LocationDto;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;

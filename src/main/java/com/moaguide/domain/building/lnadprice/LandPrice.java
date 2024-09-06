@@ -1,7 +1,7 @@
 package com.moaguide.domain.building.lnadprice;
 
 
-import com.moaguide.domain.summary.Product;
+import com.moaguide.domain.product.Product;
 import com.moaguide.dto.LandPriceDto;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.moaguide.domain.summary;
+package com.moaguide.domain.product;
 
 import com.moaguide.domain.platform.Platform;
 import com.moaguide.dto.SummaryDto;

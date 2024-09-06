@@ -1,4 +1,4 @@
-package com.moaguide.domain.elasticsearch.product;
+package com.moaguide.domain.elasticsearch.products;
 
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
 package com.moaguide.domain.view;
 
-import com.moaguide.domain.summary.Product;
+import com.moaguide.domain.product.Product;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;

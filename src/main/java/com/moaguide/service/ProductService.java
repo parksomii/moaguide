@@ -1,8 +1,8 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.GenericRepository;
-import com.moaguide.domain.summary.Product;
-import com.moaguide.domain.summary.ProductRepository;
+import com.moaguide.domain.product.Product;
+import com.moaguide.domain.product.ProductRepository;
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;

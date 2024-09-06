@@ -1,4 +1,4 @@
-package com.moaguide.domain.elasticsearch.product;
+package com.moaguide.domain.elasticsearch.products;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

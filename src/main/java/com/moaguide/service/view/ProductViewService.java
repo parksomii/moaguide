@@ -1,6 +1,6 @@
 package com.moaguide.service.view;
 
-import com.moaguide.domain.summary.Product;
+import com.moaguide.domain.product.Product;
 import com.moaguide.domain.view.ProductView;
 import com.moaguide.domain.view.ProductViewId;
 import com.moaguide.domain.view.ProductViewRepository;

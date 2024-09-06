@@ -2,7 +2,7 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.divide.Divide;
-import com.moaguide.domain.summary.Product;
+import com.moaguide.domain.product.Product;
 import com.moaguide.domain.transaction.Transaction;
 import com.moaguide.dto.MusicDetailDto;
 import com.moaguide.dto.NewDto.*;
