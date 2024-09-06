@@ -15,6 +15,5 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class TransactionDto {
     private LocalDate date;
-    private LocalTime time;
     private long price;
 }
