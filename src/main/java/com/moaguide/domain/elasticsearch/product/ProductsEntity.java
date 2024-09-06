@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class ProductEntity {
+public class ProductsEntity {
 
     @Id
     private String productId;

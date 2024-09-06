@@ -1,5 +1,6 @@
 package com.moaguide.controller;
 
+import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.service.ReportService;
 import com.moaguide.service.ProductService;
@@ -29,22 +30,30 @@ public class SummaryRestController {
                                           @RequestParam int page,
                                           @RequestParam int size) {
         log.info("category: " + category);
+        page = page-1;
         if(subcategory.equals("trade")){
             List<SummaryCustomDto> summary;
             if(category.equals("all")){
                 summary = productService.getlist(page,size,sort);
-                return ResponseEntity.ok(summary);
+                return ResponseEntity.ok(new SummaryResponseDto(summary,page,size));
 
             }else{
                 summary = productService.getcategorylist(page,size,sort,category);
-                return ResponseEntity.ok(summary);
+                return ResponseEntity.ok(new SummaryResponseDto(summary,page,size));
             }
         } else if (subcategory.equals("start")) {
             List<IssueCustomDto> inavete = productService.getstartlistCategory(page,size,sort,category,subcategory);
-            return ResponseEntity.ok(inavete);
+            return ResponseEntity.ok(new SummaryResponseDto(inavete,page,size));
         } else{
+            List<finishCustomDto> inavete;
+            if(category.equals("all")){
+                inavete = productService.getfinish(page,size,sort);
+                return ResponseEntity.ok((new SummaryResponseDto(inavete,page,size)));
 
-            return ResponseEntity.ok().body('d');
+            }else{
+                inavete = productService.getfinishCategory(page,size,sort,category);
+                return ResponseEntity.ok((new SummaryResponseDto(inavete,page,size)));
+            }
         }
     }
 

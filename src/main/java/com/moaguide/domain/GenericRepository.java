@@ -2,6 +2,7 @@ package com.moaguide.domain;
 
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -68,7 +69,7 @@ public class GenericRepository {
     }
 
     public List<IssueCustomDto> findCustomStartCategory(int page, int size, Date sqlDate, String category) {
-        String sql = "CALL start_category(:page, :size, :day, :category)";
+        String sql = "CALL start_category(:page, :size)";
         return entityManager.createNativeQuery(sql, "IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
@@ -76,4 +77,39 @@ public class GenericRepository {
                 .setParameter("category", category)
                 .getResultList();
     }
+
+    public List<finishCustomDto> findfinish(int page, int size) {
+        String sql = "CALL finsh(:page, :size)";
+        return entityManager.createNativeQuery(sql, "finishCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .getResultList();
+    }
+
+    public List<finishCustomDto> findend(int page, int size) {
+        String sql = "CALL endlist(:page, :size)";
+        return entityManager.createNativeQuery(sql, "finishCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .getResultList();
+    }
+
+    public List<finishCustomDto> findfinishCategory(int page, int size, String category) {
+        String sql = "CALL finsh_category(:page, :size, :day, :category)";
+        return entityManager.createNativeQuery(sql, "finishCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("category", category)
+                .getResultList();
+    }
+
+    public List<finishCustomDto> findendCategory(int page, int size, String category) {
+        String sql = "CALL endlist_category(:page, :size, :day, :category)";
+        return entityManager.createNativeQuery(sql, "finishCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("category", category)
+                .getResultList();
+    }
+
 }
