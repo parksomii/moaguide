@@ -1,6 +1,5 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.elasticsearch.product.ProductRepository;
 import com.moaguide.domain.elasticsearch.searchlog.SearchLog;
 import com.moaguide.domain.elasticsearch.searchlog.SearchLogRepository;
 import com.moaguide.dto.SearchRankDto;
