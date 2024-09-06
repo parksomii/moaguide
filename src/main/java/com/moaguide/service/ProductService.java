@@ -5,6 +5,7 @@ import com.moaguide.domain.summary.Product;
 import com.moaguide.domain.summary.ProductRepository;
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,26 @@ public class ProductService {
 
     public Product findById(String productId) {
         return productRepository.findById(productId).get();
+    }
+
+
+    public List<finishCustomDto> getfinish(int page, int size, String sort) {
+        if(sort.equals("finish")){
+            List<finishCustomDto> issue = genericRepository.findfinish(page,size);
+            return issue;
+        }else {
+            List<finishCustomDto> issue = genericRepository.findend(page,size);
+            return issue;
+        }
+    }
+
+    public List<finishCustomDto> getfinishCategory(int page, int size, String sort, String category) {
+        if(sort.equals("finish")){
+            List<finishCustomDto> issue = genericRepository.findfinishCategory(page,size,category);
+            return issue;
+        }else {
+            List<finishCustomDto> issue = genericRepository.findendCategory(page,size,category);
+            return issue;
+        }
     }
 }
