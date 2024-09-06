@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ProductㄴRepository extends ElasticsearchRepository<ProductsEntity, String> {
+public interface ProductsRepository extends ElasticsearchRepository<ProductsEntity, String> {
     // Custom query methods can be added here
 }
