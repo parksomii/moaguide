@@ -36,4 +36,14 @@ public class LandRegistry {
 
     @Column(name = "Zoning_Other", columnDefinition = "TEXT")
     private String zoningOther;
+
+
+    // 새로운 생성자 추가
+    public LandRegistry(String landElevation, String landShape, String roadInterface, String zoningNational, String zoningOther) {
+        this.landElevation = landElevation;
+        this.landShape = landShape;
+        this.roadInterface = roadInterface;
+        this.zoningNational = zoningNational;
+        this.zoningOther = zoningOther;
+    }
 }

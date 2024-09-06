@@ -1,15 +1,17 @@
 package com.moaguide.domain.product;
 
+import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
 
-    @Query("SELECT p from Product p where p.productId = :productId")
-    Optional<Product> findById(@RequestParam("productId") String productId);
+
+    @Transactional(readOnly = true)
+    @Procedure(name = "building_detail")
+    BuildingReponseDto findDetail(@Param("in_Product_Id") String Product_Id);
 }

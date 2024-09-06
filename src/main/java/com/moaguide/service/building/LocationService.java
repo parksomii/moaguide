@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 public class LocationService {
     private LocationRepository locationRepository;
 
-    public Location locate(String id) {
-        Location location = locationRepository.findByProductId(id);
+    public LocationDto locate(String id) {
+        LocationDto location = locationRepository.findByProductId(id);
         return location;
     }
 }

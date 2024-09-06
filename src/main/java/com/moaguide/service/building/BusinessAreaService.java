@@ -2,6 +2,7 @@ package com.moaguide.service.building;
 
 import com.moaguide.domain.building.businessarea.BusinessArea;
 import com.moaguide.domain.building.businessarea.BusinessAreaRepository;
+import com.moaguide.dto.NewDto.BusinessAreaDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
 public class BusinessAreaService {
     private BusinessAreaRepository businessAreaRepository;
 
-    public BusinessArea findBase(String id) {
-        BusinessArea businessArea = businessAreaRepository.findByproductId(id);
+    public BusinessAreaDto findBase(String id) {
+        BusinessAreaDto businessArea = businessAreaRepository.findByproductId(id);
         return businessArea;
     }
 }

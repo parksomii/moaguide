@@ -3,6 +3,7 @@ package com.moaguide.service;
 import com.moaguide.domain.GenericRepository;
 import com.moaguide.domain.product.Product;
 import com.moaguide.domain.product.ProductRepository;
+import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;
@@ -55,9 +56,6 @@ public class ProductService {
         }
     }
 
-    public Product findById(String productId) {
-        return productRepository.findById(productId).get();
-    }
 
 
     public List<finishCustomDto> getfinish(int page, int size, String sort) {
@@ -78,5 +76,10 @@ public class ProductService {
             List<finishCustomDto> issue = genericRepository.findendCategory(page,size,category);
             return issue;
         }
+    }
+
+    public BuildingReponseDto findBydetail(String productId) {
+        BuildingReponseDto building = productRepository.findDetail(productId);
+        return building;
     }
 }

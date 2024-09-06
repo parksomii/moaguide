@@ -1,6 +1,7 @@
 package com.moaguide.dto.NewDto;
 
 import com.moaguide.domain.building.location.Location;
+import com.moaguide.dto.LocationDto;
 import com.moaguide.dto.NewDto.BuildingDto.AreaDto;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,8 @@ public class BuildingAreaResponseDto {
     private double latitude;
     private List<AreaDto> areas;
 
-    public BuildingAreaResponseDto(String name, Location location, List<AreaDto> areas) {
-        this.name = name;
+    public BuildingAreaResponseDto(LocationDto location, List<AreaDto> areas) {
+        this.name = location.getName();
         this.longitude = location.getLongitude();
         this.latitude = location.getLatitude();
         this.areas = areas;

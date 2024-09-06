@@ -27,7 +27,7 @@ public class BuildingSubResponseDto {
     private int busLine;
     private int busNode;
 
-    public BuildingSubResponseDto(List<TypeDto> rent, BusinessArea businessArea, List<NearSubwayDto> nearSubway, NearBus nearBus) {
+    public BuildingSubResponseDto(List<TypeDto> rent, BusinessAreaDto businessArea, List<NearSubwayDto> nearSubway) {
         this.type = rent;
         this.cbd = businessArea.getCbd();
         this.cbdDistance = businessArea.getCbdDistance();
@@ -42,8 +42,8 @@ public class BuildingSubResponseDto {
         this.ybdCar = businessArea.getYbdCar();
         this.ybdSubway = businessArea.getYbdSubway();
         this.nearSubway = nearSubway;
-        this.busLine = nearBus.getLine();
-        this.busNode = nearBus.getNode();
+        this.busLine = businessArea.getLine();
+        this.busNode = businessArea.getNode();
     }
 
 }

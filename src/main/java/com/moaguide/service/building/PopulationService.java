@@ -13,9 +13,9 @@ import java.util.List;
 public class PopulationService {
     private final PopulationRepository populationRepository;
 
-    public List<PopulationDto> findbydate(int id, Integer year, Integer month) {
+    public List<PopulationDto> findbydate(String ProductId, Integer year, Integer month) {
         LocalDate firstDayOfTargetMonth = LocalDate.of(year, month, 1);
-        List<PopulationDto> population = populationRepository.findByLastmonth(id, firstDayOfTargetMonth);
+        List<PopulationDto> population = populationRepository.findByLastmonth(ProductId, firstDayOfTargetMonth);
         return population;
     }
 }

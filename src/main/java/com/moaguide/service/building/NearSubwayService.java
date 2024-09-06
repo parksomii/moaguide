@@ -12,8 +12,8 @@ import java.util.List;
 public class NearSubwayService {
     private final NearSubwayRepository nearSubwayRepository;
 
-    public List<NearSubwayDto> findBykeyword(String keyword) {
-        List<NearSubwayDto> nearSubway = nearSubwayRepository.findBykeyword(keyword);
+    public List<NearSubwayDto> findBykeyword(String productId) {
+        List<NearSubwayDto> nearSubway = nearSubwayRepository.findBykeyword(productId);
         return nearSubway;
     }
 }
