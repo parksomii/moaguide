@@ -23,15 +23,6 @@ public class HomeController {
     private final ReportService reportService;
     private final ProductService productService;
 
-    // 주요 상품 현황
-    @GetMapping("summary/{category}")
-    public ResponseEntity<Object> summary(@RequestParam int page,
-                                          @RequestParam int size,
-                                          @PathVariable("category") String category) {
-        List<SummaryCustomDto> summary = productService.getSummary(page, size, category);
-        return ResponseEntity.ok(summary);
-    }
-
     // 상품현황 북마크 처리
     @PostMapping("summary/{category}/{productId}/BkMark")
     public String addBookMark (@PathVariable("category") String category, @PathVariable("productId") String productId, @RequestHeader("Authorization") String token) {
