@@ -25,7 +25,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/detail/")
 public class DetailRestController {
-    private final SummaryService summaryService;
+    private ProductService productService;
     private ReportService reportService;
     private NewsService newsService;
     private DivideService divideService;
@@ -96,7 +96,7 @@ public class DetailRestController {
 
     @PostMapping("{product_Id}")
     public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable String product_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
-        Product product = summaryService.findById(product_Id);
+        Product product = productService.findById(product_Id);
         String response = productViewService.insert(product,localStorageKey,date);
         if(response != null) {
             return ResponseEntity.ok();

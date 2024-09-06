@@ -4,7 +4,6 @@ import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
 import com.moaguide.dto.NewDto.customDto.ReportAndNewsDto;
 import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
-import com.moaguide.dto.SearchRankDto;
 import com.moaguide.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -24,14 +21,14 @@ import java.util.List;
 public class HomeController {
     private final NewsService newsService;
     private final ReportService reportService;
-    private final SummaryService summaryService;
+    private final ProductService productService;
 
     // 주요 상품 현황
     @GetMapping("summary/{category}")
     public ResponseEntity<Object> summary(@RequestParam int page,
                                           @RequestParam int size,
                                           @PathVariable("category") String category) {
-        List<SummaryCustomDto> summary = summaryService.getSummary(page, size, category);
+        List<SummaryCustomDto> summary = productService.getSummary(page, size, category);
         return ResponseEntity.ok(summary);
     }
 
