@@ -19,5 +19,4 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.TransactionDto(t.tradeDay,t.price) FROM Transaction t WHERE t.productId.productId = :productId AND t.tradeDay >= :day order by t.tradeDay")
     List<TransactionDto> findbyday(@Param("productId") String productId, @Param("day")LocalDate date);
 
-
 }

@@ -15,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 public class SummaryCustomDto {
     // 주요 상품 현황 및 상품 목록
-    private String product_Id;
+    private String productId;
     private String name;
-    private long totalprice;
+    private BigDecimal totalprice;
     private long price;
     private double priceRate;
     private double dividend;

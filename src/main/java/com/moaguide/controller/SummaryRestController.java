@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/summary/")
-@Slf4j
 public class SummaryRestController {
     private final ProductService productService;
     private final ReportService reportService;
@@ -29,14 +28,12 @@ public class SummaryRestController {
                                           @RequestParam String sort,
                                           @RequestParam int page,
                                           @RequestParam int size) {
-        log.info("category: " + category);
         page = page-1;
         if(subcategory.equals("trade")){
             List<SummaryCustomDto> summary;
             if(category.equals("all")){
                 summary = productService.getlist(page,size,sort);
-                return ResponseEntity.ok(new SummaryResponseDto(summary,page,size));
-
+                return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size));
             }else{
                 summary = productService.getcategorylist(page,size,sort,category);
                 return ResponseEntity.ok(new SummaryResponseDto(summary,page,size));
