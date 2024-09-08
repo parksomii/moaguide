@@ -17,11 +17,11 @@ public class SummaryCustomDto {
     // 주요 상품 현황 및 상품 목록
     private String productId;
     private String name;
-    private BigDecimal totalprice;
-    private long price;
+    private Long totalprice;
+    private Integer price;
     private double priceRate;
     private double dividend;
-    private double dividend_rate;
+    private double dividendRate;
     private String category;
     private String platform;
 }
