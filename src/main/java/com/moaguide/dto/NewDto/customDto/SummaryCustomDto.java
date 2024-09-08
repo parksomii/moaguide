@@ -8,16 +8,18 @@ import jakarta.persistence.SqlResultSetMapping;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SqlResultSetMapping(
-        name = "SummaryMapping",
+        name = "SummaryCustomDtoMapping",
         classes = @ConstructorResult(
                 targetClass = SummaryCustomDto.class,
                 columns = {
