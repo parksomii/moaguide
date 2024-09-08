@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "news")
+@Table(name = "News")
 public class News {
 
     @Id
