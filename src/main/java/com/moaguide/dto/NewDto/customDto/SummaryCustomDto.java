@@ -21,15 +21,15 @@ import java.util.List;
         classes = @ConstructorResult(
                 targetClass = SummaryCustomDto.class,
                 columns = {
-                        @ColumnResult(name = "code", type = String.class),
-                        @ColumnResult(name = "buildingName", type = String.class),
-                        @ColumnResult(name = "price", type = Long.class),
-                        @ColumnResult(name = "someValue", type = Integer.class),
-                        @ColumnResult(name = "decimalValue1", type = BigDecimal.class),
-                        @ColumnResult(name = "decimalValue2", type = BigDecimal.class),
-                        @ColumnResult(name = "decimalValue3", type = BigDecimal.class),
-                        @ColumnResult(name = "type", type = String.class),
-                        @ColumnResult(name = "description", type = String.class)
+                        @ColumnResult(name = "Product_Id", type = String.class),
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "totalprice", type = Long.class),
+                        @ColumnResult(name = "price", type = Integer.class),
+                        @ColumnResult(name = "price_rate", type = Double.class),
+                        @ColumnResult(name = "dividend", type = Double.class),
+                        @ColumnResult(name = "dividend_Rate", type = Double.class),
+                        @ColumnResult(name = "category", type = String.class),
+                        @ColumnResult(name = "platform", type = String.class)
                 }
         )
 )
