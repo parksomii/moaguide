@@ -14,28 +14,28 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 @SqlResultSetMapping(
         name = "SummaryCustomDtoMapping",
         classes = @ConstructorResult(
                 targetClass = SummaryCustomDto.class,
                 columns = {
-                        @ColumnResult(name = "Product_Id", type = String.class),
+                        @ColumnResult(name = "productId", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "totalprice", type = Long.class),
                         @ColumnResult(name = "price", type = Integer.class),
-                        @ColumnResult(name = "price_rate", type = Double.class),
+                        @ColumnResult(name = "priceRate", type = Double.class),
                         @ColumnResult(name = "dividend", type = Double.class),
-                        @ColumnResult(name = "dividend_Rate", type = Double.class),
+                        @ColumnResult(name = "dividendRate", type = Double.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class)
                 }
         )
 )
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SummaryCustomDto {
     // 주요 상품 현황 및 상품 목록
     private String productId;
