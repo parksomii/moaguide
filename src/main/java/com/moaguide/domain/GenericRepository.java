@@ -31,7 +31,7 @@ public class GenericRepository {
     public List<SummaryCustomDto> findCustomListCategory(int page, int size, String sort, String category) {
         // 프로시저를 호출하는 네이티브 쿼리
         String sql = "CALL list_category(:page, :size, :sort, :category)";
-        return entityManager.createNativeQuery(sql, "SummaryCustomDtoMapping")
+        return entityManager.createNativeQuery(sql,  SummaryCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("sort", sort)
@@ -42,7 +42,7 @@ public class GenericRepository {
     public List<IssueCustomDto> findCustomIssue(int page, int size, Date sqlDate) {
         // 프로시저를 호출하는 네이티브 쿼리
         String sql = "CALL Issue(:page, :size, :day)";
-        return entityManager.createNativeQuery(sql, "IssueCustomDtoMapping")
+        return entityManager.createNativeQuery(sql, IssueCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
@@ -51,7 +51,7 @@ public class GenericRepository {
 
     public List<IssueCustomDto> findCustomStart(int page, int size ,Date sqlDate) {
         String sql = "CALL start(:page, :size, :day)";
-        return entityManager.createNativeQuery(sql, "IssueCustomDtoMapping")
+        return entityManager.createNativeQuery(sql, IssueCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
@@ -60,7 +60,7 @@ public class GenericRepository {
 
     public List<IssueCustomDto> findCustomIssueCategory(int page, int size, Date sqlDate, String category) {
         String sql = "CALL Issue_category(:page, :size, :day, :category)";
-        return entityManager.createNativeQuery(sql, "IssueCustomDtoMapping")
+        return entityManager.createNativeQuery(sql, IssueCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
@@ -70,7 +70,7 @@ public class GenericRepository {
 
     public List<IssueCustomDto> findCustomStartCategory(int page, int size, Date sqlDate, String category) {
         String sql = "CALL start_category(:page, :size)";
-        return entityManager.createNativeQuery(sql, "IssueCustomDtoMapping")
+        return entityManager.createNativeQuery(sql, IssueCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
@@ -80,7 +80,7 @@ public class GenericRepository {
 
     public List<finishCustomDto> findfinish(int page, int size) {
         String sql = "CALL finsh(:page, :size)";
-        return entityManager.createNativeQuery(sql, "finishCustomDtoMapping")
+        return entityManager.createNativeQuery(sql, finishCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .getResultList();
@@ -88,7 +88,7 @@ public class GenericRepository {
 
     public List<finishCustomDto> findend(int page, int size) {
         String sql = "CALL endlist(:page, :size)";
-        return entityManager.createNativeQuery(sql, "finishCustomDtoMapping")
+        return entityManager.createNativeQuery(sql, finishCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .getResultList();
@@ -96,7 +96,7 @@ public class GenericRepository {
 
     public List<finishCustomDto> findfinishCategory(int page, int size, String category) {
         String sql = "CALL finsh_category(:page, :size, :day, :category)";
-        return entityManager.createNativeQuery(sql, "finishCustomDtoMapping")
+        return entityManager.createNativeQuery(sql, finishCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("category", category)
@@ -105,7 +105,7 @@ public class GenericRepository {
 
     public List<finishCustomDto> findendCategory(int page, int size, String category) {
         String sql = "CALL endlist_category(:page, :size, :day, :category)";
-        return entityManager.createNativeQuery(sql, "finishCustomDtoMapping")
+        return entityManager.createNativeQuery(sql, finishCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("category", category)
