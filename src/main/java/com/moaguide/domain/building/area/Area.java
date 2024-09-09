@@ -19,8 +19,8 @@ public class Area {
     @Column(name = "area_size")
     private int areaSize;
 
-    @Column(name="product_name")
-    private String productName;
+    @Column(name="area_name")
+    private String areaName;
 
     private String polygon;
 
