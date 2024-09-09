@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @SqlResultSetMapping(
-        name = "AreaDtoMapping",
+        name = "LocationDtoMapping",
         classes = @ConstructorResult(
                 targetClass = LocationDto.class,
                 columns = {
@@ -31,7 +31,7 @@ import lombok.AllArgsConstructor;
 @NamedStoredProcedureQuery(
         name = "AreaProcedure",
         procedureName = "locate",
-        resultSetMappings = "AreaDtoMapping",
+        resultSetMappings = "LocationDtoMapping",
         parameters = {
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class)
         }

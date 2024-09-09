@@ -12,7 +12,6 @@ import java.util.List;
 
 public interface PopulationRepository extends JpaRepository<Population, Long> {
 
-    @Transactional(readOnly = true)
     @Procedure(name = "populate")
     List<PopulationDto> findByLastmonth(@Param("id") String ProductId, @Param("in_day") LocalDate lastmonth);
 }

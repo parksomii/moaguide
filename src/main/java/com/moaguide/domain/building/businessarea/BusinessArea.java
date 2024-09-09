@@ -36,7 +36,7 @@ import lombok.NoArgsConstructor;
         )
 )
 @NamedStoredProcedureQuery(
-        name = "BuildingsubProcedure",
+        name = "BuildingSubProcedure",
         procedureName = "business",
         resultSetMappings = "BusinessAreaDtoMapping",
         parameters = {
