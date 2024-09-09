@@ -29,15 +29,24 @@ import java.sql.Date;
                 }
         )
 )
-@NamedNativeQuery(
+@NamedStoredProcedureQuery(
         name = "findIssueList",
-        query = "CALL Issue(:page, :size, :day)",
-        resultSetMapping = "IssueCustomDtoMapping"
+        procedureName = "CALL Issue(:page, :size, :day)",
+        resultSetMappings = "IssueCustomDtoMapping",
+        parameters = {
+        @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
+        @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
+        @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)
+        }
 )
-@NamedNativeQuery(
+@NamedStoredProcedureQuery(
         name = "findstartList",
-        query = "CALL start(:page, :size, :day)",
-        resultSetMapping = "IssueCustomDtoMapping"
+        procedureName = "CALL start(:page, :size, :day)",
+        resultSetMappings = "IssueCustomDtoMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)        }
 )
 public class IssuePrice {
 
