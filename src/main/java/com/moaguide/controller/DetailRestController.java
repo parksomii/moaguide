@@ -78,11 +78,7 @@ public class DetailRestController {
         return ResponseEntity.ok().body(noticeDto);
     }
 
-    @GetMapping("{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id) {
-        BuildingReponseDto building = productService.findBydetail(product_Id);
-        return ResponseEntity.ok(building);
-    }
+
 
 //    @PostMapping("{product_Id}")
 //    public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable String product_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){

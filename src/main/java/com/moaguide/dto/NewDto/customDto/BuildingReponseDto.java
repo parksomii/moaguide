@@ -4,19 +4,21 @@ package com.moaguide.dto.NewDto.customDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor
+@Setter
 public class BuildingReponseDto {
-    private String Product_Id;
+    private String productId;
     private String category;
-    private String Platform;
-    private String Name;
+    private String platform;
+    private String name;
     private long price;
-    private double price_rate;
-    private String total;
+    private double priceRate;
+    private String totalPrice;
     private double dividend;
-    private double dividend_Rate;
-    private int divide_cycle;
+    private double dividendRate;
+    private int divideCycle;
 }

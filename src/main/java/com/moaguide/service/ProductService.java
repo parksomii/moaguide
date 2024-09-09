@@ -80,8 +80,4 @@ public class ProductService {
         }
     }
 
-    public BuildingReponseDto findBydetail(String productId) {
-        BuildingReponseDto building = productRepository.findDetail(productId);
-        return building;
-    }
 }

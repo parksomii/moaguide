@@ -38,7 +38,11 @@ public class BuildingRestController {
     private final VacancyRateService vacancyRateService;
 
 
-
+    @GetMapping("{product_Id}")
+    public ResponseEntity<?> product(@PathVariable String product_Id) {
+        BuildingReponseDto building = buildingService.findBydetail(product_Id);
+        return ResponseEntity.ok(building);
+    }
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         BuildingBaseDto building = buildingService.findbase(product_Id);
