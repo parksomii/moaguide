@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "Product")
 @Entity
+
 @SqlResultSetMapping(
         name = "SummaryCustomDtoMapping",
         classes = @ConstructorResult(

@@ -2,6 +2,7 @@ package com.moaguide.domain.detail;
 
 import com.moaguide.domain.building.districts.Districts;
 import com.moaguide.domain.product.Product;
+import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,46 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Entity
+@SqlResultSetMapping(
+        name = "BuildingBaseDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = BuildingBaseDto.class,
+                columns = {
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "Use_area", type = String.class),
+                        @ColumnResult(name = "main_use", type = String.class),
+                        @ColumnResult(name = "completion_date", type = String.class),
+                        @ColumnResult(name = "land_area", type = String.class),
+                        @ColumnResult(name = "floor_area", type = String.class),
+                        @ColumnResult(name = "dry_ratio", type = Double.class),
+                        @ColumnResult(name = "Height", type = Double.class),
+                        @ColumnResult(name = "Scale", type = String.class),
+                        @ColumnResult(name = "Main_structure", type = String.class),
+                        @ColumnResult(name = "parking", type = Integer.class),
+                        @ColumnResult(name = "Location", type = String.class),
+                        @ColumnResult(name = "Land_Elevation", type = String.class),
+                        @ColumnResult(name = "Land_Shape", type = String.class),
+                        @ColumnResult(name = "Road_Interface", type = String.class),
+                        @ColumnResult(name = "Zoning_National", type = String.class),
+                        @ColumnResult(name = "Zoning_Other", type = String.class),
+                        @ColumnResult(name = "piece", type = Integer.class),
+                        @ColumnResult(name = "dividend", type = Double.class),
+                        @ColumnResult(name = "Issue_Price", type = Integer.class),
+                        @ColumnResult(name = "total", type = String.class),
+                        @ColumnResult(name = "subscription_schedule", type = String.class),
+                        @ColumnResult(name = "Listing_date", type = String.class)
+                }
+        )
+)
+
+@NamedStoredProcedureQuery(
+        name = "BuildingBaseProcedure",
+        procedureName = "building_base",
+        resultSetMappings = "BuildingBaseDtoMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_Product_Id", type = String.class)
+        }
+)
 @Table(name = "Building_detail")
 public class BuildingDetail {
 
