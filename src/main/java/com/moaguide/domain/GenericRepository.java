@@ -28,8 +28,7 @@ public class GenericRepository {
 
     public List<SummaryCustomDto> findCustomListCategory(int page, int size, String sort, String category) {
         // 프로시저를 호출하는 네이티브 쿼리
-        String sql = "CALL list_category(:page, :size, :sort, :category)";
-        return entityManager.createNativeQuery("findCustomList", SummaryCustomDto.class)
+        return entityManager.createNativeQuery("CALL list_category(:page, :size, :sort, :category)", SummaryCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("sort", sort)
