@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class LocationService {
     private LocationRepository locationRepository;
 
-    @Transactional(readOnly = false)
     public LocationDto locate(String id) {
         LocationDto location = locationRepository.findByProductId(id);
         return location;

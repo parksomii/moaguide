@@ -13,7 +13,6 @@ public class BusinessAreaService {
     private BusinessAreaRepository businessAreaRepository;
 
 
-    @Transactional(readOnly = false)
     public BusinessAreaDto findBase(String product_Id) {
         BusinessAreaDto businessArea = businessAreaRepository.findByproductId(product_Id);
         return businessArea;
