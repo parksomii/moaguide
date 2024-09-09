@@ -2,8 +2,6 @@ package com.moaguide.domain.detail;
 
 import com.moaguide.domain.building.districts.Districts;
 import com.moaguide.domain.product.Product;
-import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
-import com.moaguide.dto.NewDto.customDto.BuildingDetailDto;
 import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

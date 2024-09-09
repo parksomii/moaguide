@@ -20,7 +20,7 @@ public class BuildingService {
 
     @Transactional(readOnly = false)
     public BuildingReponseDto findBydetail(String productId) {
-        BuildingReponseDto building = buildingRepository.Detail(productId);
+        BuildingReponseDto building = buildingRepository.findBuildingDetail(productId);
         return building;
     }
 
