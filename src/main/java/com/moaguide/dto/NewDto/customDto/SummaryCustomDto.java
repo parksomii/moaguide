@@ -15,23 +15,6 @@ import java.math.RoundingMode;
 import java.util.List;
 
 
-@SqlResultSetMapping(
-        name = "SummaryCustomDtoMapping",
-        classes = @ConstructorResult(
-                targetClass = SummaryCustomDto.class,
-                columns = {
-                        @ColumnResult(name = "productId", type = String.class),
-                        @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "totalprice", type = Long.class),
-                        @ColumnResult(name = "price", type = Integer.class),
-                        @ColumnResult(name = "priceRate", type = Double.class),
-                        @ColumnResult(name = "dividend", type = Double.class),
-                        @ColumnResult(name = "dividendRate", type = Double.class),
-                        @ColumnResult(name = "category", type = String.class),
-                        @ColumnResult(name = "platform", type = String.class)
-                }
-        )
-)
 @Getter
 @Setter
 @AllArgsConstructor
