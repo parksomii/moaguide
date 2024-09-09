@@ -15,10 +15,10 @@ public class BuildingReponseDto {
     private String category;
     private String platform;
     private String name;
-    private long price;
-    private double priceRate;
+    private Long price;
+    private Double priceRate;
     private String totalPrice;
-    private double dividend;
-    private double dividendRate;
-    private int divideCycle;
+    private Double dividend;
+    private Double dividendRate;
+    private Integer divideCycle;
 }

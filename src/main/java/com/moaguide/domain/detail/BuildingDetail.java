@@ -4,6 +4,7 @@ import com.moaguide.domain.building.districts.Districts;
 import com.moaguide.domain.product.Product;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.dto.NewDto.customDto.BuildingDetailDto;
+import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,18 +19,18 @@ import java.util.Date;
 @SqlResultSetMapping(
         name = "buildingDetailDtoMapping",
         classes = @ConstructorResult(
-                targetClass = BuildingDetailDto.class,
+                targetClass = BuildingReponseDto.class,
                 columns = {
                         @ColumnResult(name = "productId", type = String.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "price", type = long.class),
-                        @ColumnResult(name = "priceRate", type = double.class),
+                        @ColumnResult(name = "price", type = Long.class),
+                        @ColumnResult(name = "priceRate", type = Double.class),
                         @ColumnResult(name = "totalPrice", type = String.class),
-                        @ColumnResult(name = "dividend", type = double.class),
-                        @ColumnResult(name = "dividendRate", type = double.class),
-                        @ColumnResult(name = "divideCycle", type = int.class)
+                        @ColumnResult(name = "dividend", type = Double.class),
+                        @ColumnResult(name = "dividendRate", type = Double.class),
+                        @ColumnResult(name = "divideCycle", type = Integer.class)
                 }
         )
 )
