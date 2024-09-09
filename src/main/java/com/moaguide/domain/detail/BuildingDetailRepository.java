@@ -14,6 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface BuildingDetailRepository extends JpaRepository<BuildingDetail, Long> {
 
     @Transactional(readOnly = true)
-    @Query(value = "CALL building_base(:in_Product_Id);", nativeQuery = true)
+    @Procedure(name = "BuildingBaseProcedure")
     BuildingBaseDto findDetail(@Param("in_Product_Id") String productId);
 }
