@@ -34,6 +34,11 @@ import java.sql.Date;
         query = "CALL Issue(:page, :size, :day)",
         resultSetMapping = "IssueCustomDtoMapping"
 )
+@NamedNativeQuery(
+        name = "findingList",
+        query = "CALL start(:page, :size, :day)",
+        resultSetMapping = "IssueCustomDtoMapping"
+)
 public class IssuePrice {
 
     @EmbeddedId
