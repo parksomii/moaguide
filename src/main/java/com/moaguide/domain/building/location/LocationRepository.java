@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
-    @Transactional(readOnly = true)
     @Procedure(name = "locate")
     LocationDto findByProductId(@Param("id") String productId);
 }
