@@ -30,8 +30,8 @@ import lombok.NoArgsConstructor;
                         @ColumnResult(name = "ybdDistance", type = String.class),
                         @ColumnResult(name = "ybdCar", type = String.class),
                         @ColumnResult(name = "ybdSubway", type = String.class),
-                        @ColumnResult(name = "line", type = int.class),
-                        @ColumnResult(name = "node", type = int.class)
+                        @ColumnResult(name = "line", type = Integer.class),
+                        @ColumnResult(name = "node", type = Integer.class)
                 }
         )
 )
