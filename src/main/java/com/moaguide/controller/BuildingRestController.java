@@ -36,7 +36,6 @@ public class BuildingRestController {
     private final SubwayWeekService subwayWeekService;
     private final PopulationService populationService;
     private final VacancyRateService vacancyRateService;
-    private final ProductService productService;
 
 
 
