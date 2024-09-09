@@ -7,6 +7,7 @@ import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @AllArgsConstructor
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class BuildingService {
     private final BuildingDetailRepository buildingRepository;
 
+    @Transactional(readOnly = false)
     public BuildingBaseDto findbase(String productId) {
         BuildingBaseDto building = buildingRepository.findDetail(productId);
         return building;
