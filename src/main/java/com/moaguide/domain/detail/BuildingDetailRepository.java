@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface BuildingDetailRepository extends JpaRepository<BuildingDetail, Long> {
 
-    @Transactional(readOnly = true)
+    @Transactional
     @Procedure(name = "BuildingBaseProcedure")
     BuildingBaseDto findDetail(@Param("in_Product_Id") String productId);
 }
