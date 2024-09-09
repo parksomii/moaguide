@@ -42,7 +42,7 @@ import java.util.Date;
                         @ColumnResult(name = "piece", type = Integer.class),
                         @ColumnResult(name = "lastDivide", type = Double.class),
                         @ColumnResult(name = "basePrice", type = Integer.class),
-                        @ColumnResult(name = "totalPrice", type = String.class),
+                        @ColumnResult(name = "totalPrice", type = long.class),
                         @ColumnResult(name = "subscription", type = String.class),
                         @ColumnResult(name = "listingDate", type = String.class)
                 }
