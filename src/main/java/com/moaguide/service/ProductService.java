@@ -10,6 +10,7 @@ import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final GenericRepository genericRepository;
 
+    @Transactional(readOnly = false)
     public List<SummaryCustomDto> getlist(int page, int size, String sort) {
         List<SummaryCustomDto> summary = genericRepository.findCustomList(page,size,sort);
         return summary;

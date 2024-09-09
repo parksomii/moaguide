@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface BusinessAreaRepository extends JpaRepository<BusinessArea, Long> {
 
-    @Transactional(readOnly = true)
     @Procedure(name = "business")
     BusinessAreaDto findByproductId(@Param("id") String id);
 }
