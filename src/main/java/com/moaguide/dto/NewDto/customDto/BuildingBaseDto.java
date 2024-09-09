@@ -50,7 +50,7 @@ public class BuildingBaseDto {
 
     private int piece; // 증권수
 
-    private Double last_divide;
+    private Double lastDivide;
 
     private int basePrice; // 1주당 발행액
 
