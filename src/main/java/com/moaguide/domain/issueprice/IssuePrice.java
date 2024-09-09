@@ -22,7 +22,7 @@ import java.sql.Date;
                         @ColumnResult(name = "productId", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "totalprice", type = Long.class),
-                        @ColumnResult(name = "day", type = String.class),
+                        @ColumnResult(name = "day", type = Date.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
                         @ColumnResult(name = "recruitmentRate", type = Double.class),

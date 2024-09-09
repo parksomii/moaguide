@@ -12,7 +12,7 @@ public class IssueCustomDto {
     private String productId;
     private String name;
     private long totalprice;
-    private String day;
+    private Date day;
     private String category;
     private String platform;
     private double recruitmentRate;
