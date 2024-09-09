@@ -1,7 +1,6 @@
 package com.moaguide.domain.issueprice;
 
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

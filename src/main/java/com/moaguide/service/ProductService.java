@@ -36,7 +36,7 @@ public class ProductService {
 
     public List<IssueCustomDto> getstartlistCategory(int page, int size, String sort, String category,String subcategory) {
         LocalDate localDate = LocalDate.now(); // 현재 날짜 가져오기
-        Date sqlDate = Date.valueOf(localDate);
+        Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
         if(sort.equals("Ready")){
             if(subcategory.equals("all")) {
                 List<IssueCustomDto> issue = genericRepository.findCustomIssue(page,size,sqlDate);
