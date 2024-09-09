@@ -1,5 +1,6 @@
 package com.moaguide.domain.issueprice;
 
+import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import java.sql.Date;
 @SqlResultSetMapping(
         name = "IssueCustomDtoMapping",
         classes = @ConstructorResult(
-                targetClass = SummaryCustomDto.class,
+                targetClass = IssueCustomDto.class,
                 columns = {
                         @ColumnResult(name = "productId", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
