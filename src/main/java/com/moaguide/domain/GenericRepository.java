@@ -63,8 +63,7 @@ public class GenericRepository {
     }
 
     public List<IssueCustomDto> findCustomStartCategory(int page, int size, Date sqlDate, String category) {
-        String sql = "CALL start_category(:page, :size)";
-        return entityManager.createNativeQuery(sql,"IssueCustomDtoMapping")
+        return entityManager.createNativeQuery("CALL start_category(:page, :size, :day, :category)","IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
