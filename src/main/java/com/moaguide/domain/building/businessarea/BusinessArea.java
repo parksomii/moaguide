@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
                         @ColumnResult(name = "ybdCar", type = String.class),
                         @ColumnResult(name = "ybdSubway", type = String.class),
                         @ColumnResult(name = "line", type = int.class),
-                        @ColumnResult(name = "node", type = int.class),
+                        @ColumnResult(name = "node", type = int.class)
                 }
         )
 )

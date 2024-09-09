@@ -14,30 +14,17 @@ import lombok.Setter;
 @Setter
 public class BusinessAreaDto {
     private String cbd;
-
     private String cbdDistance;
-
     private String cbdCar;
-
     private String cbdSubway;
-
     private String gbd;
-
     private String gbdDistance;
-
     private String gbdCar;
-
     private String gbdSubway;
-
     private String ybd;
-
     private String ybdDistance;
-
     private String ybdCar;
-
     private String ybdSubway;
-
     private int line;
-
     private int node;
 }
