@@ -34,11 +34,11 @@ public class ProductService {
         return summary;
     }
 
-    public List<IssueCustomDto> getstartlistCategory(int page, int size, String sort, String category,String subcategory) {
+    public List<IssueCustomDto> getstartlistCategory(int page, int size, String sort, String category) {
         LocalDate localDate = LocalDate.now(); // 현재 날짜 가져오기
         Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
         if(sort.equals("Ready")){
-            if(subcategory.equals("all")) {
+            if(category.equals("all")) {
                 List<IssueCustomDto> issue = genericRepository.findCustomIssue(page,size,sqlDate);
                 return issue;
             }else {
@@ -46,7 +46,7 @@ public class ProductService {
                 return issue;
             }
         }else{
-            if(subcategory.equals("all")) {
+            if(category.equals("all")) {
                 List<IssueCustomDto> issue = genericRepository.findCustomStart(page,size,sqlDate);
                 return issue;
 

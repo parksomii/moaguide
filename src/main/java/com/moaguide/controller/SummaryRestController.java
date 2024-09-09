@@ -39,7 +39,7 @@ public class SummaryRestController {
                 return ResponseEntity.ok(new SummaryResponseDto(summary,page,size));
             }
         } else if (subcategory.equals("start")) {
-            List<IssueCustomDto> inavete = productService.getstartlistCategory(page,size,sort,category,subcategory);
+            List<IssueCustomDto> inavete = productService.getstartlistCategory(page,size,sort,category);
             return ResponseEntity.ok(new SummaryResponseDto(inavete,page,size));
         } else{
             List<finishCustomDto> inavete;
