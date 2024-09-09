@@ -15,7 +15,6 @@ import java.util.List;
 @Repository
 public interface NearSubwayRepository extends JpaRepository<NearSubway, Long> {
 
-    @Transactional(readOnly = true)
     @Procedure(name = "nearSub")
     List<NearSubwayDto> findBykeyword(@Param("id") String ProductId);
 }

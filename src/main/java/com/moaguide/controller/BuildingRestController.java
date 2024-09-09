@@ -46,7 +46,7 @@ public class BuildingRestController {
         return ResponseEntity.ok(new BuildingBaseResponseDto(building,leaseDtos));
     }
 
-    @GetMapping("sub/{product_Id}")
+        @GetMapping("sub/{product_Id}")
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
         List<TypeDto> rent = rentService.findType(product_Id);
         BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
