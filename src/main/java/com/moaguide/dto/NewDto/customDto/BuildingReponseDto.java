@@ -15,9 +15,9 @@ public class BuildingReponseDto {
     private String category;
     private String platform;
     private String name;
-    private Long price;
+    private Integer price;
     private Double priceRate;
-    private String totalPrice;
+    private Long totalPrice;
     private Double dividend;
     private Double dividendRate;
     private Integer divideCycle;

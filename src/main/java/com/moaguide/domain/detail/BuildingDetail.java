@@ -25,9 +25,9 @@ import java.util.Date;
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "price", type = Long.class),
+                        @ColumnResult(name = "price", type = Integer.class),
                         @ColumnResult(name = "priceRate", type = Double.class),
-                        @ColumnResult(name = "totalPrice", type = String.class),
+                        @ColumnResult(name = "totalPrice", type = Long.class),
                         @ColumnResult(name = "dividend", type = Double.class),
                         @ColumnResult(name = "dividendRate", type = Double.class),
                         @ColumnResult(name = "divideCycle", type = Integer.class)
