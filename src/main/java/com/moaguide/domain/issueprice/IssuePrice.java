@@ -34,9 +34,9 @@ import java.sql.Date;
         procedureName = "Issue",
         resultSetMappings = "IssueCustomDtoMapping",
         parameters = {
-        @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
-        @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
-        @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
+            @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)
         }
 )
 @NamedStoredProcedureQuery(
@@ -46,7 +46,8 @@ import java.sql.Date;
         parameters = {
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)        }
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)
+        }
 )
 public class IssuePrice {
 
