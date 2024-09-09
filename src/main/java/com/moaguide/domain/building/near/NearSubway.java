@@ -21,8 +21,8 @@ import java.sql.Date;
                 columns = {
                         @ColumnResult(name = "station", type = String.class),
                         @ColumnResult(name = "route", type = String.class),
-                        @ColumnResult(name = "distance", type = int.class),
-                        @ColumnResult(name = "time", type = int.class),
+                        @ColumnResult(name = "distance", type = Integer.class),
+                        @ColumnResult(name = "time", type = Integer.class),
                 }
         )
 )

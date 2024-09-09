@@ -15,7 +15,7 @@ public class NearSubwayDto {
 
     private String route;
 
-    private int distance;
+    private Integer distance;
 
-    private int time;
+    private Integer time;
 }
