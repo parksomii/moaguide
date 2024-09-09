@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "Product")
 @Entity
-
 @SqlResultSetMapping(
         name = "SummaryCustomDtoMapping",
         classes = @ConstructorResult(
@@ -34,6 +33,11 @@ import lombok.NoArgsConstructor;
 @NamedNativeQuery(
         name = "findCustomList",
         query = "CALL list(:page, :size, :sort)",
+        resultSetMapping = "SummaryCustomDtoMapping"
+)
+@NamedNativeQuery(
+        name = "findCustomListCategory",
+        query = "CALL list_category(:page, :size, :sort, :category)",
         resultSetMapping = "SummaryCustomDtoMapping"
 )
 public class Product {
