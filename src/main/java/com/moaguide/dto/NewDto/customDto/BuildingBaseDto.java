@@ -54,7 +54,7 @@ public class BuildingBaseDto {
 
     private int basePrice; // 1주당 발행액
 
-    private String totalPrice;
+    private long totalPrice;
 
     private String subscription; // 청약일정 YYYY.MM.DD ~ YYYY.MM.DD
 
