@@ -10,7 +10,7 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 
     @Query("SELECT new com.moaguide.dto.LocationDto( p.name ,l.longitude,l.latitude) " +
             "FROM Product p,Location l " +
-            "where p.productId = l.productId " +
+            "where p.productId = l.productId.productId " +
             "and p.productId = :id ")
     LocationDto findByProductId(@Param("id") String productId);
 }
