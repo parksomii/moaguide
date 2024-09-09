@@ -25,13 +25,13 @@ import java.sql.Date;
                         @ColumnResult(name = "day", type = Date.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
-                        @ColumnResult(name = "recruitmentRate", type = Double.class),
+                        @ColumnResult(name = "recruitmentRate", type = Double.class)
                 }
         )
 )
 @NamedStoredProcedureQuery(
         name = "findIssueList",
-        procedureName = "CALL Issue(:page, :size, :day)",
+        procedureName = "Issue",
         resultSetMappings = "IssueCustomDtoMapping",
         parameters = {
         @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
@@ -41,7 +41,7 @@ import java.sql.Date;
 )
 @NamedStoredProcedureQuery(
         name = "findstartList",
-        procedureName = "CALL start(:page, :size, :day)",
+        procedureName = "start",
         resultSetMappings = "IssueCustomDtoMapping",
         parameters = {
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
