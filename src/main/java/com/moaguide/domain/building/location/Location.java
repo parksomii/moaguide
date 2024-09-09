@@ -23,8 +23,8 @@ import lombok.AllArgsConstructor;
                 targetClass = LocationDto.class,
                 columns = {
                         @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "Longitude", type = double.class),
-                        @ColumnResult(name = "Latitude", type = double.class),
+                        @ColumnResult(name = "longitude", type = double.class),
+                        @ColumnResult(name = "latitude", type = double.class),
                 }
         )
 )

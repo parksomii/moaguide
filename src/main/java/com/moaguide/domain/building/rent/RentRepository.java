@@ -17,7 +17,6 @@ public interface RentRepository extends JpaRepository<Rent, Integer> {
     @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.RentDto(r.year,r.quarter,r.region,r.rent) FROM Rent r where r.keyword = :keyword AND r.type = :type")
     List<RentDto> findBytype(@Param("keyword") String keyword, @Param("type") String type);
 
-    @Transactional(readOnly = true)
     @Procedure(name = "type")
     List<TypeDto> findType(@Param("id")String keyword);
 }

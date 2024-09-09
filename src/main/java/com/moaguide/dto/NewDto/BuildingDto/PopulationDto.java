@@ -2,9 +2,13 @@ package com.moaguide.dto.NewDto.BuildingDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
+@Setter
+@NoArgsConstructor
 public class PopulationDto {
 
     private String weekDay;
