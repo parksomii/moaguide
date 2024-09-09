@@ -3,10 +3,12 @@ package com.moaguide.dto.NewDto.customDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class BuildingBaseDto {
     private String name;
 
