@@ -16,8 +16,8 @@ public class VacancyRateService {
     private VacancyRateRepository vacancyRateRepository;
 
 
-    public List<VacancyrateDto> findBase(String keyword,String type){
-        List<VacancyrateDto> vacancyRate = vacancyRateRepository.findByLastmonth(keyword,type);
+    public List<VacancyrateDto> findBase(String product_Id,String type){
+        List<VacancyrateDto> vacancyRate = vacancyRateRepository.findByLastmonth(product_Id,type);
         return vacancyRate;
     }
 }
