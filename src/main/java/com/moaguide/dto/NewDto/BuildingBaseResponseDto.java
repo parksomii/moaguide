@@ -24,7 +24,7 @@ public class BuildingBaseResponseDto {
                 building.getName(),
                 building.getPublisher(),
                 building.getPiece(),
-                building.getLast_divide(),
+                building.getLastDivide(),
                 building.getBasePrice(),
                 building.getTotalPrice(),
                 building.getSubscription(),
