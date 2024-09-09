@@ -38,7 +38,7 @@ public class GenericRepository {
 
     public List<IssueCustomDto> findCustomIssue(int page, int size, Date sqlDate) {
         // 프로시저를 호출하는 네이티브 쿼리
-        return entityManager.createNativeQuery("CALL Issue(:page, :size, :day)", "IssueCustomDtoMapping")
+        return entityManager.createNativeQuery("CALL Issue(:page, :size, :day)", IssueCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
@@ -46,7 +46,7 @@ public class GenericRepository {
     }
 
     public List<IssueCustomDto> findCustomStart(int page, int size ,Date sqlDate) {
-        return entityManager.createNativeQuery("CALL start(:page, :size, :day)", "IssueCustomDtoMapping")
+        return entityManager.createNativeQuery("CALL start(:page, :size, :day)", IssueCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
