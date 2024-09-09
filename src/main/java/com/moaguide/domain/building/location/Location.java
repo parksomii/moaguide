@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 @SqlResultSetMapping(
         name = "AreaDtoMapping",
         classes = @ConstructorResult(
-                targetClass = BusinessAreaDto.class,
+                targetClass = LocationDto.class,
                 columns = {
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "Longitude", type = double.class),
