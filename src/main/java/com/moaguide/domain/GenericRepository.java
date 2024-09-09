@@ -19,7 +19,7 @@ public class GenericRepository {
 
     @Transactional
     public List<SummaryCustomDto> findCustomList(int page, int size, String sort) {
-        return entityManager.createNativeQuery("findCustomList", SummaryCustomDto.class)
+        return entityManager.createNamedQuery("findCustomList", SummaryCustomDto.class)
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("sort", sort)
