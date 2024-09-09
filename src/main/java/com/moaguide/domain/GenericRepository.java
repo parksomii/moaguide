@@ -28,8 +28,7 @@ public class GenericRepository {
 
     public List<SummaryCustomDto> findCustomListCategory(int page, int size, String sort, String category) {
         // 프로시저를 호출하는 네이티브 쿼리
-        String sql = "CALL list_category(:page, :size, :sort, :category)";
-        return entityManager.createNativeQuery("findCustomList", SummaryCustomDto.class)
+        return entityManager.createNativeQuery("CALL list_category(:page, :size, :sort, :category)", "SummaryCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("sort", sort)
@@ -39,8 +38,7 @@ public class GenericRepository {
 
     public List<IssueCustomDto> findCustomIssue(int page, int size, Date sqlDate) {
         // 프로시저를 호출하는 네이티브 쿼리
-        String sql = "CALL Issue(:page, :size, :day)";
-        return entityManager.createNativeQuery(sql, IssueCustomDto.class)
+        return entityManager.createNativeQuery("CALL Issue(:page, :size, :day)", "IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
@@ -48,8 +46,7 @@ public class GenericRepository {
     }
 
     public List<IssueCustomDto> findCustomStart(int page, int size ,Date sqlDate) {
-        String sql = "CALL start(:page, :size, :day)";
-        return entityManager.createNativeQuery(sql, IssueCustomDto.class)
+        return entityManager.createNativeQuery("CALL start(:page, :size, :day)", "IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
@@ -57,8 +54,7 @@ public class GenericRepository {
     }
 
     public List<IssueCustomDto> findCustomIssueCategory(int page, int size, Date sqlDate, String category) {
-        String sql = "CALL Issue_category(:page, :size, :day, :category)";
-        return entityManager.createNativeQuery(sql, IssueCustomDto.class)
+        return entityManager.createNativeQuery("CALL Issue_category(:page, :size, :day, :category)", "IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)

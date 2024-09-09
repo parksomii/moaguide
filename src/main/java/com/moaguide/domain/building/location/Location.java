@@ -2,6 +2,8 @@ package com.moaguide.domain.building.location;
 
 import com.moaguide.domain.product.Product;
 import com.moaguide.dto.LocationDto;
+import com.moaguide.dto.NewDto.BusinessAreaDto;
+import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -15,6 +17,25 @@ import lombok.AllArgsConstructor;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SqlResultSetMapping(
+        name = "LocationDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = LocationDto.class,
+                columns = {
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "longitude", type = double.class),
+                        @ColumnResult(name = "latitude", type = double.class)
+                }
+        )
+)
+@NamedStoredProcedureQuery(
+        name = "AreaProcedure",
+        procedureName = "locate",
+        resultSetMappings = "LocationDtoMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class)
+        }
+)
 public class Location {
 
     @Id

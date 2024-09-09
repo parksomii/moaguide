@@ -1,10 +1,13 @@
 package com.moaguide.domain.building.near;
 
 
+import com.moaguide.dto.NewDto.BuildingDto.NearSubwayDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
 
 @Entity
 @Table(name="Near_Subway")

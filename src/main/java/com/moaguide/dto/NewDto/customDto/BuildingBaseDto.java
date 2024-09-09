@@ -3,10 +3,12 @@ package com.moaguide.dto.NewDto.customDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class BuildingBaseDto {
     private String name;
 
@@ -50,11 +52,11 @@ public class BuildingBaseDto {
 
     private int piece; // 증권수
 
-    private Double last_divide;
+    private Double lastDivide;
 
     private int basePrice; // 1주당 발행액
 
-    private String totalPrice;
+    private long totalPrice;
 
     private String subscription; // 청약일정 YYYY.MM.DD ~ YYYY.MM.DD
 

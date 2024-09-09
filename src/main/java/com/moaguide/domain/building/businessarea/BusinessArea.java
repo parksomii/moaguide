@@ -2,6 +2,7 @@ package com.moaguide.domain.building.businessarea;
 
 
 import com.moaguide.domain.product.Product;
+import com.moaguide.dto.NewDto.BusinessAreaDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

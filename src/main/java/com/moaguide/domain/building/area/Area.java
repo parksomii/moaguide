@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="AREA")
+@Table(name="Area")
 public class Area {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -19,8 +19,8 @@ public class Area {
     @Column(name = "area_size")
     private int areaSize;
 
-    @Column(name="product_name")
-    private String productName;
+    @Column(name="area_name")
+    private String areaName;
 
     private String polygon;
 

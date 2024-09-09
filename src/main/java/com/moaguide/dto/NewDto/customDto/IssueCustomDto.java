@@ -10,11 +10,11 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IssueCustomDto {
-    private String product_Id;
+    private String productId;
     private String name;
     private long totalprice;
     private Date day;
     private String category;
     private String platform;
-    private double rate;
+    private double recruitmentRate;
 }

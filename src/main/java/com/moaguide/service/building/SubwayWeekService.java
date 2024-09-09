@@ -14,8 +14,8 @@ import java.util.List;
 public class SubwayWeekService {
     private final SubwayWeekRepository subwayWeekRepository;
 
-    public List<SubwayWeekDto> findbydate(String keyword, Integer year, Integer month) {
-        List<SubwayWeekDto> subwayWeek = subwayWeekRepository.findByLastmonth(keyword, year, month);
+    public List<SubwayWeekDto> findbydate(String productId, Integer year, Integer month) {
+        List<SubwayWeekDto> subwayWeek = subwayWeekRepository.findByLastmonth(productId, year, month);
         return subwayWeek;
     }
 }

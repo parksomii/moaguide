@@ -4,6 +4,7 @@ import com.moaguide.domain.building.population.PopulationRepository;
 import com.moaguide.dto.NewDto.BuildingDto.PopulationDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;

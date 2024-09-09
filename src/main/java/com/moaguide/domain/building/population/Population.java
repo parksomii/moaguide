@@ -1,18 +1,48 @@
 package com.moaguide.domain.building.population;
 
 import com.moaguide.domain.building.districts.Districts;
+import com.moaguide.dto.NewDto.BuildingDto.PopulationDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="population")
+@SqlResultSetMapping(
+        name = "PopulationDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = PopulationDto.class,
+                columns = {
+                        @ColumnResult(name = "weekDay", type = String.class),
+                        @ColumnResult(name = "total", type = Integer.class),
+                        @ColumnResult(name = "age0", type = Integer.class),
+                        @ColumnResult(name = "age10", type = Integer.class),
+                        @ColumnResult(name = "age20", type = Integer.class),
+                        @ColumnResult(name = "age30", type = Integer.class),
+                        @ColumnResult(name = "age40", type = Integer.class),
+                        @ColumnResult(name = "age50", type = Integer.class),
+                        @ColumnResult(name = "age60", type = Integer.class),
+                        @ColumnResult(name = "age70", type = Integer.class),
+                        @ColumnResult(name = "man", type = Integer.class),
+                        @ColumnResult(name = "girl", type = Integer.class),
+                }
+        )
+)
+@NamedStoredProcedureQuery(
+        name = "populateProcedure",
+        procedureName = "populate",
+        resultSetMappings = "PopulationDtoMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_day", type = Date.class)
+        }
+)
 public class Population {
 
 

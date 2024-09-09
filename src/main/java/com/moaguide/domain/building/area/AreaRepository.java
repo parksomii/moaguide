@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface AreaRepository extends JpaRepository<Area, Long> {
-    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.AreaDto(A.areaSize,A.productName,A.polygon,A.latitude,A.longitude,A.color) FROM Area A WHERE A.keyword = :keyword")
-    List<AreaDto> findpolygon(@Param("keyword")String name);
+    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.AreaDto(A.areaSize,A.areaName,A.polygon,A.latitude,A.longitude,A.color) FROM Area A, BuildingDetail bd WHERE bd.keyword = A.keyword and bd.productId.productId = :product_Id  ")
+    List<AreaDto> findpolygon(@Param("product_Id")String product_Id);
 }

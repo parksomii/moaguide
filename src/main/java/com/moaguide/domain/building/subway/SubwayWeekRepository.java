@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface SubwayWeekRepository extends JpaRepository<SubwayWeek, Long> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.SubwayWeekDto(s.Year,s.Month,s.weekDay,s.totalAlighting,s.totalBoarding) FROM SubwayWeek s where s.keyword = :keyward AND s.Year = :year AND s.Month = :month")
-    List<SubwayWeekDto> findByLastmonth(@Param("keyward") String keyword, @Param("year") int year, @Param("month")int month);
+    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.SubwayWeekDto(s.Year,s.Month,s.weekDay,s.totalAlighting,s.totalBoarding) FROM SubwayWeek s,BuildingDetail bd where s.keyword = bd.keyword AND s.Year = :year AND s.Month = :month and bd.productId.productId = :product_Id")
+    List<SubwayWeekDto> findByLastmonth(@Param("product_Id") String productId, @Param("year") int year, @Param("month")int month);
 }
