@@ -18,7 +18,7 @@ public class BuildingService {
     private final BuildingDetailRepository buildingRepository;
 
 
-    @Transactional
+    @Transactional(readOnly = false)
     public BuildingReponseDto findBydetail(String productId) {
         BuildingReponseDto building = buildingRepository.Detail(productId);
         return building;

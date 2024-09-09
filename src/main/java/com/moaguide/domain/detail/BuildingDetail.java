@@ -35,7 +35,7 @@ import java.util.Date;
         )
 )
 @NamedStoredProcedureQuery(
-        name = "buildingDetail",
+        name = "building_detail",
         procedureName = "building_detail",
         resultSetMappings = "buildingDetailDtoMapping",
         parameters = {
