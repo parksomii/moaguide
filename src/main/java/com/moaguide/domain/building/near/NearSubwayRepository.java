@@ -15,6 +15,9 @@ import java.util.List;
 @Repository
 public interface NearSubwayRepository extends JpaRepository<NearSubway, Long> {
 
-    @Procedure(name = "nearSub")
+    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.NearSubwayDto(ns.station ,ns.route,ns.distance,ns.time) " +
+            "FROM BuildingDetail bd ,NearSubway ns " +
+            "where bd.keyword = ns.keyword " +
+            "and bd.productId.productId = :id")
     List<NearSubwayDto> findBykeyword(@Param("id") String ProductId);
 }

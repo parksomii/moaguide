@@ -14,26 +14,6 @@ import java.sql.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@SqlResultSetMapping(
-        name = "NearSubMapping",
-        classes = @ConstructorResult(
-                targetClass = NearSubwayDto.class,
-                columns = {
-                        @ColumnResult(name = "station", type = String.class),
-                        @ColumnResult(name = "route", type = String.class),
-                        @ColumnResult(name = "distance", type = Integer.class),
-                        @ColumnResult(name = "time", type = Integer.class),
-                }
-        )
-)
-@NamedStoredProcedureQuery(
-        name = "NearSubProcedure",
-        procedureName = "nearSub",
-        resultSetMappings = "NearSubMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class),
-        }
-)
 public class NearSubway {
 
     @Id

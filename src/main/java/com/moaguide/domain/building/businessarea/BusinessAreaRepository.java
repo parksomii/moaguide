@@ -16,6 +16,6 @@ public interface BusinessAreaRepository extends JpaRepository<BusinessArea, Long
             "FROM BusinessArea b,BuildingDetail bd,NearBus nb " +
             "WHERE bd.productId.productId =  b.productId.productId " +
             "and bd.keyword = nb.keyword " +
-            "and b.productId = :id ")
+            "and b.productId.productId = :id ")
     BusinessAreaDto findByproductId(@Param("id") String product_Id);
 }
