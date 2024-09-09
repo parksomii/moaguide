@@ -49,7 +49,6 @@ public class ProductService {
             if(category.equals("all")) {
                 List<IssueCustomDto> issue = genericRepository.findCustomStart(page,size,sqlDate);
                 return issue;
-
             }else {
                 List<IssueCustomDto> issue = genericRepository.findCustomStartCategory(page, size, sqlDate, category);
                 return issue;

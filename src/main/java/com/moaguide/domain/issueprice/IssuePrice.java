@@ -35,7 +35,7 @@ import java.sql.Date;
         resultSetMapping = "IssueCustomDtoMapping"
 )
 @NamedNativeQuery(
-        name = "findingListbyCategory",
+        name = "findstartList",
         query = "CALL start(:page, :size, :day)",
         resultSetMapping = "IssueCustomDtoMapping"
 )
