@@ -13,36 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Table(name = "Business_Area")
-@SqlResultSetMapping(
-        name = "BusinessAreaDtoMapping",
-        classes = @ConstructorResult(
-                targetClass = BusinessAreaDto.class,
-                columns = {
-                        @ColumnResult(name = "cbd", type = String.class),
-                        @ColumnResult(name = "cbdDistance", type = String.class),
-                        @ColumnResult(name = "cbdCar", type = String.class),
-                        @ColumnResult(name = "cbdSubway", type = String.class),
-                        @ColumnResult(name = "gbd", type = String.class),
-                        @ColumnResult(name = "gbdDistance", type = String.class),
-                        @ColumnResult(name = "gbdCar", type = String.class),
-                        @ColumnResult(name = "gbdSubway", type = String.class),
-                        @ColumnResult(name = "ybd", type = String.class),
-                        @ColumnResult(name = "ybdDistance", type = String.class),
-                        @ColumnResult(name = "ybdCar", type = String.class),
-                        @ColumnResult(name = "ybdSubway", type = String.class),
-                        @ColumnResult(name = "line", type = Integer.class),
-                        @ColumnResult(name = "node", type = Integer.class)
-                }
-        )
-)
-@NamedStoredProcedureQuery(
-        name = "BuildingSubProcedure",
-        procedureName = "business",
-        resultSetMappings = "BusinessAreaDtoMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class)
-        }
-)
 public class BusinessArea {
 
     @Id
