@@ -24,9 +24,4 @@ public class BuildingService {
         return building;
     }
 
-    @Transactional(readOnly = false)
-    public BuildingBaseDto findbase(String productId) {
-        BuildingBaseDto building = buildingRepository.findDetail(productId);
-        return building;
-    }
 }
