@@ -2,6 +2,7 @@ package com.moaguide.domain.building.location;
 
 import com.moaguide.domain.product.Product;
 import com.moaguide.dto.LocationDto;
+import com.moaguide.dto.NewDto.BusinessAreaDto;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -17,48 +18,24 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @SqlResultSetMapping(
-        name = "BuildingBaseDtoMapping",
+        name = "AreaDtoMapping",
         classes = @ConstructorResult(
-                targetClass = BuildingBaseDto.class,
+                targetClass = BusinessAreaDto.class,
                 columns = {
                         @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "useArea", type = String.class),
-                        @ColumnResult(name = "mainUse", type = String.class),
-                        @ColumnResult(name = "completionDate", type = String.class),
-                        @ColumnResult(name = "landArea", type = String.class),
-                        @ColumnResult(name = "floorArea", type = String.class),
-                        @ColumnResult(name = "floorAreaRate", type = Double.class),
-                        @ColumnResult(name = "dryRatio", type = Double.class),
-                        @ColumnResult(name = "height", type = Double.class),
-                        @ColumnResult(name = "scale", type = String.class),
-                        @ColumnResult(name = "mainStructure", type = String.class),
-                        @ColumnResult(name = "parking", type = Integer.class),
-                        @ColumnResult(name = "lift", type = Integer.class),
-                        @ColumnResult(name = "location", type = String.class),
-                        @ColumnResult(name = "landElevation", type = String.class),
-                        @ColumnResult(name = "landShape", type = String.class),
-                        @ColumnResult(name = "roadInterface", type = String.class),
-                        @ColumnResult(name = "zoningNational", type = String.class),
-                        @ColumnResult(name = "zoningOther", type = String.class),
-                        @ColumnResult(name = "publisher", type = String.class),
-                        @ColumnResult(name = "piece", type = Integer.class),
-                        @ColumnResult(name = "lastDivide", type = Double.class),
-                        @ColumnResult(name = "basePrice", type = Integer.class),
-                        @ColumnResult(name = "totalPrice", type = long.class),
-                        @ColumnResult(name = "subscription", type = String.class),
-                        @ColumnResult(name = "listingDate", type = String.class)
+                        @ColumnResult(name = "Longitude", type = double.class),
+                        @ColumnResult(name = "Latitude", type = double.class),
                 }
         )
 )
 @NamedStoredProcedureQuery(
-        name = "BuildingBaseProcedure",
-        procedureName = "building_base",
-        resultSetMappings = "BuildingBaseDtoMapping",
+        name = "AreaProcedure",
+        procedureName = "locate",
+        resultSetMappings = "AreaDtoMapping",
         parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_Product_Id", type = String.class)
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class)
         }
 )
-
 public class Location {
 
     @Id
