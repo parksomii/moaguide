@@ -72,7 +72,7 @@ public class GenericRepository {
     }
 
     public List<finishCustomDto> findfinish(int page, int size) {
-        String sql = "CALL finsh(:page, :size)";
+        String sql = "CALL finish(:page, :size)";
         return entityManager.createNativeQuery(sql, "SaleCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
@@ -88,7 +88,7 @@ public class GenericRepository {
     }
 
     public List<finishCustomDto> findfinishCategory(int page, int size, String category) {
-        String sql = "CALL finsh_category(:page, :size, :day, :category)";
+        String sql = "CALL finish_category(:page, :size, :day, :category)";
         return entityManager.createNativeQuery(sql, "SaleCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
