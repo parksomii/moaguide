@@ -1,9 +1,6 @@
 package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.ArtBaseResponseDto;
-import com.moaguide.dto.NewDto.customDto.ArtAuthorDto;
-import com.moaguide.dto.NewDto.customDto.ArtPublishDto;
-import com.moaguide.dto.NewDto.customDto.ArtWorkDto;
 import com.moaguide.service.art.ArtService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

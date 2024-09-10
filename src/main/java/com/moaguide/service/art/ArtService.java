@@ -70,10 +70,10 @@ public class ArtService {
 
         // ArtWorkDto 매핑
         ArtWorkDto artWorkDto = new ArtWorkDto(
-                (String) result[0],  // name
-                (String) result[13],  // size
-                (String) result[14],  // productionDate
-                (String) result[15]   // material
+                (String) result[13],  // name
+                (String) result[14],  // size
+                (String) result[15],  // productionDate
+                (String) result[16]   // material
         );
 
         // 최종적으로 ArtBaseResponseDto 리턴

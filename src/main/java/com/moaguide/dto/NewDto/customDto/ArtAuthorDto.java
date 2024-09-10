@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ArtAuthorDto {
     // 작가 정보
-    private String authorName; // 작가 이름
+    private String name; // 작가 이름
     private String nationality; // 국적
     private LocalDate birth; // 태생년도
     private String academicAbility; // 학력
