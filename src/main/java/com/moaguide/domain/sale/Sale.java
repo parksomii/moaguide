@@ -30,12 +30,12 @@ import java.time.LocalDate;
         )
 )
 @NamedNativeQuery(
-        name = "findCustomList",
+        name = "saleCustomList",
         query = "CALL finish(:page, :size)",
         resultSetMapping = "SaleCustomDtoMapping"
 )
 @NamedNativeQuery(
-        name = "findCustomListCategory",
+        name = "saleCustomListCategory",
         query = "CALL finish_category(:page, :size, :category)",
         resultSetMapping = "SaleCustomDtoMapping"
 )
