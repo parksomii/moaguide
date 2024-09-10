@@ -30,7 +30,7 @@ public class HanwooPriceService {
         if ("grade1Rate".equals(category)) {
             grade1Rate = grade1RateRepository.findGrade1Rate(currentYear);
         } else if ("productionCost".equals(category)) {
-            productionCost = productionCostRepository.findProductionCost(currentYear); // 2023년 데이터
+            productionCost = productionCostRepository.findProductionCost(currentYear); // 2003년부터 2023년까지의 데이터
         } else if ("averagePrice".equals(category)) {
             averagePrice = averagePriceRepository.findAveragePrice("한우", currentYear);
         } else if ("cattlePrice".equals(category)) {
