@@ -3,6 +3,7 @@ package com.moaguide.service;
 import com.moaguide.domain.GenericRepository;
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.endCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class ProductService {
         }
     }
 
-    public List<finishCustomDto> getend(int page, int size , String category) {
+    public List<endCustomDto> getend(int page, int size , String category) {
         if(category.equals("all")){
             return genericRepository.findend(page,size);
         }else {

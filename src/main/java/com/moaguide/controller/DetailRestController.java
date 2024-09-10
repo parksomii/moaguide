@@ -31,11 +31,8 @@ public class DetailRestController {
     private final ReportService reportService;
     private final NewsService newsService;
     private final DivideService divideService;
-    private final BuildingService buildingService;
     private final TransactionService transactionService;
     private final NoticeService noticeService;
-    private final MusicDetailService musicDetailService;
-    private final ProductViewService productViewService;
     private final CurrentDivideService currentDivideService;
 
     @GetMapping("report/{category}")

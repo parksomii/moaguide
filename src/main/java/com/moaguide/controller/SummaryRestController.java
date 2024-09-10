@@ -46,12 +46,13 @@ public class SummaryRestController {
                 return ResponseEntity.ok(new SummaryResponseDto(inavete,page,size));
             }
         } else if (subcategory.equals("end")){
-            List<finishCustomDto> inavete;
             if(sort.equals("end")){
-                inavete = productService.getfinish(page,size,category);
+                List<endCustomDto> inavete;
+                inavete = productService.getend(page,size,category);
                 return ResponseEntity.ok((new SummaryResponseDto(inavete,page,size)));
             }else if(sort.equals("finish")){
-                inavete = productService.getend(page,size,category);
+                List<finishCustomDto> inavete;
+                inavete = productService.getfinish(page,size,category);
                 return ResponseEntity.ok((new SummaryResponseDto(inavete,page,size)));
             }
         }

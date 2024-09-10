@@ -2,6 +2,7 @@ package com.moaguide.domain;
 
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.endCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -79,7 +80,7 @@ public class GenericRepository {
                 .getResultList();
     }
 
-    public List<finishCustomDto> findend(int page, int size) {
+    public List<endCustomDto> findend(int page, int size) {
         String sql = "CALL endlist(:page, :size)";
         return entityManager.createNativeQuery(sql, "endCustomDtoMapping")
                 .setParameter("page", page)
@@ -96,7 +97,7 @@ public class GenericRepository {
                 .getResultList();
     }
 
-    public List<finishCustomDto> findendCategory(int page, int size, String category) {
+    public List<endCustomDto> findendCategory(int page, int size, String category) {
         String sql = "CALL endlist_category(:page, :size, :day, :category)";
         return entityManager.createNativeQuery(sql, "endCustomDtoMapping")
                 .setParameter("page", page)

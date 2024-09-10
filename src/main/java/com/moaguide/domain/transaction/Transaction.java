@@ -2,6 +2,7 @@ package com.moaguide.domain.transaction;
 
 
 import com.moaguide.domain.product.Product;
+import com.moaguide.dto.NewDto.customDto.endCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 @SqlResultSetMapping(
         name = "endCustomDtoMapping",
         classes = @ConstructorResult(
-                targetClass = finishCustomDto.class,
+                targetClass = endCustomDto.class,
                 columns = {
                         @ColumnResult(name = "productId", type = String.class),
                         @ColumnResult(name = "name", type = String.class),

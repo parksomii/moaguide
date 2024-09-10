@@ -25,15 +25,6 @@ public class ReportRestController {
     private ReportService reportService;
     private ReportViewService reportViewService;
 
-    // 리포트 홈페이지
-    // todo: 임시로 이미지 넣음.
-/*    @GetMapping("/")
-    public ResponseEntity<Object> reportList() {
-        // 1개만 가져오기
-        Pageable pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "date"));
-        List<ReportCustomDto> reportList = reportService.getMainReport(pageable);
-        return ResponseEntity.ok(reportList);
-    }*/
 
     // 카테고리별 리포트 조회
     @GetMapping("/list/{category}")
