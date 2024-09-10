@@ -8,10 +8,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProductionCostRepository extends JpaRepository<ProductionCost, Long> {
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ProductionCostDto(YEAR(p.prdDe), AVG(p.prdDt), p.cType) " +
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ProductionCostDto(YEAR(p.prdDe), AVG(p.prdDt)) " +
             "FROM ProductionCost p " +
             "WHERE YEAR(p.prdDe) = :year " +
-            "GROUP BY YEAR(p.prdDe), p.cType")
+            "GROUP BY YEAR(p.prdDe)")
     List<ProductionCostDto> findProductionCost(@Param("year") int year);
 }
 
