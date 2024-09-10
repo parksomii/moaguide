@@ -18,4 +18,14 @@ public class ArtAuthorDto {
     private String awardCareer; // 수상 경력
     private String major; // 대표작
     private String introduction; // 작가활동 및 소개
+
+    /*public ArtAuthorDto(String authorName, String nationality, LocalDate birth, String academicAbility, String awardCareer, String major, String introduction) {
+        this.authorName = authorName;
+        this.nationality = nationality;
+        this.birth = birth;
+        this.academicAbility = academicAbility;
+        this.awardCareer = awardCareer;
+        this.major = major;
+        this.introduction = introduction;
+    }*/
 }

@@ -1,16 +1,19 @@
 package com.moaguide.dto.NewDto.customDto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ProductionCostDto {
-    private String cType;
-    private LocalDate prdDe;
-    private Double prdDt;
+    private String cType; // 카테고리 타입
+    private Integer year; // 월
+    private Double productionCost; // 1등급 비율
+
+    // 생성자
+    public ProductionCostDto(Integer year, Double productionCost, String cType) {
+        this.cType = cType;
+        this.year = year;
+        this.productionCost = productionCost;
+    }
 }

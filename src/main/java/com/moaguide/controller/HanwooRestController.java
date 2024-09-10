@@ -2,15 +2,14 @@ package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
 import com.moaguide.dto.NewDto.HanwooPriceResponseDto;
-import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.dto.NewDto.customDto.HanwooFarmDto;
+import com.moaguide.dto.NewDto.customDto.HanwooPublishDto;
 import com.moaguide.service.hanwoo.HanwooPriceService;
 import com.moaguide.service.hanwoo.HanwooService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -22,27 +21,25 @@ public class HanwooRestController {
 
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-        HanwooPublishDto hanwoo = hanwooService.findHanwoo(product_Id);
-        HanwooFarmDto farm = hanwooService.findFarm(product_Id);
-        return ResponseEntity.ok(new HanwooBaseResponseDto(hanwoo,farm));
+        HanwooBaseResponseDto hanwoo = hanwooService.findDetail(product_Id);
+        return ResponseEntity.ok(hanwoo);
     }
 
     @GetMapping("sub/hanwooPrice")
-    public ResponseEntity<Object> add(@RequestParam String category) {
-        List<AveragePriceDto> averagePrice = null;
-        List<Grade1RateDto> grade1Rate = null;
-        List<ProductionCostDto> productionCost = null;
-        if (category.equals("grade1Rate")) {
-            hanwooPriceService.findGrade1Rate(category);
-        }else if (category.equals("productionCost")) {  // 두당 생산비
-            hanwooPriceService.findProductionCost(category);
-        }else {
-            if (category.equals("averagePrice")) {   // 두당 평균 도매가격
-                hanwooPriceService.findAveragePrice(category);
-            }
-            // 거세우 평균가격
-            hanwooPriceService.findAverageCattlePrice(category);
+    public ResponseEntity<Object> getHanwooPriceData(@RequestParam String category) {
+        HanwooPriceResponseDto response = hanwooPriceService.getHanwooPriceData(category);
+
+        if (response == null) {
+            return ResponseEntity.badRequest().body("잘못된 카테고리입니다.");
         }
-        return ResponseEntity.ok().body(new HanwooPriceResponseDto(averagePrice, grade1Rate, productionCost));
+
+        // 모든 데이터가 null 또는 empty인 경우 처리
+        if ((response.getAveragePrice() == null || response.getAveragePrice().isEmpty()) &&
+                (response.getGrade1Rate() == null || response.getGrade1Rate().isEmpty()) &&
+                (response.getProductionCost() == null || response.getProductionCost().isEmpty())) {
+            return ResponseEntity.badRequest().body("데이터가 존재하지 않습니다.");
+        }
+
+        return ResponseEntity.ok(response);
     }
 }
