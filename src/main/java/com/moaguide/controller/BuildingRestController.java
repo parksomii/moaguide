@@ -36,12 +36,17 @@ public class BuildingRestController {
     private final SubwayWeekService subwayWeekService;
     private final PopulationService populationService;
     private final VacancyRateService vacancyRateService;
+    private final LandRegistryService landRegistryService;
 
 
-
+    @GetMapping("{product_Id}")
+    public ResponseEntity<?> product(@PathVariable String product_Id) {
+        BuildingReponseDto building = buildingService.findBydetail(product_Id);
+        return ResponseEntity.ok(building);
+    }
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-        BuildingBaseDto building = buildingService.findbase(product_Id);
+        BuildingBaseDto building = landRegistryService.findbase(product_Id);
         List<LeaseDto> leaseDtos = leaseService.detail(product_Id);
         return ResponseEntity.ok(new BuildingBaseResponseDto(building,leaseDtos));
     }

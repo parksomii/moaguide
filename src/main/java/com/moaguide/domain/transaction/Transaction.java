@@ -2,6 +2,8 @@ package com.moaguide.domain.transaction;
 
 
 import com.moaguide.domain.product.Product;
+import com.moaguide.dto.NewDto.customDto.endCustomDto;
+import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +15,29 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@SqlResultSetMapping(
+        name = "endCustomDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = endCustomDto.class,
+                columns = {
+                        @ColumnResult(name = "productId", type = String.class),
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "category", type = String.class),
+                        @ColumnResult(name = "platform", type = String.class),
+                        @ColumnResult(name = "totalPrice", type = Long.class),
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "endCustomList",
+        query = "CALL endlist(:page, :size)",
+        resultSetMapping = "endCustomDtoMapping"
+)
+@NamedNativeQuery(
+        name = "endCustomListCategory",
+        query = "CALL endlist_category(:page, :size, :category)",
+        resultSetMapping = "endCustomDtoMapping"
+)
 public class Transaction {
 
     @Id

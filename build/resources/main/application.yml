@@ -85,6 +85,7 @@ serverName: green_server
 
 spring:
   jpa:
+
     hibernate:
       ddl-auto: none
       naming:
@@ -115,10 +116,16 @@ spring:
 logging:
   level:
     root: DEBUG
-
+    org:
+      hibernate:
+        SQL:
+          DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
 server:
   servlet:
     session:
       timeout: 3600
-
 

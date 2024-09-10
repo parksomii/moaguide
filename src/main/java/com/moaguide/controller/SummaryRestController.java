@@ -2,10 +2,9 @@ package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
-import com.moaguide.service.ReportService;
 import com.moaguide.service.ProductService;
+import com.moaguide.service.ReportService;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/summary/")
 public class SummaryRestController {
-    private final ProductService productService;
     private final ReportService reportService;
-
+    private final ProductService productService;
 
     // 카테고리별 상품현황 목록 조회
     @GetMapping("/list/{category}")
@@ -39,19 +37,26 @@ public class SummaryRestController {
                 return ResponseEntity.ok(new SummaryResponseDto(summary,page,size));
             }
         } else if (subcategory.equals("start")) {
-            List<IssueCustomDto> inavete = productService.getstartlistCategory(page,size,sort,category,subcategory);
-            return ResponseEntity.ok(new SummaryResponseDto(inavete,page,size));
-        } else{
-            List<finishCustomDto> inavete;
-            if(category.equals("all")){
-                inavete = productService.getfinish(page,size,sort);
+            List<IssueCustomDto> inavete;
+            if(sort.equals("ready")){
+                inavete = productService.getreadylist(page,size,category);
+                return ResponseEntity.ok(new SummaryResponseDto(inavete,page,size));
+            }else if(sort.equals("start")){
+                inavete = productService.getstartlisty(page,size,category);
+                return ResponseEntity.ok(new SummaryResponseDto(inavete,page,size));
+            }
+        } else if (subcategory.equals("end")){
+            if(sort.equals("end")){
+                List<endCustomDto> inavete;
+                inavete = productService.getend(page,size,category);
                 return ResponseEntity.ok((new SummaryResponseDto(inavete,page,size)));
-
-            }else{
-                inavete = productService.getfinishCategory(page,size,sort,category);
+            }else if(sort.equals("finish")){
+                List<finishCustomDto> inavete;
+                inavete = productService.getfinish(page,size,category);
                 return ResponseEntity.ok((new SummaryResponseDto(inavete,page,size)));
             }
         }
+        return ResponseEntity.badRequest().body("잘못된 요청입니다.");
     }
 
     // 관련 리포트

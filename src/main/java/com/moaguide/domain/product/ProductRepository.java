@@ -11,7 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ProductRepository extends JpaRepository<Product, String> {
 
 
-    @Transactional(readOnly = true)
-    @Procedure(name = "building_detail")
-    BuildingReponseDto findDetail(@Param("in_Product_Id") String Product_Id);
+
 }

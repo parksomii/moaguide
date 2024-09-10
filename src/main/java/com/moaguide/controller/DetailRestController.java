@@ -31,11 +31,8 @@ public class DetailRestController {
     private final ReportService reportService;
     private final NewsService newsService;
     private final DivideService divideService;
-    private final BuildingService buildingService;
     private final TransactionService transactionService;
     private final NoticeService noticeService;
-    private final MusicDetailService musicDetailService;
-    private final ProductViewService productViewService;
     private final CurrentDivideService currentDivideService;
 
     @GetMapping("report/{category}")
@@ -78,11 +75,7 @@ public class DetailRestController {
         return ResponseEntity.ok().body(noticeDto);
     }
 
-    @GetMapping("{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id) {
-        BuildingReponseDto building = productService.findBydetail(product_Id);
-        return ResponseEntity.ok(building);
-    }
+
 
 //    @PostMapping("{product_Id}")
 //    public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable String product_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){

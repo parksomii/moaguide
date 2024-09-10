@@ -2,6 +2,7 @@ package com.moaguide.domain;
 
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.endCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -63,8 +64,7 @@ public class GenericRepository {
     }
 
     public List<IssueCustomDto> findCustomStartCategory(int page, int size, Date sqlDate, String category) {
-        String sql = "CALL start_category(:page, :size)";
-        return entityManager.createNativeQuery(sql, IssueCustomDto.class)
+        return entityManager.createNativeQuery("CALL start_category(:page, :size, :day, :category)","IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
@@ -73,33 +73,33 @@ public class GenericRepository {
     }
 
     public List<finishCustomDto> findfinish(int page, int size) {
-        String sql = "CALL finsh(:page, :size)";
-        return entityManager.createNativeQuery(sql, finishCustomDto.class)
+        String sql = "CALL finish(:page, :size)";
+        return entityManager.createNativeQuery(sql, "SaleCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .getResultList();
     }
 
-    public List<finishCustomDto> findend(int page, int size) {
+    public List<endCustomDto> findend(int page, int size) {
         String sql = "CALL endlist(:page, :size)";
-        return entityManager.createNativeQuery(sql, finishCustomDto.class)
+        return entityManager.createNativeQuery(sql, "endCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .getResultList();
     }
 
     public List<finishCustomDto> findfinishCategory(int page, int size, String category) {
-        String sql = "CALL finsh_category(:page, :size, :day, :category)";
-        return entityManager.createNativeQuery(sql, finishCustomDto.class)
+        String sql = "CALL finish_category(:page, :size, :day, :category)";
+        return entityManager.createNativeQuery(sql, "SaleCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("category", category)
                 .getResultList();
     }
 
-    public List<finishCustomDto> findendCategory(int page, int size, String category) {
+    public List<endCustomDto> findendCategory(int page, int size, String category) {
         String sql = "CALL endlist_category(:page, :size, :day, :category)";
-        return entityManager.createNativeQuery(sql, finishCustomDto.class)
+        return entityManager.createNativeQuery(sql, "endCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("category", category)

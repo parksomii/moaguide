@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface VacancyRateRepository extends JpaRepository<VacancyRate, Long> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.VacancyrateDto(v.year,v.quarter,v.region,v.vacancyRate) FROM VacancyRate v where v.keyword = :keyward AND v.type = :type")
-    List<VacancyrateDto> findByLastmonth(@Param("keyward") String keyword, @Param("type") String type);
+    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.VacancyrateDto(v.year,v.quarter,v.region,v.vacancyRate) FROM VacancyRate v,BuildingDetail bd where v.keyword = bd.keyword AND v.type = :type AND bd.productId.productId = :product_Id")
+    List<VacancyrateDto> findByLastmonth(@Param("product_Id") String product_Id, @Param("type") String type);
 }

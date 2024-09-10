@@ -117,7 +117,6 @@ public class UserRestController {
     public ResponseEntity<?> verifyMail(@RequestBody mailDto mailDto) {
         boolean success = emailService.verifyCode(mailDto.getEamil(),mailDto.getCode());
         if (success) {
-            // 인증 성공 시 JWT 토큰 발급
             String token = jwtUtil.createJwt("verify", mailDto.getEamil(),"pass", 1000 * 60 * 30L);
             return ResponseEntity.ok().header("verify",  token).body("인증에 성공했습니다.");
         }

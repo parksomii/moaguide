@@ -1,6 +1,8 @@
 package com.moaguide.domain.sale;
 
 import com.moaguide.domain.product.Product;
+import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +16,29 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Sale")
+@SqlResultSetMapping(
+        name = "SaleCustomDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = finishCustomDto.class,
+                columns = {
+                        @ColumnResult(name = "productId", type = String.class),
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "category", type = String.class),
+                        @ColumnResult(name = "platform", type = String.class),
+                        @ColumnResult(name = "sailRate", type = Double.class),
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "saleCustomList",
+        query = "CALL finish(:page, :size)",
+        resultSetMapping = "SaleCustomDtoMapping"
+)
+@NamedNativeQuery(
+        name = "saleCustomListCategory",
+        query = "CALL finish_category(:page, :size, :category)",
+        resultSetMapping = "SaleCustomDtoMapping"
+)
 public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

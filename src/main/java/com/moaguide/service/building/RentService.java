@@ -18,8 +18,8 @@ public class RentService {
     private RentRepository rentRepository;
 
 
-    public List<RentDto> findBase(String keyword, String type) {
-        List<RentDto> rent = rentRepository.findBytype(keyword,type);
+    public List<RentDto> findBase(String product_Id, String type) {
+        List<RentDto> rent = rentRepository.findBytype(product_Id,type);
         return rent;
     }
 
