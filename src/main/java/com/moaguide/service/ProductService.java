@@ -21,24 +21,21 @@ public class ProductService {
 
     @Transactional(readOnly = false)
     public List<SummaryCustomDto> getlist(int page, int size, String sort) {
-        List<SummaryCustomDto> summary = genericRepository.findCustomList(page,size,sort);
-        return summary;
+        return genericRepository.findCustomList(page,size,sort);
+
     }
 
     public List<SummaryCustomDto> getcategorylist (int page, int size, String sort, String category) {
-        List<SummaryCustomDto> summary = genericRepository.findCustomListCategory(page,size,sort,category);
-        return summary;
+        return genericRepository.findCustomListCategory(page,size,sort,category);
     }
 
     public List<IssueCustomDto> getreadylist(int page, int size, String category) {
         LocalDate localDate = LocalDate.now(); // 현재 날짜 가져오기
         Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
             if(category.equals("all")) {
-                List<IssueCustomDto> issue = genericRepository.findCustomIssue(page,size,sqlDate);
-                return issue;
+                return genericRepository.findCustomIssue(page,size,sqlDate);
             }else {
-                List<IssueCustomDto> issue = genericRepository.findCustomIssueCategory(page, size, sqlDate, category);
-                return issue;
+                return genericRepository.findCustomIssueCategory(page, size, sqlDate, category);
             }
     }
 
@@ -46,31 +43,25 @@ public class ProductService {
         LocalDate localDate = LocalDate.now(); // 현재 날짜 가져오기
         Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
         if(category.equals("all")) {
-            List<IssueCustomDto> issue = genericRepository.findCustomStart(page,size,sqlDate);
-            return issue;
+            return genericRepository.findCustomStart(page,size,sqlDate);
         }else {
-            List<IssueCustomDto> issue = genericRepository.findCustomStartCategory(page, size, sqlDate, category);
-            return issue;
+            return genericRepository.findCustomStartCategory(page, size, sqlDate, category);
         }
     }
 
     public List<finishCustomDto> getfinish(int page, int size, String category) {
         if(category.equals("all")){
-            List<finishCustomDto> issue = genericRepository.findfinish(page,size);
-            return issue;
+            return genericRepository.findfinish(page,size);
         }else {
-            List<finishCustomDto> issue = genericRepository.findfinishCategory(page,size,category);
-            return issue;
+            return genericRepository.findfinishCategory(page,size,category);
         }
     }
 
     public List<finishCustomDto> getend(int page, int size , String category) {
         if(category.equals("all")){
-            List<finishCustomDto> issue = genericRepository.findend(page,size);
-            return issue;
+            return genericRepository.findend(page,size);
         }else {
-            List<finishCustomDto> issue = genericRepository.findendCategory(page, size, category);
-            return issue;
+            return genericRepository.findendCategory(page, size, category);
         }
     }
 
