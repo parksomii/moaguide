@@ -1,9 +1,6 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.GenericRepository;
-import com.moaguide.domain.product.Product;
-import com.moaguide.domain.product.ProductRepository;
-import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;
@@ -20,7 +17,6 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class ProductService {
-    private final ProductRepository productRepository;
     private final GenericRepository genericRepository;
 
     @Transactional(readOnly = false)
@@ -34,10 +30,9 @@ public class ProductService {
         return summary;
     }
 
-    public List<IssueCustomDto> getstartlistCategory(int page, int size, String sort, String category) {
+    public List<IssueCustomDto> getreadylist(int page, int size, String category) {
         LocalDate localDate = LocalDate.now(); // 현재 날짜 가져오기
         Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
-        if(sort.equals("ready")){
             if(category.equals("all")) {
                 List<IssueCustomDto> issue = genericRepository.findCustomIssue(page,size,sqlDate);
                 return issue;
@@ -45,36 +40,36 @@ public class ProductService {
                 List<IssueCustomDto> issue = genericRepository.findCustomIssueCategory(page, size, sqlDate, category);
                 return issue;
             }
-        }else{
-            if(category.equals("all")) {
-                List<IssueCustomDto> issue = genericRepository.findCustomStart(page,size,sqlDate);
-                return issue;
-            }else {
-                List<IssueCustomDto> issue = genericRepository.findCustomStartCategory(page, size, sqlDate, category);
-                return issue;
+    }
 
-            }
+    public List<IssueCustomDto> getstartlisty(int page, int size, String category) {
+        LocalDate localDate = LocalDate.now(); // 현재 날짜 가져오기
+        Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
+        if(category.equals("all")) {
+            List<IssueCustomDto> issue = genericRepository.findCustomStart(page,size,sqlDate);
+            return issue;
+        }else {
+            List<IssueCustomDto> issue = genericRepository.findCustomStartCategory(page, size, sqlDate, category);
+            return issue;
         }
     }
 
-
-
-    public List<finishCustomDto> getfinish(int page, int size, String sort) {
-        if(sort.equals("finish")){
+    public List<finishCustomDto> getfinish(int page, int size, String category) {
+        if(category.equals("all")){
             List<finishCustomDto> issue = genericRepository.findfinish(page,size);
             return issue;
         }else {
-            List<finishCustomDto> issue = genericRepository.findend(page,size);
+            List<finishCustomDto> issue = genericRepository.findfinishCategory(page,size,category);
             return issue;
         }
     }
 
-    public List<finishCustomDto> getfinishCategory(int page, int size, String sort, String category) {
-        if(sort.equals("finish")){
-            List<finishCustomDto> issue = genericRepository.findfinishCategory(page,size,category);
+    public List<finishCustomDto> getend(int page, int size , String category) {
+        if(category.equals("all")){
+            List<finishCustomDto> issue = genericRepository.findend(page,size);
             return issue;
         }else {
-            List<finishCustomDto> issue = genericRepository.findendCategory(page,size,category);
+            List<finishCustomDto> issue = genericRepository.findendCategory(page, size, category);
             return issue;
         }
     }
