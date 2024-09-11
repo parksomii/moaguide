@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ArtService {
                 ((Integer) result[3]),  // piece (Integer 그대로 사용)
                 ((Integer) result[4]),  // basePrice (Integer -> Long 변환)
                 String.valueOf(result[5]),  // totalPrice
-                (LocalDate) result[6]  // subscriptionDate
+                ((Date) result[6]).toLocalDate()  // subscriptionDate
         );
 
         // ArtAuthorDto 매핑
