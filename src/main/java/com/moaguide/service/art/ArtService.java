@@ -54,7 +54,7 @@ public class ArtService {
                 ((Integer) result[3]),  // piece (Integer 그대로 사용)
                 ((Integer) result[4]),  // basePrice (Integer -> Long 변환)
                 String.valueOf(result[5]),  // totalPrice
-                (String) result[6]  // subscriptionDate
+                (LocalDate) result[6]  // subscriptionDate
         );
 
         // ArtAuthorDto 매핑

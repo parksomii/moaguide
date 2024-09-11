@@ -15,7 +15,6 @@ public class ArtWorkDto {
     private String productionDate;    // 제작년도
     // 경매명
     // 출품처
-    // 증권종류
     // 발행인
     // 추정가
 

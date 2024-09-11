@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +17,7 @@ public class ArtPublishDto {
     private int piece; // 증권수
     private int basePrice; // 1주당 발행액
     private String totalPrice;    // 총 모집액
-    private String subscriptionDate;    // 청약기간 YYYY.MM.DD ~ YYYY.MM.DD
+    private LocalDate subscriptionDate;    // 청약기간 YYYY.MM.DD ~ YYYY.MM.DD
 
     /*public ArtPublishDto(String name, String publisher, String authorName, int piece, int basePrice, String totalPrice, String subscriptionDate) {
         this.name = name;
