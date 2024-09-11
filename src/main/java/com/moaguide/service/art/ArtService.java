@@ -54,11 +54,12 @@ public class ArtService {
                 (String) result[1],  // category
                 (String) result[2],  // platform
                 (String) result[3],  // name
-                ((Long) result[4]),  // recruitmentPrice (Integer 그대로 사용)
-                ((BigDecimal) result[5]).doubleValue(),  // recruitmentRate (Double 그대로 사용)
-                ((Long) result[6]),  // totalPrice
-                String.valueOf(result[7]),  // subscriptionDate
-                ((Integer) result[8])  // minInvestment (Integer 그대로 사용)
+                (String) result[4],  // authorName
+                ((Long) result[5]),  // recruitmentPrice (Integer 그대로 사용)
+                ((BigDecimal) result[6]).doubleValue(),  // recruitmentRate (Double 그대로 사용)
+                ((Long) result[7]),  // totalPrice
+                String.valueOf(result[8]),  // subscriptionDate
+                ((Integer) result[9])  // minInvestment (Integer 그대로 사용)
         );
     }
 

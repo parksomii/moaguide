@@ -14,6 +14,7 @@ public class ArtDetailDto {
     private String category;
     private String platform;
     private String name;
+    private String authorName;
     private Long recruitmentPrice;
     private Double recruitmentRate;
     private Long totalPrice;
