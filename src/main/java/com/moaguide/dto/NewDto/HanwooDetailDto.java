@@ -18,6 +18,6 @@ public class HanwooDetailDto {
     private Long recruitmentPrice;
     private Double recruitmentRate;
     private Long totalPrice;
-    private LocalDate paymentDate;
+    private LocalDate recruitmentDate;
     private int minInvestment;
 }

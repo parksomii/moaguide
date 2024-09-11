@@ -18,6 +18,6 @@ public class ArtDetailDto {
     private Long recruitmentPrice;
     private Double recruitmentRate;
     private Long totalPrice;
-    private String subscriptionDate;
+    private String recruitmentDate;
     private int minInvestment;
 }
