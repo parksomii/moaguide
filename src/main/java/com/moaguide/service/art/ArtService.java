@@ -3,6 +3,7 @@ package com.moaguide.service.art;
 import com.moaguide.domain.art.ArtAuthorRepository;
 import com.moaguide.domain.detail.ArtDetailRepository;
 import com.moaguide.dto.NewDto.ArtBaseResponseDto;
+import com.moaguide.dto.NewDto.ArtDetailDto;
 import com.moaguide.dto.NewDto.customDto.ArtAuthorDto;
 import com.moaguide.dto.NewDto.customDto.ArtPublishDto;
 import com.moaguide.dto.NewDto.customDto.ArtWorkDto;
@@ -24,9 +25,41 @@ import java.util.List;
 public class ArtService {
     private final ArtDetailRepository artRepository;
     private final ArtAuthorRepository authorRepository;
-
     @PersistenceContext
     private final EntityManager entityManager;
+
+    public ArtDetailDto findArtDetail(String productId) {
+        // StoredProcedureQuery 객체 생성
+        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("art_detail");
+
+        // IN 파라미터 등록
+        storedProcedure.registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN);
+        storedProcedure.setParameter("in_Product_Id", productId);
+
+        // 프로시저 실행
+        List<Object[]> resultList = storedProcedure.getResultList();
+
+        // 결과가 없을 경우 null 리턴
+        if (resultList.isEmpty()) {
+            return null;
+        }
+
+        // 결과값을 DTO에 매핑
+        Object[] result = resultList.get(0);  // 첫 번째 결과만 사용
+
+        // ArtDetailDto 매핑
+        return new ArtDetailDto(
+                (String) result[0],  // productId
+                (String) result[1],  // category
+                (String) result[2],  // platform
+                (String) result[3],  // name
+                ((Integer) result[4]),  // recruitmentPrice (Integer 그대로 사용)
+                ((Double) result[5]),  // recruitmentRate (Double 그대로 사용)
+                String.valueOf(result[6]),  // totalPrice
+                String.valueOf(result[7]),  // subscriptionDate
+                ((Integer) result[8])  // minInvestment (Integer 그대로 사용)
+        );
+    }
 
     public ArtBaseResponseDto findArtBase(String productId) {
         // StoredProcedureQuery 객체 생성
