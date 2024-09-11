@@ -31,8 +31,8 @@ public class ArtDetail {
     @Column(name = "material", length = 50)
     private String material;    // 재료
 
-    @Column(name = "transaction_date", length = 30)
-    private String transactionDate; // 거래일
+    @Column(name = "subscription_date")
+    private LocalDate subscriptionDate; // 거래일
 
     @Column(name = "auction_name", length = 50)
     private String auctionName;     // 경매명
@@ -46,8 +46,8 @@ public class ArtDetail {
     @Column(name = "issuer", length = 50)
     private String issuer;      // 발행인
 
-    @Column(name = "subscription_date", length = 100)
-    private LocalDate subscriptionDate;    // 청약기간
+    @Column(name = "issuance_date")
+    private LocalDate issuanceDate;    // 청약기간
 
     @Column(name = "presumptive", length = 30)
     private String presumptive;     // 추정가

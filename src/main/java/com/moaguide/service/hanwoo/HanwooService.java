@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 
 @AllArgsConstructor
 @Slf4j
@@ -46,10 +47,10 @@ public class HanwooService {
                 (String) result[5],  // recruitingType
                 (String) result[6],  // rightsStructure
                 (String) result[7],  // revenueStructure
-                ((java.sql.Date) result[8]).toLocalDate(),  // paymentDate
-                ((java.sql.Date) result[9]).toLocalDate(),  // subscriptionDate
-                ((java.sql.Date) result[10]).toLocalDate(), // allocationDate
-                ((java.sql.Date) result[11]).toLocalDate()  // criteriaDate
+                ((Date) result[8]).toLocalDate(),  // paymentDate
+                ((Date) result[9]).toLocalDate(),  // subscriptionDate
+                ((Date) result[10]).toLocalDate(), // allocationDate
+                ((Date) result[11]).toLocalDate()  // criteriaDate
         );
 
         // HanwooFarmDto 생성
@@ -59,7 +60,7 @@ public class HanwooService {
                 (String) result[14],  // manager
                 String.valueOf(result[15]),  // certifiedHeads
                 (String) result[16],  // cattleBreed
-                ((java.sql.Date) result[17]).toLocalDate()  // initialDate
+                ((Date) result[17]).toLocalDate()  // initialDate
         );
 
         // HanwooBaseResponseDto 생성 및 반환
