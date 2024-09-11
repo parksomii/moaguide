@@ -1,6 +1,5 @@
 package com.moaguide.dto.NewDto.customDto;
 
-import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +11,8 @@ import lombok.NoArgsConstructor;
 public class BuildingDetailDto {
 
     private Product productId;
+
+    private String address;
 
     private String useArea;
 
@@ -37,7 +38,6 @@ public class BuildingDetailDto {
 
     private Integer lift;
 
-    private String location;
 
 
     // 필요한 필드를 받는 새로운 생성자 추가
@@ -56,6 +56,6 @@ public class BuildingDetailDto {
         this.mainStructure = mainStructure;
         this.parking = parking;
         this.lift = lift;
-        this.location = location;
+        this.address = location;
     }
 }

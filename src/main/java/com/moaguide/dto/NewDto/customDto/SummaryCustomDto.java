@@ -21,13 +21,12 @@ import java.util.List;
 @NoArgsConstructor
 public class SummaryCustomDto {
     // 주요 상품 현황 및 상품 목록
-    private String productId;
+    private String product_Id;
     private String name;
-    private Long totalprice;
+    private Long totalPrice;
     private Integer price;
     private double priceRate;
-    private double dividend;
-    private double dividendRate;
+    private double lastDivide_rate;
     private String category;
     private String platform;
 }

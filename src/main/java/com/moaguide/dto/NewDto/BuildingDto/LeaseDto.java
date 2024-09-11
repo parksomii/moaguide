@@ -19,8 +19,8 @@ public class LeaseDto {
 
     private String rent;
 
-    private String administrationCost;
+    private String adminCost;
 
-    private String detailedConditions;
+    private String detaile;
 
 }
