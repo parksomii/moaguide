@@ -13,7 +13,7 @@ public class HanwooDetailDto {
     private String productId;
     private String category;
     private String platform;
-    private String type;
+    private String title;
     private String name;
     private Long recruitmentPrice;
     private Double recruitmentRate;
