@@ -14,6 +14,4 @@ public class ArtBaseResponseDto {
     private ArtPublishDto artPublish;
     private ArtAuthorDto artAuthor;
     private ArtWorkDto artWork;
-
-
 }

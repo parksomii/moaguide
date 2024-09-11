@@ -1,9 +1,6 @@
 package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.ArtBaseResponseDto;
-import com.moaguide.dto.NewDto.customDto.ArtAuthorDto;
-import com.moaguide.dto.NewDto.customDto.ArtPublishDto;
-import com.moaguide.dto.NewDto.customDto.ArtWorkDto;
 import com.moaguide.service.art.ArtService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +19,8 @@ public class ArtRestController {
 
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-        ArtPublishDto art = artService.findArt(product_Id);
-        ArtAuthorDto author = artService.findAuthor(product_Id);
-        ArtWorkDto work = artService.findWork(product_Id);
-        return ResponseEntity.ok(new ArtBaseResponseDto(art,author,work));
+        ArtBaseResponseDto artBaseResponse = artService.findArtBase(product_Id);
+        return ResponseEntity.ok(artBaseResponse);
     }
 
     @GetMapping("sub/{product_Id}")

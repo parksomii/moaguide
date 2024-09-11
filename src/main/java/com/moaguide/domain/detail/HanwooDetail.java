@@ -59,7 +59,7 @@ public class HanwooDetail {
     private String manager; // 관리책임자
 
     @Column(name = "certifiedHeads")
-    private Integer certifiedHeads; // 인증두수
+    private String certifiedHeads; // 인증두수
 
     @Column(name = "cattleBreed", length = 50)
     private String cattleBreed; // 축종

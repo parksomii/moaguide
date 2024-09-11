@@ -3,6 +3,7 @@ package com.moaguide.service.hanwoo;
 import com.moaguide.domain.hanwoo.AveragePriceRepository;
 import com.moaguide.domain.hanwoo.Grade1RateRepository;
 import com.moaguide.domain.hanwoo.ProductionCostRepository;
+import com.moaguide.dto.NewDto.HanwooPriceResponseDto;
 import com.moaguide.dto.NewDto.customDto.AveragePriceDto;
 import com.moaguide.dto.NewDto.customDto.Grade1RateDto;
 import com.moaguide.dto.NewDto.customDto.ProductionCostDto;
@@ -10,7 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.Year;
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,25 +22,23 @@ public class HanwooPriceService {
     private final Grade1RateRepository grade1RateRepository;
     private final ProductionCostRepository productionCostRepository;
 
-    // 두당 평균 도매가격
-    public List<AveragePriceDto> findAveragePrice(String category) {
-//        List<AveragePriceDto> averagePrice = averagePriceRepository.findAveragePrice(category, Year.now().getValue());
-        return null;
-    }
+    public HanwooPriceResponseDto getHanwooPriceData(String category, int currentYear) {
+        List<AveragePriceDto> averagePrice = null;
+        List<Grade1RateDto> grade1Rate = null;
+        List<ProductionCostDto> productionCost = null;
 
-    // 거세우 평균가격
-    public List<AveragePriceDto> findAverageCattlePrice(String category) {
-//        List<AveragePriceDto> averagePrice = averagePriceRepository.findAverageCattlePrice(category, Year.now().getValue());
-        return null;
-    }
+        if ("grade1Rate".equals(category)) {
+            grade1Rate = grade1RateRepository.findGrade1Rate(currentYear);
+        } else if ("productionCost".equals(category)) {
+            productionCost = productionCostRepository.findProductionCost(currentYear); // 2003년부터 2023년까지의 데이터
+        } else if ("averagePrice".equals(category)) {
+            averagePrice = averagePriceRepository.findAveragePrice("한우", currentYear);
+        } else if ("cattlePrice".equals(category)) {
+            averagePrice = averagePriceRepository.findAveragePrice("거세", currentYear);
+        } else {
+            return null;
+        }
 
-    public List<Grade1RateDto> findGrade1Rate(String category) {
-//        List<Grade1RateDto> grade1Rate = grade1RateRepository.findGrade1Rate(category);
-        return null;
-    }
-
-    public List<ProductionCostDto> findProductionCost(String category) {
-//        List<ProductionCostDto> productionCost = productionCostRepository.findProductionCost(category);
-        return null;
+        return new HanwooPriceResponseDto(averagePrice, grade1Rate, productionCost);
     }
 }

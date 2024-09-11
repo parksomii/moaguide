@@ -1,11 +1,20 @@
 package com.moaguide.service.hanwoo;
 
 import com.moaguide.domain.detail.HanwooDetailRepository;
+import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
 import com.moaguide.dto.NewDto.customDto.HanwooFarmDto;
 import com.moaguide.dto.NewDto.customDto.HanwooPublishDto;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.ParameterMode;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.StoredProcedureQuery;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 @Slf4j
@@ -13,13 +22,47 @@ import org.springframework.stereotype.Service;
 public class HanwooService {
     private final HanwooDetailRepository hanwooRepository;
 
-    public HanwooPublishDto findHanwoo(String productId) {
-        HanwooPublishDto hanwoo = hanwooRepository.findHanwooDetail(productId);
-        return hanwoo;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public HanwooFarmDto findFarm(String productId) {
-        HanwooFarmDto farm = hanwooRepository.findfarmDetail(productId);
-        return farm;
+    @Transactional
+    public HanwooBaseResponseDto findDetail(String productId) {
+        // 프로시저 호출
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery("hanwoo_base")
+                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+                .setParameter("in_Product_Id", productId);
+
+        // 결과 받아오기
+        Object[] result = (Object[]) query.getSingleResult();
+
+        // HanwooPublishDto 생성
+        HanwooPublishDto publishDto = new HanwooPublishDto(
+                (String) result[0],  // name
+                (String) result[1],  // type
+                ((Integer) result[2]),  // piece (Integer 그대로 사용)
+                ((Integer) result[3]),  // basePrice (Integer -> Long 변환)
+                String.valueOf(result[4]),  // totalPrice
+                (String) result[5],  // recruitingType
+                (String) result[6],  // rightsStructure
+                (String) result[7],  // revenueStructure
+                ((java.sql.Date) result[8]).toLocalDate(),  // paymentDate
+                ((java.sql.Date) result[9]).toLocalDate(),  // subscriptionDate
+                ((java.sql.Date) result[10]).toLocalDate(), // allocationDate
+                ((java.sql.Date) result[11]).toLocalDate()  // criteriaDate
+        );
+
+        // HanwooFarmDto 생성
+        HanwooFarmDto farmDto = new HanwooFarmDto(
+                (String) result[12],  // certificationNumber
+                (String) result[13],  // certificationAgency
+                (String) result[14],  // manager
+                String.valueOf(result[15]),  // certifiedHeads
+                (String) result[16],  // cattleBreed
+                ((java.sql.Date) result[17]).toLocalDate()  // initialDate
+        );
+
+        // HanwooBaseResponseDto 생성 및 반환
+        return new HanwooBaseResponseDto(publishDto, farmDto);
     }
 }
