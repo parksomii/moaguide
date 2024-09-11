@@ -19,15 +19,15 @@ import java.util.Date;
         classes = @ConstructorResult(
                 targetClass = BuildingReponseDto.class,
                 columns = {
-                        @ColumnResult(name = "productId", type = String.class),
+                        @ColumnResult(name = "product_Id", type = String.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "price", type = Integer.class),
                         @ColumnResult(name = "priceRate", type = Double.class),
                         @ColumnResult(name = "totalPrice", type = Long.class),
-                        @ColumnResult(name = "dividend", type = Double.class),
-                        @ColumnResult(name = "dividendRate", type = Double.class),
+                        @ColumnResult(name = "lastDivide", type = Double.class),
+                        @ColumnResult(name = "lastDivide_rate", type = Double.class),
                         @ColumnResult(name = "divideCycle", type = Integer.class)
                 }
         )
