@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -45,7 +47,7 @@ public class ArtDetail {
     private String issuer;      // 발행인
 
     @Column(name = "subscription_date", length = 100)
-    private String subscriptionDate;    // 청약기간
+    private LocalDate subscriptionDate;    // 청약기간
 
     @Column(name = "presumptive", length = 30)
     private String presumptive;     // 추정가

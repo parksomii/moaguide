@@ -72,8 +72,8 @@ public class ArtService {
         ArtWorkDto artWorkDto = new ArtWorkDto(
                 (String) result[13],  // name
                 (String) result[14],  // size
-                (String) result[15],  // productionDate
-                (String) result[16]   // material
+                (String) result[15],  // material
+                (String) result[16]   // productionDate
         );
 
         // 최종적으로 ArtBaseResponseDto 리턴
