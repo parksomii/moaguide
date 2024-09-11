@@ -37,7 +37,7 @@ public class articleRestController {
         return ResponseEntity.ok(articleDtos);
     }
 
-    @GetMapping("guide")
+    @GetMapping("guide/sub")
     public ResponseEntity<List<SubRoadmap>> getsubroadmap(@RequestParam int category) {
         List<SubRoadmap> subRoadmap = studyService.findAllbysub(category);
         return ResponseEntity.ok(subRoadmap);

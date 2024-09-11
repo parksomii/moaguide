@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface SubRoadmapRepository extends JpaRepository<SubRoadmap, Long> {
 
-    @Query("SELECT s FROM SubRoadmap s where s.roadmapId.id = :id")
+    @Query("SELECT s FROM SubRoadmap s where s.roadmapId.id = :id order by s.number")
     List<SubRoadmap> findAll(@Param("id") int category);
 }
