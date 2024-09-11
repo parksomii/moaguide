@@ -2,6 +2,7 @@ package com.moaguide.service.hanwoo;
 
 import com.moaguide.domain.detail.HanwooDetailRepository;
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
+import com.moaguide.dto.NewDto.HanwooDetailDto;
 import com.moaguide.dto.NewDto.customDto.HanwooFarmDto;
 import com.moaguide.dto.NewDto.customDto.HanwooPublishDto;
 import jakarta.persistence.EntityManager;
@@ -22,11 +23,34 @@ import java.sql.Date;
 @Service
 public class HanwooService {
     private final HanwooDetailRepository hanwooRepository;
-
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional
+    public HanwooDetailDto findHanwooDetail(String productId) {
+        // 프로시저 호출
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery("hanwoo_detail")
+                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+                .setParameter("in_Product_Id", productId);
+
+        // 결과 받아오기
+        Object[] result = (Object[]) query.getSingleResult();
+
+        // HanwooDetailDto 생성 및 반환
+        return new HanwooDetailDto(
+                (String) result[0],  // productId
+                (String) result[1],  // category
+                (String) result[2],  // platform
+                (String) result[3],  // type
+                (String) result[4],  // name
+                ((Long) result[5]),  // recruitmentPrice (Integer 그대로 사용)
+                ((Double) result[6]),  // recruitmentRate (Double 그대로 사용)
+                ((Long) result[7]),  // totalPrice
+                ((Date) result[8]).toLocalDate(),  // paymentDate
+                ((Integer) result[9])  // minInvestment
+        );
+    }
+
     public HanwooBaseResponseDto findDetail(String productId) {
         // 프로시저 호출
         StoredProcedureQuery query = entityManager

@@ -31,14 +31,13 @@ public class ArtService {
 
     public ArtDetailDto findArtDetail(String productId) {
         // StoredProcedureQuery 객체 생성
-        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("art_detail");
-
-        // IN 파라미터 등록
-        storedProcedure.registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN);
-        storedProcedure.setParameter("in_Product_Id", productId);
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery("art_detail")
+                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+                .setParameter("in_Product_Id", productId);
 
         // 프로시저 실행
-        List<Object[]> resultList = storedProcedure.getResultList();
+        List<Object[]> resultList = query.getResultList();
 
         // 결과가 없을 경우 null 리턴
         if (resultList.isEmpty()) {
