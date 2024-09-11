@@ -1,6 +1,8 @@
 package com.moaguide.controller;
 
+import com.moaguide.dto.NewDto.ArtDetailDto;
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
+import com.moaguide.dto.NewDto.HanwooDetailDto;
 import com.moaguide.dto.NewDto.HanwooPriceResponseDto;
 import com.moaguide.dto.NewDto.customDto.HanwooFarmDto;
 import com.moaguide.dto.NewDto.customDto.HanwooPublishDto;
@@ -18,6 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class HanwooRestController {
     private final HanwooService hanwooService;
     private final HanwooPriceService hanwooPriceService;
+
+    @GetMapping("{product_Id}")
+    public ResponseEntity<Object> detail(@PathVariable String product_Id) {
+        HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id);
+        return ResponseEntity.ok().body(hanwooDetail);
+    }
 
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {

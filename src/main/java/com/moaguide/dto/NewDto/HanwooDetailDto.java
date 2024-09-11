@@ -4,20 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.beans.ConstructorProperties;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArtDetailDto {
+public class HanwooDetailDto {
     private String productId;
     private String category;
     private String platform;
+    private String type;
     private String name;
-    private String authorName;
     private Long recruitmentPrice;
     private Double recruitmentRate;
     private Long totalPrice;
-    private String subscriptionDate;
+    private LocalDate paymentDate;
     private int minInvestment;
 }
