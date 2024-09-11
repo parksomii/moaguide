@@ -53,9 +53,9 @@ public class ArtService {
                 (String) result[1],  // category
                 (String) result[2],  // platform
                 (String) result[3],  // name
-                ((Integer) result[4]),  // recruitmentPrice (Integer 그대로 사용)
+                ((Long) result[4]),  // recruitmentPrice (Integer 그대로 사용)
                 ((Double) result[5]),  // recruitmentRate (Double 그대로 사용)
-                String.valueOf(result[6]),  // totalPrice
+                ((Long) result[6]),  // totalPrice
                 String.valueOf(result[7]),  // subscriptionDate
                 ((Integer) result[8])  // minInvestment (Integer 그대로 사용)
         );

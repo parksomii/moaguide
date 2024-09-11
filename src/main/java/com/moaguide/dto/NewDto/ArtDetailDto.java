@@ -14,9 +14,9 @@ public class ArtDetailDto {
     private String category;
     private String platform;
     private String name;
-    private Integer recruitmentPrice;
+    private Long recruitmentPrice;
     private Double recruitmentRate;
-    private String totalPrice;
+    private Long totalPrice;
     private String subscriptionDate;
     private int minInvestment;
 }
