@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name="sub_Roadmap")
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
-@Entity
+@Entity(name="roadmap")
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor
