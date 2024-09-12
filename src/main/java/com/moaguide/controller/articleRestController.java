@@ -25,14 +25,14 @@ public class articleRestController {
 
     @GetMapping("guide")
     public ResponseEntity<RoadmapResponseDto> getroadmap(@RequestParam int page , @RequestParam int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         Page<Roadmap> roadmaps = studyService.findAll(pageable);
         return ResponseEntity.ok(new RoadmapResponseDto(roadmaps));
     }
 
     @GetMapping("article")
     public ResponseEntity<ArticlelistResponseDto> getarticle(@RequestParam int page , @RequestParam int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page-1, size);
         ArticlelistResponseDto articleDtos = studyService.findAllByarticle(pageable);
         return ResponseEntity.ok(articleDtos);
     }
