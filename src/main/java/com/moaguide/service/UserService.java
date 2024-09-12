@@ -74,4 +74,8 @@ public class UserService {
         userRepository.updatePasswordbyEmail(email, passwordEncoder.encode(changePassword));
 
     }
+
+    public String findemail(String phone) {
+        return userRepository.findUserByphone(phone);
+    }
 }

@@ -125,4 +125,16 @@ public class UserRestController {
         }
     }
 
+
+    @GetMapping("/email")
+    public ResponseEntity<?> getEmail(HttpServletRequest request) {
+        String verifyToken = request.getHeader("verify");
+        // JWT 토큰 검증
+        if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
+            return new ResponseEntity<>("앞선 인증을 완료해주세요", HttpStatus.BAD_REQUEST);
+        }else{
+            String email = userService.findemail(jwtUtil.getNickname(verifyToken));
+            return ResponseEntity.ok().body(email);
+        }
+    }
 }
