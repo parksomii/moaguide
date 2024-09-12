@@ -38,20 +38,20 @@ public class articleRestController {
         return ResponseEntity.ok(articleDtos);
     }
 
-        @GetMapping("guide/sub")
+        @GetMapping("guide/{category}")
     public ResponseEntity<List<SubRoadmapDto>> getsubroadmap(@RequestParam int category) {
         List<SubRoadmapDto> subRoadmap = studyService.findAllbysub(category);
         return ResponseEntity.ok(subRoadmap);
     }
 
-    @GetMapping("guide/{subcategory}")
-    public ResponseEntity<List<ArticleDto>> getArticle( @PathVariable int subcategory) {
+    @GetMapping("guide/article")
+    public ResponseEntity<List<ArticleDto>> getArticle( @RequestParam int subcategory) {
         List<ArticleDto> articles = studyService.findAllById(subcategory);
         return ResponseEntity.ok(articles);
     }
 
-    @GetMapping("detail/article")
-    public ResponseEntity<Article> getdetail(@RequestParam int id) {
+    @GetMapping("detail/article/{id}")
+    public ResponseEntity<Article> getdetail(@PathVariable int id) {
         Article articles = studyService.findById(id);
         return ResponseEntity.ok(articles);
     }
