@@ -39,7 +39,7 @@ public class articleRestController {
     }
 
         @GetMapping("guide/{category}")
-    public ResponseEntity<List<SubRoadmapDto>> getsubroadmap(@RequestParam int category) {
+    public ResponseEntity<List<SubRoadmapDto>> getsubroadmap(@PathVariable int category) {
         List<SubRoadmapDto> subRoadmap = studyService.findAllbysub(category);
         return ResponseEntity.ok(subRoadmap);
     }
@@ -51,8 +51,8 @@ public class articleRestController {
     }
 
     @GetMapping("detail/article/{id}")
-    public ResponseEntity<Article> getdetail(@PathVariable int id) {
-        Article articles = studyService.findById(id);
+    public ResponseEntity<ArticleDto> getdetail(@PathVariable int id) {
+        ArticleDto articles = studyService.findById(id);
         return ResponseEntity.ok(articles);
     }
 }

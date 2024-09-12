@@ -35,7 +35,7 @@ public class StudyService {
         return articleRepository.findBycategory(subcategory);
     }
 
-    public Article findById(int id) {
+    public ArticleDto findById(int id) {
         return  articleRepository.findById(id);
     }
 }
