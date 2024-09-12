@@ -23,12 +23,14 @@ public class Article {
 
     private String description;
 
+    @Column(name="image_link")
     private String imageLink;
 
     private Date date;
 
     private String content;
 
+    @Column(name="pdf_link")
     private String pdfLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
