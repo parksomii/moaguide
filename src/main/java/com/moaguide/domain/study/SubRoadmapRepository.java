@@ -12,5 +12,6 @@ import java.util.List;
 public interface SubRoadmapRepository extends JpaRepository<SubRoadmap, Long> {
 
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.SubRoadmapDto(s.id, s.number, s.title, s.description) FROM sub_Roadmap s WHERE s.roadmapId.id = :id ORDER BY s.number")
-    List<SubRoadmapDto> findAllDto(@Param("id") int category);    List<SubRoadmap> findAll(@Param("id") int category);
+    List<SubRoadmapDto> findAllDto(@Param("id") int category);
+
 }

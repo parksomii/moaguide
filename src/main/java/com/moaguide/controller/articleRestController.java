@@ -7,6 +7,7 @@ import com.moaguide.domain.study.SubRoadmap;
 import com.moaguide.dto.NewDto.ArticlelistResponseDto;
 import com.moaguide.dto.NewDto.RoadmapResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleDto;
+import com.moaguide.dto.NewDto.customDto.SubRoadmapDto;
 import com.moaguide.service.StudyService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,8 +39,8 @@ public class articleRestController {
     }
 
         @GetMapping("guide/sub")
-    public ResponseEntity<List<SubRoadmap>> getsubroadmap(@RequestParam int category) {
-        List<SubRoadmap> subRoadmap = studyService.findAllbysub(category);
+    public ResponseEntity<List<SubRoadmapDto>> getsubroadmap(@RequestParam int category) {
+        List<SubRoadmapDto> subRoadmap = studyService.findAllbysub(category);
         return ResponseEntity.ok(subRoadmap);
     }
 

@@ -4,6 +4,7 @@ package com.moaguide.service;
 import com.moaguide.domain.study.*;
 import com.moaguide.dto.NewDto.ArticlelistResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleDto;
+import com.moaguide.dto.NewDto.customDto.SubRoadmapDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +27,8 @@ public class StudyService {
         return new ArticlelistResponseDto(articleRepository.findArticle(pageable));
     }
 
-    public List<SubRoadmap> findAllbysub(int category) {
-        return subRoadmapRepository.findAll(category);
+    public List<SubRoadmapDto> findAllbysub(int category) {
+        return subRoadmapRepository.findAllDto(category);
     }
 
     public List<ArticleDto> findAllById(int subcategory) {
