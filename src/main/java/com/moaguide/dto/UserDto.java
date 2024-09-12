@@ -41,4 +41,9 @@ public class UserDto {
             this.loginType
         );
     }
+
+    public UserDto(String email,String password) {
+        this.email = email;
+        this.password = password;
+    }
 }
