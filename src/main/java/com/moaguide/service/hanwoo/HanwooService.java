@@ -42,7 +42,7 @@ public class HanwooService {
                 (String) result[0],  // productId
                 (String) result[1],  // category
                 (String) result[2],  // platform
-                (String) result[3],  // type
+                (String) result[3],  // title
                 (String) result[4],  // name
                 ((Long) result[5]),  // recruitmentPrice (Integer 그대로 사용)
                 ((BigDecimal) result[6]).doubleValue(),  // recruitmentRate (Double 그대로 사용)
