@@ -1,9 +1,7 @@
 package com.moaguide.controller;
 
 
-import com.moaguide.domain.study.Article;
 import com.moaguide.domain.study.Roadmap;
-import com.moaguide.domain.study.SubRoadmap;
 import com.moaguide.dto.NewDto.ArticlelistResponseDto;
 import com.moaguide.dto.NewDto.RoadmapResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleDto;

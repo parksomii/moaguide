@@ -115,9 +115,9 @@ public class UserRestController {
 
     @PostMapping("/verify/mail")
     public ResponseEntity<?> verifyMail(@RequestBody mailDto mailDto) {
-        boolean success = emailService.verifyCode(mailDto.getEamil(),mailDto.getCode());
+        boolean success = emailService.verifyCode(mailDto.getEmail(),mailDto.getCode());
         if (success) {
-            String token = jwtUtil.createJwt("verify", mailDto.getEamil(),"pass", 1000 * 60 * 30L);
+            String token = jwtUtil.createJwt("verify", mailDto.getEmail(),"pass", 1000 * 60 * 30L);
             return ResponseEntity.ok().header("verify",  token).body("인증에 성공했습니다.");
         }
         else {
