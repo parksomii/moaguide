@@ -67,17 +67,17 @@ public class UserRestController {
         // JWT 토큰 검증
         if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
             return new ResponseEntity<>("앞선 인증을 완료해주세요", HttpStatus.BAD_REQUEST);
-        }else{
-            if(userDto.getNickname().isEmpty()) {
+        } else {
+            // null 확인 후 처리
+            if (userDto.getNickname() == null || userDto.getNickname().isEmpty()) {
                 userService.updatePasswordbyEmail(userDto.getEmail(), userDto.getPassword());
-                return ResponseEntity.ok("success");
-
-            }else {
+            } else {
                 userService.updatePassword(userDto.getNickname(), userDto.getPassword());
-                return ResponseEntity.ok("success");
             }
+            return ResponseEntity.ok("success");
         }
     }
+
 
     // 전화번호 변경
     @PatchMapping("/update/phone")
