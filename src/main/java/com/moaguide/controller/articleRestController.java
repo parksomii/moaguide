@@ -48,4 +48,10 @@ public class articleRestController {
         List<ArticleDto> articles = studyService.findAllById(subcategory);
         return ResponseEntity.ok(articles);
     }
+
+    @GetMapping("detail/article")
+    public ResponseEntity<Article> getdetail(@RequestParam int id) {
+        Article articles = studyService.findById(id);
+        return ResponseEntity.ok(articles);
+    }
 }

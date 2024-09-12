@@ -18,4 +18,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleDto(a.id,a.title,a.description,a.imageLink) FROM article a where a.subRoadmapId.id =:id order by a.date")
     List<ArticleDto> findBycategory(@Param("id") int subRoadmapId);
+
+    @Query("SELECT  new com.moaguide.dto.NewDto.customDto.ArticleDto(a.title,a.date,a.imageLink,a.content,a.pdfLink) from article a where a.id = :id")
+    Article findById(@Param("id") int id);
 }

@@ -33,4 +33,8 @@ public class StudyService {
     public List<ArticleDto> findAllById(int subcategory) {
         return articleRepository.findBycategory(subcategory);
     }
+
+    public Article findById(int id) {
+        return  articleRepository.findById(id);
+    }
 }
