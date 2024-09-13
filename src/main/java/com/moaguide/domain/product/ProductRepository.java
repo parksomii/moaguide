@@ -20,7 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Procedure(name = "startCount")
     int findstart(@Param("day")Date sqlDate);
 
-    @Query("SELECT CEIL(count(p)/10) FROM Product p JOIN Platform pl ON pl.PlatformId = p.PlatformId.PlatformId WHERE pl.status = :status and pl.category = :categroy")
+    @Query("SELECT CEIL(count(p)/10) FROM Product p JOIN Platform pl ON pl.PlatformId = p.PlatformId.PlatformId WHERE pl.status = :status and pl.category = :category")
     int findlistTotalCategory(@Param("status") String status,@Param("category") String category);
 
     @Procedure(name = "startCountCategory")
