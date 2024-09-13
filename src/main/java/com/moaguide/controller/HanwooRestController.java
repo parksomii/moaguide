@@ -1,11 +1,8 @@
 package com.moaguide.controller;
 
-import com.moaguide.dto.NewDto.ArtDetailDto;
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
 import com.moaguide.dto.NewDto.HanwooDetailDto;
 import com.moaguide.dto.NewDto.HanwooPriceResponseDto;
-import com.moaguide.dto.NewDto.customDto.HanwooFarmDto;
-import com.moaguide.dto.NewDto.customDto.HanwooPublishDto;
 import com.moaguide.service.hanwoo.HanwooPriceService;
 import com.moaguide.service.hanwoo.HanwooService;
 import lombok.AllArgsConstructor;

@@ -23,18 +23,35 @@ public class HanwooPriceService {
     private final ProductionCostRepository productionCostRepository;
 
     public HanwooPriceResponseDto getHanwooPriceData(String category, int currentYear) {
+        LocalDate startDate;
+        int nowDate = LocalDate.now().getYear();
+
+        // 연도 파라미터에 따라 startDate 설정
+        if (currentYear == 1) {
+            startDate = LocalDate.of(nowDate, 1, 1);  // 현재 연도
+        } else if (currentYear == 3) {
+            startDate = LocalDate.of(nowDate - currentYear, 1, 1);  // 3년 전부터
+        } else if (currentYear == 5) {
+            startDate = LocalDate.of(nowDate - currentYear, 1, 1);  // 5년 전부터
+        } else {
+            // 전체 데이터를 가져올 경우
+            startDate = LocalDate.of(1990, 1, 1);  // 시작 날짜를 적당히 과거로 설정
+        }
+
+        log.info("currentYear: {}", currentYear);
+        log.info("startDate: {}", startDate);
         List<AveragePriceDto> averagePrice = null;
         List<Grade1RateDto> grade1Rate = null;
         List<ProductionCostDto> productionCost = null;
 
         if ("grade1Rate".equals(category)) {
-            grade1Rate = grade1RateRepository.findGrade1Rate(currentYear);
+            grade1Rate = grade1RateRepository.findGrade1Rate(startDate);
         } else if ("productionCost".equals(category)) {
-            productionCost = productionCostRepository.findProductionCost(currentYear); // 2003년부터 2023년까지의 데이터
+            productionCost = productionCostRepository.findProductionCost(startDate); // 2003년부터 2023년까지의 데이터
         } else if ("averagePrice".equals(category)) {
-            averagePrice = averagePriceRepository.findAveragePrice("한우", currentYear);
+            averagePrice = averagePriceRepository.findAveragePrice("한우", startDate);
         } else if ("cattlePrice".equals(category)) {
-            averagePrice = averagePriceRepository.findAveragePrice("거세", currentYear);
+            averagePrice = averagePriceRepository.findAveragePrice("거세", startDate);
         } else {
             return null;
         }
