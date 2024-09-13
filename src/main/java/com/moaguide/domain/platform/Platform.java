@@ -22,7 +22,7 @@ public class Platform {
     private String platform;
 
     @Column(nullable = false)
-    private boolean possible;
+    private String status;
 
-    public PlatformDto toDto(){ return new PlatformDto(PlatformId, category, platform, possible); }
+    public PlatformDto toDto(){ return new PlatformDto(PlatformId, category, platform, status); }
 }

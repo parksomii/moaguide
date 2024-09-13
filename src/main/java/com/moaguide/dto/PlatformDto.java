@@ -9,9 +9,9 @@ public class PlatformDto {
     private int PlatformId;
     private String category;
     private String platform;
-    private boolean passible;
+    private String status;
 
     public Platform toEntity(){
-        return new Platform(PlatformId, category, platform, passible);
+        return new Platform(PlatformId, category, platform, status);
     }
 }

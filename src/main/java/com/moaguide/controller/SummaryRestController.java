@@ -31,29 +31,30 @@ public class SummaryRestController {
             List<SummaryCustomDto> summary;
             if(category.equals("all")){
                 summary = productService.getlist(page,size,sort);
-                return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size));
+                int total =  productService.getlistTotal("거래중");
+                return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size,total));
             }else{
                 summary = productService.getcategorylist(page,size,sort,category);
-                return ResponseEntity.ok(new SummaryResponseDto(summary,page,size));
+                int total = productService.getlistTotalCategory("거래중",category);
+                return ResponseEntity.ok(new SummaryResponseDto(summary,page,size,total));
             }
         } else if (subcategory.equals("start")) {
-            List<IssueCustomDto> inavete;
+            SummaryResponseDto inavete;
             if(sort.equals("ready")){
                 inavete = productService.getreadylist(page,size,category);
-                return ResponseEntity.ok(new SummaryResponseDto(inavete,page,size));
+                return ResponseEntity.ok(inavete);
             }else if(sort.equals("start")){
                 inavete = productService.getstartlisty(page,size,category);
-                return ResponseEntity.ok(new SummaryResponseDto(inavete,page,size));
+                return ResponseEntity.ok(inavete);
             }
         } else if (subcategory.equals("end")){
+            SummaryResponseDto inavete;
             if(sort.equals("end")){
-                List<endCustomDto> inavete;
                 inavete = productService.getend(page,size,category);
-                return ResponseEntity.ok((new SummaryResponseDto(inavete,page,size)));
+                return ResponseEntity.ok(inavete);
             }else if(sort.equals("finish")){
-                List<finishCustomDto> inavete;
                 inavete = productService.getfinish(page,size,category);
-                return ResponseEntity.ok((new SummaryResponseDto(inavete,page,size)));
+                return ResponseEntity.ok(inavete);
             }
         }
         return ResponseEntity.badRequest().body("잘못된 요청입니다.");

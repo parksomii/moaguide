@@ -9,9 +9,16 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class SummaryResponseDto {
     private List<?> product;
     private int page;
     private int size;
+    private int total;
+
+    public SummaryResponseDto(List<?> product, int page, int size,int total) {
+        this.product = product;
+        this.page = page+1;
+        this.size = size;
+        this.total = total;
+    }
 }
