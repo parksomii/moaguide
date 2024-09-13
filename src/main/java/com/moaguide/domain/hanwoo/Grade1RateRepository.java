@@ -25,7 +25,7 @@ public interface Grade1RateRepository extends JpaRepository<Grade1Rate, Long> {
             "FROM Grade1Rate g " +
             "WHERE g.prdDe >= :year " +
             "GROUP BY YEAR(g.prdDe), MONTH(g.prdDe), g.cType " +
-            "ORDER BY YEAR(g.prdDe), MONTH(g.prdDe), g.cType")
+            "ORDER BY YEAR(g.prdDe), MONTH(g.prdDe), g.cType DESC")
     List<Grade1RateDto> findGrade1Rate(@Param("year") LocalDate year);
 
 }
