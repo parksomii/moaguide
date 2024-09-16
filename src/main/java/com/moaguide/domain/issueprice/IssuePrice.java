@@ -10,7 +10,7 @@ import java.sql.Date;
 
 
 @Entity
-@Table(name = "Issue_price")
+@Table(name = "Issue_Price")
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor
