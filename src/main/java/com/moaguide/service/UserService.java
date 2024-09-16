@@ -3,7 +3,6 @@ package com.moaguide.service;
 import com.moaguide.domain.bookmark.BookmarkRepository;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
-import com.moaguide.dto.ProfileDto;
 import com.moaguide.dto.UserDto;
 import com.moaguide.dto.codeDto;
 import lombok.AllArgsConstructor;

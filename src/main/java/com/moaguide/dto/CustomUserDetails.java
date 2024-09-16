@@ -48,6 +48,10 @@ public class CustomUserDetails implements UserDetails {
         return UserDetails.super.isEnabled();
     }
 
+    public String getLoginType() {
+        return user.getLoginType();
+    }
+
     public String getemail(){
         return user.getEmail();
     }

@@ -20,8 +20,8 @@ public class SummaryRestController {
     private final ProductService productService;
 
     // 카테고리별 상품현황 목록 조회
-    @GetMapping("/list/{category}")
-    public ResponseEntity<?> summary(@PathVariable("category") String category,
+    @GetMapping("/list")
+    public ResponseEntity<?> summary(@RequestParam String category,
                                           @RequestParam String subcategory,
                                           @RequestParam String sort,
                                           @RequestParam int page,
