@@ -73,34 +73,18 @@ public class MusicDetail {
     @Temporal(TemporalType.DATE)
     private Date announcementDate;
 
-
-    @Column(name = "issuance_date")
-    @Temporal(TemporalType.DATE)
-    private Date issuanceDate;
-
     @Column(name = "type", length = 10)
     private String type;
+
+    @Column(name="melon_Id")
+    private String melonId;
 
     @Column(name="youtube_url")
     private String youtubeUrl;
 
     private String keyword;
 
-/*    public MusicDetailDto toDTO() {
-        return new MusicDetailDto(
-                this.id,
-                this.productId,
-                this.introduceSong,
-                this.genre,
-                this.singer,
-                this.writer,
-                this.composing,
-                this.arrangements,
-                this.announcementDate,
-                this.issuanceDate,
-                this.type,
-                this.youtubeUrl,
-                this.keyword
-        );
-    }*/
+    @Column(name = "issue_day")
+    @Temporal(TemporalType.DATE)
+    private Date issuDay;
 }

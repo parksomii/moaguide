@@ -1,6 +1,9 @@
 package com.moaguide.controller;
 
+import com.moaguide.dto.NewDto.MusicBaseResponseDto;
+import com.moaguide.dto.NewDto.customDto.MusicPublishDto;
 import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
+import com.moaguide.dto.NewDto.customDto.MusicSongDto;
 import com.moaguide.service.MusicDetailService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +26,15 @@ public class MusicRestController {
         return ResponseEntity.ok(music);
     }
 
-/*    @GetMapping("base/{product_Id}")
+    @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-        MusicBaseDto music = musicService.findbase(product_Id);
-        return ResponseEntity.ok(new MusicBaseResponseDto(music));
+        MusicPublishDto music = musicService.findbase(product_Id);
+        MusicSongDto musicSong = musicService.findsong(product_Id);
+        // 저작권료 정보
+        return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong));
     }
 
+/*
     @GetMapping("sub/{product_Id}")
     public ResponseEntity<Object> Sub(@PathVariable String product_Id) {
         MusicSubDto music = musicService.findsub(product_Id);
