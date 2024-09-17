@@ -14,11 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MusicDetailService {
     private final MusicDetailRepository musicRepository;
 
-/*    public MusicDetailDto detail(String id) {
-        MusicDetailDto musicDetailDto = musicRepository.findByproductId(id).toDTO();
-        return musicDetailDto;
-    }*/
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
     public MusicReponseDto findBydetail(String productId) {
         MusicReponseDto music = musicRepository.findMusicDetail(productId);
         return music;

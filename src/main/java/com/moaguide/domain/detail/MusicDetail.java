@@ -2,6 +2,7 @@ package com.moaguide.domain.detail;
 
 import com.moaguide.domain.product.Product;
 import com.moaguide.dto.MusicDetailDto;
+import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +17,7 @@ import java.util.Date;
 @SqlResultSetMapping(
         name = "musicDetailDtoMapping",
         classes = @ConstructorResult(
-                targetClass = MusicDetailDto.class,
+                targetClass = MusicReponseDto.class,
                 columns = {
                         @ColumnResult(name = "product_Id", type = String.class),
                         @ColumnResult(name = "category", type = String.class),
@@ -85,7 +86,7 @@ public class MusicDetail {
 
     private String keyword;
 
-    public MusicDetailDto toDTO() {
+/*    public MusicDetailDto toDTO() {
         return new MusicDetailDto(
                 this.id,
                 this.productId,
@@ -101,5 +102,5 @@ public class MusicDetail {
                 this.youtubeUrl,
                 this.keyword
         );
-    }
+    }*/
 }

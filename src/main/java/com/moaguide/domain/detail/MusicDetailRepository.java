@@ -9,8 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface MusicDetailRepository extends JpaRepository<MusicDetail, Long> {
 
-/*    @Query("SELECT m FROM MusicDetail m WHERE m.productId.productId = :productId")
-    MusicDetail findByproductId(@Param("productId") String id);*/
     @Procedure(name = "music_detail")
     MusicReponseDto findMusicDetail(@Param("in_Product_Id") String productId);
 }
