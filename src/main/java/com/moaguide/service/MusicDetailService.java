@@ -2,9 +2,11 @@ package com.moaguide.service;
 
 import com.moaguide.domain.detail.MusicDetailRepository;
 import com.moaguide.dto.MusicDetailDto;
+import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Slf4j
@@ -12,8 +14,13 @@ import org.springframework.stereotype.Service;
 public class MusicDetailService {
     private final MusicDetailRepository musicRepository;
 
-    public MusicDetailDto detail(String id) {
+/*    public MusicDetailDto detail(String id) {
         MusicDetailDto musicDetailDto = musicRepository.findByproductId(id).toDTO();
         return musicDetailDto;
+    }*/
+    @Transactional(readOnly = false)
+    public MusicReponseDto findBydetail(String productId) {
+        MusicReponseDto music = musicRepository.findMusicDetail(productId);
+        return music;
     }
 }
