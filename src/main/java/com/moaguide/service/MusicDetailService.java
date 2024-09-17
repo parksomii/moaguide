@@ -6,6 +6,7 @@ import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Slf4j
@@ -17,6 +18,7 @@ public class MusicDetailService {
         MusicDetailDto musicDetailDto = musicRepository.findByproductId(id).toDTO();
         return musicDetailDto;
     }*/
+    @Transactional(readOnly = false)
     public MusicReponseDto findBydetail(String productId) {
         MusicReponseDto music = musicRepository.findMusicDetail(productId);
         return music;
