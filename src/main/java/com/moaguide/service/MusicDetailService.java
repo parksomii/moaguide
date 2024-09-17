@@ -1,7 +1,6 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.detail.MusicDetailRepository;
-import com.moaguide.dto.MusicDetailDto;
 import com.moaguide.dto.NewDto.customDto.MusicPublishDto;
 import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
 import com.moaguide.dto.NewDto.customDto.MusicSongDto;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
