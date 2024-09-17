@@ -23,6 +23,7 @@ import java.util.List;
 @Service
 public class MusicDetailService {
     private final MusicDetailRepository musicRepository;
+
     @PersistenceContext
     private final EntityManager entityManager;
 
@@ -34,62 +35,56 @@ public class MusicDetailService {
 
     @Transactional(readOnly = true)
     public MusicPublishDto findbase(String productId) {
-        // StoredProcedureQuery 객체 생성
-        StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("music_base")
-                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
-                .setParameter("in_Product_Id", productId);
-
-        // 프로시저 실행
-        List<Object[]> resultList = query.getResultList();
-
-        // 결과가 없을 경우 null 리턴
-        if (resultList.isEmpty()) {
+        Object[] result = executeStoredProcedure("music_base", productId);
+        if (result == null) {
             return null;
         }
 
-        // 결과값을 DTO에 매핑
-        Object[] result = resultList.get(0);  // 첫 번째 결과만 사용
-
-        // MusicReponseDto 매핑
         return new MusicPublishDto(
                 (String) result[0],  // name
                 (String) result[1],  // type
-                (String) result[2], // singer
-                ((Integer) result[3]),  // piece (Integer 그대로 사용)
-                ((Integer) result[4]),  // basePrice (Integer -> Long 변환)
-                ((Long) result[5]),  // totalPrice (Long 그대로 사용
+                (String) result[2],  // singer
+                (Integer) result[3],  // piece
+                (Integer) result[4],  // basePrice
+                (Long) result[5],     // totalPrice
                 ((Date) result[6]).toLocalDate()  // issuDay
         );
     }
 
     @Transactional(readOnly = true)
     public MusicSongDto findsong(String productId) {
-        // StoredProcedureQuery 객체 생성
-        StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("music_base")
-                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
-                .setParameter("in_Product_Id", productId);
-
-        // 프로시저 실행
-        List<Object[]> resultList = query.getResultList();
-
-        // 결과가 없을 경우 null 리턴
-        if (resultList.isEmpty()) {
+        Object[] result = executeStoredProcedure("music_base", productId);
+        if (result == null) {
             return null;
         }
 
-        // 결과값을 DTO에 매핑
-        Object[] result = resultList.get(0);  // 첫 번째 결과만 사용
-
-        // MusicSongDto 매핑
         return new MusicSongDto(
                 (String) result[7],  // introduce_song
                 (String) result[8],  // genre
                 (String) result[2],  // singer
                 (String) result[9],  // writer
-                (String) result[10],  // composing
+                (String) result[10], // composing
                 ((Date) result[11]).toLocalDate()  // announcement_date
         );
+    }
+
+    private Object[] executeStoredProcedure(String procedureName, String productId) {
+        // StoredProcedureQuery 객체 생성
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery(procedureName)
+                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+                .setParameter("in_Product_Id", productId);
+
+        // 프로시저 실행 및 결과 조회
+        List<Object[]> resultList = query.getResultList();
+
+        // 결과가 없을 경우 null 반환
+        if (resultList.isEmpty()) {
+            log.warn("Stored procedure {} returned no results for productId: {}", procedureName, productId);
+            return null;
+        }
+
+        // 첫 번째 결과 반환
+        return resultList.get(0);
     }
 }
