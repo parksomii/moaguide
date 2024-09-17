@@ -33,7 +33,7 @@ public class MusicDetailService {
 
     @Transactional(readOnly = true)
     public MusicPublishDto findbase(String productId) {
-        Object[] result = executeStoredProcedure("music_base", productId);
+        Object[] result = executeStoredProcedure(productId);
         if (result == null) {
             return null;
         }
@@ -51,7 +51,7 @@ public class MusicDetailService {
 
     @Transactional(readOnly = true)
     public MusicSongDto findsong(String productId) {
-        Object[] result = executeStoredProcedure("music_base", productId);
+        Object[] result = executeStoredProcedure(productId);
         if (result == null) {
             return null;
         }
@@ -66,10 +66,10 @@ public class MusicDetailService {
         );
     }
 
-    private Object[] executeStoredProcedure(String procedureName, String productId) {
+    private Object[] executeStoredProcedure(String productId) {
         // StoredProcedureQuery 객체 생성
         StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery(procedureName)
+                .createStoredProcedureQuery("music_base")
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
                 .setParameter("in_Product_Id", productId);
 
@@ -78,7 +78,7 @@ public class MusicDetailService {
 
         // 결과가 없을 경우 null 반환
         if (resultList.isEmpty()) {
-            log.warn("Stored procedure {} returned no results for productId: {}", procedureName, productId);
+            log.warn("Stored procedure {} returned no results for productId: {}", "music_base", productId);
             return null;
         }
 
