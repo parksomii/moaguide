@@ -1,6 +1,7 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.detail.MusicDetailRepository;
+import com.moaguide.dto.NewDto.MusicBaseResponseDto;
 import com.moaguide.dto.NewDto.customDto.MusicPublishDto;
 import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
 import com.moaguide.dto.NewDto.customDto.MusicSongDto;
@@ -25,13 +26,42 @@ public class MusicDetailService {
     @PersistenceContext
     private final EntityManager entityManager;
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public MusicReponseDto findBydetail(String productId) {
         MusicReponseDto music = musicRepository.findMusicDetail(productId);
         return music;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
+    public MusicBaseResponseDto findbase(String productId) {
+        Object[] result = executeStoredProcedure(productId);
+        if (result == null) {
+            return null;
+        }
+
+        // MusicPublishDto와 MusicSongDto를 한 번에 처리
+        MusicPublishDto publishDto = new MusicPublishDto(
+                (String) result[0],  // name
+                (String) result[1],  // type
+                (String) result[2],  // singer
+                (Integer) result[3],  // piece
+                (Integer) result[4],  // basePrice
+                (Long) result[5],     // totalPrice
+                ((Date) result[6]).toLocalDate()  // issuDay
+        );
+
+        MusicSongDto songDto = new MusicSongDto(
+                (String) result[7],  // introduce_song
+                (String) result[8],  // genre
+                (String) result[2],  // singer
+                (String) result[9],  // writer
+                (String) result[10], // composing
+                ((Date) result[11]).toLocalDate()  // announcement_date
+        );
+
+        return new MusicBaseResponseDto(publishDto, songDto);
+    }
+    /*
     public MusicPublishDto findbase(String productId) {
         Object[] result = executeStoredProcedure(productId);
         if (result == null) {
@@ -49,7 +79,6 @@ public class MusicDetailService {
         );
     }
 
-    @Transactional(readOnly = true)
     public MusicSongDto findsong(String productId) {
         Object[] result = executeStoredProcedure(productId);
         if (result == null) {
@@ -64,7 +93,7 @@ public class MusicDetailService {
                 (String) result[10], // composing
                 ((Date) result[11]).toLocalDate()  // announcement_date
         );
-    }
+    }*/
 
     private Object[] executeStoredProcedure(String productId) {
         // StoredProcedureQuery 객체 생성

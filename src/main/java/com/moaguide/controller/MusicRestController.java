@@ -28,10 +28,11 @@ public class MusicRestController {
 
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-        MusicPublishDto music = musicService.findbase(product_Id);
-        MusicSongDto musicSong = musicService.findsong(product_Id);
+/*        MusicPublishDto music = musicService.findbase(product_Id);
+        MusicSongDto musicSong = musicService.findsong(product_Id);*/
+        MusicBaseResponseDto musicBase = musicService.findbase(product_Id);
         // 저작권료 정보
-        return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong));
+        return ResponseEntity.ok(musicBase);
     }
 
 /*

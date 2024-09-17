@@ -37,7 +37,7 @@ import java.util.Date;
         procedureName = "music_detail",
         resultSetMappings = "musicDetailDtoMapping",
         parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_product_id", type = String.class)
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_Product_Id", type = String.class)
         }
 )
 @Table(name = "MusicDetail")
