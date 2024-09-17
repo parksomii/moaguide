@@ -34,7 +34,24 @@ public class MusicDetailService {
 
     @Transactional(readOnly = false)
     public MusicBaseResponseDto findbase(String productId) {
-        Object[] result = executeStoredProcedure(productId);
+        // StoredProcedureQuery 객체 생성
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery("music_base")
+                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+                .setParameter("in_Product_Id", productId);
+
+        // 프로시저 실행 및 결과 조회
+        List<Object[]> resultList = query.getResultList();
+
+        // 결과가 없을 경우 null 반환
+        if (resultList.isEmpty()) {
+            log.warn("Stored procedure {} returned no results for productId: {}", "music_base", productId);
+            return null;
+        }
+
+        // 첫 번째 결과 반환
+        Object[] result = resultList.get(0);
+
         if (result == null) {
             return null;
         }
@@ -60,58 +77,5 @@ public class MusicDetailService {
         );
 
         return new MusicBaseResponseDto(publishDto, songDto);
-    }
-    /*
-    public MusicPublishDto findbase(String productId) {
-        Object[] result = executeStoredProcedure(productId);
-        if (result == null) {
-            return null;
-        }
-
-        return new MusicPublishDto(
-                (String) result[0],  // name
-                (String) result[1],  // type
-                (String) result[2],  // singer
-                (Integer) result[3],  // piece
-                (Integer) result[4],  // basePrice
-                (Long) result[5],     // totalPrice
-                ((Date) result[6]).toLocalDate()  // issuDay
-        );
-    }
-
-    public MusicSongDto findsong(String productId) {
-        Object[] result = executeStoredProcedure(productId);
-        if (result == null) {
-            return null;
-        }
-
-        return new MusicSongDto(
-                (String) result[7],  // introduce_song
-                (String) result[8],  // genre
-                (String) result[2],  // singer
-                (String) result[9],  // writer
-                (String) result[10], // composing
-                ((Date) result[11]).toLocalDate()  // announcement_date
-        );
-    }*/
-
-    private Object[] executeStoredProcedure(String productId) {
-        // StoredProcedureQuery 객체 생성
-        StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("music_base")
-                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
-                .setParameter("in_Product_Id", productId);
-
-        // 프로시저 실행 및 결과 조회
-        List<Object[]> resultList = query.getResultList();
-
-        // 결과가 없을 경우 null 반환
-        if (resultList.isEmpty()) {
-            log.warn("Stored procedure {} returned no results for productId: {}", "music_base", productId);
-            return null;
-        }
-
-        // 첫 번째 결과 반환
-        return resultList.get(0);
     }
 }
