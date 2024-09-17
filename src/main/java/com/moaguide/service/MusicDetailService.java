@@ -26,13 +26,13 @@ public class MusicDetailService {
     @PersistenceContext
     private final EntityManager entityManager;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public MusicReponseDto findBydetail(String productId) {
         MusicReponseDto music = musicRepository.findMusicDetail(productId);
         return music;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public MusicPublishDto findbase(String productId) {
         // StoredProcedureQuery 객체 생성
         StoredProcedureQuery query = entityManager
@@ -63,7 +63,7 @@ public class MusicDetailService {
         );
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public MusicSongDto findsong(String productId) {
         // StoredProcedureQuery 객체 생성
         StoredProcedureQuery query = entityManager
