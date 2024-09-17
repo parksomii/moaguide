@@ -13,6 +13,32 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Entity
+@SqlResultSetMapping(
+        name = "musicDetailDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = MusicDetailDto.class,
+                columns = {
+                        @ColumnResult(name = "product_Id", type = String.class),
+                        @ColumnResult(name = "category", type = String.class),
+                        @ColumnResult(name = "platform", type = String.class),
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "price", type = Integer.class),
+                        @ColumnResult(name = "priceRate", type = Double.class),
+                        @ColumnResult(name = "totalPrice", type = Long.class),
+                        @ColumnResult(name = "lastDivide", type = Double.class),
+                        @ColumnResult(name = "lastDivide_rate", type = Double.class),
+                        @ColumnResult(name = "divideCycle", type = Integer.class)
+                }
+        )
+)
+@NamedStoredProcedureQuery(
+        name = "music_detail",
+        procedureName = "music_detail",
+        resultSetMappings = "musicDetailDtoMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_product_id", type = String.class)
+        }
+)
 @Table(name = "MusicDetail")
 public class MusicDetail {
 
