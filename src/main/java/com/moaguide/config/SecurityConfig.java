@@ -114,7 +114,7 @@ public class SecurityConfig {
         configuration.setAllowedOriginPatterns(Arrays.asList("*")); // 모든 도메인 패턴 허용
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용 메서드
         configuration.setAllowedHeaders(Arrays.asList("Authorization","verify", "Content-Type","cookie")); // 허용 헤더
-        configuration.setExposedHeaders(Arrays.asList("Authorization")); // 클라이언트가 접근할 수 있는 응답 헤더
+        configuration.setExposedHeaders(Arrays.asList("Authorization","verify")); // 클라이언트가 접근할 수 있는 응답 헤더
         configuration.setAllowCredentials(true); // 자격증명 허용
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
