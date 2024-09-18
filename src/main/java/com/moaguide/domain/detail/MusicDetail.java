@@ -23,6 +23,7 @@ import java.util.Date;
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "singer", type = String.class),
                         @ColumnResult(name = "price", type = Integer.class),
                         @ColumnResult(name = "priceRate", type = Double.class),
                         @ColumnResult(name = "totalPrice", type = Long.class),
