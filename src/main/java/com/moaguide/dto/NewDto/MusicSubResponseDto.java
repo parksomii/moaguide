@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class MusicSubResponseDto {
-/*    private String youtubeUrl;  // 유튜브 url
+    private String youtubeUrl;  // 유튜브 url
     // 유튜브 조회수 리스트
     private String youtubeViewCount; // 유튜브 조회수
     // 검색량 리스트
@@ -16,5 +16,5 @@ public class MusicSubResponseDto {
     // 스트리밍 수 리스트
     private String streamingCount;  // 스트리밍 수
     // 공연일정 리스트
-    private String performanceSchedule;  // 공연일정*/
+    private String performanceSchedule;  // 공연일정
 }
