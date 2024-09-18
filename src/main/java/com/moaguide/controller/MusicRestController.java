@@ -1,9 +1,8 @@
 package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.MusicBaseResponseDto;
-import com.moaguide.dto.NewDto.customDto.MusicPublishDto;
-import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
-import com.moaguide.dto.NewDto.customDto.MusicSongDto;
+import com.moaguide.dto.NewDto.MusicSubResponseDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.service.MusicDetailService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -28,17 +29,16 @@ public class MusicRestController {
 
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-/*        MusicPublishDto music = musicService.findbase(product_Id);
-        MusicSongDto musicSong = musicService.findsong(product_Id);*/
-        MusicBaseResponseDto musicBase = musicService.findbase(product_Id);
-        // 저작권료 정보
-        return ResponseEntity.ok(musicBase);
+        MusicPublishDto music = musicService.findBase(product_Id);
+        MusicSongDto musicSong = musicService.findSong(product_Id);
+        MusicDivideResponseDto musicDivide = musicService.findDivide(product_Id);
+        List<DivideCustomDto> divideCustomDtoList = musicService.findAllByproductId(product_Id);
+        return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong, musicDivide, divideCustomDtoList));
     }
 
-/*
-    @GetMapping("sub/{product_Id}")
+/*    @GetMapping("sub/{product_Id}")
     public ResponseEntity<Object> Sub(@PathVariable String product_Id) {
-        MusicSubDto music = musicService.findsub(product_Id);
-        return ResponseEntity.ok(new MusicSubResponseDto(music));
+
+        return ResponseEntity.ok(new MusicSubResponseDto());
     }*/
 }
