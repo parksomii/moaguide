@@ -14,6 +14,7 @@ public class MusicReponseDto {
     private String category;
     private String platform;
     private String name;
+    private String singer;
     private Integer price;
     private Double priceRate;
     private Long totalPrice;

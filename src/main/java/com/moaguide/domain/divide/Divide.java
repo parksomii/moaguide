@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(name="DIVIDE")
+@Table(name="Divide")
 public class Divide {
     @Id
     @Column(name="id")
