@@ -1,0 +1,27 @@
+package com.moaguide.domain.detail;
+
+import com.moaguide.dto.NewDto.ContentDetailDto;
+import com.moaguide.dto.NewDto.customDto.ContentInvestmentDto;
+import com.moaguide.dto.NewDto.customDto.ContentPublishDto;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ContentRepository extends JpaRepository<Content, Long> {
+
+    @Query("SELECT c FROM Content c where c.productId.productId = :Product_Id")
+    Content findByProductId(@Param("Product_Id") String productId);
+
+    @Procedure(procedureName = "GetContentDetails")
+    ContentDetailDto findByDetail(@Param("Id") String productId);
+
+    @Procedure(procedureName = "GetContentpublish")
+    ContentPublishDto findpublish(@Param("Id") String productId);
+
+    @Query("select new com.moaguide.dto.NewDto.customDto.ContentInvestmentDto(c.totalBudget,c.customerUnitPrice,c.profitLossRatio,c.breakEvenPoint) FROM Content c where c.productId.productId = :id")
+    ContentInvestmentDto findInvest(@Param("id") String productId);
+}

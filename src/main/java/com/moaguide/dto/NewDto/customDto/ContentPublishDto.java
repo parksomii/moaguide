@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Getter
@@ -18,6 +19,6 @@ public class ContentPublishDto {
     private int piece;          // 최소 모집수량
     private int basePrice;      // 1주당 가격
     private Integer minInvestment;  // 최소 투자금액
-    private LocalDate issuanceDate; // 증권발행일
-    private LocalDate expirationDate;   // 증권만기일
+    private Date issuanceDate; // 증권발행일
+    private Date expirationDate;   // 증권만기일
 }
