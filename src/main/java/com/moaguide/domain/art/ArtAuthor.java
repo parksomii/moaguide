@@ -19,7 +19,7 @@ public class ArtAuthor {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", nullable = false)
+    @JoinColumn(name = "Product_Id", referencedColumnName = "Product_Id", nullable = false)
     private Product productId;
 
     @Column(name = "author_name", nullable = false, length = 255)

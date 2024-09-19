@@ -1,6 +1,7 @@
 package com.moaguide.domain.detail;
 
 import com.moaguide.domain.product.Product;
+import com.moaguide.dto.NewDto.ContentDetailDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,23 @@ import java.util.Date;
 @Table(name = "content_Detail")
 @AllArgsConstructor
 @NoArgsConstructor
+@SqlResultSetMapping(
+        name = "ContentDetailDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = ContentDetailDto.class,
+                columns = {
+                        @ColumnResult(name = "productId", type = String.class),
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "genre", type = String.class),
+                        @ColumnResult(name = "category", type = String.class),
+                        @ColumnResult(name = "platform", type = String.class),
+                        @ColumnResult(name = "totalPrice", type = Long.class),
+                        @ColumnResult(name = "rate", type = Double.class),
+                        @ColumnResult(name = "date", type = Date.class),
+                        @ColumnResult(name = "lowPrice", type = Integer.class)
+                }
+        )
+)
 public class Content {
 
     @Id

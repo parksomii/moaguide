@@ -13,9 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContentRepository extends JpaRepository<Content, Long> {
 
-    @Query("SELECT c FROM Content c where c.productId.productId = :Product_Id")
-    Content findByProductId(@Param("Product_Id") String productId);
-
     @Procedure(procedureName = "GetContentDetails")
     ContentDetailDto findByDetail(@Param("Id") String productId);
 

@@ -15,10 +15,6 @@ public class ContentService {
     private final ContentRepository contentRepository;
 
 
-    public Content findByProductId(String productId) {
-        return contentRepository.findByProductId(productId);
-    }
-
     public ContentDetailDto findDetail(String productId) {
         return contentRepository.findByDetail(productId);
     }
