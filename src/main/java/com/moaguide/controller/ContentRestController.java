@@ -16,15 +16,32 @@ import org.springframework.web.bind.annotation.*;
 public class ContentRestController {
     private final ContentService contentService;
 
-    @GetMapping("/{product_Id}")
+    @GetMapping("{product_Id}")
     public ResponseEntity<ContentDetailDto> getContent(@PathVariable String product_Id) {
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
-        return  ResponseEntity.ok(contentDetailDto);
+        return ResponseEntity.ok(contentDetailDto);
     }
 
     @GetMapping("base/{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id,@RequestParam String genre) {
-            ContentBaseDto base = contentService.findBase(product_Id,genre);
-            return ResponseEntity.ok(base);
+    public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {
+        ContentBaseDto base = contentService.findBase(product_Id, genre);
+        return ResponseEntity.ok(base);
     }
+
+//    @GetMapping("inform/{product_Id}")
+//    public ResponseEntity<?> inform(@PathVariable String product_Id, @RequestParam String genre) {
+//        if(genre.equals("MOVIE")){
+//
+//        } else if (genre.equals("EXHIBITION")) {
+//
+//        }else if (genre.equals("Drama") || genre.equals("ANIMATION")) {
+//
+//        }  else if(genre.equals("CULTURE")){
+//
+//        }else if(genre.equals("TRAVEL")){
+//
+//        }else{
+//            return ResponseEntity.ok("");
+//        }
+//    }
 }

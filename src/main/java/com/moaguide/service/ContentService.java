@@ -24,7 +24,7 @@ public class ContentService {
     }
 
     public ContentBaseDto findBase(String productId, String genre) {
-        if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") ){
+        if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
             ContentPublishDto publish = contentRepository.findpublish(productId);
             ContentInvestmentDto investmentDto = contentRepository.findInvest(productId);
             return  new ContentBaseDto(publish,investmentDto);
