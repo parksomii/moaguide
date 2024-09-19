@@ -12,6 +12,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BuildingSubwayResponseDto {
-    private SubwayTimeDto subwayTime;
+    private SubwayTimeresponseDto subwayTime;
     private List<SubwayWeekDto> subwayWeek;
+
+    public BuildingSubwayResponseDto(SubwayTimeDto subwayTime,List<SubwayWeekDto> subwayWeek){
+        this.subwayTime = new SubwayTimeresponseDto(subwayTime);
+        this.subwayWeek = subwayWeek;
+    }
 }
