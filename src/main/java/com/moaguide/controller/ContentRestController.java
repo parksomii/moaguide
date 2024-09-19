@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/detail/Content/")
+@RequestMapping("/detail/content/")
 public class ContentRestController {
     private final ContentService contentService;
     private final MovieService movieService;
