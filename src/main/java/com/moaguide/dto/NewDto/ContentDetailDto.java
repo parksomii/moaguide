@@ -18,5 +18,5 @@ public class ContentDetailDto {
     private Long totalPrice;
     private double rate;
     private Date date;
-    private Int lowPrice;
+    private Integer lowPrice;
 }
