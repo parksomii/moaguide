@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/detail/art/")
+@RequestMapping("/detail/art")
 public class ArtRestController {
     private final ArtService artService;
 
@@ -24,13 +24,13 @@ public class ArtRestController {
         return ResponseEntity.ok().body(artDetail);
     }
 
-    @GetMapping("base/{product_Id}")
+    @GetMapping("/base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         ArtBaseResponseDto artBaseResponse = artService.findArtBase(product_Id);
         return ResponseEntity.ok(artBaseResponse);
     }
 
-    @GetMapping("sub/{product_Id}")
+    @GetMapping("/sub/{product_Id}")
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
 
         return ResponseEntity.ok().body(null);
