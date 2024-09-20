@@ -31,6 +31,11 @@ import java.util.Date;
                 }
         )
 )
+@NamedNativeQuery(
+        name = "ContentDetailDtoQuery",
+        query = "CALL GetContentDetails(:Id)",  // 네이티브 쿼리에서 IN 파라미터 사용
+        resultSetMapping = "ContentDetailDtoMapping"  // @SqlResultSetMapping과 연결
+)
 public class Content {
 
     @Id

@@ -67,4 +67,9 @@ public class ContentRestController {
         List<MovieStats> movieStats = movieService.findStats(product_Id);
         return ResponseEntity.ok(new ContentsSubResponseDto(movieScheduleDtos,movieStats));
     }
+
+//    @GetMapping("screen/{product_Id}")
+//    public ResponseEntity<?> screen(@PathVariable String product_Id) {
+//
+//    }
 }
