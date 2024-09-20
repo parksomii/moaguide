@@ -18,7 +18,7 @@ import java.sql.Date;
         procedureName = "GetContentDetails", // 실제 프로시저 이름
         resultSetMappings = "ContentDetailDtoMapping", // 결과 매핑
         parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "Id", type = String.class) // IN 파라미터 정의
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_Id", type = String.class) // IN 파라미터 정의
         }
 )
 @SqlResultSetMapping(
