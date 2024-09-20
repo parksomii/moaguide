@@ -8,6 +8,7 @@ import com.moaguide.dto.NewDto.customDto.MovieInfoDto;
 import com.moaguide.dto.NewDto.customDto.MovieScheduleDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class MovieService {
         return movieRepository.findByProductId(productId);
     }
 
+    @Transactional
     public List<MovieScheduleDto> findSechedule(String productId) {
         return movieRepository.findByschedule(productId);
     }
