@@ -1,7 +1,6 @@
 package com.moaguide.domain.detail;
 
 import com.moaguide.domain.product.Product;
-import com.moaguide.dto.NewDto.ContentDetailDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -14,28 +13,6 @@ import java.util.Date;
 @Table(name = "content_Detail")
 @AllArgsConstructor
 @NoArgsConstructor
-@SqlResultSetMapping(
-        name = "ContentDetailDtoMapping",
-        classes = @ConstructorResult(
-                targetClass = ContentDetailDto.class,
-                columns = {
-                        @ColumnResult(name = "productId", type = String.class),
-                        @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "genre", type = String.class),
-                        @ColumnResult(name = "category", type = String.class),
-                        @ColumnResult(name = "platform", type = String.class),
-                        @ColumnResult(name = "totalPrice", type = Long.class),
-                        @ColumnResult(name = "rate", type = Double.class),
-                        @ColumnResult(name = "date", type = Date.class),
-                        @ColumnResult(name = "lowPrice", type = Integer.class)
-                }
-        )
-)
-@NamedNativeQuery(
-        name = "ContentDetailDtoQuery",
-        query = "CALL GetContentDetails(:Id)",  // 네이티브 쿼리에서 IN 파라미터 사용
-        resultSetMapping = "ContentDetailDtoMapping"  // @SqlResultSetMapping과 연결
-)
 public class Content {
 
     @Id
@@ -43,7 +20,7 @@ public class Content {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", nullable = false)
+    @JoinColumn(name = "Product_Id", referencedColumnName = "Product_Id", nullable = false)
     private Product productId;
 
     @Column(name = "genre")
