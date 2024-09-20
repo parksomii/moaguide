@@ -27,7 +27,6 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/detail/")
 public class DetailRestController {
-    private final ProductService productService;
     private final ReportService reportService;
     private final NewsService newsService;
     private final DivideService divideService;
@@ -76,9 +75,4 @@ public class DetailRestController {
     }
 
 
-
-//    @PostMapping("{product_Id}")
-//    public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable String product_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
-//
-//    }
 }
