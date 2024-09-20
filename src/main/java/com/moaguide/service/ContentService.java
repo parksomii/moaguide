@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ContentService {
     private final ContentRepository contentRepository;
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = false)
     public ContentDetailDto findDetail(String productId) {
         return contentRepository.findByDetail(productId);
     }
