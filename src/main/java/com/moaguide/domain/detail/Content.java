@@ -31,7 +31,7 @@ import java.sql.Date;
                         @ColumnResult(name = "genre", type = String.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
-                        @ColumnResult(name = "totalPrice", type = Long.class),
+                        @ColumnResult(name = "totalPrice", type = long.class),
                         @ColumnResult(name = "rate", type = Double.class),
                         @ColumnResult(name = "date", type = Date.class),
                         @ColumnResult(name = "lowPrice", type = Integer.class)
