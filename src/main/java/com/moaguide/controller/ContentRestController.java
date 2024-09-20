@@ -1,11 +1,8 @@
 package com.moaguide.controller;
 
 
-
 import com.moaguide.domain.content.movie.MovieStats;
-import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
-import com.moaguide.dto.NewDto.customDto.TravelInfoDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.service.ContentService;
 import com.moaguide.service.ContentSubService;
@@ -22,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RequestMapping("/detail/contents")
-public class ContentsRestController {
+public class ContentRestController {
     private final ContentService contentService;
     private final MovieService movieService;
     private final ContentSubService contentSubService;
@@ -36,7 +33,7 @@ public class ContentsRestController {
     }
 
     @GetMapping("/base/{product_Id}")
-        public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {
+    public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {
         ContentBaseDto base = contentService.findBase(product_Id, genre);
         return ResponseEntity.ok(base);
     }
@@ -134,6 +131,5 @@ public class ContentsRestController {
         List<MovieSubDto>  screen = contentSubService.findrankten(product_Id,pageable);
         return ResponseEntity.ok(screen);
     }
-
 
 }

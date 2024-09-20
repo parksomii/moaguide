@@ -1,17 +1,8 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.detail.BuildingDetail;
-import com.moaguide.domain.divide.Divide;
-import com.moaguide.domain.product.Product;
-import com.moaguide.domain.report.Report;
-import com.moaguide.domain.transaction.Transaction;
-import com.moaguide.dto.MusicDetailDto;
 import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.customDto.*;
-import com.moaguide.dto.NewsDto;
 import com.moaguide.service.*;
-import com.moaguide.service.building.BuildingService;
-import com.moaguide.service.view.ProductViewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
