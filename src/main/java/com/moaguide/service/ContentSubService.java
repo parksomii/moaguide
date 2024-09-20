@@ -45,7 +45,7 @@ public class ContentSubService {
     }
 
     public List<Integer> findScreen(String productId) {
-        return null;
+        return movieScreenRepository.findByProductId(productId);
     }
 
     public List<Integer> findScreenten(String productId, Pageable pageable) {

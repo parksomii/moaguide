@@ -91,4 +91,10 @@ public class ContentRestController {
         return ResponseEntity.ok(showtimes);
     }
 
+    @GetMapping("screen/ten/{product_Id}")
+    public ResponseEntity<?> showtimeten(@PathVariable String product_Id) {
+        Pageable pageable = Pageable.ofSize(10);
+        List<Integer>  screen = contentSubService.findshowtimeten(product_Id,pageable);
+        return ResponseEntity.ok(screen);
+    }
 }
