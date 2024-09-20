@@ -16,7 +16,7 @@ public class ContentDetailDto {
     private String category;
     private String platform;
     private Long totalPrice;
-    private double rate;
+    private Double rate;
     private Date date;
     private Integer lowPrice;
 }
