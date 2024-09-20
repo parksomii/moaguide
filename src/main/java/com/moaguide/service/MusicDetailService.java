@@ -203,7 +203,7 @@ public class MusicDetailService {
         // StoredProcedureQuery 객체 생성
 
         StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("music_view")
+                .createStoredProcedureQuery("youtube_view")
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("in_Start_Date", Date.class, ParameterMode.IN)
                 .setParameter("in_Product_Id", productId)
