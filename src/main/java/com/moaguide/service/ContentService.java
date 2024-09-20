@@ -8,17 +8,19 @@ import com.moaguide.dto.NewDto.customDto.ContentInvestmentDto;
 import com.moaguide.dto.NewDto.customDto.ContentPublishDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
 public class ContentService {
     private final ContentRepository contentRepository;
 
-
+    @Transactional(readOnly = true)
     public ContentDetailDto findDetail(String productId) {
         return contentRepository.findByDetail(productId);
     }
 
+    @Transactional
     public ContentBaseDto findBase(String productId, String genre) {
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
             ContentPublishDto publish = contentRepository.findpublish(productId);
