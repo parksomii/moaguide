@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MovieScreenRepository extends JpaRepository<MovieScreen, Long> {
+public interface MovieShowtimesRepository extends JpaRepository<MovieShowtimes,Long> {
 
-    @Query("select ms.screenCount FROM MovieScreen ms where ms.productId.productId =:Id order by ms.day")
+
+    @Query("select ms.showtimesCount FROM MovieShowtimes ms where ms.productId.productId =:Id order by ms.day")
     List<Integer> findByProductId(@Param("Id") String productId);
 
-    @Query("select ms.screenCount FROM MovieScreen ms where ms.productId.productId =:Id order by ms.day")
-    List<Integer> findByProductIdTop10(@Param("Id") String productId, Pageable pageable);
+    @Query("select ms.showtimesCount FROM MovieShowtimes ms where ms.productId.productId =:Id order by ms.day")
+    List<Integer> findByProductIdTop10(@Param("Id")String productId, Pageable pageable);
 }

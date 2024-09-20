@@ -12,6 +12,7 @@ import com.moaguide.service.ContentSubService;
 import com.moaguide.service.MovieService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,8 +69,23 @@ public class ContentRestController {
         return ResponseEntity.ok(new ContentsSubResponseDto(movieScheduleDtos,movieStats));
     }
 
-//    @GetMapping("screen/{product_Id}")
-//    public ResponseEntity<?> screen(@PathVariable String product_Id) {
-//
-//    }
+    @GetMapping("screen/{product_Id}")
+    public ResponseEntity<?> screen(@PathVariable String product_Id) {
+        List<Integer>  screen = contentSubService.findScreen(product_Id);
+        return ResponseEntity.ok(screen);
+    }
+
+    @GetMapping("screen/ten/{product_Id}")
+    public ResponseEntity<?> screenten(@PathVariable String product_Id) {
+        Pageable pageable = Pageable.ofSize(10);
+        List<Integer>  screen = contentSubService.findScreenten(product_Id,pageable);
+        return ResponseEntity.ok(screen);
+    }
+
+    @GetMapping("showtime/{product_Id}")
+    public ResponseEntity<?> showtime(@PathVariable String product_Id) {
+        List<Integer> showtimes = contentSubService.findshowtime(product_Id);
+        return ResponseEntity.ok(showtimes);
+    }
+
 }
