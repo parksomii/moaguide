@@ -74,27 +74,68 @@ public class ContentRestController {
 
     @GetMapping("screen/{product_Id}")
     public ResponseEntity<?> screen(@PathVariable String product_Id) {
-        List<Integer>  screen = contentSubService.findScreen(product_Id);
+        List<MovieSubDto>  screen = contentSubService.findScreen(product_Id);
         return ResponseEntity.ok(screen);
     }
 
     @GetMapping("screen/ten/{product_Id}")
     public ResponseEntity<?> screenten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
-        List<Integer>  screen = contentSubService.findScreenten(product_Id,pageable);
+        List<MovieSubDto>  screen = contentSubService.findScreenten(product_Id,pageable);
         return ResponseEntity.ok(screen);
     }
 
     @GetMapping("showtime/{product_Id}")
     public ResponseEntity<?> showtime(@PathVariable String product_Id) {
-        List<Integer> showtimes = contentSubService.findshowtime(product_Id);
+        List<MovieSubDto> showtimes = contentSubService.findshowtime(product_Id);
         return ResponseEntity.ok(showtimes);
     }
 
     @GetMapping("screen/ten/{product_Id}")
     public ResponseEntity<?> showtimeten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
-        List<Integer>  screen = contentSubService.findshowtimeten(product_Id,pageable);
+        List<MovieSubDto>  screen = contentSubService.findshowtimeten(product_Id,pageable);
         return ResponseEntity.ok(screen);
     }
+
+    @GetMapping("audience/{product_Id}")
+    public ResponseEntity<?> Audience(@PathVariable String product_Id) {
+        List<MovieSubDto> showtimes = contentSubService.findaudience(product_Id);
+        return ResponseEntity.ok(showtimes);
+    }
+
+    @GetMapping("audience/ten/{product_Id}")
+    public ResponseEntity<?> Audienceten(@PathVariable String product_Id) {
+        Pageable pageable = Pageable.ofSize(10);
+        List<MovieSubDto>  screen = contentSubService.findaudienceten(product_Id,pageable);
+        return ResponseEntity.ok(screen);
+    }
+
+    @GetMapping("revenue/{product_Id}")
+    public ResponseEntity<?> revenue(@PathVariable String product_Id) {
+        List<MovieSubDto> showtimes = contentSubService.findrevenue(product_Id);
+        return ResponseEntity.ok(showtimes);
+    }
+
+    @GetMapping("revenue/ten/{product_Id}")
+    public ResponseEntity<?> revenueten(@PathVariable String product_Id) {
+        Pageable pageable = Pageable.ofSize(10);
+        List<MovieSubDto>  screen = contentSubService.findrevenueten(product_Id,pageable);
+        return ResponseEntity.ok(screen);
+    }
+
+    @GetMapping("rank/{product_Id}")
+    public ResponseEntity<?> rank(@PathVariable String product_Id) {
+        List<MovieSubDto> showtimes = contentSubService.findrank(product_Id);
+        return ResponseEntity.ok(showtimes);
+    }
+
+    @GetMapping("rank/ten/{product_Id}")
+    public ResponseEntity<?> rankten(@PathVariable String product_Id) {
+        Pageable pageable = Pageable.ofSize(10);
+        List<MovieSubDto>  screen = contentSubService.findrankten(product_Id,pageable);
+        return ResponseEntity.ok(screen);
+    }
+
+
 }

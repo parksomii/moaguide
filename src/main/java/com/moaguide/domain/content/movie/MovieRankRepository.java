@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MovieScreenRepository extends JpaRepository<MovieScreen, Long> {
-
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.screenCount,ms.day)  FROM MovieScreen ms where ms.productId.productId =:Id order by ms.day")
+public interface MovieRankRepository extends JpaRepository<MovieRank, Long> {
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(mr.ranking,mr.day) FROM MovieRank mr where mr.productId.productId =:Id order by mr.day")
     List<MovieSubDto> findByProductId(@Param("Id") String productId);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.screenCount,ms.day) FROM MovieScreen ms where ms.productId.productId =:Id order by ms.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(mr.ranking,mr.day) FROM MovieRank mr where mr.productId.productId =:Id order by mr.day")
     List<MovieSubDto> findByProductIdTop10(@Param("Id") String productId, Pageable pageable);
+
 }
