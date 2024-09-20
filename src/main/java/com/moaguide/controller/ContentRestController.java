@@ -28,7 +28,7 @@ public class ContentRestController {
     private final ContentSubService contentSubService;
 
 
-    @GetMapping("top/{product_Id}")
+    @GetMapping("/top/{product_Id}")
     public ResponseEntity<ContentDetailDto> getContent(@PathVariable String product_Id) {
         log.info("받은 상품명: {}", product_Id);
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
