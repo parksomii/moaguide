@@ -21,14 +21,14 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/detail/content")
+@RequestMapping("/detail/contents")
 public class ContentRestController {
     private final ContentService contentService;
     private final MovieService movieService;
     private final ContentSubService contentSubService;
 
 
-    @GetMapping("/top/{product_Id}")
+    @GetMapping("/{product_Id}")
     public ResponseEntity<ContentDetailDto> getContent(@PathVariable String product_Id) {
         log.info("받은 상품명: {}", product_Id);
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);

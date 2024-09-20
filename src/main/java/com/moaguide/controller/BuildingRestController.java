@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/detail/building/")
+@RequestMapping("/detail/building")
 public class BuildingRestController {
     private final RentService rentService;
     private final BuildingService buildingService;
@@ -39,19 +39,19 @@ public class BuildingRestController {
     private final LandRegistryService landRegistryService;
 
 
-    @GetMapping("{product_Id}")
+    @GetMapping("/{product_Id}")
     public ResponseEntity<?> product(@PathVariable String product_Id) {
         BuildingReponseDto building = buildingService.findBydetail(product_Id);
         return ResponseEntity.ok(building);
     }
-    @GetMapping("base/{product_Id}")
+    @GetMapping("/base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         BuildingBaseDto building = landRegistryService.findbase(product_Id);
         List<LeaseDto> leaseDtos = leaseService.detail(product_Id);
         return ResponseEntity.ok(new BuildingBaseResponseDto(building,leaseDtos));
     }
 
-        @GetMapping("sub/{product_Id}")
+        @GetMapping("/sub/{product_Id}")
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
         List<TypeDto> rent = rentService.findType(product_Id);
         BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
@@ -60,20 +60,20 @@ public class BuildingRestController {
         return ResponseEntity.ok(buildingSubResponseDto);
     }
 
-    @GetMapping("land/{product_Id}")
+    @GetMapping("/land/{product_Id}")
     public ResponseEntity<Object> land(@PathVariable String product_Id) {
         List<LandDto> landPrice = landPriceService.priceList(product_Id);
         return ResponseEntity.ok(new BuildingLandResponseDto(landPrice));
     }
 
-    @GetMapping("area/{product_Id}")
+    @GetMapping("/area/{product_Id}")
     public ResponseEntity<Object> area(@PathVariable String product_Id) {
         LocationDto location = locationService.locate(product_Id);
         List<AreaDto> areas = areaService.findpolygon(product_Id);
         return ResponseEntity.ok(new BuildingAreaResponseDto(location,areas));
     }
 
-    @GetMapping("subway/{product_Id}")
+    @GetMapping("/subway/{product_Id}")
     public ResponseEntity<Object> subway(@PathVariable String product_Id,@RequestParam int year,@RequestParam int month) {
         SubwayTimeDto subwayTimeDtos = subwayTimeService.findbydate(product_Id,year,month);
         List<SubwayWeekDto> subwayWeekDtos = subwayWeekService.findbydate(product_Id,year,month);
@@ -81,13 +81,13 @@ public class BuildingRestController {
         return ResponseEntity.ok(subwayResponseDto);
     }
 
-    @GetMapping("population/{product_Id}")
+    @GetMapping("/population/{product_Id}")
     public ResponseEntity<Object> population(@PathVariable String product_Id, @RequestParam int year,@RequestParam int month) {
         List<PopulationDto> populationDto = populationService.findbydate(product_Id,year,month);
         return ResponseEntity.ok(new BuildingPopulationDto(populationDto));
     }
 
-    @GetMapping("rate/{product_Id}")
+    @GetMapping("/rate/{product_Id}")
     public ResponseEntity<Object> rate(@PathVariable String product_Id, @RequestParam String type) {
         List<RentDto> rentDtos = rentService.findBase(product_Id,type);
         List<VacancyrateDto> vacancyrateDtos = vacancyRateService.findBase(product_Id,type);
