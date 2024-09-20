@@ -7,16 +7,19 @@ import com.moaguide.dto.NewDto.customDto.ContentBaseDto;
 import com.moaguide.dto.NewDto.customDto.ContentInvestmentDto;
 import com.moaguide.dto.NewDto.customDto.ContentPublishDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ContentService {
     private final ContentRepository contentRepository;
 
     @Transactional(readOnly = false)
     public ContentDetailDto findDetail(String productId) {
+        log.info("받은 상품명: {}", productId);
         return contentRepository.findByDetail(productId);
     }
 

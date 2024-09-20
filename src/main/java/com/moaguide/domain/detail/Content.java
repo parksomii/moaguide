@@ -21,6 +21,23 @@ import java.sql.Date;
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_Id", type = String.class) // IN 파라미터 정의
         }
 )
+@SqlResultSetMapping(
+        name = "ContentDetailDtoMapping",
+        classes = @ConstructorResult(
+                targetClass = ContentDetailDto.class,
+                columns = {
+                        @ColumnResult(name = "productId", type = String.class),
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "genre", type = String.class),
+                        @ColumnResult(name = "category", type = String.class),
+                        @ColumnResult(name = "platform", type = String.class),
+                        @ColumnResult(name = "totalPrice", type = long.class),
+                        @ColumnResult(name = "rate", type = Double.class),
+                        @ColumnResult(name = "date", type = Date.class),
+                        @ColumnResult(name = "lowPrice", type = Integer.class)
+                }
+        )
+)
 public class Content {
 
     @Id
