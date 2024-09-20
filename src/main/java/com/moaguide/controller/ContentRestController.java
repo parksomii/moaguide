@@ -91,7 +91,7 @@ public class ContentRestController {
         return ResponseEntity.ok(showtimes);
     }
 
-    @GetMapping("screen/ten/{product_Id}")
+    @GetMapping("showtime/ten/{product_Id}")
     public ResponseEntity<?> showtimeten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findshowtimeten(product_Id,pageable);
