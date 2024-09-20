@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContentRepository extends JpaRepository<Content, Long> {
 
-    @Procedure(name = "GetContentDetails")
+    @Procedure(name = "ContentDetailProcedure")
     ContentDetailDto findByDetail(@Param("Id") String productId);
 
     @Procedure(procedureName = "GetContentpublish")

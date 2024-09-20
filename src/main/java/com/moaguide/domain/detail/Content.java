@@ -13,6 +13,14 @@ import java.sql.Date;
 @Table(name = "content_Detail")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedStoredProcedureQuery(
+        name = "ContentDetailProcedure", // 프로시저 호출 이름
+        procedureName = "GetContentDetails", // 실제 프로시저 이름
+        resultSetMappings = "ContentDetailDtoMapping", // 결과 매핑
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "Id", type = String.class) // IN 파라미터 정의
+        }
+)
 @SqlResultSetMapping(
         name = "ContentDetailDtoMapping",
         classes = @ConstructorResult(
@@ -30,11 +38,6 @@ import java.sql.Date;
                 }
         )
 )
-@NamedNativeQuery(
-        name = "ContentDetailDtoQuery",
-        query = "CALL GetContentDetails(:Id)",  // 네이티브 쿼리에서 IN 파라미터 사용
-        resultSetMapping = "ContentDetailDtoMapping"  // @SqlResultSetMapping과 연결
-)
 public class Content {
 
     @Id
@@ -42,7 +45,7 @@ public class Content {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "Product_ID", referencedColumnName = "Product_ID", nullable = false)
+    @JoinColumn(name = "Product_Id", referencedColumnName = "Product_Id", nullable = false)
     private Product productId;
 
     @Column(name = "genre")
