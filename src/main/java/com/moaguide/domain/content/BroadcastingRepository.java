@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface BroadcastingRepository extends JpaRepository<Broadcasting, Long> {
 
 
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.BroadcastINfoDto(b.airDate,b.director,b.cast,b.company,b.channel) from Broadcasting b where b.productId.productId = :Id")
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.BroadcastInfoDto(b.airDate,b.director,b.cast,b.company,b.channel) from Broadcasting b where b.productId.productId = :Id")
     BroadcastInfoDto findByProductId(@Param("Id") String productId);
 }
