@@ -24,6 +24,7 @@ public class ContentService {
     }
 
     public ContentBaseDto findBase(String productId, String genre) {
+        log.info("받은 상품명: {}", productId);
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
             ContentInvestmentDto investmentDto = contentRepository.findInvest(productId);
             log.info("인베스트는 나오나? {}", investmentDto.toString());
