@@ -3,10 +3,12 @@ package com.moaguide.dto.NewDto.customDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ContentInvestmentDto {
     private Long totalBudget; // 총 예산규모
     private Integer unitPrice;   // 객단가

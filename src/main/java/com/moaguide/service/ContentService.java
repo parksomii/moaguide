@@ -26,8 +26,9 @@ public class ContentService {
     @Transactional(readOnly = false)
     public ContentBaseDto findBase(String productId, String genre) {
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
-            ContentPublishDto publish = contentRepository.findpublish(productId);
             ContentInvestmentDto investmentDto = contentRepository.findInvest(productId);
+            log.info("인베스트는 나오나? {}", investmentDto);
+            ContentPublishDto publish = contentRepository.findpublish(productId);
             return  new ContentBaseDto(publish,investmentDto);
         }else{
             ContentPublishDto publish = contentRepository.findpublish(productId);
