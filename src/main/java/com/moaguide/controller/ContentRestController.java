@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/contents")
+@RequestMapping("/detail/contents")
 public class ContentRestController {
     private final ContentService contentService;
     private final MovieService movieService;
