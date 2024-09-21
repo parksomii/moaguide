@@ -103,13 +103,13 @@ public class GenericRepository {
                 .getResultList();
     }
 
-    public ContentPublishDto findPublish(String id) {
+    public ContentPublishDto findPublish(String Id) {
         // 프로시저 호출 SQL
-        String sql = "CALL GetContentPublish(:Id)";
+        String sql = "CALL GetContentpublish(:Id)";
 
         // 엔티티매니저를 이용해 프로시저 실행 및 매핑
         return (ContentPublishDto) entityManager.createNativeQuery(sql,"ContentPublishMapping")
-                .setParameter("Id", id)
+                .setParameter("Id", Id)
                 .getSingleResult();
     }
 }
