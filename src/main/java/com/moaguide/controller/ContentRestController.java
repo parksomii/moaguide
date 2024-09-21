@@ -41,7 +41,8 @@ public class ContentRestController {
 
     @GetMapping("/base/{product_Id}")
     public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {
-        log.info("받은 상품명: {}", product_Id);
+        log.debug("받은 상품명: {}", product_Id);
+        log.debug("받은 파라미터: {}", genre);
         ContentBaseDto base = contentService.findBase(product_Id, genre);
         return ResponseEntity.ok(base);
     }
