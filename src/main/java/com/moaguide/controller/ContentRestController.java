@@ -28,14 +28,7 @@ public class ContentRestController {
 
     @GetMapping("/{product_Id}")
     public ResponseEntity<?> getContent(@PathVariable String product_Id) {
-        log.info("받은 상품명: {}", product_Id);
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
-        if (contentDetailDto == null) {
-            log.warn("ContentDetailDto가 null입니다.");
-        } else {
-            log.info("반환값 : {}", contentDetailDto.toString());
-        }
-
         return ResponseEntity.ok(contentDetailDto);
     }
 

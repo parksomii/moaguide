@@ -8,6 +8,9 @@ WORKDIR /app
 # This forces Docker to re-copy the JAR every time, ensuring the latest version is always used.
 ARG CACHEBUST=1
 
+# Echo the CACHEBUST value to invalidate the cache for this layer
+RUN echo $CACHEBUST
+
 # Copy the JAR file built by the previous build step
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
