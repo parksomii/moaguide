@@ -2,7 +2,9 @@ package com.moaguide.domain;
 
 import com.moaguide.dto.NewDto.customDto.*;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.StoredProcedureQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,12 +106,11 @@ public class GenericRepository {
     }
 
     public ContentPublishDto findPublish(String Id) {
-        // 프로시저 호출 SQL
-        String sql = "CALL GetContentpublish(:Id)";
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery("GetContentpublish", ContentPublishDto.class)
+                .registerStoredProcedureParameter("Id", String.class, ParameterMode.IN)
+                .setParameter("Id", Id);
 
-        // 엔티티매니저를 이용해 프로시저 실행 및 매핑
-        return (ContentPublishDto) entityManager.createNativeQuery(sql,"ContentPublishMapping")
-                .setParameter("Id", Id)
-                .getSingleResult();
+        return (ContentPublishDto) query.getSingleResult();
     }
 }
