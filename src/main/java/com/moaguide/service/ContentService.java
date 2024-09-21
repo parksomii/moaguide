@@ -25,6 +25,7 @@ public class ContentService {
         return contentRepository.findByDetail(productId);
     }
 
+    @Transactional(readOnly = false)
     public ContentBaseDto findBase(String productId, String genre) {
         log.info("받은 상품명: {}", productId);
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
