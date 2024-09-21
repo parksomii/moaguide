@@ -29,7 +29,7 @@ import java.sql.Date;
                 procedureName = "GetContentpublish", // 실제 두 번째 프로시저 이름
                 resultSetMappings = "ContentPublishMapping", // 두 번째 프로시저 결과 매핑
                 parameters = {
-                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "Id", type = String.class) // 두 번째 프로시저 IN 파라미터 정의
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "pro_Id", type = String.class) // 두 번째 프로시저 IN 파라미터 정의
                 }
         )
 })

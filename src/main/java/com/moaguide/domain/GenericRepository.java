@@ -104,13 +104,4 @@ public class GenericRepository {
                 .setParameter("category", category)
                 .getResultList();
     }
-
-    public ContentPublishDto findPublish(String Id) {
-        StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("GetContentpublish", ContentPublishDto.class)
-                .registerStoredProcedureParameter("Id", String.class, ParameterMode.IN)
-                .setParameter("Id", Id);
-
-        return (ContentPublishDto) query.getSingleResult();
-    }
 }

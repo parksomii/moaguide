@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class ContentService {
     private final ContentRepository contentRepository;
-    private final GenericRepository genericRepository;
 
     @Transactional(readOnly = false)
     public ContentDetailDto findDetail(String productId) {
@@ -30,10 +29,10 @@ public class ContentService {
         log.info("받은 상품명: {}", productId);
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
             ContentInvestmentDto investmentDto = contentRepository.findInvest(productId);
-            ContentPublishDto publish = genericRepository.findPublish(productId);
+            ContentPublishDto publish = contentRepository.findPublish(productId);
             return  new ContentBaseDto(publish,investmentDto);
         }else{
-            ContentPublishDto publish = genericRepository.findPublish(productId);
+            ContentPublishDto publish = contentRepository.findPublish(productId);
             return  new ContentBaseDto(publish);
         }
     }
