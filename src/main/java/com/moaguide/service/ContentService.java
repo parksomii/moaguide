@@ -1,5 +1,6 @@
 package com.moaguide.service;
 
+import com.moaguide.domain.GenericRepository;
 import com.moaguide.domain.detail.Content;
 import com.moaguide.domain.detail.ContentRepository;
 import com.moaguide.dto.NewDto.ContentDetailDto;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class ContentService {
     private final ContentRepository contentRepository;
+    private final GenericRepository genericRepository;
 
     @Transactional(readOnly = false)
     public ContentDetailDto findDetail(String productId) {
@@ -27,11 +29,10 @@ public class ContentService {
         log.info("받은 상품명: {}", productId);
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
             ContentInvestmentDto investmentDto = contentRepository.findInvest(productId);
-            log.info("인베스트는 나오나? {}", investmentDto.toString());
-            ContentPublishDto publish = contentRepository.findpublish(productId);
+            ContentPublishDto publish = genericRepository.findPublish(productId);
             return  new ContentBaseDto(publish,investmentDto);
         }else{
-            ContentPublishDto publish = contentRepository.findpublish(productId);
+            ContentPublishDto publish = genericRepository.findPublish(productId);
             return  new ContentBaseDto(publish);
         }
     }

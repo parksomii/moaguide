@@ -1,9 +1,6 @@
 package com.moaguide.domain;
 
-import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
-import com.moaguide.dto.NewDto.customDto.endCustomDto;
-import com.moaguide.dto.NewDto.customDto.finishCustomDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -106,4 +103,14 @@ public class GenericRepository {
                 .getResultList();
     }
 
+    @Transactional
+    public ContentPublishDto findPublish(String id) {
+        // 프로시저 호출 SQL
+        String sql = "CALL GetContentPublish(:Id)";
+
+        // 엔티티매니저를 이용해 프로시저 실행 및 매핑
+        return (ContentPublishDto) entityManager.createNamedStoredProcedureQuery("ContentPublishProcedure")
+                .setParameter("Id", id)
+                .getSingleResult();
+    }
 }
