@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface ContentRepository extends JpaRepository<Content, Long> {
@@ -15,6 +16,7 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     @Procedure(name = "ContentDetailProcedure")
     ContentDetailDto findByDetail(@Param("in_Id") String in_Id);
 
+    @Transactional(readOnly = false)
     @Procedure(name = "ContentPublishProcedure")
     ContentPublishDto findpublish(@Param("Id") String productId);
 

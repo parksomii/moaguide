@@ -23,7 +23,6 @@ public class ContentService {
         return contentRepository.findByDetail(productId);
     }
 
-    @Transactional(readOnly = false)
     public ContentBaseDto findBase(String productId, String genre) {
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
             ContentInvestmentDto investmentDto = contentRepository.findInvest(productId);
