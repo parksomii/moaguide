@@ -34,7 +34,9 @@ public class ContentRestController {
             log.warn("ContentDetailDto가 null입니다.");
         } else {
             log.info("반환값 : {}", contentDetailDto.toString());
-        }return ResponseEntity.ok(contentDetailDto);
+        }
+
+        return ResponseEntity.ok(contentDetailDto);
     }
 
     @GetMapping("/base/{product_Id}")
