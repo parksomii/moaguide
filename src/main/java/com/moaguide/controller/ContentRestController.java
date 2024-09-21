@@ -2,6 +2,7 @@ package com.moaguide.controller;
 
 
 import com.moaguide.domain.content.movie.MovieStats;
+import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.service.ContentService;
@@ -28,7 +29,7 @@ public class ContentRestController {
     @GetMapping("/{product_Id}")
     public ResponseEntity<?> getContent(@PathVariable String product_Id) {
         log.info("받은 상품명: {}", product_Id);
-        //ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
+        ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
         return ResponseEntity.ok("성공");
     }
 
