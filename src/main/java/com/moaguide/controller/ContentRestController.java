@@ -30,7 +30,7 @@ public class ContentRestController {
     public ResponseEntity<?> getContent(@PathVariable String product_Id) {
         log.info("받은 상품명: {}", product_Id);
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
-        return ResponseEntity.ok("성공");
+        return ResponseEntity.ok("contentDetailDto");
     }
 
     @GetMapping("/base/{product_Id}")
