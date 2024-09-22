@@ -1,19 +1,45 @@
 package com.moaguide.domain.content;
 
 import com.moaguide.domain.product.Product;
+import com.moaguide.dto.NewDto.customDto.MovieScheduleDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "movie")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@SqlResultSetMapping(
+        name = "MovieScheduleMapping",
+        classes = {
+                @ConstructorResult(
+                        targetClass = MovieScheduleDto.class,
+                        columns = {
+                                @ColumnResult(name = "title", type = String.class),
+                                @ColumnResult(name = "genre", type = String.class),
+                                @ColumnResult(name = "country", type = String.class),
+                                @ColumnResult(name = "director", type = String.class),
+                                @ColumnResult(name = "releaseDate", type = String.class),
+                                @ColumnResult(name = "imgLink", type = String.class)
+                        }
+                )
+        }
+)
+
+@NamedStoredProcedureQuery(
+        name = "GetMoviesInDateRange",
+        procedureName = "GetMoviesInDateRange",
+        resultSetMappings = "MovieScheduleMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name="movieId",type = String.class)
+        }
+)
+
 public class Movie {
 
     @Id

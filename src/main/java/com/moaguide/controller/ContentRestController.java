@@ -2,6 +2,7 @@ package com.moaguide.controller;
 
 
 import com.moaguide.domain.content.movie.MovieStats;
+import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.service.ContentService;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/contents")
+@RequestMapping("/detail/contents")
 public class ContentRestController {
     private final ContentService contentService;
     private final MovieService movieService;
@@ -27,13 +28,14 @@ public class ContentRestController {
 
     @GetMapping("/{product_Id}")
     public ResponseEntity<?> getContent(@PathVariable String product_Id) {
-        log.info("받은 상품명: {}", product_Id);
-        //ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
-        return ResponseEntity.ok("성공");
+        ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
+        return ResponseEntity.ok(contentDetailDto);
     }
 
     @GetMapping("/base/{product_Id}")
     public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {
+        log.debug("받은 상품명: {}", product_Id);
+        log.debug("받은 파라미터: {}", genre);
         ContentBaseDto base = contentService.findBase(product_Id, genre);
         return ResponseEntity.ok(base);
     }

@@ -17,6 +17,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.MovieInfoDto(m.introduction,m.subGenre,m.releaseDate,m.rating,m.screeningTime,m.director,m.actor,m.distributor,m.original) FROM Movie m where m.productId.productId = :Id")
     MovieInfoDto findByProductId(@Param("Id") String productId);
 
-    @Procedure(procedureName = "GetMoviesInDateRange")
+    @Procedure(name = "GetMoviesInDateRange")
     List<MovieScheduleDto> findByschedule(@Param("movieId") String productId);
 }

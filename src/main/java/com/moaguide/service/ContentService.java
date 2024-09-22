@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.detail.Content;
+import com.moaguide.domain.GenericRepository;
 import com.moaguide.domain.detail.ContentRepository;
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.customDto.ContentBaseDto;
@@ -25,12 +25,13 @@ public class ContentService {
 
     @Transactional(readOnly = false)
     public ContentBaseDto findBase(String productId, String genre) {
+        log.info("받은 상품명: {}", productId);
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
-            ContentPublishDto publish = contentRepository.findpublish(productId);
             ContentInvestmentDto investmentDto = contentRepository.findInvest(productId);
+            ContentPublishDto publish = contentRepository.findPublish(productId);
             return  new ContentBaseDto(publish,investmentDto);
         }else{
-            ContentPublishDto publish = contentRepository.findpublish(productId);
+            ContentPublishDto publish = contentRepository.findPublish(productId);
             return  new ContentBaseDto(publish);
         }
     }

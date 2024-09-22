@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.annotation.Nullable;
 import java.sql.Date;
 
 @AllArgsConstructor
@@ -14,6 +15,8 @@ public class MovieScheduleDto {
     private String genre;
     private String country;
     private String director;
-    private Date releseDate;
+    @Nullable
+    private Date releaseDate;
+    @Nullable
     private String imgLink;
 }
