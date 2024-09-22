@@ -28,12 +28,14 @@ public class MusicRestController {
     private final DivideService divideService;
     private final CurrentDivideService currentDivideService;
 
+    // 최상단 기본정보
     @GetMapping("{product_Id}")
     public ResponseEntity<?> product(@PathVariable String product_Id) {
         MusicReponseDto music = musicService.findBydetail(product_Id);
         return ResponseEntity.ok(music);
     }
 
+    // 기본정보
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         MusicPublishDto music = musicService.findBase(product_Id);
@@ -42,6 +44,7 @@ public class MusicRestController {
         return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong, musicDivide));
     }
 
+    // 저작권료 그래프
     @GetMapping("divide/{product_Id}")
     public ResponseEntity<Object> divide(@PathVariable String product_Id, @RequestParam String date) {
         List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id, date);
@@ -49,12 +52,14 @@ public class MusicRestController {
         return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos,divideCycle));
     }
 
+    // 상세정보
     @GetMapping("sub/{product_Id}")
     public ResponseEntity<Object> Sub(@PathVariable String product_Id) {
         MusicSubResponseDto youtube = musicService.findYoutube(product_Id);
         return ResponseEntity.ok(youtube);
     }
 
+    // 유튜브 조회수
     @GetMapping("view/{product_Id}")
     public ResponseEntity<?> view(@PathVariable String product_Id, @RequestParam String date) {
         // 조회수 (6개월, 1년, 3년, 전체)
@@ -62,6 +67,7 @@ public class MusicRestController {
         return ResponseEntity.ok(youtubeView);
     }
 
+    // 검색량
     @GetMapping("search/{product_Id}")
     public ResponseEntity<?> search(@PathVariable String product_Id, @RequestParam String date) {
         // 검색량 (일주일, 6개월, 1년, 전체)
@@ -69,6 +75,7 @@ public class MusicRestController {
         return ResponseEntity.ok(search);
     }
 
+    // 스트리밍 수
     @GetMapping("streaming/{product_Id}")
     public ResponseEntity<?> streaming(@PathVariable String product_Id, @RequestParam String date) {
         // 스트리밍 수 (일주일, 6개월, 1년, 전체)
@@ -76,6 +83,7 @@ public class MusicRestController {
         return ResponseEntity.ok(streaming);
     }
 
+    // 공연일정
     @GetMapping("consert/{product_Id}")
     public ResponseEntity<?> consert(@PathVariable String product_Id) {
         // 공연일정 최신순

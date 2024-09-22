@@ -42,7 +42,7 @@ public class HanwooRestController {
         if ((response.getAveragePrice() == null || response.getAveragePrice().isEmpty()) &&
                 (response.getGrade1Rate() == null || response.getGrade1Rate().isEmpty()) &&
                 (response.getProductionCost() == null || response.getProductionCost().isEmpty())) {
-            return ResponseEntity.badRequest().body("데이터가 존재하지 않습니다.");
+            return ResponseEntity.badRequest().body(null);
         }
 
         return ResponseEntity.ok(response);

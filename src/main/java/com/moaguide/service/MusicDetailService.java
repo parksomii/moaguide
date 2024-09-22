@@ -39,12 +39,14 @@ public class MusicDetailService {
     @PersistenceContext
     private final EntityManager entityManager;
 
+    // 최상단 기본정보
     @Transactional(readOnly = false)
     public MusicReponseDto findBydetail(String productId) {
         MusicReponseDto music = musicRepository.findMusicDetail(productId);
         return music;
     }
 
+    // 기본정보 : 발행정보
     @Transactional(readOnly = false)
     public MusicPublishDto findBase(String productId){
         // StoredProcedureQuery 객체 생성
@@ -58,7 +60,6 @@ public class MusicDetailService {
 
         // 결과가 없을 경우 null 반환
         if (resultList.isEmpty()) {
-            log.warn("Stored procedure {} returned no results for productId: {}", "music_base", productId);
             return null;
         }
 
@@ -83,6 +84,7 @@ public class MusicDetailService {
         return publishDto;
     }
 
+    // 기본정보 : 곡정보
     @Transactional(readOnly = false)
     public MusicSongDto findSong(String productId){
         // StoredProcedureQuery 객체 생성
@@ -96,7 +98,6 @@ public class MusicDetailService {
 
         // 결과가 없을 경우 null 반환
         if (resultList.isEmpty()) {
-            log.warn("Stored procedure {} returned no results for productId: {}", "music_song", productId);
             return null;
         }
 
@@ -120,9 +121,9 @@ public class MusicDetailService {
         return songDto;
     }
 
+    // 기본정보 : 저작권료
     @Transactional(readOnly = false)
     public MusicDivideResponseDto findDivide(String productId) {
-        log.info("Starting stored procedure call for productId: {}", productId);
 
         // StoredProcedureQuery 객체 생성
         StoredProcedureQuery query = entityManager
@@ -130,26 +131,18 @@ public class MusicDetailService {
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
                 .setParameter("in_Product_Id", productId);
 
-        log.info("Stored procedure created, about to execute");
-
         // 프로시저 실행 및 결과 조회
         List<Object[]> resultList = query.getResultList();
 
-        log.info("Stored procedure executed, result size: {}", resultList.size());
-
         // 결과가 없을 경우 null 반환
         if (resultList.isEmpty()) {
-            log.warn("Stored procedure {} returned no results for productId: {}", "music_divide", productId);
             return null;
         }
 
         // 첫 번째 결과 반환
         Object[] result = resultList.get(0);
 
-        log.debug("First result: {}", Arrays.toString(result));
-
         if (result == null) {
-            log.warn("Stored procedure returned null result for productId: {}", productId);
             return null;
         }
 
@@ -163,8 +156,6 @@ public class MusicDetailService {
                 ((BigDecimal) result[7]).doubleValue()  // Etc
         );
 
-        log.debug("MusicDivideDto created: {}", musicDivideDto);
-
         // MusicDivideResponseDto에 필요한 값을 추출하여 DTO 생성
         MusicDivideResponseDto divideResponseDto = new MusicDivideResponseDto(
                 ((BigDecimal) result[0]).doubleValue(),      // lastDividend
@@ -174,16 +165,16 @@ public class MusicDetailService {
                 (Integer) result[9]                          // divideCycle
         );
 
-        log.debug("MusicDivideResponseDto created: {}", divideResponseDto);
-
         return divideResponseDto;
     }
 
+    // 상세정보
     public MusicSubResponseDto findYoutube(String productId) {
         MusicSubResponseDto youtube = musicRepository.findYoutube(productId);
         return youtube;
     }
 
+    // 유튜브 조회수
     public List<ViewDto> findView(String productId, String date) {
         // 유튜브 조회수 (6개월, 1년, 3년, 전체)
         // 현재 날짜 기준으로 날짜 계산
@@ -214,7 +205,6 @@ public class MusicDetailService {
 
         // 결과가 없을 경우 null 반환
         if (resultList.isEmpty()) {
-            log.warn("Stored procedure {} returned no results for productId: {}", "music_view", productId);
             return null;
         }
 
@@ -231,6 +221,7 @@ public class MusicDetailService {
         return viewList;
     }
 
+    // 검색량
     public List<SearchDto> findSearch(String productId, String date) {
         // 검색량 (일주일, 6개월, 1년, 전체)
         // 현재 날짜 기준으로 날짜 계산
@@ -260,7 +251,6 @@ public class MusicDetailService {
 
         // 2. MusicDetail에서 결과가 없으면 Product에서 검색
         if (resultList.isEmpty()) {
-            log.warn("No results found in MusicDetail, checking Product for productId: {}", productId);
 
             // Product 프로시저 호출
             query = entityManager
@@ -274,7 +264,6 @@ public class MusicDetailService {
 
             // Product에서도 결과가 없으면 null 반환
             if (resultList.isEmpty()) {
-                log.warn("No results found in Product for productId: {}", productId);
                 return null;
             }
         }
@@ -292,6 +281,7 @@ public class MusicDetailService {
         return searchList;
     }
 
+    // 스트리밍 수
     public List<SteamingDto> findStreaming(String productId, String date) {
         // 스트리밍 수 (일주일, 6개월, 1년, 전체)
         // 현재 날짜 기준으로 날짜 계산
@@ -322,7 +312,6 @@ public class MusicDetailService {
 
         // 결과가 없을 경우 null 반환
         if (resultList.isEmpty()) {
-            log.warn("Stored procedure {} returned no results for productId: {}", "music_streaming", productId);
             return null;
         }
 
@@ -339,6 +328,7 @@ public class MusicDetailService {
         return streamingList;
     }
 
+    // 공연일정
     public List<ConsertDto> findConsert(String productId) {
         // StoredProcedureQuery 객체 생성
         StoredProcedureQuery query = entityManager
@@ -351,7 +341,6 @@ public class MusicDetailService {
 
         // 결과가 없을 경우 null 반환
         if (resultList.isEmpty()) {
-            log.warn("Stored procedure {} returned no results for productId: {}", "consert_keyword", productId);
             return null;
         }
 
@@ -369,5 +358,4 @@ public class MusicDetailService {
 
         return consertList;
     }
-
 }

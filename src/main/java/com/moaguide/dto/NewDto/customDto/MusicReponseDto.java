@@ -28,7 +28,7 @@ public class MusicReponseDto {
         this.category = category;
         this.platform = platform;
         this.name = name;
-        this.singer = singer; // 가수 이름 추가
+        this.singer = singer;
         this.price = price;
         this.priceRate = priceRate;
         this.totalPrice = totalPrice;
@@ -36,5 +36,4 @@ public class MusicReponseDto {
         this.lastDivide_rate = lastDivide_rate;
         this.divideCycle = divideCycle;
     }
-
 }
