@@ -8,13 +8,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "movie")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@SqlResultSetMapping(
+        name = "MovieScheduleMapping",
+        entities = {
+                @EntityResult(
+                        entityClass = MovieScheduleDto.class,
+                        fields = {
+                                @FieldResult(name = "title", column = "title"),
+                                @FieldResult(name = "genre", column = "genre"),
+                                @FieldResult(name = "country", column = "country"),
+                                @FieldResult(name = "director", column = "director"),
+                                @FieldResult(name = "releseDate", column = "releseDate"),
+                                @FieldResult(name = "imgLink", column = "imgLink")
+                        }
+                )
+        }
+)
 public class Movie {
 
     @Id
