@@ -104,4 +104,31 @@ public class GenericRepository {
                 .setParameter("category", category)
                 .getResultList();
     }
+
+    public ContentPublishDto findPublish(String productId) {
+        // 엔티티 매니저를 사용해 저장 프로시저 호출
+        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("GetContentpublish");
+
+        // 파라미터 설정
+        query.registerStoredProcedureParameter("pro_Id", String.class, ParameterMode.IN);
+        query.setParameter("pro_Id", productId);
+
+        // 결과 처리 (DTO나 Object 배열로 받을 수 있음)
+        Object[] result = (Object[]) query.getSingleResult();
+
+        // 결과를 ContentPublishDto로 변환
+        ContentPublishDto contentPublishDto = new ContentPublishDto();
+        contentPublishDto.setName((String) result[0]);
+        contentPublishDto.setGenre((String) result[1]);
+        contentPublishDto.setType((String) result[2]);
+        contentPublishDto.setMinAmount((Long) result[3]);
+        contentPublishDto.setMaxAmount((Long) result[4]);
+        contentPublishDto.setPiece((Integer) result[5]);
+        contentPublishDto.setBasePrice((Integer) result[6]);
+        contentPublishDto.setMinInvestment((Integer) result[7]);
+        contentPublishDto.setIssuanceDate((Date) result[8]);
+        contentPublishDto.setExpirationDate((Date) result[9]);
+
+        return contentPublishDto;
+    }
 }
