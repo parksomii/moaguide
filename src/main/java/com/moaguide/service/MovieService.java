@@ -22,7 +22,7 @@ public class MovieService {
         return movieRepository.findByProductId(productId);
     }
 
-    @Transactional
+    @Transactional(readOnly = false)
     public List<MovieScheduleDto> findSechedule(String productId) {
         return movieRepository.findByschedule(productId);
     }
