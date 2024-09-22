@@ -15,14 +15,6 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@NamedStoredProcedureQuery(
-        name = "getMoviesInDateRange",
-        procedureName = "GetMoviesInDateRange",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "movieId", type = String.class)
-        },
-        resultClasses = MovieScheduleDto.class
-)
 public class Movie {
 
     @Id
