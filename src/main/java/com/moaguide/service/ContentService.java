@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class ContentService {
     private final ContentRepository contentRepository;
-    private final GenericRepository genericRepository;
 
     @Transactional(readOnly = false)
     public ContentDetailDto findDetail(String productId) {

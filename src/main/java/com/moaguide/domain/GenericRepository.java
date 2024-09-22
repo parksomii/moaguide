@@ -107,45 +107,4 @@ public class GenericRepository {
                 .getResultList();
     }
 
-    public ContentPublishDto findPublish(String productId) {
-            log.info("findPublish 호출됨, productId: {}", productId);
-
-            StoredProcedureQuery query = entityManager.createStoredProcedureQuery("GetContentpublish");
-
-            // 파라미터 설정 로그
-            log.info("프로시저 파라미터 설정: pro_Id = {}", productId);
-            query.registerStoredProcedureParameter("pro_Id", String.class, ParameterMode.IN);
-            query.setParameter("pro_Id", productId);
-
-            List<Object[]> resultList = query.getResultList();
-
-            // 결과 리스트 로그
-            log.info("프로시저 호출 결과 리스트 사이즈: {}", resultList.size());
-
-            if (resultList.isEmpty()) {
-                log.warn("결과가 없습니다.");
-                return null;
-            }
-
-            // 첫 번째 결과 로그
-            Object[] result = resultList.get(0);
-            log.info("첫 번째 결과: {}", (Object) result);
-
-            // 결과를 DTO로 변환하는 과정에서 로그
-            ContentPublishDto contentPublishDto = new ContentPublishDto();
-            contentPublishDto.setName((String) result[0]);
-            contentPublishDto.setGenre((String) result[1]);
-            contentPublishDto.setType((String) result[2]);
-            contentPublishDto.setMinAmount((Long) result[3]);
-            contentPublishDto.setMaxAmount((Long) result[4]);
-            contentPublishDto.setPiece((Integer) result[5]);
-            contentPublishDto.setBasePrice((Integer) result[6]);
-            contentPublishDto.setMinInvestment((Integer) result[7]);
-            contentPublishDto.setIssuanceDate((Date) result[8]);
-            contentPublishDto.setExpirationDate((Date) result[9]);
-
-            log.info("ContentPublishDto 생성 완료: {}", contentPublishDto);
-
-            return contentPublishDto;
-    }
 }
