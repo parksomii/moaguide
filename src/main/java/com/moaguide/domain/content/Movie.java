@@ -24,13 +24,12 @@ import java.sql.Date;
                                 @ColumnResult(name = "genre", type = String.class),
                                 @ColumnResult(name = "country", type = String.class),
                                 @ColumnResult(name = "director", type = String.class),
-                                @ColumnResult(name = "releaseDate", type = String.class),
+                                @ColumnResult(name = "releaseDate", type = Date.class),
                                 @ColumnResult(name = "imgLink", type = String.class)
                         }
                 )
         }
 )
-
 @NamedStoredProcedureQuery(
         name = "GetMoviesInDateRange",
         procedureName = "GetMoviesInDateRange",
@@ -39,7 +38,6 @@ import java.sql.Date;
                 @StoredProcedureParameter(mode = ParameterMode.IN, name="movieId",type = String.class)
         }
 )
-
 public class Movie {
 
     @Id
