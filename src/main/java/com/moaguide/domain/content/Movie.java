@@ -23,7 +23,6 @@ import java.time.LocalDate;
         },
         resultClasses = MovieScheduleDto.class
 )
-
 public class Movie {
 
     @Id
