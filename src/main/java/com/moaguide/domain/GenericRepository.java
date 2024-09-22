@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.StoredProcedureQuery;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class GenericRepository {
 
     @PersistenceContext
@@ -106,29 +108,44 @@ public class GenericRepository {
     }
 
     public ContentPublishDto findPublish(String productId) {
-        // 엔티티 매니저를 사용해 저장 프로시저 호출
-        StoredProcedureQuery query = entityManager.createStoredProcedureQuery("GetContentpublish");
+            log.info("findPublish 호출됨, productId: {}", productId);
 
-        // 파라미터 설정
-        query.registerStoredProcedureParameter("pro_Id", String.class, ParameterMode.IN);
-        query.setParameter("pro_Id", productId);
+            StoredProcedureQuery query = entityManager.createStoredProcedureQuery("GetContentpublish");
 
-        // 결과 처리 (DTO나 Object 배열로 받을 수 있음)
-        Object[] result = (Object[]) query.getSingleResult();
+            // 파라미터 설정 로그
+            log.info("프로시저 파라미터 설정: pro_Id = {}", productId);
+            query.registerStoredProcedureParameter("pro_Id", String.class, ParameterMode.IN);
+            query.setParameter("pro_Id", productId);
 
-        // 결과를 ContentPublishDto로 변환
-        ContentPublishDto contentPublishDto = new ContentPublishDto();
-        contentPublishDto.setName((String) result[0]);
-        contentPublishDto.setGenre((String) result[1]);
-        contentPublishDto.setType((String) result[2]);
-        contentPublishDto.setMinAmount((Long) result[3]);
-        contentPublishDto.setMaxAmount((Long) result[4]);
-        contentPublishDto.setPiece((Integer) result[5]);
-        contentPublishDto.setBasePrice((Integer) result[6]);
-        contentPublishDto.setMinInvestment((Integer) result[7]);
-        contentPublishDto.setIssuanceDate((Date) result[8]);
-        contentPublishDto.setExpirationDate((Date) result[9]);
+            List<Object[]> resultList = query.getResultList();
 
-        return contentPublishDto;
+            // 결과 리스트 로그
+            log.info("프로시저 호출 결과 리스트 사이즈: {}", resultList.size());
+
+            if (resultList.isEmpty()) {
+                log.warn("결과가 없습니다.");
+                return null;
+            }
+
+            // 첫 번째 결과 로그
+            Object[] result = resultList.get(0);
+            log.info("첫 번째 결과: {}", (Object) result);
+
+            // 결과를 DTO로 변환하는 과정에서 로그
+            ContentPublishDto contentPublishDto = new ContentPublishDto();
+            contentPublishDto.setName((String) result[0]);
+            contentPublishDto.setGenre((String) result[1]);
+            contentPublishDto.setType((String) result[2]);
+            contentPublishDto.setMinAmount((Long) result[3]);
+            contentPublishDto.setMaxAmount((Long) result[4]);
+            contentPublishDto.setPiece((Integer) result[5]);
+            contentPublishDto.setBasePrice((Integer) result[6]);
+            contentPublishDto.setMinInvestment((Integer) result[7]);
+            contentPublishDto.setIssuanceDate((Date) result[8]);
+            contentPublishDto.setExpirationDate((Date) result[9]);
+
+            log.info("ContentPublishDto 생성 완료: {}", contentPublishDto);
+
+            return contentPublishDto;
     }
 }
