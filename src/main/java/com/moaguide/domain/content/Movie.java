@@ -16,20 +16,30 @@ import java.sql.Date;
 @NoArgsConstructor
 @SqlResultSetMapping(
         name = "MovieScheduleMapping",
-        entities = {
-                @EntityResult(
-                        entityClass = MovieScheduleDto.class,
-                        fields = {
-                                @FieldResult(name = "title", column = "title"),
-                                @FieldResult(name = "genre", column = "genre"),
-                                @FieldResult(name = "country", column = "country"),
-                                @FieldResult(name = "director", column = "director"),
-                                @FieldResult(name = "releseDate", column = "releseDate"),
-                                @FieldResult(name = "imgLink", column = "imgLink")
+        classes = {
+                @ConstructorResult(
+                        targetClass = MovieScheduleDto.class,
+                        columns = {
+                                @ColumnResult(name = "title", type = String.class),
+                                @ColumnResult(name = "genre", type = String.class),
+                                @ColumnResult(name = "country", type = String.class),
+                                @ColumnResult(name = "director", type = String.class),
+                                @ColumnResult(name = "releseDate", type = Date.class),
+                                @ColumnResult(name = "imgLink", type = String.class)
                         }
                 )
         }
 )
+
+@NamedStoredProcedureQuery(
+        name = "GetMoviesInDateRange",
+        procedureName = "GetMoviesInDateRange",
+        resultSetMappings = "MovieScheduleMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name="movieId",type = String.class)
+        }
+)
+
 public class Movie {
 
     @Id
