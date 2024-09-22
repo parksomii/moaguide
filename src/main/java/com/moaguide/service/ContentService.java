@@ -19,13 +19,11 @@ public class ContentService {
 
     @Transactional(readOnly = false)
     public ContentDetailDto findDetail(String productId) {
-        log.info("받은 상품명: {}", productId);
         return contentRepository.findByDetail(productId);
     }
 
     @Transactional(readOnly = false)
     public ContentBaseDto findBase(String productId, String genre) {
-        log.info("받은 상품명: {}", productId);
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
             ContentInvestmentDto investmentDto = contentRepository.findInvest(productId);
             ContentPublishDto publish = contentRepository.findPublish(productId);
