@@ -10,6 +10,7 @@ import com.moaguide.dto.NewDto.customDto.ContentPublishDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -24,7 +25,7 @@ public class ContentService {
         return contentRepository.findByDetail(productId);
     }
 
-    @Transactional(readOnly = false)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public ContentBaseDto findBase(String productId, String genre) {
         log.info("받은 상품명: {}", productId);
         if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE") || genre.equals("TRAVEL") ){
