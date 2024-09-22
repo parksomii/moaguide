@@ -24,7 +24,7 @@ import java.sql.Date;
                                 @ColumnResult(name = "genre", type = String.class),
                                 @ColumnResult(name = "country", type = String.class),
                                 @ColumnResult(name = "director", type = String.class),
-                                @ColumnResult(name = "releseDate", type = Date.class),
+                                @ColumnResult(name = "releseDate", type = String.class),
                                 @ColumnResult(name = "imgLink", type = String.class)
                         }
                 )
