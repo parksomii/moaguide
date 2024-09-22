@@ -17,8 +17,7 @@ public class MovieScheduleDto {
     private String genre;
     private String country;
     private String director;
-    @Nullable
-    private Date releaseDate;
+    private String releaseDate;
     @Nullable
     private String imgLink;
 }
