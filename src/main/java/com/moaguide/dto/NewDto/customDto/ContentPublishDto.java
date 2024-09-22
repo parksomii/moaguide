@@ -9,7 +9,6 @@ import java.sql.Date;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class ContentPublishDto {
     private String name;    // 상품명
@@ -22,4 +21,19 @@ public class ContentPublishDto {
     private Integer minInvestment;  // 최소 투자금액
     private Date issuanceDate; // 증권발행일
     private Date expirationDate;   // 증권만기일
+
+    public ContentPublishDto(String name, String genre, String type, Long minAmount, Long maxAmount,
+                             Integer piece, Integer basePrice, Integer minInvestment,
+                             Date issuanceDate, Date expirationDate) {
+        this.name = name;
+        this.genre = genre;
+        this.type = type;
+        this.minAmount = minAmount;
+        this.maxAmount = maxAmount;
+        this.piece = piece;
+        this.basePrice = basePrice;
+        this.minInvestment = minInvestment;
+        this.issuanceDate = issuanceDate;
+        this.expirationDate = expirationDate;
+    }
 }

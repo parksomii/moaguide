@@ -19,6 +19,7 @@ public interface ContentRepository extends JpaRepository<Content, Long> {
     @Query("select new com.moaguide.dto.NewDto.customDto.ContentInvestmentDto(c.totalBudget,c.customerUnitPrice,c.profitLossRatio,c.breakEvenPoint) FROM Content c where c.productId.productId = :id")
     ContentInvestmentDto findInvest(@Param("id") String productId);
 
-//    @Procedure(name = "ContentPublishProcedure")
-//    ContentPublishDto findPublish(@Param("pro_Id")String pro_Id);
+
+    @Procedure(name = "ContentPublishProcedure")
+    ContentPublishDto findPublish(@Param("pro_Id")String pro_Id);
 }
