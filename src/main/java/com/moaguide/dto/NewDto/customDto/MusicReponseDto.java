@@ -22,12 +22,13 @@ public class MusicReponseDto {
     private Double lastDivide_rate;
     private Integer divideCycle;
 
-    @ConstructorProperties({"product_Id", "category", "platform", "name", "price", "priceRate", "totalPrice", "lastDivide", "lastDivide_rate", "divideCycle"})
-    public MusicReponseDto(String product_Id, String category, String platform, String name, Integer price, Double priceRate, Long totalPrice, Double lastDivide, Double lastDivide_rate, Integer divideCycle) {
+    @ConstructorProperties({"product_Id", "category", "platform", "name", "singer", "price", "priceRate", "totalPrice", "lastDivide", "lastDivide_rate", "divideCycle"})
+    public MusicReponseDto(String product_Id, String category, String platform, String name, String singer, Integer price, Double priceRate, Long totalPrice, Double lastDivide, Double lastDivide_rate, Integer divideCycle) {
         this.product_Id = product_Id;
         this.category = category;
         this.platform = platform;
         this.name = name;
+        this.singer = singer;
         this.price = price;
         this.priceRate = priceRate;
         this.totalPrice = totalPrice;

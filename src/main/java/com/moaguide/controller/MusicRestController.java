@@ -1,5 +1,6 @@
 package com.moaguide.controller;
 
+import com.moaguide.dto.NewDto.DetailDivideResponseDto;
 import com.moaguide.dto.NewDto.MusicBaseResponseDto;
 import com.moaguide.dto.NewDto.MusicSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
@@ -7,6 +8,8 @@ import com.moaguide.dto.NewDto.musicDto.ConsertDto;
 import com.moaguide.dto.NewDto.musicDto.SearchDto;
 import com.moaguide.dto.NewDto.musicDto.SteamingDto;
 import com.moaguide.dto.NewDto.musicDto.ViewDto;
+import com.moaguide.service.CurrentDivideService;
+import com.moaguide.service.DivideService;
 import com.moaguide.service.MusicDetailService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,8 @@ import java.util.List;
 @RequestMapping("/detail/music/")
 public class MusicRestController {
     private final MusicDetailService musicService;
+    private final DivideService divideService;
+    private final CurrentDivideService currentDivideService;
 
     @GetMapping("{product_Id}")
     public ResponseEntity<?> product(@PathVariable String product_Id) {
@@ -34,15 +39,21 @@ public class MusicRestController {
         MusicPublishDto music = musicService.findBase(product_Id);
         MusicSongDto musicSong = musicService.findSong(product_Id);
         MusicDivideResponseDto musicDivide = musicService.findDivide(product_Id);
-        List<DivideCustomDto> divideCustomDtoList = musicService.findAllByproductId(product_Id);
-        return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong, musicDivide, divideCustomDtoList));
+        return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong, musicDivide));
     }
 
-/*    @GetMapping("sub/{product_Id}")
+    @GetMapping("divide/{product_Id}")
+    public ResponseEntity<Object> divide(@PathVariable String product_Id, @RequestParam String date) {
+        List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id, date);
+        Integer divideCycle = currentDivideService.findCycle(product_Id);
+        return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos,divideCycle));
+    }
+
+    @GetMapping("sub/{product_Id}")
     public ResponseEntity<Object> Sub(@PathVariable String product_Id) {
-    MusicYoutubeDto music = musicService.findYoutube(product_Id);
-        return ResponseEntity.ok(new MusicSubResponseDto());
-    }*/
+        MusicSubResponseDto youtube = musicService.findYoutube(product_Id);
+        return ResponseEntity.ok(youtube);
+    }
 
     @GetMapping("view/{product_Id}")
     public ResponseEntity<?> view(@PathVariable String product_Id, @RequestParam String date) {

@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,10 @@ public interface DivideRepository extends JpaRepository<Divide, Long> {
 
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.DivideCustomDto(d.decisionDay,d.paymentDate,d.dividend,d.dividendRate) FROM Divide d WHERE d.productId.productId = :productId ORDER BY d.decisionDay DESC")
     List<DivideCustomDto> findAllById(@Param("productId") String productId);
+
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.DivideCustomDto(d.decisionDay,d.paymentDate,d.dividend,d.dividendRate) " +
+            "FROM Divide d WHERE d.productId.productId = :productId AND d.decisionDay >= :day ORDER BY d.decisionDay")
+    List<DivideCustomDto> findAllByDate(@Param("productId") String productId, @Param("day") Date day);
 
     @Procedure(procedureName = "dividegetlast")
     Divide findlast(@Param("productId") String productId);

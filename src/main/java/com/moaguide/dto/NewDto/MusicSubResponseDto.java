@@ -15,12 +15,5 @@ import java.util.List;
 @Getter
 public class MusicSubResponseDto {
     private String youtubeUrl;  // 유튜브 url
-    // 유튜브 조회수 리스트
-    private List<ViewDto> youtubeViewCount; // 유튜브 조회수
-    // 검색량 리스트
-    private List<SearchDto> searchVolume;    // 검색량
-    // 스트리밍 수 리스트
-    private List<SteamingDto> streamingCount;  // 스트리밍 수
-    // 공연일정 리스트
-    private List<ConsertDto> consert;  // 공연일정
+    private String youtubeTitle;  // 유튜브 제목
 }

@@ -37,4 +37,30 @@ public class DivideService {
         return divide;
     }
 
+    public List<DivideCustomDto> getAllProductIdByDate(String id, String date) {
+        // 지급주기별 저작권료 & 시가저작권료
+        // (일주일, 6개월, 1년, 전체
+        // 현재 날짜 기준으로 날짜 계산
+        LocalDate day = LocalDate.now();
+
+        if (date.equals("1w")) {
+            day = day.minusWeeks(1); // 1주일 전
+        } else if (date.equals("6m")) {
+            day = day.minusMonths(6); // 6개월 전
+        } else if (date.equals("12m")) {
+            day = day.minusYears(1); // 1년 전
+        } else if (date.equals("all")) {
+            day = LocalDate.of(1900, 1, 1); // 전체 기간 조회를 위한 과거 날짜
+        } else {
+            return null;
+        }
+
+        // LocalDate -> java.sql.Date 변환
+        Date daySql = Date.valueOf(day);
+
+        List<DivideCustomDto> divideList = divideRepository.findAllByDate(id, daySql);
+        log.info("*************** 배당금 리스트: {}", divideList);
+        return divideList;
+    }
+
 }
