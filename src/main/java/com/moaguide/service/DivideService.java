@@ -62,5 +62,4 @@ public class DivideService {
         log.info("*************** 배당금 리스트: {}", divideList);
         return divideList;
     }
-
 }

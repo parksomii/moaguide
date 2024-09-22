@@ -57,33 +57,29 @@ public class MusicRestController {
 
     @GetMapping("view/{product_Id}")
     public ResponseEntity<?> view(@PathVariable String product_Id, @RequestParam String date) {
-        // 스트리밍 수 (6개월, 1년, 3년, 전체)
-
-        List<ViewDto> music = musicService.findView(product_Id, date);
-        return ResponseEntity.ok(music);
+        // 조회수 (6개월, 1년, 3년, 전체)
+        List<ViewDto> youtubeView = musicService.findView(product_Id, date);
+        return ResponseEntity.ok(youtubeView);
     }
 
     @GetMapping("search/{product_Id}")
     public ResponseEntity<?> search(@PathVariable String product_Id, @RequestParam String date) {
         // 검색량 (일주일, 6개월, 1년, 전체)
-
-        List<SearchDto> music = musicService.findSearch(product_Id, date);
-        return ResponseEntity.ok(music);
+        List<SearchDto> search = musicService.findSearch(product_Id, date);
+        return ResponseEntity.ok(search);
     }
 
     @GetMapping("streaming/{product_Id}")
     public ResponseEntity<?> streaming(@PathVariable String product_Id, @RequestParam String date) {
         // 스트리밍 수 (일주일, 6개월, 1년, 전체)
-
-        List<SteamingDto> music = musicService.findStreaming(product_Id, date);
-        return ResponseEntity.ok(music);
+        List<SteamingDto> streaming = musicService.findStreaming(product_Id, date);
+        return ResponseEntity.ok(streaming);
     }
 
     @GetMapping("consert/{product_Id}")
     public ResponseEntity<?> consert(@PathVariable String product_Id) {
         // 공연일정 최신순
-
-        List<ConsertDto> music = musicService.findConsert(product_Id);
-        return ResponseEntity.ok(music);
+        List<ConsertDto> consert = musicService.findConsert(product_Id);
+        return ResponseEntity.ok(consert);
     }
 }

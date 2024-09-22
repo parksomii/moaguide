@@ -20,6 +20,7 @@ public interface DivideRepository extends JpaRepository<Divide, Long> {
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.DivideCustomDto(d.decisionDay,d.paymentDate,d.dividend,d.dividendRate) FROM Divide d WHERE d.productId.productId = :productId ORDER BY d.decisionDay DESC")
     List<DivideCustomDto> findAllById(@Param("productId") String productId);
 
+
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.DivideCustomDto(d.decisionDay,d.paymentDate,d.dividend,d.dividendRate) " +
             "FROM Divide d WHERE d.productId.productId = :productId AND d.decisionDay >= :day ORDER BY d.decisionDay")
     List<DivideCustomDto> findAllByDate(@Param("productId") String productId, @Param("day") Date day);

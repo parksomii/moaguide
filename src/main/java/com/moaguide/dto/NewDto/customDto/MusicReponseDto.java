@@ -36,4 +36,5 @@ public class MusicReponseDto {
         this.lastDivide_rate = lastDivide_rate;
         this.divideCycle = divideCycle;
     }
+
 }

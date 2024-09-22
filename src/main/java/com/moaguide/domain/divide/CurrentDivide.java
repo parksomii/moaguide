@@ -27,4 +27,5 @@ public class CurrentDivide {
 
     @Column(name="divide_cycle")
     private int divideCycle;
+
 }

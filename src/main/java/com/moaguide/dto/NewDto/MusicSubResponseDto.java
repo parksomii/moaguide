@@ -16,4 +16,5 @@ import java.util.List;
 public class MusicSubResponseDto {
     private String youtubeUrl;  // 유튜브 url
     private String youtubeTitle;  // 유튜브 제목
+
 }
