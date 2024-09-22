@@ -21,6 +21,4 @@ public class MusicBaseResponseDto {
     private MusicSongDto musicSong;
 // 저작권료 정보
     private MusicDivideResponseDto musicDivideResponse;
-// 지급주기별 저작권료 & 시가저작권료
-    List<DivideCustomDto> divideCustomDtoList;
 }

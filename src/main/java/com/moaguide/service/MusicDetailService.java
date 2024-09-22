@@ -4,6 +4,7 @@ import com.moaguide.domain.detail.MusicDetailRepository;
 import com.moaguide.domain.divide.CurrentDivideRepository;
 import com.moaguide.domain.divide.DivideRepository;
 import com.moaguide.domain.divide.MusicDivideRepository;
+import com.moaguide.dto.NewDto.MusicSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.dto.NewDto.musicDto.ConsertDto;
 import com.moaguide.dto.NewDto.musicDto.SearchDto;
@@ -178,10 +179,9 @@ public class MusicDetailService {
         return divideResponseDto;
     }
 
-    public List<DivideCustomDto> findAllByproductId(String id) {
-        List<DivideCustomDto> divideList = divideRepository.findAllById(id);
-        log.info("*************** 배당금 리스트: {}", divideList);
-        return divideList;
+    public MusicSubResponseDto findYoutube(String productId) {
+        MusicSubResponseDto youtube = musicRepository.findYoutube(productId);
+        return youtube;
     }
 
     public List<ViewDto> findView(String productId, String date) {
@@ -189,11 +189,11 @@ public class MusicDetailService {
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
 
-        if (date.equals("6month")) {
+        if (date.equals("6m")) {
             day = day.minusMonths(6); // 6개월 전
-        } else if (date.equals("1year")) {
+        } else if (date.equals("12m")) {
             day = day.minusYears(1); // 1년 전
-        } else if (date.equals("3year")) {
+        } else if (date.equals("36m")) {
             day = day.minusYears(3); // 3년 전
         } else if (date.equals("all")) {
             day = LocalDate.of(1900, 1, 1); // 전체 기간 조회를 위한 과거 날짜
@@ -222,8 +222,8 @@ public class MusicDetailService {
         List<ViewDto> viewList = new ArrayList<>();
         for (Object[] result : resultList) {
             ViewDto viewDto = new ViewDto(
-                    (String) result[0],  // 조회수
-                    ((Date) result[1]).toLocalDate().toString()  // 조회 날짜를 String으로 변환
+                    result[0].toString(),  // 조회수
+                    result[1].toString()   // 조회날짜
             );
             viewList.add(viewDto);
         }
@@ -232,15 +232,16 @@ public class MusicDetailService {
     }
 
     public List<SearchDto> findSearch(String productId, String date) {
+        // 검색량 (일주일, 6개월, 1년, 전체)
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
 
-        if (date.equals("6month")) {
+        if (date.equals("1w")) {
+            day = day.minusWeeks(1); // 1주일 전
+        } else if (date.equals("6m")) {
             day = day.minusMonths(6); // 6개월 전
-        } else if (date.equals("1year")) {
+        } else if (date.equals("12m")) {
             day = day.minusYears(1); // 1년 전
-        } else if (date.equals("3year")) {
-            day = day.minusYears(3); // 3년 전
         } else if (date.equals("all")) {
             day = LocalDate.of(1900, 1, 1); // 전체 기간 조회를 위한 과거 날짜
         } else {
@@ -282,8 +283,8 @@ public class MusicDetailService {
         List<SearchDto> searchList = new ArrayList<>();
         for (Object[] result : resultList) {
             SearchDto searchDto = new SearchDto(
-                    (String) result[1],  // 검색량 (value)
-                    (String) result[0]  // 검색 날짜 (viewDay)
+                    result[0].toString(),  // 검색량
+                    result[1].toString()   // 검색날짜
             );
             searchList.add(searchDto);
         }
@@ -292,15 +293,15 @@ public class MusicDetailService {
     }
 
     public List<SteamingDto> findStreaming(String productId, String date) {
-        // 스트리밍 수 (6개월, 1년, 3년, 전체)
+        // 스트리밍 수 (일주일, 6개월, 1년, 전체)
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
 
-        if (date.equals("week")) {
+        if (date.equals("1w")) {
             day = day.minusWeeks(1); // 1주일 전
-        } else if (date.equals("6month")) {
+        } else if (date.equals("6m")) {
             day = day.minusMonths(6); // 6개월 전
-        } else if (date.equals("1year")) {
+        } else if (date.equals("12m")) {
             day = day.minusYears(1); // 1년 전
         } else if (date.equals("all")) {
             day = LocalDate.of(1900, 1, 1); // 전체 기간 조회를 위한 과거 날짜
@@ -310,7 +311,7 @@ public class MusicDetailService {
 
         // StoredProcedureQuery 객체 생성
         StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("music_streaming")
+                .createStoredProcedureQuery("melon_streaming")
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("in_Start_Date", Date.class, ParameterMode.IN)
                 .setParameter("in_Product_Id", productId)
@@ -329,8 +330,8 @@ public class MusicDetailService {
         List<SteamingDto> streamingList = new ArrayList<>();
         for (Object[] result : resultList) {
             SteamingDto steamingDto = new SteamingDto(
-                    (String) result[0],  // 스트리밍 수
-                    ((Date) result[1]).toLocalDate().toString()  // 스트리밍 날짜를 String으로 변환
+                    result[0].toString(),  // 스트리밍수
+                    result[1].toString()   // 스트리밍날짜
             );
             streamingList.add(steamingDto);
         }
@@ -358,7 +359,7 @@ public class MusicDetailService {
         List<ConsertDto> consertList = new ArrayList<>();
         for (Object[] result : resultList) {
             ConsertDto consertDto = new ConsertDto(
-                    (String) result[0],  // title
+                    result[0].toString(),  // title
                     (String) result[1],  // place
                     (String) result[2],  // period
                     (String) result[3]   // imageUrl

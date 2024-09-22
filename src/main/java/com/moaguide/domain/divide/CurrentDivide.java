@@ -6,11 +6,12 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name="Current_Divide")
 public class CurrentDivide {
 
     @Id
     @Column(name="id")
-    private int divideId;
+    private Long divideId;
 
     @ManyToOne
     @JoinColumn(referencedColumnName="product_Id",name="product_Id")
@@ -25,5 +26,5 @@ public class CurrentDivide {
     private double dividendRate;
 
     @Column(name="divide_cycle")
-    private Date divideCycle;
+    private int divideCycle;
 }
