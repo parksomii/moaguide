@@ -21,4 +21,5 @@ public class MusicBaseResponseDto {
     private MusicSongDto musicSong;
 // 저작권료 정보
     private MusicDivideResponseDto musicDivideResponse;
+
 }
