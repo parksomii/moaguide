@@ -28,18 +28,6 @@ backend/.factorypath
 backend/.classpath
 backend/.project
 
-# 특정 경로의 빌드 디렉토리 포함
-!backend/src/main/**/build/
-!backend/src/test/**/build/
-
-# 특정 경로의 bin 디렉토리 포함
-!backend/src/main/**/bin/
-!backend/src/test/**/bin/
-
-# 특정 경로의 out 디렉토리 포함
-!backend/src/main/**/out/
-!backend/src/test/**/out/
-
 # 특정 파일 및 디렉토리 제외
 backend/HELP.md
 

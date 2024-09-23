@@ -18,7 +18,6 @@ import java.util.List;
 public class MovieService {
     private final MovieRepository movieRepository;
     private final MovieStatsRepository movieStatsRepository;
-    private final GenericRepository genericRepository;
 
     public MovieInfoDto findmovie(String productId) {
         return movieRepository.findByProductId(productId);
@@ -26,7 +25,7 @@ public class MovieService {
 
     @Transactional
     public List<MovieScheduleDto> findSechedule(String productId) {
-        return genericRepository.findByschedule(productId);
+        return movieRepository.findByschedule(productId);
     }
 
     public List<MovieStats> findStats(String productId) {
