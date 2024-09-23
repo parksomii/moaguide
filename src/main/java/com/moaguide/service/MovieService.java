@@ -1,7 +1,6 @@
 package com.moaguide.service;
 
 
-import com.moaguide.domain.GenericRepository;
 import com.moaguide.domain.content.MovieRepository;
 import com.moaguide.domain.content.movie.MovieStats;
 import com.moaguide.domain.content.movie.MovieStatsRepository;
