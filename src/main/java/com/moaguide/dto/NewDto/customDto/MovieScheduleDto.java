@@ -11,6 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class MovieScheduleDto {
     private String title;
     private String genre;
@@ -20,13 +21,4 @@ public class MovieScheduleDto {
     private Date releaseDate;
     @Nullable
     private String imgLink;
-
-    public MovieScheduleDto(String title, String genre, String country, String director, Date releaseDate, String imgLink) {
-        this.title = title;
-        this.genre = genre;
-        this.country = country;
-        this.director = director;
-        this.releaseDate = releaseDate;
-        this.imgLink = imgLink;
-    }
 }
