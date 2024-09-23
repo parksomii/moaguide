@@ -1,6 +1,7 @@
 package com.moaguide.service;
 
 
+import com.moaguide.domain.GenericRepository;
 import com.moaguide.domain.content.MovieRepository;
 import com.moaguide.domain.content.movie.MovieStats;
 import com.moaguide.domain.content.movie.MovieStatsRepository;
@@ -17,6 +18,7 @@ import java.util.List;
 public class MovieService {
     private final MovieRepository movieRepository;
     private final MovieStatsRepository movieStatsRepository;
+    private final GenericRepository genericRepository;
 
     public MovieInfoDto findmovie(String productId) {
         return movieRepository.findByProductId(productId);
@@ -24,7 +26,7 @@ public class MovieService {
 
     @Transactional
     public List<MovieScheduleDto> findSechedule(String productId) {
-        return movieRepository.findByschedule(productId);
+        return genericRepository.findByschedule(productId);
     }
 
     public List<MovieStats> findStats(String productId) {

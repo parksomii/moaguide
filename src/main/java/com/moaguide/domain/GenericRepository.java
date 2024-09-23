@@ -107,4 +107,9 @@ public class GenericRepository {
                 .getResultList();
     }
 
+    public List<MovieScheduleDto> findByschedule(String productId) {
+        return entityManager.createNativeQuery("call GetMoviesInDateRange(movieId)", "MovieScheduleMapping")
+                .setParameter("movieId",productId)
+                .getResultList();
+    }
 }
