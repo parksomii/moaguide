@@ -37,9 +37,9 @@ public class DivideService {
         return divide;
     }
 
+    // 지급주기별 저작권료 & 시가저작권료 조회
     public List<DivideCustomDto> getAllProductIdByDate(String id, String date) {
-        // 지급주기별 저작권료 & 시가저작권료
-        // (일주일, 6개월, 1년, 전체
+        // (일주일, 6개월, 1년, 전체) 기간별 조회
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
 

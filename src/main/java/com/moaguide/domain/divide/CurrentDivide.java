@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="Current_Divide")
+@Table(name="Current_Divide") // 테이블명
 public class CurrentDivide {
 
     @Id
