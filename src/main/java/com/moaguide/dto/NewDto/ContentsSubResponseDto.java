@@ -1,5 +1,6 @@
 package com.moaguide.dto.NewDto;
 
+import com.moaguide.domain.content.movie.MovieSchedule;
 import com.moaguide.domain.content.movie.MovieStats;
 import com.moaguide.dto.NewDto.customDto.MovieScheduleDto;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class ContentsSubResponseDto {
-    private List<MovieScheduleDto> schedules;
+    private List<MovieSchedule> schedules;
     private List<MovieStats> stats;
 }

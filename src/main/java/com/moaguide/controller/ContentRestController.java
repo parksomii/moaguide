@@ -1,6 +1,7 @@
 package com.moaguide.controller;
 
 
+import com.moaguide.domain.content.movie.MovieSchedule;
 import com.moaguide.domain.content.movie.MovieStats;
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
@@ -63,8 +64,8 @@ public class ContentRestController {
 
     @GetMapping("/sub/{product_Id}")
     public ResponseEntity<?> schedule(@PathVariable String product_Id) {
+        List<MovieSchedule> movieScheduleDtos = movieService.findSechedule(product_Id);
         List<MovieStats> movieStats = movieService.findStats(product_Id);
-        List<MovieScheduleDto> movieScheduleDtos = movieService.findSechedule(product_Id);
         return ResponseEntity.ok(new ContentsSubResponseDto(movieScheduleDtos,movieStats));
     }
 

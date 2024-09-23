@@ -2,6 +2,7 @@ package com.moaguide.service;
 
 
 import com.moaguide.domain.content.MovieRepository;
+import com.moaguide.domain.content.movie.MovieSchedule;
 import com.moaguide.domain.content.movie.MovieScheduleRepository;
 import com.moaguide.domain.content.movie.MovieStats;
 import com.moaguide.domain.content.movie.MovieStatsRepository;
@@ -28,7 +29,7 @@ public class MovieService {
     }
 
     @Transactional
-    public List<MovieScheduleDto> findSechedule(String productId) {
+    public List<MovieSchedule> findSechedule(String productId) {
 //        Date date = movieRepository.findDate(productId);
 //        LocalDate localDate = date.toLocalDate();
 //        Date before = Date.valueOf(localDate.minusDays(6));
