@@ -4,8 +4,12 @@ FROM openjdk:17-jdk-slim
 # Set the working directory
 WORKDIR /app
 
+# Add a dummy build argument to invalidate the Docker cache for the application JAR file layer
+ARG CACHEBUST=1
+RUN echo "Cache bust at $(date)"
+
 # Copy the JAR file built by the previous build step
-# Replace "*.jar" with the specific JAR file name, if needed, or leave the wildcard if necessary.
+# The JAR file will be copied afresh each time due to the cache bust mechanism.
 ARG JAR_FILE=build/libs/*.jar
 COPY --chown=root:root ${JAR_FILE} /app/app.jar
 
