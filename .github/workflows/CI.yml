@@ -28,7 +28,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ github.sha }}
+          key: "${{ runner.os }}-gradle-${{ github.sha }}"
           restore-keys: |
             ${{ runner.os }}-gradle-
 
