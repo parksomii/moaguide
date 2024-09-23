@@ -24,11 +24,4 @@ public class Bookmark {
     @JoinColumn(nullable = false,referencedColumnName="nickname",name="nickname")
     private User nickName;
 
-
-    public Bookmark(String productId, String nickname) {
-        this.productId = new Product();
-        this.productId.setProductId(productId);
-        this.nickName = new User();
-        this.nickName.setNickname(nickname);
-    }
 }

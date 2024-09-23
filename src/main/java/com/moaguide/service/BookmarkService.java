@@ -21,7 +21,7 @@ public class BookmarkService {
 
     public void postBookmark(String productId, String nickname) {
         try {
-            bookmarkRepository.save(new Bookmark(productId, nickname));
+            bookmarkRepository.insertBookmark(productId, nickname);
         } catch (IllegalArgumentException e) {
             // 중복 북마크가 있을 경우 예외 처리
             throw new RuntimeException("이미 북마크가 되어 있습니다.");
