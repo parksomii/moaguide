@@ -29,7 +29,7 @@ public class SummaryRestController {
     @PostMapping("/bookmark/{productId}")
     public ResponseEntity<String> bookmark(@PathVariable String productId, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
-        if (jwt != null && jwt.startsWith("Bearer ") && jwtUtil.isExpired(jwt.substring(7))) {
+        if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
 
             try {
@@ -46,7 +46,7 @@ public class SummaryRestController {
     @DeleteMapping("/bookmark/{productId}")
     public ResponseEntity<String> bookmarkDelete(@PathVariable String productId, HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
-        if (jwt != null && jwt.startsWith("Bearer ") && jwtUtil.isExpired(jwt.substring(7))) {
+        if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
 
             try {
