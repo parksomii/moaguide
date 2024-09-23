@@ -3,6 +3,7 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.content.movie.MovieSchedule;
 import com.moaguide.domain.content.movie.MovieStats;
+import com.moaguide.dto.NewDto.ContentBaseResponseDto;
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
@@ -31,7 +32,7 @@ public class ContentRestController {
     @GetMapping("/{product_Id}")
     public ResponseEntity<?> getContent(@PathVariable String product_Id) {
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
-        return ResponseEntity.ok(contentDetailDto);
+        return ResponseEntity.ok(new ContentBaseResponseDto(contentDetailDto));
     }
 
     @GetMapping("/base/{product_Id}")
@@ -54,9 +55,6 @@ public class ContentRestController {
         }  else if(genre.equals("CULTURE")){
             PerformanceInfoDto performance = contentSubService.findperformance(product_Id);
             return ResponseEntity.ok(performance);
-        }else if(genre.equals("TRAVEL")){
-            TravelInfoDto travel = contentSubService.findtravel(product_Id);
-            return ResponseEntity.ok(travel);
         }else{
             return ResponseEntity.ok("");
         }
