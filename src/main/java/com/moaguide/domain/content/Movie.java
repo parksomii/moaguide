@@ -15,30 +15,6 @@ import java.sql.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@SqlResultSetMapping(
-        name = "MovieScheduleMapping",
-        classes = {
-                @ConstructorResult(
-                        targetClass = MovieScheduleDto.class,
-                        columns = {
-                                @ColumnResult(name = "title", type = String.class),
-                                @ColumnResult(name = "genre", type = String.class),
-                                @ColumnResult(name = "country", type = String.class),
-                                @ColumnResult(name = "director", type = String.class),
-                                @ColumnResult(name = "releaseDate", type = Date.class),
-                                @ColumnResult(name = "imgLink", type = String.class)
-                        }
-                )
-        }
-)
-@NamedStoredProcedureQuery(
-        name = "GetMoviesInDateRange",
-        procedureName = "GetMoviesInDateRange",
-        resultSetMappings = "MovieScheduleMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name="movieId",type = String.class)
-        }
-)
 public class Movie {
 
     @Id
