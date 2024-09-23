@@ -85,7 +85,6 @@ serverName: green_server
 
 spring:
   jpa:
-
     hibernate:
       ddl-auto: none
       naming:

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
-import java.sql.Date;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +17,7 @@ public class MovieScheduleDto {
     private String genre;
     private String country;
     private String director;
-    private String releaseDate;
+    private Date releaseDate;
     @Nullable
     private String imgLink;
 }
