@@ -8,13 +8,11 @@ import com.moaguide.domain.content.movie.MovieStats;
 import com.moaguide.domain.content.movie.MovieStatsRepository;
 import com.moaguide.dto.NewDto.customDto.MovieInfoDto;
 import com.moaguide.dto.NewDto.customDto.MovieScheduleDto;
+import com.moaguide.dto.NewDto.customDto.MovieStatsDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -30,14 +28,10 @@ public class MovieService {
 
     @Transactional
     public List<MovieSchedule> findSechedule(String productId) {
-//        Date date = movieRepository.findDate(productId);
-//        LocalDate localDate = date.toLocalDate();
-//        Date before = Date.valueOf(localDate.minusDays(6));
-//        Date after = Date.valueOf(localDate.plusDays(7));
         return  movieScheduleRepository.findByschedule(productId);
     }
 
-    public List<MovieStats> findStats(String productId) {
+    public List<MovieStatsDto> findStats(String productId) {
         return movieStatsRepository.findByProductId(productId);
     }
 

@@ -65,7 +65,7 @@ public class ContentRestController {
     @GetMapping("/sub/{product_Id}")
     public ResponseEntity<?> schedule(@PathVariable String product_Id) {
         List<MovieSchedule> movieScheduleDtos = movieService.findSechedule(product_Id);
-        List<MovieStats> movieStats = movieService.findStats(product_Id);
+        List<MovieStatsDto> movieStats = movieService.findStats(product_Id);
         return ResponseEntity.ok(new ContentsSubResponseDto(movieScheduleDtos,movieStats));
     }
 
