@@ -15,6 +15,14 @@ import java.sql.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@NamedStoredProcedureQuery(
+        name = "getMoviesInDateRange",
+        procedureName = "GetMoviesInDateRange",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "movieId", type = String.class)
+        },
+        resultClasses = MovieSchedule.class
+)
 public class MovieSchedule {
 
     @Id
