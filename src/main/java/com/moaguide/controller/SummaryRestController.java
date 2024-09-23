@@ -31,7 +31,6 @@ public class SummaryRestController {
         String jwt = request.getHeader("Authorization");
         if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
-
             try {
                 bookmarkService.postBookmark(productId, nickname);
                 return ResponseEntity.ok("북마크 성공");

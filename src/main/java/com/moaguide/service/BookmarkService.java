@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.print.Book;
 
@@ -19,6 +20,7 @@ public class BookmarkService {
         return bookmarkRepository.countByUser(username);
     }
 
+    @Transactional
     public void postBookmark(String productId, String nickname) {
         try {
             bookmarkRepository.insertBookmark(productId, nickname);
@@ -31,6 +33,7 @@ public class BookmarkService {
         }
     }
 
+    @Transactional
     public void deleteBookmark(String productId, String nickname) {
         try {
             // productId와 nickname으로 해당 북마크를 찾아 삭제
