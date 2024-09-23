@@ -31,14 +31,6 @@ import java.sql.Date;
                 )
         }
 )
-@NamedStoredProcedureQuery(
-        name = "GetMoviesInDateRange",
-        procedureName = "GetMoviesInDateRange",
-        resultSetMappings = "MovieScheduleMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name="movieId",type = String.class)
-        }
-)
 public class Movie {
 
     @Id
