@@ -2,15 +2,17 @@ package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CurrentDivideService;
-import com.moaguide.service.DivideService;
 import com.moaguide.service.ProductService;
 import com.moaguide.service.ReportService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.moaguide.service.BookmarkService;
 
 import java.util.List;
 
@@ -21,7 +23,45 @@ public class SummaryRestController {
     private final ReportService reportService;
     private final ProductService productService;
     private final CurrentDivideService divideService;
-    @GetMapping
+    private final BookmarkService bookmarkService;
+    private final JWTUtil jwtUtil;
+
+    @PostMapping("/bookmark/{productId}")
+    public ResponseEntity<String> bookmark(@PathVariable String productId, HttpServletRequest request) {
+        String jwt = request.getHeader("Authorization");
+        if (jwt != null && jwt.startsWith("Bearer ") && jwtUtil.isExpired(jwt.substring(7))) {
+            String nickname = jwtUtil.getNickname(jwt.substring(7));
+
+            try {
+                bookmarkService.postBookmark(productId, nickname);
+                return ResponseEntity.ok("북마크 성공");
+            } catch (RuntimeException e) {
+                return ResponseEntity.badRequest().body("북마크 실패: " + e.getMessage());
+            }
+        } else {
+            return ResponseEntity.badRequest().body("유효하지 않은 토큰");
+        }
+    }
+
+    @DeleteMapping("/bookmark/{productId}")
+    public ResponseEntity<String> bookmarkDelete(@PathVariable String productId, HttpServletRequest request) {
+        String jwt = request.getHeader("Authorization");
+        if (jwt != null && jwt.startsWith("Bearer ") && jwtUtil.isExpired(jwt.substring(7))) {
+            String nickname = jwtUtil.getNickname(jwt.substring(7));
+
+            try {
+                bookmarkService.deleteBookmark(productId, nickname);
+                return ResponseEntity.ok().body("북마크 해제 성공");
+            } catch (RuntimeException e) {
+                return ResponseEntity.badRequest().body("북마크 해제 실패: " + e.getMessage());
+            }
+        } else {
+            return ResponseEntity.badRequest().body("유효하지 않은 토큰");
+        }
+    }
+
+
+        @GetMapping
     public ResponseEntity<SummaryRecentDto> getSummary() {
         Pageable pageable = PageRequest.of(0, 3);
         List<SummaryDivideCustomDto> divide = divideService.findrecent(pageable);
