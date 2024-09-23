@@ -1,6 +1,7 @@
 package com.moaguide.controller;
 
 
+import com.moaguide.domain.content.movie.MoviePeople;
 import com.moaguide.domain.content.movie.MovieSchedule;
 import com.moaguide.domain.content.movie.MovieStats;
 import com.moaguide.dto.NewDto.ContentBaseResponseDto;
@@ -130,6 +131,13 @@ public class ContentRestController {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findrankten(product_Id,pageable);
         return ResponseEntity.ok(screen);
+    }
+
+    @GetMapping("/people/{keyword}")
+    public ResponseEntity<?> people(@PathVariable String keyword,@RequestParam  int page) {
+        Pageable pageable = Pageable.ofSize(3).withPage(page-1);
+        List<MoviePeople> moviePeople =  movieService.findPeople(keyword,pageable);
+        return ResponseEntity.ok(moviePeople);
     }
 
 }
