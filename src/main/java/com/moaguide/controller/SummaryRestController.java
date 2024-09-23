@@ -61,7 +61,7 @@ public class SummaryRestController {
     }
 
 
-        @GetMapping
+    @GetMapping
     public ResponseEntity<SummaryRecentDto> getSummary() {
         Pageable pageable = PageRequest.of(0, 3);
         List<SummaryDivideCustomDto> divide = divideService.findrecent(pageable);
