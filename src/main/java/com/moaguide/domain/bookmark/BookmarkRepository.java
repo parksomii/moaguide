@@ -16,7 +16,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     void deleteByProductIdAndNickName(@Param("productId") String productId, @Param("nickname") String nickname);
 
     @Modifying
-    @Query(value = "INSERT INTO bookmark (product_Id, nickname) VALUES (:productId, :nickname)", nativeQuery = true)
+    @Query(value = "INSERT INTO Bookmark (product_Id, nickname) VALUES (:productId, :nickname)", nativeQuery = true)
     void insertBookmark(@Param("productId") String productId, @Param("nickname") String nickname);
 
 }
