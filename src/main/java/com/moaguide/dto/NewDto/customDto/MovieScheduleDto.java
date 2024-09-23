@@ -8,10 +8,10 @@ import org.springframework.lang.Nullable;
 
 import java.sql.Date;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class MovieScheduleDto {
     private String title;
     private String genre;
