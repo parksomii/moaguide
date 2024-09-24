@@ -137,4 +137,11 @@ public class UserRestController {
             return ResponseEntity.ok().body(email);
         }
     }
+
+    @DeleteMapping("/Withdrawal")
+    public ResponseEntity<?> withdrawal(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
+        String nickname = jwtUtil.getNickname(auth.substring(7));
+        String result = userService.delete(nickname);
+        return ResponseEntity.ok().body(result);
+    }
 }

@@ -77,4 +77,13 @@ public class UserService {
     public String findemail(String phone) {
         return userRepository.findUserByphone(phone);
     }
+
+    public String delete(String nickname) {
+        try {
+            userRepository.delete(userRepository.findUserByNickName(nickname));
+            return "회원 탈퇴 성공";
+        }catch (Exception e) {
+            return "회원 탈퇴 실패";
+        }
+    }
 }
