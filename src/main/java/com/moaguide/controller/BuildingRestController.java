@@ -41,18 +41,19 @@ public class BuildingRestController {
     private final JWTUtil jwtUtil;
 
 
-    @GetMapping("/{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-        String Nickname = jwtUtil.getNickname(auth.substring(7));
-        BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
-        return ResponseEntity.ok(building);
-    }
 //    @GetMapping("/{product_Id}")
-//    public ResponseEntity<?> product(@PathVariable String product_Id) {
-//        String Nickname = "moaguide";
+//    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+//        String Nickname = jwtUtil.getNickname(auth.substring(7));
 //        BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
 //        return ResponseEntity.ok(building);
 //    }
+
+    @GetMapping("/{product_Id}")
+    public ResponseEntity<?> product(@PathVariable String product_Id) {
+        String Nickname = "moaguide";
+        BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
+        return ResponseEntity.ok(building);
+    }
 
     @GetMapping("/base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
