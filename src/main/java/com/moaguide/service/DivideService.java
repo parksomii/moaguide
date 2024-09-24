@@ -3,18 +3,13 @@ package com.moaguide.service;
 import com.moaguide.domain.divide.Divide;
 import com.moaguide.domain.divide.DivideRepository;
 import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
-import com.moaguide.dto.SummaryDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

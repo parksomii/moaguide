@@ -2,7 +2,6 @@ package com.moaguide.domain.product;
 
 import com.moaguide.domain.platform.Platform;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
-import com.moaguide.dto.SummaryDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -63,17 +62,5 @@ public class Product {
 
     public String getCategory(){return PlatformId.getCategory();}
     public String getPlatform(){return PlatformId.getPlatform();}
-    public SummaryDto toDto(){
-        return new SummaryDto(productId, PlatformId, name, piece, views,nowPiece);
-    }
-
-    public Product(String productId, Platform platformId, String name, Integer piece, Integer views, Integer nowPiece) {
-        this.productId = productId;
-        this.PlatformId = platformId;
-        this.name = name;
-        this.piece = piece;
-        this.views = views;
-        this.nowPiece = nowPiece;
-    }
 
 }
