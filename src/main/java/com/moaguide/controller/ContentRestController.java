@@ -32,12 +32,20 @@ public class ContentRestController {
     private final JWTUtil jwtUtil;
 
 
+//    @GetMapping("/{product_Id}")
+//    public ResponseEntity<?> getContent(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+//        String Nickname = jwtUtil.getNickname(auth.substring(7));
+//        ContentDetailDto contentDetailDto = contentService.findDetail(product_Id,Nickname);
+//        return ResponseEntity.ok(new ContentBaseResponseDto(contentDetailDto));
+//    }
+
     @GetMapping("/{product_Id}")
-    public ResponseEntity<?> getContent(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-        String Nickname = jwtUtil.getNickname(auth.substring(7));
+    public ResponseEntity<?> getContent(@PathVariable String product_Id) {
+        String Nickname = "moaguide";
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id,Nickname);
         return ResponseEntity.ok(new ContentBaseResponseDto(contentDetailDto));
     }
+
 
     @GetMapping("/base/{product_Id}")
     public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {

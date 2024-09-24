@@ -20,9 +20,16 @@ public class HanwooRestController {
     private final HanwooPriceService hanwooPriceService;
     private final JWTUtil jwtUtil;
 
+//    @GetMapping("{product_Id}")
+//    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+//        String Nickname = jwtUtil.getNickname(auth.substring(7));
+//        HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id,Nickname);
+//        return ResponseEntity.ok().body(hanwooDetail);
+//    }
+
     @GetMapping("{product_Id}")
-    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-        String Nickname = jwtUtil.getNickname(auth.substring(7));
+    public ResponseEntity<Object> detail(@PathVariable String product_Id) {
+        String Nickname = "moaguide";
         HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id,Nickname);
         return ResponseEntity.ok().body(hanwooDetail);
     }

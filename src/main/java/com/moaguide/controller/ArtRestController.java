@@ -19,9 +19,16 @@ public class ArtRestController {
     private final JWTUtil jwtUtil;
 
 
+//    @GetMapping("/{product_Id}")
+//    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+//        String Nickname = jwtUtil.getNickname(auth.substring(7));
+//        ArtDetailDto artDetail = artService.findArtDetail(product_Id,Nickname);
+//        return ResponseEntity.ok().body(artDetail);
+//    }
+
     @GetMapping("/{product_Id}")
-    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-        String Nickname = jwtUtil.getNickname(auth.substring(7));
+    public ResponseEntity<Object> detail(@PathVariable String product_Id) {
+        String Nickname = "moaguide";
         ArtDetailDto artDetail = artService.findArtDetail(product_Id,Nickname);
         return ResponseEntity.ok().body(artDetail);
     }

@@ -31,12 +31,21 @@ public class MusicRestController {
     private final JWTUtil jwtUtil;
 
     // 최상단 기본정보
+//    @GetMapping("{product_Id}")
+//    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+//        String Nickname = jwtUtil.getNickname(auth.substring(7));
+//        MusicReponseDto music = musicService.findBydetail(product_Id,Nickname);
+//        return ResponseEntity.ok(music);
+//    }
+
     @GetMapping("{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-        String Nickname = jwtUtil.getNickname(auth.substring(7));
+    public ResponseEntity<?> product(@PathVariable String product_Id) {
+//        String Nickname = jwtUtil.getNickname(auth.substring(7));
+        String Nickname = "moaguide";
         MusicReponseDto music = musicService.findBydetail(product_Id,Nickname);
         return ResponseEntity.ok(music);
     }
+
 
     // 기본정보
     @GetMapping("base/{product_Id}")
