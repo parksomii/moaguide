@@ -8,6 +8,7 @@ import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CookieService;
 import com.moaguide.service.EmailService;
 import com.moaguide.service.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -139,7 +140,22 @@ public class UserRestController {
     }
 
     @DeleteMapping("/Withdrawal")
-    public ResponseEntity<?> withdrawal(@RequestHeader("Authorization") String auth) {
+    public ResponseEntity<?> withdrawa(HttpServletResponse response) {
+        Cookie refreshTokenCookie = new Cookie("refresh", null);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setSecure(true); // HTTPS 사용 시
+        refreshTokenCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
+        refreshTokenCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
+        response.addCookie(refreshTokenCookie);
+
+        // rememberMe 쿠키 만료
+        Cookie rememberMeCookie = new Cookie("rememberMe", null);
+        rememberMeCookie.setHttpOnly(true);
+        rememberMeCookie.setSecure(true); // HTTPS 사용 시
+        rememberMeCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
+        rememberMeCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
+        response.addCookie(rememberMeCookie);
+        String auth = response.getHeader("Authorization");
         String nickname = jwtUtil.getNickname(auth.substring(7));
         String result = userService.delete(nickname);
         return ResponseEntity.ok().body(result);
