@@ -21,6 +21,8 @@ public class ContentBaseResponseDto {
     private Date date;
     private Integer lowPrice;
     private boolean Invest;
+    private String link;
+    private Boolean bookmark;
 
     public ContentBaseResponseDto(ContentDetailDto contentDetailDto) {
         this.productId = contentDetailDto.getProductId();
@@ -37,5 +39,7 @@ public class ContentBaseResponseDto {
         }else{
             this.Invest = false;
         }
+        this.link = contentDetailDto.getLink();
+        this.bookmark = contentDetailDto.getBookmark();
     }
 }

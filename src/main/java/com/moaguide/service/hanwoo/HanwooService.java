@@ -30,7 +30,8 @@ public class HanwooService {
                 .createStoredProcedureQuery("hanwoo_detail")
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("nickname", String.class, ParameterMode.IN)
-                .setParameter("in_Product_Id", productId);
+                .setParameter("in_Product_Id", productId)
+                .setParameter("nickname", nickname);
 
         // 결과 받아오기
         Object[] result = (Object[]) query.getSingleResult();

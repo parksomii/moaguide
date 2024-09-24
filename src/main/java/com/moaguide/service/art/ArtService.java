@@ -35,7 +35,9 @@ public class ArtService {
                 .createStoredProcedureQuery("art_detail")
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("nickname", String.class, ParameterMode.IN)
-                .setParameter("in_Product_Id", productId);
+                .setParameter("in_Product_Id", productId)
+                .setParameter("nickname", nickname);
+
 
         // 프로시저 실행
         List<Object[]> resultList = query.getResultList();
