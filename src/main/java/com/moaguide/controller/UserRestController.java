@@ -51,13 +51,16 @@ public class UserRestController {
     public ResponseEntity<?> checkPassword(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
         String nickname = jwtUtil.getNickname(auth.substring(7));
         String password = userDto.getPassword();
-        boolean check = userService.checkPassword(nickname, password);
-        if (check) {
-            String token = jwtUtil.createJwt("verify",nickname,"pass", 1000 * 60 * 30L);
-            return ResponseEntity.ok().header("verify",  token).body("인증에 성공했습니다.");
-
+        if (!jwtUtil.isExpired(auth)) {
+            boolean check = userService.checkPassword(nickname, password);
+            if (check) {
+                String token = jwtUtil.createJwt("verify", nickname, "pass", 1000 * 60 * 30L);
+                return ResponseEntity.ok().header("verify", token).body("인증에 성공했습니다.");
+            } else {
+                return ResponseEntity.badRequest().body("fail");
+            }
         } else {
-            return ResponseEntity.badRequest().body("fail");
+            return ResponseEntity.badRequest().body("토큰이 만료되었습니다.");
         }
     }
 
