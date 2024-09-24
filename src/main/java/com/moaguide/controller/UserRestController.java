@@ -49,13 +49,14 @@ public class UserRestController {
     // 비밀번호 인증
     @PostMapping("/check/password")
     public ResponseEntity<?> checkPassword(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
-        String nickname = jwtUtil.getNickname(auth.substring(7));
-        String password = userDto.getPassword();
-        if (!jwtUtil.isExpired(auth)) {
+        String token = auth.substring(7);
+        if (!jwtUtil.isExpired(token)) {
+            String nickname = jwtUtil.getNickname(token);
+            String password = userDto.getPassword();
             boolean check = userService.checkPassword(nickname, password);
             if (check) {
-                String token = jwtUtil.createJwt("verify", nickname, "pass", 1000 * 60 * 30L);
-                return ResponseEntity.ok().header("verify", token).body("인증에 성공했습니다.");
+                String newToken = jwtUtil.createJwt("verify", nickname, "pass", 1000 * 60 * 30L);
+                return ResponseEntity.ok().header("verify", newToken).body("인증에 성공했습니다.");
             } else {
                 return ResponseEntity.badRequest().body("fail");
             }
