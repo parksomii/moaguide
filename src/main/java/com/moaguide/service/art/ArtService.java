@@ -63,7 +63,7 @@ public class ArtService {
                 String.valueOf(result[8]),  // subscriptionDate
                 ((Integer) result[9]),  // minInvestment (Integer 그대로 사용)
                 (String) result[10],
-                (Boolean) result[11]
+                ((Long) result[11]) == 1 // isBookmarked: Long 값을 Boolean으로 변환
         );
     }
 

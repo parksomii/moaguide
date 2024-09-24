@@ -49,7 +49,7 @@ public class HanwooService {
                 ((Date) result[8]).toLocalDate(),  // paymentDate
                 ((Integer) result[9]),  // minInvestment
                 (String) result[10],
-                (Boolean) result[11]
+                ((Long) result[11]) == 1 // isBookmarked: Long 값을 Boolean으로 변환
         );
     }
 
