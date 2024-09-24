@@ -78,6 +78,7 @@ public class SignUpRestController {
             if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
                 return ResponseEntity.badRequest().body("회원가입 실패");
             }
+            userService.historySave(userDto.getPhoneNumber());
             userDto.setRole(Role.USER);
             int res = userService.save(userDto);
             if(res == 1){

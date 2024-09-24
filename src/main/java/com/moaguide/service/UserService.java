@@ -3,6 +3,8 @@ package com.moaguide.service;
 import com.moaguide.domain.bookmark.BookmarkRepository;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
+import com.moaguide.domain.user.phoneHistory;
+import com.moaguide.domain.user.phoneHistoryRepository;
 import com.moaguide.dto.UserDto;
 import com.moaguide.dto.codeDto;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,7 @@ import java.util.Optional;
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
-    private final BookmarkRepository bookmarkRepository;
+    private final phoneHistoryRepository phoneHistoryRepository;
     private final PasswordEncoder passwordEncoder;
 
     public Optional<User> check(String nickName) {
@@ -84,6 +86,14 @@ public class UserService {
             return "회원 탈퇴 성공";
         }catch (Exception e) {
             return "회원 탈퇴 실패";
+        }
+    }
+
+    public void historySave(String phoneNumber) {
+        try {
+            phoneHistoryRepository.save(new phoneHistory(phoneNumber));
+        }catch (Exception e) {
+            log.info("이미 가입한 했었던 전화번호");
         }
     }
 }
