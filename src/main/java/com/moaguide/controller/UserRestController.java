@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-    @RequestMapping("/user")
+@RequestMapping("/user")
 @AllArgsConstructor
 public class UserRestController {
     private final UserService userService;
@@ -139,7 +139,7 @@ public class UserRestController {
     }
 
     @DeleteMapping("/Withdrawal")
-    public ResponseEntity<?> withdrawal(@RequestHeader("Authorization") String auth, @RequestBody UserDto userDto) {
+    public ResponseEntity<?> withdrawal(@RequestHeader("Authorization") String auth) {
         String nickname = jwtUtil.getNickname(auth.substring(7));
         String result = userService.delete(nickname);
         return ResponseEntity.ok().body(result);
