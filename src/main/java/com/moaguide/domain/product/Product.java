@@ -59,6 +59,8 @@ public class Product {
     @Column(name="now_piece")
     private Integer nowPiece;
 
+    private String link;
+
     public String getCategory(){return PlatformId.getCategory();}
     public String getPlatform(){return PlatformId.getPlatform();}
     public SummaryDto toDto(){
