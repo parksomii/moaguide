@@ -41,8 +41,8 @@ public class HanwooRestController {
     }
 
     @GetMapping("sub/hanwooPrice")
-    public ResponseEntity<Object> getHanwooPriceData(@RequestParam String category, @RequestParam int year) {
-        HanwooPriceResponseDto response = hanwooPriceService.getHanwooPriceData(category, year);
+    public ResponseEntity<Object> getHanwooPriceData(@RequestParam String category, @RequestParam String date) {
+        HanwooPriceResponseDto response = hanwooPriceService.getHanwooPriceData(category, date);
 
         if (response == null) {
             return ResponseEntity.badRequest().body("잘못된 카테고리입니다.");
