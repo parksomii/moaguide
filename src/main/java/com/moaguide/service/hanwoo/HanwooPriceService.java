@@ -24,6 +24,7 @@ public class HanwooPriceService {
 
     public HanwooPriceResponseDto getHanwooPriceData(String category, String date) {
         LocalDate startDate = LocalDate.now();
+        LocalDate newStartDate = LocalDate.of(2003, 1, 1);  // 2003년부터 데이터가 있음
 
         // 날짜 파라미터에 따라 startDate 설정
         if ("1y".equals(date)) {
@@ -45,7 +46,7 @@ public class HanwooPriceService {
         if ("grade1Rate".equals(category)) {
             grade1Rate = grade1RateRepository.findGrade1Rate(startDate);
         } else if ("productionCost".equals(category)) {
-            productionCost = productionCostRepository.findProductionCost(startDate); // 2003년부터 2023년까지의 데이터
+            productionCost = productionCostRepository.findProductionCost(newStartDate); // 2003년부터 2023년까지의 데이터
         } else if ("averagePrice".equals(category)) {
             averagePrice = averagePriceRepository.findAveragePrice("한우", startDate);
         } else if ("cattlePrice".equals(category)) {

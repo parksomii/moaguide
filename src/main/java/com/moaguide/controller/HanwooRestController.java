@@ -45,7 +45,7 @@ public class HanwooRestController {
         HanwooPriceResponseDto response = hanwooPriceService.getHanwooPriceData(category, date);
 
         if (response == null) {
-            return ResponseEntity.badRequest().body("잘못된 카테고리입니다.");
+            return ResponseEntity.badRequest().body(null);
         }
 
         // 모든 데이터가 null 또는 empty인 경우 처리
