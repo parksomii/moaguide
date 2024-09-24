@@ -20,4 +20,6 @@ public class HanwooDetailDto {
     private Long totalPrice;
     private LocalDate recruitmentDate;
     private int minInvestment;
+    private String link;
+    private Boolean bookmark;
 }

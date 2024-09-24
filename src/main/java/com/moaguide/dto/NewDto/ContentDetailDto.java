@@ -19,4 +19,6 @@ public class ContentDetailDto {
     private Double rate;
     private Date date;
     private Integer lowPrice;
+    private String link;
+    private Boolean bookmark;
 }

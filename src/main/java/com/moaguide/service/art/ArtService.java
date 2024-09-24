@@ -29,11 +29,12 @@ public class ArtService {
     @PersistenceContext
     private final EntityManager entityManager;
 
-    public ArtDetailDto findArtDetail(String productId) {
+    public ArtDetailDto findArtDetail(String productId, String nickname) {
         // StoredProcedureQuery 객체 생성
         StoredProcedureQuery query = entityManager
                 .createStoredProcedureQuery("art_detail")
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("nickname", String.class, ParameterMode.IN)
                 .setParameter("in_Product_Id", productId);
 
         // 프로시저 실행
@@ -58,7 +59,9 @@ public class ArtService {
                 ((BigDecimal) result[6]).doubleValue(),  // recruitmentRate (Double 그대로 사용)
                 ((Long) result[7]),  // totalPrice
                 String.valueOf(result[8]),  // subscriptionDate
-                ((Integer) result[9])  // minInvestment (Integer 그대로 사용)
+                ((Integer) result[9]),  // minInvestment (Integer 그대로 사용)
+                (String) result[10],
+                (Boolean) result[11]
         );
     }
 

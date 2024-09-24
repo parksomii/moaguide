@@ -8,6 +8,7 @@ import com.moaguide.dto.NewDto.musicDto.ConsertDto;
 import com.moaguide.dto.NewDto.musicDto.SearchDto;
 import com.moaguide.dto.NewDto.musicDto.SteamingDto;
 import com.moaguide.dto.NewDto.musicDto.ViewDto;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CurrentDivideService;
 import com.moaguide.service.DivideService;
 import com.moaguide.service.MusicDetailService;
@@ -27,11 +28,13 @@ public class MusicRestController {
     private final MusicDetailService musicService;
     private final DivideService divideService;
     private final CurrentDivideService currentDivideService;
+    private final JWTUtil jwtUtil;
 
     // 최상단 기본정보
     @GetMapping("{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id) {
-        MusicReponseDto music = musicService.findBydetail(product_Id);
+    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+        String Nickname = jwtUtil.getNickname(auth.substring(7));
+        MusicReponseDto music = musicService.findBydetail(product_Id,Nickname);
         return ResponseEntity.ok(music);
     }
 

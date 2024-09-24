@@ -1,9 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.detail.BuildingDetail;
 import com.moaguide.domain.detail.BuildingDetailRepository;
-import com.moaguide.dto.NewDto.BuildingDto.IdDto;
-import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +16,8 @@ public class BuildingService {
 
 
     @Transactional(readOnly = false)
-    public BuildingReponseDto findBydetail(String productId) {
-        BuildingReponseDto building = buildingRepository.findBuildingDetail(productId);
+    public BuildingReponseDto findBydetail(String productId, String nickname) {
+        BuildingReponseDto building = buildingRepository.findBuildingDetail(productId,nickname);
         return building;
     }
 

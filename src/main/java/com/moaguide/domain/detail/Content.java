@@ -22,7 +22,8 @@ import java.sql.Date;
                 procedureName = "GetContentDetails", // 실제 첫 번째 프로시저 이름
                 resultSetMappings = "ContentDetailDtoMapping", // 첫 번째 프로시저 결과 매핑
                 parameters = {
-                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_Id", type = String.class) // 첫 번째 프로시저 IN 파라미터 정의
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_Id", type = String.class), // 첫 번째 프로시저 IN 파라미터 정의
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "nickname", type = String.class)
                 }
         ),
         @NamedStoredProcedureQuery(
@@ -48,7 +49,9 @@ import java.sql.Date;
                                 @ColumnResult(name = "totalPrice", type = long.class),
                                 @ColumnResult(name = "rate", type = Double.class),
                                 @ColumnResult(name = "date", type = Date.class),
-                                @ColumnResult(name = "lowPrice", type = Integer.class)
+                                @ColumnResult(name = "lowPrice", type = Integer.class),
+                                @ColumnResult(name = "link", type =String.class),
+                                @ColumnResult(name = "bookmark", type = Boolean.class)
                         }
                 )
         ),

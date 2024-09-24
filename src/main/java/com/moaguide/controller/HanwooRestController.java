@@ -3,6 +3,7 @@ package com.moaguide.controller;
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
 import com.moaguide.dto.NewDto.HanwooDetailDto;
 import com.moaguide.dto.NewDto.HanwooPriceResponseDto;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.hanwoo.HanwooPriceService;
 import com.moaguide.service.hanwoo.HanwooService;
 import lombok.AllArgsConstructor;
@@ -17,10 +18,12 @@ import org.springframework.web.bind.annotation.*;
 public class HanwooRestController {
     private final HanwooService hanwooService;
     private final HanwooPriceService hanwooPriceService;
+    private final JWTUtil jwtUtil;
 
     @GetMapping("{product_Id}")
-    public ResponseEntity<Object> detail(@PathVariable String product_Id) {
-        HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id);
+    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+        String Nickname = jwtUtil.getNickname(auth.substring(7));
+        HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id,Nickname);
         return ResponseEntity.ok().body(hanwooDetail);
     }
 

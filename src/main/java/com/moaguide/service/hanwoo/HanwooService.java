@@ -12,11 +12,8 @@ import jakarta.persistence.StoredProcedureQuery;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 
 @AllArgsConstructor
@@ -27,11 +24,12 @@ public class HanwooService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public HanwooDetailDto findHanwooDetail(String productId) {
+    public HanwooDetailDto findHanwooDetail(String productId, String nickname) {
         // 프로시저 호출
         StoredProcedureQuery query = entityManager
                 .createStoredProcedureQuery("hanwoo_detail")
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("nickname", String.class, ParameterMode.IN)
                 .setParameter("in_Product_Id", productId);
 
         // 결과 받아오기
@@ -48,7 +46,9 @@ public class HanwooService {
                 ((BigDecimal) result[6]).doubleValue(),  // recruitmentRate (Double 그대로 사용)
                 ((Long) result[7]),  // totalPrice
                 ((Date) result[8]).toLocalDate(),  // paymentDate
-                ((Integer) result[9])  // minInvestment
+                ((Integer) result[9]),  // minInvestment
+                (String) result[10],
+                (Boolean) result[11]
         );
     }
 

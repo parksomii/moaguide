@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface BuildingDetailRepository extends JpaRepository<BuildingDetail, Long> {
 
     @Procedure(name = "building_detail")
-    BuildingReponseDto findBuildingDetail(@Param("in_Product_Id") String productId);
+    BuildingReponseDto findBuildingDetail(@Param("in_Product_Id") String productId,@Param("nickname") String nickname);
 }
 

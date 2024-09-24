@@ -1,6 +1,5 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.GenericRepository;
 import com.moaguide.domain.detail.ContentRepository;
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.customDto.ContentBaseDto;
@@ -18,8 +17,8 @@ public class ContentService {
     private final ContentRepository contentRepository;
 
     @Transactional(readOnly = false)
-    public ContentDetailDto findDetail(String productId) {
-        return contentRepository.findByDetail(productId);
+    public ContentDetailDto findDetail(String productId, String nickname) {
+        return contentRepository.findByDetail(productId,nickname);
     }
 
     @Transactional(readOnly = false)

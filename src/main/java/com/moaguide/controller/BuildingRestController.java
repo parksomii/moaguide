@@ -8,6 +8,7 @@ import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.BuildingDto.*;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.DivideService;
 import com.moaguide.service.ProductService;
 import com.moaguide.service.TransactionService;
@@ -37,11 +38,13 @@ public class BuildingRestController {
     private final PopulationService populationService;
     private final VacancyRateService vacancyRateService;
     private final LandRegistryService landRegistryService;
+    private final JWTUtil jwtUtil;
 
 
     @GetMapping("/{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id) {
-        BuildingReponseDto building = buildingService.findBydetail(product_Id);
+    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+        String Nickname = jwtUtil.getNickname(auth.substring(7));
+        BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
         return ResponseEntity.ok(building);
     }
     @GetMapping("/base/{product_Id}")

@@ -20,4 +20,6 @@ public class ArtDetailDto {
     private Long totalPrice;
     private String recruitmentDate;
     private int minInvestment;
+    private String link;
+    private Boolean bookmark;
 }

@@ -8,6 +8,7 @@ import com.moaguide.dto.NewDto.ContentBaseResponseDto;
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.ContentService;
 import com.moaguide.service.ContentSubService;
 import com.moaguide.service.MovieService;
@@ -28,11 +29,13 @@ public class ContentRestController {
     private final ContentService contentService;
     private final MovieService movieService;
     private final ContentSubService contentSubService;
+    private final JWTUtil jwtUtil;
 
 
     @GetMapping("/{product_Id}")
-    public ResponseEntity<?> getContent(@PathVariable String product_Id) {
-        ContentDetailDto contentDetailDto = contentService.findDetail(product_Id);
+    public ResponseEntity<?> getContent(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
+        String Nickname = jwtUtil.getNickname(auth.substring(7));
+        ContentDetailDto contentDetailDto = contentService.findDetail(product_Id,Nickname);
         return ResponseEntity.ok(new ContentBaseResponseDto(contentDetailDto));
     }
 
