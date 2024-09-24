@@ -47,19 +47,16 @@ public class CookieService {
         return cookie;
     }
 
+
     public void setCookieWithSameSite(HttpServletResponse response, String key, String value, long maxAge) {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge((int) (maxAge / 1000)); // 밀리초를 초 단위로 변환
-        cookie.setHttpOnly(false);
+        cookie.setHttpOnly(true);
         cookie.setSecure(true); // HTTPS 사용 시
         cookie.setPath("/");
-
-        // 쿠키를 응답 헤더에 추가하고 SameSite=None으로 설정
-        String cookieHeader = String.format("%s=%s; Max-Age=%d; Path=%s; Secure; HttpOnly; SameSite=None",
-                cookie.getName(), cookie.getValue(), cookie.getMaxAge(), cookie.getPath());
-
-        response.setHeader("Set-Cookie", cookieHeader);
+        // SameSite 설정
+        response.addHeader("Set-Cookie", String.format("%s=%s; Max-Age=%d; Path=/; Secure; HttpOnly; SameSite=None",
+                key, value, (int) (maxAge / 1000)));
     }
-
 
 }
