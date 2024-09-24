@@ -85,7 +85,7 @@ public class ContentRestController {
         return ResponseEntity.ok(screen);
     }
 
-    @GetMapping("/screen/ten/{product_Id}")
+    @GetMapping("/tenscreen/ten/{product_Id}")
     public ResponseEntity<?> screenten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findScreenten(product_Id,pageable);
@@ -98,7 +98,7 @@ public class ContentRestController {
         return ResponseEntity.ok(showtimes);
     }
 
-    @GetMapping("/showtime/ten/{product_Id}")
+    @GetMapping("/tenshowtime/ten/{product_Id}")
     public ResponseEntity<?> showtimeten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findshowtimeten(product_Id,pageable);
@@ -111,7 +111,7 @@ public class ContentRestController {
         return ResponseEntity.ok(showtimes);
     }
 
-    @GetMapping("/audience/ten/{product_Id}")
+    @GetMapping("/tenaudience/ten/{product_Id}")
     public ResponseEntity<?> Audienceten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findaudienceten(product_Id,pageable);
@@ -124,7 +124,7 @@ public class ContentRestController {
         return ResponseEntity.ok(showtimes);
     }
 
-    @GetMapping("/revenue/ten/{product_Id}")
+    @GetMapping("/tenrevenue/ten/{product_Id}")
     public ResponseEntity<?> revenueten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findrevenueten(product_Id,pageable);
@@ -137,7 +137,7 @@ public class ContentRestController {
         return ResponseEntity.ok(showtimes);
     }
 
-    @GetMapping("/rank/ten/{product_Id}")
+    @GetMapping("/tenrank/ten/{product_Id}")
     public ResponseEntity<?> rankten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findrankten(product_Id,pageable);
