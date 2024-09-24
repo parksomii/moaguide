@@ -66,4 +66,14 @@ public class Product {
     public SummaryDto toDto(){
         return new SummaryDto(productId, PlatformId, name, piece, views,nowPiece);
     }
+
+    public Product(String productId, Platform platformId, String name, Integer piece, Integer views, Integer nowPiece) {
+        this.productId = productId;
+        this.PlatformId = platformId;
+        this.name = name;
+        this.piece = piece;
+        this.views = views;
+        this.nowPiece = nowPiece;
+    }
+
 }
