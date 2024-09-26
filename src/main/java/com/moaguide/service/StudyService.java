@@ -4,6 +4,7 @@ package com.moaguide.service;
 import com.moaguide.domain.study.*;
 import com.moaguide.dto.NewDto.ArticlelistResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleDto;
+import com.moaguide.dto.NewDto.customDto.ArticleSummaryDto;
 import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
 import com.moaguide.dto.NewDto.customDto.SubRoadmapDto;
 import lombok.AllArgsConstructor;
@@ -41,7 +42,11 @@ public class StudyService {
         return  articleRepository.findById(id);
     }
 
-    public List<ReportCustomDto> getSummary(String category, Pageable pageable) {
-        return  articleRepository.findSummary(category,pageable);
+    public List<ArticleSummaryDto> getSummary(String category, Pageable pageable) {
+        if (category.equals("all")) {
+            return articleRepository.findSummaryAll(pageable);
+        } else {
+            return articleRepository.findSummary(category, pageable);
+        }
     }
 }
