@@ -8,10 +8,8 @@ import java.util.List;
 @Getter
 public class DetailDivideResponseDto {
     private List<DivideCustomDto> divide;
-    private int divideCycle;
 
-    public DetailDivideResponseDto(List<DivideCustomDto> divideDtos, Integer dividendCycle) {
+    public DetailDivideResponseDto(List<DivideCustomDto> divideDtos) {
         this.divide = divideDtos;
-        this.divideCycle = dividendCycle;
     }
 }

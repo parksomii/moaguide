@@ -56,14 +56,6 @@ public class MusicRestController {
         return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong, musicDivide));
     }
 
-    // 저작권료 그래프
-    @GetMapping("divide/{product_Id}")
-    public ResponseEntity<Object> divide(@PathVariable String product_Id, @RequestParam String date) {
-        List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id, date);
-        Integer divideCycle = currentDivideService.findCycle(product_Id);
-        return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos,divideCycle));
-    }
-
     // 상세정보
     @GetMapping("sub/{product_Id}")
     public ResponseEntity<Object> Sub(@PathVariable String product_Id) {

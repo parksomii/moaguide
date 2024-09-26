@@ -64,7 +64,7 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
         http.
                 authorizeHttpRequests(request -> request
-                            .requestMatchers("/logout","/update/phone", "/user/update/nickname").authenticated() // 로그아웃 요청도 인증 필요
+                            .requestMatchers("/logout","/update/phone", "/user/update/nickname"). authenticated() // 로그아웃 요청도 인증 필요
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().permitAll())
                 .exceptionHandling(auth -> auth

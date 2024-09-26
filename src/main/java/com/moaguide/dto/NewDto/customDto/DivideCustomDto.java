@@ -12,14 +12,12 @@ import java.util.Date;
 @NoArgsConstructor
 public class DivideCustomDto {
     //최근 배당금
-    private String decisionDate;
     private String paymentDate;
     private double divide;
     private double divide_rate;
 
-    public DivideCustomDto(Date decisionDate, Date paymentDate, double divide, double divide_rate) {
+    public DivideCustomDto(Date paymentDate, double divide, double divide_rate) {
         SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.decisionDate = targetFormat.format(decisionDate);
         this.paymentDate = targetFormat.format(paymentDate);
         this.divide = divide;
         this.divide_rate = divide_rate;

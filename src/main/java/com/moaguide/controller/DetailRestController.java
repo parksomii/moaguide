@@ -39,11 +39,10 @@ public class DetailRestController {
         return ResponseEntity.ok(new DetailNewsResponseDto(newsDtos));
     }
 
-    @GetMapping("/divide/building")
-    public ResponseEntity<Object> divide(@RequestParam String product_Id) {
-        List<DivideCustomDto> divideCustomDtos = divideService.findAllByproductId(product_Id);
-        Integer divideCycle = currentDivideService.findCycle(product_Id);
-        return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos,divideCycle));
+    @GetMapping("/divide/{product_Id}}")
+    public ResponseEntity<Object> divide(@RequestParam String product_Id, @RequestParam String date) {
+        List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id,date);
+        return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos));
     }
 
     @GetMapping("/transaction/{product_Id}")

@@ -19,13 +19,6 @@ public class DivideService {
     private final DivideRepository divideRepository;
 
 
-
-    public List<DivideCustomDto> findAllByproductId(String id) {
-        List<DivideCustomDto> divideList = divideRepository.findAllById(id);
-        log.info("*************** 배당금 리스트: {}", divideList);
-        return divideList;
-    }
-
     @Transactional
     public Divide findOne(String id) {
         Divide divide = divideRepository.findlast(id);
