@@ -41,7 +41,7 @@ public class DetailRestController {
     }
 
     @GetMapping("/divide/{product_Id}")
-    public ResponseEntity<Object> divide(@RequestParam String product_Id, @RequestParam int month) {
+    public ResponseEntity<Object> divide(@PathVariable String product_Id, @RequestParam int month) {
         List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id,month);
         // null 체크
         if (divideCustomDtos == null) {
