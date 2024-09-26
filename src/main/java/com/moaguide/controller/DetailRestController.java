@@ -40,7 +40,7 @@ public class DetailRestController {
         return ResponseEntity.ok(new DetailNewsResponseDto(newsDtos));
     }
 
-    @GetMapping("/divide/{product_Id}}")
+    @GetMapping("/divide/{product_Id}")
     public ResponseEntity<Object> divide(@RequestParam String product_Id, @RequestParam int date) {
         List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id,date);
         // null 체크
