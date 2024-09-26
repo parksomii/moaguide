@@ -13,5 +13,5 @@ import java.util.List;
 public interface HistoryRepository extends JpaRepository<History, Long> {
 
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.TransactionDto(h.tradeDay,h.price) FROM History h WHERE h.productId.productId = :productId AND h.tradeDay >= :day order by h.tradeDay")
-    List<TransactionDto> findbyallday(@Param("productId") String productId,@Param("tradeDay") LocalDate localDate);
+    List<TransactionDto> findbyallday(@Param("productId") String productId,@Param("day") LocalDate localDate);
 }
