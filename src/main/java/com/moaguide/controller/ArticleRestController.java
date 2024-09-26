@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/study/")
-public class articleRestController {
+public class ArticleRestController {
     private final StudyService studyService;
 
     @GetMapping("guide")

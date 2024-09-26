@@ -17,7 +17,7 @@ public class ArticlelistResponseDto {
 
     public ArticlelistResponseDto(Page<ArticleDto> article) {
         this.articleList = article.getContent();
-        this.page = article.getNumber();
+        this.page = article.getNumber()+1;
         this.size = article.getSize();
         this.total = article.getTotalPages();
     }
