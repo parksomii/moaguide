@@ -11,14 +11,16 @@ import java.util.List;
 @Data
 public class ArticlelistResponseDto {
     private List<ArticleDto> articleList;
-    private int page;
-    private int size;
-    private int total;
+    private Long nextCursur; // id는 Long 타입으로 가정
 
     public ArticlelistResponseDto(Page<ArticleDto> article) {
         this.articleList = article.getContent();
-        this.page = article.getNumber()+1;
-        this.size = article.getSize();
-        this.total = article.getTotalPages();
+
+        // 10번째 요소의 id를 nextCursur에 할당, 없으면 null 처리
+        if (articleList.size() >= 10) {
+            this.nextCursur = articleList.get(9).getId(); // 10번째 요소 (index 9)
+        } else {
+            this.nextCursur = null; // 10번째 요소가 없으면 null 처리
+        }
     }
 }
