@@ -26,8 +26,8 @@ public class StudyService {
         return roadmapRepository.findAll(pageable);
     }
 
-    public ArticlelistResponseDto findAllByarticle(int nexCursur) {
-        return new ArticlelistResponseDto(articleRepository.findArticle(nexCursur, PageRequest.of(0, 10)));
+    public ArticlelistResponseDto findAllByarticle(int nextCursor) {
+        return new ArticlelistResponseDto(articleRepository.findArticle(nextCursor, PageRequest.of(0, 10)));
     }
 
     public List<SubRoadmapDto> findAllbysub(int category) {

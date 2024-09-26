@@ -30,12 +30,12 @@ public class ArticleRestController {
     }
 
     @GetMapping("article")
-    public ResponseEntity<ArticlelistResponseDto> getarticle(@RequestParam int nexCursur) {
-        ArticlelistResponseDto articleDtos = studyService.findAllByarticle(nexCursur);
+    public ResponseEntity<ArticlelistResponseDto> getarticle(@RequestParam(defaultValue = "999999") int nextCursor) {
+        ArticlelistResponseDto articleDtos = studyService.findAllByarticle(nextCursor);
         return ResponseEntity.ok(articleDtos);
     }
 
-        @GetMapping("guide/{category}")
+    @GetMapping("guide/{category}")
     public ResponseEntity<List<SubRoadmapDto>> getsubroadmap(@PathVariable int category) {
         List<SubRoadmapDto> subRoadmap = studyService.findAllbysub(category);
         return ResponseEntity.ok(subRoadmap);
