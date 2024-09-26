@@ -37,4 +37,6 @@ public class Article {
     @JoinColumn(name = "sub_Roadmap_Id", foreignKey = @ForeignKey(name = "Sub_Roadmap_article_FK"))
     private SubRoadmap subRoadmapId;
 
+    private String category;
+
 }

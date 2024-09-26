@@ -3,16 +3,13 @@ package com.moaguide.controller;
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.service.CurrentDivideService;
-import com.moaguide.service.ProductService;
-import com.moaguide.service.ReportService;
+import com.moaguide.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.moaguide.service.BookmarkService;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/summary")
 public class SummaryRestController {
-    private final ReportService reportService;
+    private final StudyService articleService;
     private final ProductService productService;
     private final CurrentDivideService divideService;
     private final BookmarkService bookmarkService;
@@ -111,11 +108,9 @@ public class SummaryRestController {
 
     // 관련 리포트
     @GetMapping("/report/{category}")
-    public ResponseEntity<Object> summaryReport(@PathVariable("category") String category,
-                                                @RequestParam(value = "page", defaultValue = "1") int page,
-                                                @RequestParam(value = "size", defaultValue = "3") int size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        List<ReportCustomDto> reportList = reportService.getSummary(category, pageable);
+    public ResponseEntity<Object> summaryReport(@PathVariable("category") String category) {
+        Pageable pageable = PageRequest.of(0, 3);
+        List<ReportCustomDto> reportList = articleService.getSummary(category, pageable);
         return ResponseEntity.ok(reportList);
     }
 

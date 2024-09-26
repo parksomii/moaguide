@@ -1,6 +1,7 @@
 package com.moaguide.domain.study;
 
 import com.moaguide.dto.NewDto.customDto.ArticleDto;
+import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("SELECT  new com.moaguide.dto.NewDto.customDto.ArticleDto(a.title,a.date,a.imageLink,a.content,a.pdfLink) from article a where a.id = :id")
     ArticleDto findById(@Param("id") int id);
+
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleDto(a.id,a.title,a.description,a.imageLink) FROM article a where a.category =:category order by a.id")
+    List<ReportCustomDto> findSummary(@Param("category")String category, Pageable pageable);
 }

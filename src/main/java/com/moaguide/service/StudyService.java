@@ -4,6 +4,7 @@ package com.moaguide.service;
 import com.moaguide.domain.study.*;
 import com.moaguide.dto.NewDto.ArticlelistResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleDto;
+import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
 import com.moaguide.dto.NewDto.customDto.SubRoadmapDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,5 +39,9 @@ public class StudyService {
 
     public ArticleDto findById(int id) {
         return  articleRepository.findById(id);
+    }
+
+    public List<ReportCustomDto> getSummary(String category, Pageable pageable) {
+        return  articleRepository.findSummary(category,pageable);
     }
 }
