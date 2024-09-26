@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,14 +41,34 @@ public class DetailRestController {
     }
 
     @GetMapping("/divide/{product_Id}}")
-    public ResponseEntity<Object> divide(@RequestParam String product_Id, @RequestParam String date) {
+    public ResponseEntity<Object> divide(@RequestParam String product_Id, @RequestParam int date) {
         List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id,date);
+        // null 체크
+        if (divideCustomDtos == null) {
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
+
+        // 빈 리스트 체크
+        if (divideCustomDtos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        }
+
+        // 정상적인 경우 데이터 반환
         return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos));
     }
 
     @GetMapping("/transaction/{product_Id}")
     public ResponseEntity<Object> transaction(@PathVariable String product_Id,@RequestParam int month){
         List<TransactionDto> transaction = transactionService.findbymonth(product_Id,month);
+        if (transaction == null) {
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
+
+        // 빈 리스트 체크
+        if (transaction.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        }
+
         return ResponseEntity.ok().body(new DetailTransactionResponseDto(transaction));
     }
 
