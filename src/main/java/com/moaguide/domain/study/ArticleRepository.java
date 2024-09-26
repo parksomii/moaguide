@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleDto(a.id,a.title,a.description,a.imageLink) FROM article a where a.subRoadmapId.id is null order by a.date")
-    Page<ArticleDto> findArticle(Pageable pageable);
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleDto(a.id,a.title,a.description,a.imageLink) FROM article a where a.subRoadmapId.id is null and a.id<:nextCursur order by a.id desc")
+    Page<ArticleDto> findArticle(@Param("nextCursur")int nextCursur,Pageable pageable);
 
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleDto(a.id,a.title,a.description,a.imageLink) FROM article a where a.subRoadmapId.id =:id order by a.id")
     List<ArticleDto> findBycategory(@Param("id") int subRoadmapId);

@@ -7,6 +7,7 @@ import com.moaguide.dto.NewDto.customDto.ArticleDto;
 import com.moaguide.dto.NewDto.customDto.SubRoadmapDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class StudyService {
         return roadmapRepository.findAll(pageable);
     }
 
-    public ArticlelistResponseDto findAllByarticle(Pageable pageable) {
-        return new ArticlelistResponseDto(articleRepository.findArticle(pageable));
+    public ArticlelistResponseDto findAllByarticle(int nexCursur) {
+        return new ArticlelistResponseDto(articleRepository.findArticle(nexCursur, PageRequest.of(0, 10)));
     }
 
     public List<SubRoadmapDto> findAllbysub(int category) {

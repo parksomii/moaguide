@@ -30,9 +30,8 @@ public class ArticleRestController {
     }
 
     @GetMapping("article")
-    public ResponseEntity<ArticlelistResponseDto> getarticle(@RequestParam int page , @RequestParam int size) {
-        Pageable pageable = PageRequest.of(page-1, size);
-        ArticlelistResponseDto articleDtos = studyService.findAllByarticle(pageable);
+    public ResponseEntity<ArticlelistResponseDto> getarticle(@RequestParam int nexCursur) {
+        ArticlelistResponseDto articleDtos = studyService.findAllByarticle(nexCursur);
         return ResponseEntity.ok(articleDtos);
     }
 
