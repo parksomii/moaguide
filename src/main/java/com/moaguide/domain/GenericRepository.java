@@ -20,7 +20,7 @@ public class GenericRepository {
     private EntityManager entityManager;
 
     public List<SummaryCustomDto> findlistBookmark(int page, int size, String sort, String nickname) {
-        return entityManager.createNativeQuery("CALL list(:page, :size, :sort, :nickname)", "SummaryCustomDtoMapping")
+        return entityManager.createNativeQuery("CALL list_bookmark(:page, :size, :sort, :nickname)", "SummaryCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("sort", sort)
