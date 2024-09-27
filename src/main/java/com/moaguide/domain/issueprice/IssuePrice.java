@@ -49,6 +49,28 @@ import java.sql.Date;
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)
         }
 )
+@NamedStoredProcedureQuery(
+        name = "findIssueListbookMark",
+        procedureName = "IssueBybookMark",
+        resultSetMappings = "IssueCustomDtoMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = String.class)
+        }
+)
+@NamedStoredProcedureQuery(
+        name = "findstartListbookMark",
+        procedureName = "startBybookmark",
+        resultSetMappings = "IssueCustomDtoMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = String.class)
+        }
+)
 public class IssuePrice {
 
     @EmbeddedId

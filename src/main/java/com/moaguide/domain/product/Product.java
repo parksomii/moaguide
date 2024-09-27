@@ -40,6 +40,11 @@ import lombok.Setter;
         query = "CALL list_category(:page, :size, :sort, :category)",
         resultSetMapping = "SummaryCustomDtoMapping"
 )
+@NamedNativeQuery(
+        name = "findCustomListCategory",
+        query = "CALL list_bookmark(:page, :size, :sort, :category,:nickname)",
+        resultSetMapping = "SummaryCustomDtoMapping"
+)
 public class Product {
     @Id
     @Column(name = "Product_Id")

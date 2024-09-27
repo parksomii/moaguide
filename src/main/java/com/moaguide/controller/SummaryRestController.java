@@ -73,11 +73,16 @@ public class SummaryRestController {
                                           @RequestParam int page,
                                           @RequestParam int size) {
         page = page-1;
+        String nickname = "moaguide";
         if(subcategory.equals("trade")){
             List<SummaryCustomDto> summary;
             if(category.equals("all")){
                 summary = productService.getlist(page,size,sort);
                 int total =  productService.getlistTotal("거래중");
+                return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size,total));
+            }else if(category.equals("bookmark")){
+                summary = productService.getlistBookmark(page,size,sort,nickname);
+                int total =  productService.getlistTotalByBookmark("거래중",nickname);
                 return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size,total));
             }else{
                 summary = productService.getcategorylist(page,size,sort,category);
@@ -87,10 +92,10 @@ public class SummaryRestController {
         } else if (subcategory.equals("start")) {
             SummaryResponseDto inavete;
             if(sort.equals("ready")){
-                inavete = productService.getreadylist(page,size,category);
+                inavete = productService.getreadylist(page,size,category,nickname);
                 return ResponseEntity.ok(inavete);
             }else if(sort.equals("start")){
-                inavete = productService.getstartlisty(page,size,category);
+                inavete = productService.getstartlisty(page,size,category,nickname);
                 return ResponseEntity.ok(inavete);
             }
         } else if (subcategory.equals("end")){

@@ -19,6 +19,16 @@ public class GenericRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public List<SummaryCustomDto> findlistBookmark(int page, int size, String sort, String nickname) {
+        return entityManager.createNativeQuery("CALL list(:page, :size, :sort, :nickname)", "SummaryCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("sort", sort)
+                .setParameter("nickname", nickname)
+                .getResultList();
+    }
+
+
     @Transactional
     public List<SummaryCustomDto> findCustomList(int page, int size, String sort) {
         return entityManager.createNativeQuery("CALL list(:page, :size, :sort)", "SummaryCustomDtoMapping")
@@ -104,6 +114,24 @@ public class GenericRepository {
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("category", category)
+                .getResultList();
+    }
+
+    public List<IssueCustomDto> findCustomIssuebyBookmark(int page, int size, Date sqlDate, String nickname) {
+        return entityManager.createNativeQuery("CALL Issue_bookmark(:page, :size, :day, :nickname)", "IssueCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("day", sqlDate)
+                .setParameter("nickname", nickname)
+                .getResultList();
+    }
+
+    public List<IssueCustomDto> findCustomStartBookmark(int page, int size, Date sqlDate, String nickname) {
+        return entityManager.createNativeQuery("CALL start_bookmark(:page, :size, :day, :nickname)", "IssueCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("day", sqlDate)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
