@@ -41,7 +41,7 @@ import lombok.Setter;
         resultSetMapping = "SummaryCustomDtoMapping"
 )
 @NamedNativeQuery(
-        name = "findCustomListCategory",
+        name = "findCustomListBookmark",
         query = "CALL list_bookmark(:page, :size, :sort, :category,:nickname)",
         resultSetMapping = "SummaryCustomDtoMapping"
 )
