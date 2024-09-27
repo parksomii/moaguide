@@ -18,6 +18,6 @@ public interface IssuePriceRepository extends JpaRepository<IssuePrice, Long> {
     @Procedure(name = "Issue_count_category")
     int findissuebyCategroy(@Param("day") Date sqlDate,@Param("category") String category);
 
-    @Query("SELECT CEIL(count(i)/10.0) FROM IssuePrice i, Bookmark b WHERE b.productId.productId = i.id.productId.productId AND i.day > :day AND b.nickName = :nickname")
+    @Query("SELECT CEIL(count(i)/10.0) FROM IssuePrice i, Bookmark b WHERE b.productId.productId = i.id.productId.productId AND i.day > :day AND b.nickName.nickname = :nickname")
     int findissuebyBookcark(@Param("day") Date sqlDate,@Param("nickname")  String nickname);
 }

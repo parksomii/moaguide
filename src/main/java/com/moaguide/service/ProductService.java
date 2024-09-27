@@ -58,16 +58,16 @@ public class ProductService {
         LocalDate localDate = LocalDate.now(); // 현재 날짜 가져오기
         Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
         if(category.equals("all")) {
-            int total =  productRepository.findstart(sqlDate);
+            int total =  genericRepository.getStartCount(sqlDate);
             List<IssueCustomDto> dto =  genericRepository.findCustomStart(page,size,sqlDate);
             return new SummaryResponseDto(dto,page,size,total);
 
         }else if(category.equals("bookmark")){
-            int total = productRepository.findstartBookmark(sqlDate,nickname);
+            int total = genericRepository.getStartCountBookmark(sqlDate,nickname);
             List<IssueCustomDto> dto = genericRepository.findCustomStartBookmark(page, size, sqlDate, nickname);
             return new SummaryResponseDto(dto,page,size,total);
         }else {
-            int total =  productRepository.findstartCategory(sqlDate,category);
+            int total =  genericRepository.getStartCountCategory(sqlDate,category);
             List<IssueCustomDto> dto = genericRepository.findCustomStartCategory(page, size, sqlDate, category);
             return new SummaryResponseDto(dto,page,size,total);
 

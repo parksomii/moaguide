@@ -153,6 +153,67 @@ public class GenericRepository {
                 .getResultList();
     }
 
+    public int getStartCount(Date sqlDate) {
+        // 프로시저 호출을 위한 StoredProcedureQuery 생성
+        StoredProcedureQuery storedProcedure = entityManager
+                .createStoredProcedureQuery("startCount");
+
+        // IN 및 OUT 파라미터 등록
+        storedProcedure.registerStoredProcedureParameter("day", Date.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("totalPages", Integer.class, ParameterMode.OUT);
+
+        // IN 파라미터 설정
+        storedProcedure.setParameter("day", sqlDate);
+
+        // 프로시저 실행
+        storedProcedure.execute();
+
+        // OUT 파라미터 값 반환
+        return (Integer) storedProcedure.getOutputParameterValue("totalPages");
+    }
+
+    public int getStartCountBookmark(Date sqlDate, String nickname) {
+        // 프로시저 호출을 위한 StoredProcedureQuery 생성
+        StoredProcedureQuery storedProcedure = entityManager
+                .createStoredProcedureQuery("startCountBookmark");
+
+        // IN 및 OUT 파라미터 등록
+        storedProcedure.registerStoredProcedureParameter("day", Date.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("nickname", String.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("totalPages", Integer.class, ParameterMode.OUT);
+
+        // IN 파라미터 설정
+        storedProcedure.setParameter("day", sqlDate);
+        storedProcedure.setParameter("nickname", nickname);
+
+        // 프로시저 실행
+        storedProcedure.execute();
+
+        // OUT 파라미터 값 반환
+        return (Integer) storedProcedure.getOutputParameterValue("totalPages");
+    }
+
+    public int getStartCountCategory(Date sqlDate, String category) {
+        // 프로시저 호출을 위한 StoredProcedureQuery 생성
+        StoredProcedureQuery storedProcedure = entityManager
+                .createStoredProcedureQuery("startCountCategory");
+
+        // IN 및 OUT 파라미터 등록
+        storedProcedure.registerStoredProcedureParameter("day", Date.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("category", String.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("totalPages", Integer.class, ParameterMode.OUT);
+
+        // IN 파라미터 설정
+        storedProcedure.setParameter("day", sqlDate);
+        storedProcedure.setParameter("category", category);
+
+        // 프로시저 실행
+        storedProcedure.execute();
+
+        // OUT 파라미터 값 반환
+        return (Integer) storedProcedure.getOutputParameterValue("totalPages");
+    }
+
 //    public List<MovieScheduleDto> findByschedule(String productId) {
 //        return entityManager.createNativeQuery("call GetMoviesInDateRange(movieId)", "MovieScheduleMapping")
 //                .setParameter("movieId",productId)
