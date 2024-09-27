@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Procedure(name = "startCountCategory")
     int findstartCategory(@Param("day") Date sqlDate, @Param("category") String category);
 
-    @Query("SELECT CEIL(count(p)/10) FROM Product p JOIN Platform pl ON pl.PlatformId = p.PlatformId.PlatformId JOIN Bookmark b ON b.productId.productId=p.productId WHERE pl.status = :status AND b.nickName = :nickname")
+    @Query("SELECT CEIL(count(p)/10) FROM Product p JOIN Platform pl ON pl.PlatformId = p.PlatformId.PlatformId JOIN Bookmark b ON b.productId.productId=p.productId WHERE pl.status = :status AND b.nickName.nickname = :nickname")
     int findlistTotalByBookmark(@Param("status") String status,@Param("nickname") String nickname);
 
     @Procedure(name = "startCountBookmark")
