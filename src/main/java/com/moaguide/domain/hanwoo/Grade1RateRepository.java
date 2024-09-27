@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface Grade1RateRepository extends JpaRepository<Grade1Rate, Long> {
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.Grade1RateDto(g.prdDe, AVG(g.prdDt), g.cType) " +
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.Grade1RateDto(g.prdDe, AVG(g.prdDt)) " +
             "FROM Grade1Rate g " +
             "WHERE g.prdDe >= :year " +
             "GROUP BY YEAR(g.prdDe), MONTH(g.prdDe), g.cType " +
