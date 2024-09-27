@@ -2,6 +2,7 @@ package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
 import com.moaguide.dto.NewDto.HanwooDetailDto;
+import com.moaguide.dto.NewDto.HanwooMarketResponseDto;
 import com.moaguide.dto.NewDto.HanwooPriceResponseDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.hanwoo.HanwooPriceService;
@@ -56,5 +57,23 @@ public class HanwooRestController {
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("sub/hanwoomarket")
+    public ResponseEntity<?> getHanwooMarket(@RequestParam String category, @RequestParam String date) {
+        HanwooMarketResponseDto hanwooMarket = hanwooPriceService.findHanwooMarket(category, date);
+
+        if (hanwooMarket == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        if ((hanwooMarket.getCattlePopulation() == null || hanwooMarket.getCattlePopulation().isEmpty()) &&
+                (hanwooMarket.getCattleSale() == null || hanwooMarket.getCattleSale().isEmpty()) &&
+                (hanwooMarket.getCattleFarm() == null || hanwooMarket.getCattleFarm().isEmpty()) &&
+                (hanwooMarket.getCattlePrice() == null || hanwooMarket.getCattlePrice().isEmpty())) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        return ResponseEntity.ok(hanwooMarket);
     }
 }
