@@ -74,24 +74,32 @@ public class ProductService {
         }
     }
 
-    public SummaryResponseDto getfinish(int page, int size, String category) {
+    public SummaryResponseDto getfinish(int page, int size, String category, String nickname) {
         if(category.equals("all")){
             int total = productRepository.findlistTotal("매각완료");
             List<finishCustomDto> dto =  genericRepository.findfinish(page,size);
             return new SummaryResponseDto(dto,page,size,total);
-        }else {
+        }else if(category.equals("bookmark")){
+            int total = productRepository.findlistTotalByBookmark("매각완료",nickname);
+            List<endCustomDto> dto = genericRepository.findfinishBookmark(page,size,nickname);
+            return new SummaryResponseDto(dto,page,size,total);
+        } else {
             int total = productRepository.findlistTotalCategory("매각완료",category);
             List<finishCustomDto> dto = genericRepository.findfinishCategory(page,size,category);
             return new SummaryResponseDto(dto,page,size,total);
         }
     }
 
-    public SummaryResponseDto getend(int page, int size , String category) {
+    public SummaryResponseDto getend(int page, int size , String category,String nickname) {
         if(category.equals("all")){
             int total = productRepository.findlistTotal("공모완료");
             List<endCustomDto> dto = genericRepository.findend(page,size);
             return new SummaryResponseDto(dto,page,size,total);
-        }else {
+        }else if(category.equals("bookmark")){
+            int total = productRepository.findlistTotalByBookmark("공모완료",nickname);
+            List<endCustomDto> dto = genericRepository.findendBookmark(page,size,nickname);
+            return new SummaryResponseDto(dto,page,size,total);
+        } else {
             int total = productRepository.findlistTotalCategory("공모완료",category);
             List<endCustomDto> dto = genericRepository.findendCategory(page, size, category);
             return new SummaryResponseDto(dto,page,size,total);

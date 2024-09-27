@@ -101,10 +101,10 @@ public class SummaryRestController {
         } else if (subcategory.equals("end")){
             SummaryResponseDto inavete;
             if(sort.equals("end")){
-                inavete = productService.getend(page,size,category);
+                inavete = productService.getend(page,size,category,nickname);
                 return ResponseEntity.ok(inavete);
             }else if(sort.equals("finish")){
-                inavete = productService.getfinish(page,size,category);
+                inavete = productService.getfinish(page,size,category,nickname);
                 return ResponseEntity.ok(inavete);
             }
         }

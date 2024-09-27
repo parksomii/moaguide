@@ -135,6 +135,24 @@ public class GenericRepository {
                 .getResultList();
     }
 
+    public List<endCustomDto> findendBookmark(int page, int size, String nickname) {
+        String sql = "CALL endlist_bookmark(:page, :size, :nickname)";
+        return entityManager.createNativeQuery(sql, "endCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("nickname", nickname)
+                .getResultList();
+    }
+
+    public List<endCustomDto> findfinishBookmark(int page, int size, String nickname) {
+        String sql = "CALL finish_bookmark(:page, :size, :nickname)";
+        return entityManager.createNativeQuery(sql, "SaleCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("nickname", nickname)
+                .getResultList();
+    }
+
 //    public List<MovieScheduleDto> findByschedule(String productId) {
 //        return entityManager.createNativeQuery("call GetMoviesInDateRange(movieId)", "MovieScheduleMapping")
 //                .setParameter("movieId",productId)

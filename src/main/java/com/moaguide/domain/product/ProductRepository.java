@@ -29,5 +29,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Procedure(name = "startCountBookmark")
     int findstartBookmark(@Param("day")Date sqlDate,@Param("nickname") String nickname);
+
 }
 
