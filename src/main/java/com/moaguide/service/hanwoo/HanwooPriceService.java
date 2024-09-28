@@ -25,17 +25,13 @@ public class HanwooPriceService {
 
     public HanwooPriceResponseDto getHanwooPriceData(String category, String date) {
         LocalDate startDate = LocalDate.now();
-        LocalDate newStartDate = LocalDate.now();
-//        LocalDate newStartDate = LocalDate.of(2003, 1, 1);  // 2003년부터 데이터가 있음
-        if ("productionCost".equals(category)) {
-            newStartDate = newStartDate.minusYears(2);  // 1년 전
-        }
+
         // 날짜 파라미터에 따라 startDate 설정
         if ("1y".equals(date)) {
             startDate = startDate.minusYears(1);  // 1년 전
         } else if ("3y".equals(date)) {
             startDate = startDate.minusYears(3);  // 3년 전
-        } else if ("5".equals(date)) {
+        } else if ("5y".equals(date)) {
             startDate = startDate.minusYears(5);  // 5년 전
         } else if ("all".equals(date)) {
             startDate = LocalDate.of(1990, 1, 1);  // 전체 데이터
@@ -50,7 +46,8 @@ public class HanwooPriceService {
         if ("grade1Rate".equals(category)) {
             grade1Rate = grade1RateRepository.findGrade1Rate(startDate);
         } else if ("productionCost".equals(category)) {
-            productionCost = productionCostRepository.findProductionCost(newStartDate); // 2003년부터 2023년까지의 데이터
+            int newStartYear = startDate.getYear();  // 연도로 변환
+            productionCost = productionCostRepository.findProductionCost(newStartYear); // 2003년부터 2023년까지의 데이터
         } else if ("averagePrice".equals(category)) {
             averagePrice = averagePriceRepository.findAveragePrice("한우", startDate);
         } else if ("cattlePrice".equals(category)) {
@@ -69,7 +66,7 @@ public class HanwooPriceService {
             startDate = startDate.minusYears(1);  // 1년 전
         } else if ("3y".equals(date)) {
             startDate = startDate.minusYears(3);  // 3년 전
-        } else if ("5".equals(date)) {
+        } else if ("5y".equals(date)) {
             startDate = startDate.minusYears(5);  // 5년 전
         } else if ("all".equals(date)) {
             startDate = LocalDate.of(1990, 1, 1);  // 전체 데이터
@@ -87,7 +84,7 @@ public class HanwooPriceService {
         } else if ("cattleSale".equals(category)) {
             cattleSale = cattleSaleRepository.findCattleSale(startDate);
         } else if ("cattleFarm".equals(category)) {
-            cattleFarm = cattleFarmRepository.findCattleSale(startDate);
+            cattleFarm = cattleFarmRepository.findCattleFarm(startDate);
         } else if ("cattlePrice".equals(category)) {
             cattlePrice = cattlePriceRepository.findCattlePrice(startDate);
         } else {

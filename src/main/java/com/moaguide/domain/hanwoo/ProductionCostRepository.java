@@ -13,5 +13,5 @@ public interface ProductionCostRepository extends JpaRepository<ProductionCost, 
             "FROM ProductionCost p " +
             "WHERE YEAR(p.prdDe) >= :year " +
             "GROUP BY YEAR(p.prdDe)")
-    List<ProductionCostDto> findProductionCost(@Param("year") LocalDate year);
+    List<ProductionCostDto> findProductionCost(@Param("year") Integer year);
 }

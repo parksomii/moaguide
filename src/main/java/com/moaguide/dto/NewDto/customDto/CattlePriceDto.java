@@ -18,8 +18,8 @@ public class CattlePriceDto {
         this.value = value;
     }
 
-    // 연도와 월을 YYYY.MM 형식으로 변환하는 메서드
+    // 날짜를 yyyy-MM-dd 형식으로 변환
     private String startDate(LocalDate date) {
-        return String.format("%d.%02d", date.getYear(), date.getMonthValue());
+        return date.toString();
     }
 }
