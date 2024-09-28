@@ -77,7 +77,7 @@ public class HanwooPriceService {
         List<CattlePopulationDto> cattlePopulation = null;
         List<CattleSaleDto> cattleSale = null;
         List<CattleFarmDto> cattleFarm = null;
-        List<CattlePriceDto> cattlePrice = null;
+        List<CattleTransactionDto> cattleTransaction = null;
 
         if ("cattlePopulation".equals(category)) {
             cattlePopulation = cattlePopulationRepository.findCattlePopulation(startDate);
@@ -85,12 +85,12 @@ public class HanwooPriceService {
             cattleSale = cattleSaleRepository.findCattleSale(startDate);
         } else if ("cattleFarm".equals(category)) {
             cattleFarm = cattleFarmRepository.findCattleFarm(startDate);
-        } else if ("cattlePrice".equals(category)) {
-            cattlePrice = cattlePriceRepository.findCattlePrice(startDate);
+        } else if ("cattleTransaction".equals(category)) {
+            cattleTransaction = cattlePriceRepository.findCattleTransaction(startDate);
         } else {
             return null;
         }
 
-        return new HanwooMarketResponseDto(cattlePopulation, cattleSale, cattleFarm, cattlePrice);
+        return new HanwooMarketResponseDto(cattlePopulation, cattleSale, cattleFarm, cattleTransaction);
     }
 }

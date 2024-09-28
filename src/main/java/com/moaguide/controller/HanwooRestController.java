@@ -70,7 +70,7 @@ public class HanwooRestController {
         if ((hanwooMarket.getCattlePopulation() == null || hanwooMarket.getCattlePopulation().isEmpty()) &&
                 (hanwooMarket.getCattleSale() == null || hanwooMarket.getCattleSale().isEmpty()) &&
                 (hanwooMarket.getCattleFarm() == null || hanwooMarket.getCattleFarm().isEmpty()) &&
-                (hanwooMarket.getCattlePrice() == null || hanwooMarket.getCattlePrice().isEmpty())) {
+                (hanwooMarket.getCattleTransaction() == null || hanwooMarket.getCattleTransaction().isEmpty())) {
             return ResponseEntity.badRequest().body(null);
         }
 
