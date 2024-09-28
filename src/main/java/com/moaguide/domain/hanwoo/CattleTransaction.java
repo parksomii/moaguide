@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Entity
 @Table(name = "cattle_transaction")
-public class CattlePrice {
+public class CattleTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

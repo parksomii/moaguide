@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface CattlePriceRepository extends JpaRepository<CattlePrice, Long> {
+public interface CattlePriceRepository extends JpaRepository<CattleTransaction, Long> {
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.CattleTransactionDto(cp.date, cp.value)" +
-            "FROM CattlePrice cp " +
+            "FROM CattleTransaction cp " +
             "WHERE cp.date >= :date " +
             "GROUP BY cp.date, cp.value " +
             "ORDER BY cp.date, cp.value")
