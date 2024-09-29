@@ -9,5 +9,5 @@ public class VacancyrateDto {
     private int year;
     private int quarter;
     private String region;
-    private double vacancyRate;
+    private double value;
 }

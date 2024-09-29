@@ -9,5 +9,5 @@ public class RentDto {
     private int year;
     private int quarter;
     private String region;
-    private double rent;
+    private double value;
 }

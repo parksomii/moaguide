@@ -1,6 +1,5 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.rent.Rent;
 import com.moaguide.domain.building.rent.RentRepository;
 import com.moaguide.dto.NewDto.BuildingDto.RentDto;
 import com.moaguide.dto.NewDto.BuildingDto.TypeDto;
@@ -18,8 +17,8 @@ public class RentService {
     private RentRepository rentRepository;
 
 
-    public List<RentDto> findBase(String product_Id, String type) {
-        List<RentDto> rent = rentRepository.findBytype(product_Id,type);
+    public List<RentDto> findBase(String product_Id, String type, int syear, int eyear) {
+        List<RentDto> rent = rentRepository.findBytype(product_Id,type,syear,eyear);
         return rent;
     }
 

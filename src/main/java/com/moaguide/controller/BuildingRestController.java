@@ -1,24 +1,21 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.building.businessarea.BusinessArea;
-import com.moaguide.domain.building.near.NearBus;
-import com.moaguide.domain.building.near.NearSubway;
+
 import com.moaguide.dto.LocationDto;
 import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.BuildingDto.*;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.service.DivideService;
-import com.moaguide.service.ProductService;
-import com.moaguide.service.TransactionService;
 import com.moaguide.service.building.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -74,7 +71,9 @@ public class BuildingRestController {
     @GetMapping("/land/{product_Id}")
     public ResponseEntity<Object> land(@PathVariable String product_Id) {
         List<LandDto> landPrice = landPriceService.priceList(product_Id);
-        return ResponseEntity.ok(new BuildingLandResponseDto(landPrice));
+        Map<String, Object> response = new HashMap<>();
+        response.put("lands", landPrice);
+        return ResponseEntity.ok(response   );
     }
 
     @GetMapping("/area/{product_Id}")
@@ -95,13 +94,24 @@ public class BuildingRestController {
     @GetMapping("/population/{product_Id}")
     public ResponseEntity<Object> population(@PathVariable String product_Id, @RequestParam int year,@RequestParam int month) {
         List<PopulationDto> populationDto = populationService.findbydate(product_Id,year,month);
-        return ResponseEntity.ok(new BuildingPopulationDto(populationDto));
+        Map<String, Object> response = new HashMap<>();
+        response.put("populations", populationDto);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/rate/{product_Id}")
-    public ResponseEntity<Object> rate(@PathVariable String product_Id, @RequestParam String type) {
-        List<RentDto> rentDtos = rentService.findBase(product_Id,type);
-        List<VacancyrateDto> vacancyrateDtos = vacancyRateService.findBase(product_Id,type);
-        return ResponseEntity.ok(new BuildingRateResponseDto(rentDtos,vacancyrateDtos));
+    @GetMapping("/rentrate/{product_Id}")
+    public ResponseEntity<Object> rentrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
+        List<RentDto> rentDtos = rentService.findBase(product_Id,type,syear,eyear);
+        Map<String, Object> response = new HashMap<>();
+        response.put("rent", rentDtos);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/vacancyrate/{product_Id}")
+    public ResponseEntity<Object> vacancyrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
+        List<VacancyrateDto> vacancyrateDtos = vacancyRateService.findBase(product_Id,type,syear,eyear);
+        Map<String, Object> response = new HashMap<>();
+        response.put("vacancyrate", vacancyrateDtos);
+        return ResponseEntity.ok(response);
     }
 }
