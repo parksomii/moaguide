@@ -10,7 +10,6 @@ import java.util.List;
 
 @Getter
 public class BuildingSubResponseDto {
-    private List<TypeDto> type;
     private String cbd;
     private String cbdDistance;
     private String cbdCar;
@@ -27,8 +26,7 @@ public class BuildingSubResponseDto {
     private int busLine;
     private int busNode;
 
-    public BuildingSubResponseDto(List<TypeDto> rent, BusinessAreaDto businessArea, List<NearSubwayDto> nearSubway) {
-        this.type = rent;
+    public BuildingSubResponseDto(BusinessAreaDto businessArea, List<NearSubwayDto> nearSubway) {
         this.cbd = businessArea.getCbd();
         this.cbdDistance = businessArea.getCbdDistance();
         this.cbdCar = businessArea.getCbdCar();

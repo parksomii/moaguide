@@ -6,13 +6,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class LandDto {
-    private int landPrice;
-    private String baseYear;
-    private String baseDay;
+    private int value;
+    private String day;
 
-    public LandDto(int landPrice, String baseYear, String baseDay) {
-        this.landPrice = landPrice;
-        this.baseYear = baseYear;
-        this.baseDay = baseDay;
+    public LandDto(int value, String day) {
+        this.value = value;
+        this.day = day;
     }
 }

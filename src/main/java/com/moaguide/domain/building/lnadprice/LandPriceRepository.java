@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface LandPriceRepository extends JpaRepository<LandPrice, Long> {
 
-    @Query("SELECT  new com.moaguide.dto.NewDto.BuildingDto.LandDto(L.landPrice, L.baseYear, L.baseDay) from LandPrice L WHERE L.productId.productId = :productId ORDER BY L.baseYear DESC, L.baseDay DESC")
+    @Query("SELECT  new com.moaguide.dto.NewDto.BuildingDto.LandDto(L.landPrice, L.baseYear) from LandPrice L WHERE L.productId.productId = :productId ORDER BY L.baseYear DESC, L.baseDay DESC")
     List<LandDto> findAllByproductId(@Param("productId") String Id);
 }

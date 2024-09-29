@@ -6,6 +6,7 @@ import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.BuildingDto.*;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
+import com.moaguide.dto.NewDto.customDto.BuildingTypeResponseDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.building.*;
 import lombok.AllArgsConstructor;
@@ -48,8 +49,10 @@ public class BuildingRestController {
     @GetMapping("/{product_Id}")
     public ResponseEntity<?> product(@PathVariable String product_Id) {
         String Nickname = "moaguide";
+        List<TypeDto> rent = rentService.findType(product_Id);
         BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
-        return ResponseEntity.ok(building);
+        BuildingTypeResponseDto response = new BuildingTypeResponseDto(building, rent);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/base/{product_Id}")
@@ -61,10 +64,9 @@ public class BuildingRestController {
 
         @GetMapping("/sub/{product_Id}")
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
-        List<TypeDto> rent = rentService.findType(product_Id);
         BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
-        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(rent,businessArea,nearSubway);
+        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway);
         return ResponseEntity.ok(buildingSubResponseDto);
     }
 
