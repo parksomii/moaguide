@@ -11,8 +11,7 @@ import java.util.List;
 public interface ProductionCostRepository extends JpaRepository<ProductionCost, Long> {
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.ProductionCostDto(p.prdDe, p.prdDt) " +
             "FROM ProductionCost p " +
-            "WHERE p.prdDe >= :year " +
+            "WHERE YEAR(p.prdDe) >= :year " +
             "GROUP BY YEAR(p.prdDe)")
-    List<ProductionCostDto> findProductionCost(@Param("year") LocalDate year);
+    List<ProductionCostDto> findProductionCost(@Param("year") Integer year);
 }
-
