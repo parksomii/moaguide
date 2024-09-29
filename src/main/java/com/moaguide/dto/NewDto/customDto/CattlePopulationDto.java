@@ -8,11 +8,11 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 public class CattlePopulationDto {
-    private Long value;
-    private String date;
+    private String day;
+    private String value;
 
-    public CattlePopulationDto(LocalDate date, Long value) {
-        this.date = startDate(date);
+    public CattlePopulationDto(LocalDate date, String value) {
+        this.day = startDate(date);
         this.value = value;
     }
 

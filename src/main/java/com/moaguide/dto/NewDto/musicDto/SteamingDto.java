@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class SteamingDto {
-    private String steamingCount;   // 스트리밍수
-    private String steamingDate;     // 스트리밍날짜
+    private String day;     // 스트리밍날짜
+    private String value;   // 스트리밍수
 }

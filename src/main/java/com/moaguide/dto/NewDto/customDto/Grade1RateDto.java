@@ -9,12 +9,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Grade1RateDto {
 //    private String cType; // 카테고리 타입
-    private String startDate;; // 연도 + 월
-    private Double grade1Rate; // 1등급 비율
+    private String day;; // 연도 + 월
+    private Double value; // 1등급 비율
 
     public Grade1RateDto(LocalDate preDe, Double grade1Rate) {
-        this.startDate = startDate(preDe);
-        this.grade1Rate = grade1Rate;
+        this.day = startDate(preDe);
+        this.value = grade1Rate;
     }
     /*public Grade1RateDto(LocalDate preDe, Double grade1Rate, String cType) {
         this.startDate = startDate(preDe);

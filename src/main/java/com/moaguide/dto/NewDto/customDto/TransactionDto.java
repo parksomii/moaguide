@@ -14,6 +14,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionDto {
-    private LocalDate date;
-    private long price;
+    private LocalDate day;
+    private long value;
 }

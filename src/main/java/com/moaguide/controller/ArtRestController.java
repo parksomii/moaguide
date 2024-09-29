@@ -30,18 +30,26 @@ public class ArtRestController {
     public ResponseEntity<Object> detail(@PathVariable String product_Id) {
         String Nickname = "moaguide";
         ArtDetailDto artDetail = artService.findArtDetail(product_Id,Nickname);
+        // null 체크
+        if(artDetail == null){
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
         return ResponseEntity.ok().body(artDetail);
     }
 
     @GetMapping("/base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         ArtBaseResponseDto artBaseResponse = artService.findArtBase(product_Id);
+        // null 체크
+        if(artBaseResponse == null){
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
         return ResponseEntity.ok(artBaseResponse);
     }
 
-    @GetMapping("/sub/{product_Id}")
-    public ResponseEntity<Object> add(@PathVariable String product_Id) {
-
-        return ResponseEntity.ok().body(null);
-    }
+//    @GetMapping("/sub/{product_Id}")
+//    public ResponseEntity<Object> add(@PathVariable String product_Id) {
+//        // null 체크
+//        return ResponseEntity.ok().body(null);
+//    }
 }

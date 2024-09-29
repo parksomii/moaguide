@@ -23,18 +23,18 @@ public class HanwooPriceService {
     private final CattleFarmRepository cattleFarmRepository;
     private final CattlePriceRepository cattlePriceRepository;
 
-    public HanwooPriceResponseDto getHanwooPriceData(String category, String date) {
+    public HanwooPriceResponseDto getHanwooPriceData(String category, int month) {
         LocalDate startDate = LocalDate.now();
 
         // 날짜 파라미터에 따라 startDate 설정
-        if ("1y".equals(date)) {
-            startDate = startDate.minusYears(1);  // 1년 전
-        } else if ("3y".equals(date)) {
-            startDate = startDate.minusYears(3);  // 3년 전
-        } else if ("5y".equals(date)) {
-            startDate = startDate.minusYears(5);  // 5년 전
-        } else if ("all".equals(date)) {
-            startDate = LocalDate.of(1990, 1, 1);  // 전체 데이터
+        if (month == 1) {
+            startDate = startDate.minusYears(month);  // 1년 전
+        } else if (month == 3) {
+            startDate = startDate.minusYears(month);  // 3년 전
+        } else if (month == 5) {
+            startDate = startDate.minusYears(month);  // 5년 전
+        } else if (month == 100) {
+            startDate = startDate.minusYears(month);  // 전체 데이터
         } else {
             return null;  // 유효하지 않은 날짜 파라미터 처리
         }
@@ -59,17 +59,17 @@ public class HanwooPriceService {
         return new HanwooPriceResponseDto(averagePrice, grade1Rate, productionCost);
     }
 
-    public HanwooMarketResponseDto findHanwooMarket(String category, String date) {
+    public HanwooMarketResponseDto findHanwooMarket(String category, int month) {
         LocalDate startDate = LocalDate.now();
 
-        if ("1y".equals(date)) {
-            startDate = startDate.minusYears(1);  // 1년 전
-        } else if ("3y".equals(date)) {
-            startDate = startDate.minusYears(3);  // 3년 전
-        } else if ("5y".equals(date)) {
-            startDate = startDate.minusYears(5);  // 5년 전
-        } else if ("all".equals(date)) {
-            startDate = LocalDate.of(1990, 1, 1);  // 전체 데이터
+        if (month == 1) {
+            startDate = startDate.minusYears(month);  // 1년 전
+        } else if (month == 3) {
+            startDate = startDate.minusYears(month);  // 3년 전
+        } else if (month == 5) {
+            startDate = startDate.minusYears(month);  // 5년 전
+        } else if (month == 100) {
+            startDate = startDate.minusYears(month);  // 전체 데이터
         } else {
             return null;  // 유효하지 않은 날짜 파라미터 처리
         }
