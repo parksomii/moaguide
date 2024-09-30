@@ -5,6 +5,7 @@ import com.moaguide.dto.NewDto.customDto.mailDto;
 import com.moaguide.dto.UserDto;
 import com.moaguide.dto.codeDto;
 import com.moaguide.jwt.JWTUtil;
+import com.moaguide.service.BookmarkService;
 import com.moaguide.service.CookieService;
 import com.moaguide.service.EmailService;
 import com.moaguide.service.UserService;
@@ -24,6 +25,7 @@ public class UserRestController {
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
     private final EmailService emailService;
+    private final BookmarkService bookmarkService;
 
     // 닉네임 수정
     @PatchMapping("/update/nickname")
@@ -163,5 +165,13 @@ public class UserRestController {
         String nickname = jwtUtil.getNickname(auth.substring(7));
         String result = userService.delete(nickname);
         return ResponseEntity.ok().body(result);
+    }
+
+    // 관심종목 갯수 조회
+    @GetMapping("/bookmark")
+    public ResponseEntity<?> getBookmarkCount(@RequestHeader("Authorization") String auth) {
+        String nickname = jwtUtil.getNickname(auth.substring(7));
+        int count = bookmarkService.countByUser(nickname);
+        return ResponseEntity.ok().body(count);
     }
 }
