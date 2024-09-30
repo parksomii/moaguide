@@ -13,6 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 @Slf4j
@@ -52,36 +56,31 @@ public class HanwooRestController {
 
     @GetMapping("sub/hanwooPrice")
     public ResponseEntity<Object> getHanwooPriceData(@RequestParam String category, @RequestParam int month) {
-        HanwooPriceResponseDto response = hanwooPriceService.getHanwooPriceData(category, month);
+        List<?> result = hanwooPriceService.getHanwooPriceData(category, month);
+        Map<String, Object> response = new HashMap<>();
         // null 체크
-        if (response == null) {
+        if (result == null) {
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-
-        // 빈 리스트 체크
-        if ((response.getAveragePrice() == null || response.getAveragePrice().isEmpty()) &&
-                (response.getGrade1Rate() == null || response.getGrade1Rate().isEmpty()) &&
-                (response.getProductionCost() == null || response.getProductionCost().isEmpty())) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        if (result.isEmpty()){
+        return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-
+        response.put("object",result);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("sub/hanwoomarket")
     public ResponseEntity<?> getHanwooMarket(@RequestParam String category, @RequestParam int month) {
-        HanwooMarketResponseDto hanwooMarket = hanwooPriceService.findHanwooMarket(category, month);
+        List<?> hanwooMarket = hanwooPriceService.findHanwooMarket(category, month);
+        Map<String, Object> response = new HashMap<>();
         // null 체크
         if (hanwooMarket == null) {
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-
-        // 빈 리스트 체크
-        if (hanwooMarket.getCattlePopulation().isEmpty() && hanwooMarket.getCattleSale().isEmpty() &&
-                hanwooMarket.getCattleFarm().isEmpty() && hanwooMarket.getCattleTransaction().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        if (hanwooMarket.isEmpty()){
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-
+        response.put("object",hanwooMarket);
         return ResponseEntity.ok(hanwooMarket);
     }
 }
