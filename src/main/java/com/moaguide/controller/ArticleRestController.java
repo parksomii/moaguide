@@ -38,9 +38,9 @@ public class ArticleRestController {
         return ResponseEntity.ok(articleDtos);
     }
 
-    @GetMapping("article/{roadmap_Id}")
-    public ResponseEntity<Map<String, Object>> getArticle(@PathVariable int roadmap_Id) {
-        List<ArticleSummaryDto> articleDtos = studyService.findByRoadmap(roadmap_Id);
+    @GetMapping("article/roadmap/{id}")
+    public ResponseEntity<Map<String, Object>> getArticle(@PathVariable int id) {
+        List<ArticleSummaryDto> articleDtos = studyService.findByRoadmap(id);
         Map<String, Object> response = new HashMap<>();
         response.put("articleList", articleDtos);
         return ResponseEntity.ok(response);
