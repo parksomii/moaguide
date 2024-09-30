@@ -30,13 +30,11 @@ public class Article {
 
     private String content;
 
-    @Column(name="pdf_link")
-    private String pdfLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sub_Roadmap_Id", foreignKey = @ForeignKey(name = "Sub_Roadmap_article_FK"))
-    private SubRoadmap subRoadmapId;
+    @JoinColumn(name = "Roadmap_Id", foreignKey = @ForeignKey(name = "Roadmap_article_FK"))
+    private Roadmap RoadmapId;
 
+    private String link;
     private String category;
-
 }

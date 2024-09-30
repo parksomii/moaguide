@@ -11,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -116,7 +118,9 @@ public class SummaryRestController {
     public ResponseEntity<Object> summaryReport(@PathVariable("category") String category) {
         Pageable pageable = PageRequest.of(0, 3);
         List<ArticleSummaryDto> reportList = articleService.getSummary(category, pageable);
-        return ResponseEntity.ok(reportList);
+        Map<String, Object> response = new HashMap<>();
+        response.put("article", reportList);
+        return ResponseEntity.ok(response);
     }
 
 }
