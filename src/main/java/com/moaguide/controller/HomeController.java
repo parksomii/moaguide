@@ -1,9 +1,7 @@
 package com.moaguide.controller;
 
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
-import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
-import com.moaguide.dto.NewDto.customDto.ReportAndNewsDto;
-import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
+import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +20,8 @@ public class HomeController {
     private final NewsService newsService;
     private final ReportService reportService;
     private final ProductService productService;
+    private final NotificationService notificationService;
+    private final JWTUtil jwtUtil;
 
     // 상품현황 북마크 처리
     @PostMapping("summary/{category}/{productId}/BkMark")
@@ -41,4 +41,38 @@ public class HomeController {
         return ResponseEntity.ok(reportAndNewsDto);
     }
 
+    // 홈페이지 알림상태 조회
+    @GetMapping("notification")
+    public ResponseEntity<Boolean> notification(@RequestHeader("Authorization") String token) {
+        // 알림 상태 확인 true or false 반환
+        String Nickname = jwtUtil.getNickname(token.substring(7));
+        boolean status = notificationService.getNotification(Nickname);
+        return ResponseEntity.ok(status);
+    }
+
+    // 알림창 리스트 조회
+    @GetMapping("notificationList")
+    public ResponseEntity<List<NotificationDto>> notificationList(@RequestHeader("Authorization") String token) {
+        // 알림창 리스트 반환
+        String Nickname = jwtUtil.getNickname(token.substring(7));
+        List<NotificationDto> notificationList = notificationService.getNotificationList(Nickname);
+        // 알림이 없으면 빈 리스트 반환
+        if (notificationList == null) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.ok(notificationList);
+    }
+
+    // 알림 읽으면 삭제
+    @DeleteMapping("notification/{id}")
+    public ResponseEntity<String> deleteNotification(@PathVariable("id") Long id) {
+        // 읽은 알림 삭제 시 성공 여부 반환
+        boolean isDeleted = notificationService.deleteNotification(id);
+
+        // 삭제 실패 시 에러 처리
+        if (!isDeleted) {
+            return ResponseEntity.badRequest().body("알림을 삭제하는데 실패했습니다.");
+        }
+        return ResponseEntity.ok("success");
+    }
 }
