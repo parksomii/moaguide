@@ -9,9 +9,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CattlePopulationDto {
     private String day;
-    private String value;
+    private Long  value;
 
-    public CattlePopulationDto(LocalDate date, String value) {
+    public CattlePopulationDto(LocalDate date, Long  value) {
         this.day = startDate(date);
         this.value = value;
     }
