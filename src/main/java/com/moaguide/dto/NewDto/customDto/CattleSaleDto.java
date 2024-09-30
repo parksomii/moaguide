@@ -10,10 +10,10 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 public class CattleSaleDto {
-    private Date day;
+    private LocalDate day;
     private Long  value;
 
-    public CattleSaleDto(Date date, Long  value) {
+    public CattleSaleDto(LocalDate date, Long  value) {
         this.day = date;
         this.value = value;
     }

@@ -18,5 +18,5 @@ public class CattleSale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long value;
-    private Date date;
+    private LocalDate date;
 }
