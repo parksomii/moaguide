@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -74,10 +75,10 @@ public class HanwooPriceService {
             return null;  // 유효하지 않은 날짜 파라미터 처리
         }
 
-        List<CattlePopulationDto> cattlePopulation = null;
-        List<CattleSaleDto> cattleSale = null;
-        List<CattleFarmDto> cattleFarm = null;
-        List<CattleTransactionDto> cattleTransaction = null;
+        List<CattlePopulationDto> cattlePopulation =  new ArrayList<>();
+        List<CattleSaleDto> cattleSale =  new ArrayList<>();
+        List<CattleFarmDto> cattleFarm =  new ArrayList<>();
+        List<CattleTransactionDto> cattleTransaction =  new ArrayList<>();
 
         if ("cattlePopulation".equals(category)) {
             cattlePopulation = cattlePopulationRepository.findCattlePopulation(startDate);
