@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -11,9 +13,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CattleTransactionDto {
     private LocalDate day;
-    private Long  value;
+    private BigDecimal value;
 
-    public CattleTransactionDto(LocalDate date, Long  value) {
+    public CattleTransactionDto(LocalDate date, BigDecimal value) {
         this.day = date;
         this.value = value;
     }

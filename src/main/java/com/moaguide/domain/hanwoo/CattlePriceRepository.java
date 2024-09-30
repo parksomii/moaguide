@@ -9,10 +9,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CattlePriceRepository extends JpaRepository<CattlePrice, Long> {
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.CattleTransactionDto(cp.date, CAST(SUM(cp.value) AS long))" +
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.CattleTransactionDto(cp.date, SUM(cp.value))" +
             "FROM CattlePrice cp " +
             "WHERE cp.date >= :date " +
-            "GROUP BY cp.date " +
+            "GROUP BY YEAR(cp.date), MONTH(cp.date) " +
             "ORDER BY cp.date, cp.value")
     List<CattleTransactionDto> findCattleTransaction(@Param("date") LocalDate date);
 }
