@@ -23,23 +23,5 @@ public class ArticleDto {
 
     private Date date;
 
-    private String content;
-
-    private String pdfLink;
-
-
-    public ArticleDto(Long id, String title, String description, String imageLink) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.imageLink = imageLink;
-    }
-
-    public ArticleDto(String title, Date date, String imageLink, String content, String pdfLink) {
-        this.title = title;
-        this.date = date;
-        this.imageLink = imageLink;
-        this.content = content;
-        this.pdfLink = pdfLink;
-    }
+    private String link;
 }

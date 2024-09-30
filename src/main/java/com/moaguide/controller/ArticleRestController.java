@@ -5,6 +5,7 @@ import com.moaguide.domain.study.Roadmap;
 import com.moaguide.dto.NewDto.ArticlelistResponseDto;
 import com.moaguide.dto.NewDto.RoadmapResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleDto;
+import com.moaguide.dto.NewDto.customDto.ArticleSummaryDto;
 import com.moaguide.dto.NewDto.customDto.SubRoadmapDto;
 import com.moaguide.service.StudyService;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -35,21 +38,11 @@ public class ArticleRestController {
         return ResponseEntity.ok(articleDtos);
     }
 
-    @GetMapping("guide/{category}")
-    public ResponseEntity<List<SubRoadmapDto>> getsubroadmap(@PathVariable int category) {
-        List<SubRoadmapDto> subRoadmap = studyService.findAllbysub(category);
-        return ResponseEntity.ok(subRoadmap);
-    }
-
-    @GetMapping("guide/article")
-    public ResponseEntity<List<ArticleDto>> getArticle( @RequestParam int subcategory) {
-        List<ArticleDto> articles = studyService.findAllById(subcategory);
-        return ResponseEntity.ok(articles);
-    }
-
-    @GetMapping("detail/article/{id}")
-    public ResponseEntity<ArticleDto> getdetail(@PathVariable int id) {
-        ArticleDto articles = studyService.findById(id);
-        return ResponseEntity.ok(articles);
+    @GetMapping("article/{roadmap_Id}")
+    public ResponseEntity<Map<String, Object>> getArticle(@PathVariable int roadmap_Id) {
+        List<ArticleSummaryDto> articleDtos = studyService.findByRoadmap(roadmap_Id);
+        Map<String, Object> response = new HashMap<>();
+        response.put("articleList", articleDtos);
+        return ResponseEntity.ok(response);
     }
 }
