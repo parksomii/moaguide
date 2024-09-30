@@ -25,26 +25,6 @@ public class ReportRestController {
     private ReportService reportService;
     private ReportViewService reportViewService;
 
-
-    // 카테고리별 리포트 조회
-    @GetMapping("/list/{category}")
-    public ResponseEntity<Object> reportListCategory(@PathVariable String category,
-                                                     @RequestParam int page,
-                                                     @RequestParam int size,
-                                                     @RequestParam String subcategory,
-                                                     @RequestParam String sort) {
-        Page<ReportCustomDto> reportList;
-        if (sort.equals("popular")) {
-            reportList = reportService.getAllPopularBySubCategory(category, subcategory, page, size);
-        } else {
-            reportList = reportService.getAllLatestBySubCategory(category, subcategory, page, size);
-            log.info("reportList: {}", reportList);
-        }
-        log.info("******reportList: {}", reportList);
-
-        return ResponseEntity.ok(reportList);
-    }
-
     // 리포트 상세
     @GetMapping("/{report_Id}")
     public ResponseEntity<Object> reportDetail(@PathVariable int report_Id) {
