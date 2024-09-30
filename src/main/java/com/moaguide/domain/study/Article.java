@@ -32,7 +32,7 @@ public class Article {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "Roadmap_article_FK"))
+    @JoinColumn(name = "RoadmapId", foreignKey = @ForeignKey(name = "Roadmap_article_FK"))
     private Roadmap RoadmapId;
 
     private String link;
