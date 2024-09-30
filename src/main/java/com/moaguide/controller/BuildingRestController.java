@@ -108,7 +108,7 @@ public class BuildingRestController {
 
     @GetMapping("/rentrate/{product_Id}")
     public ResponseEntity<Object> rentrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
-        List<RentDto> rentDtos = rentService.findBase(product_Id,type,syear,eyear);
+        Map<String, List<RentDto>> rentDtos = rentService.getRentByRegion(product_Id,type,syear,eyear);
         Map<String, Object> response = new HashMap<>();
         response.put("rent", rentDtos);
         return ResponseEntity.ok(response);
@@ -116,7 +116,7 @@ public class BuildingRestController {
 
     @GetMapping("/vacancyrate/{product_Id}")
     public ResponseEntity<Object> vacancyrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
-        List<VacancyrateDto> vacancyrateDtos = vacancyRateService.findBase(product_Id,type,syear,eyear);
+        Map<String,List<VacancyrateDto>> vacancyrateDtos = vacancyRateService.findBase(product_Id,type,syear,eyear);
         Map<String, Object> response = new HashMap<>();
         response.put("vacancyrate", vacancyrateDtos);
         return ResponseEntity.ok(response);

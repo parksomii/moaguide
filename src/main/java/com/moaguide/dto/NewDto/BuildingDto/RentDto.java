@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class RentDto {
+public class    RentDto {
     private int year;
     private int quarter;
     private String region;
