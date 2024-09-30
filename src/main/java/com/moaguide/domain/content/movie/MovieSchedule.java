@@ -16,8 +16,8 @@ import java.sql.Date;
 @Getter
 @Setter
 @NamedStoredProcedureQuery(
-        name = "getMoviesInDateRange",
-        procedureName = "GetMoviesInDateRange",
+        name = "GetMoviesIntenDateRange",
+        procedureName = "GetMoviesIntenDateRange",
         parameters = {
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "movieId", type = String.class)
         },

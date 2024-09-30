@@ -23,6 +23,8 @@ public class BuildingReponseDto {
     private Integer divideCycle;
     private String link;
     private Boolean bookmark;
+    private Boolean rentTpye;
+
 
     @ConstructorProperties({"product_Id", "category", "platform", "name", "price", "priceRate", "totalPrice", "lastDivide", "lastDivide_rate", "divideCycle","link","bookmark"})
     public BuildingReponseDto(String product_Id, String category, String platform, String name, Integer price, Double priceRate, Long totalPrice, Double lastDivide, Double lastDivide_rate, Integer divideCycle,String link,Boolean bookmark) {

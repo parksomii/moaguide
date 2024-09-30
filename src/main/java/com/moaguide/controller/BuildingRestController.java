@@ -51,8 +51,13 @@ public class BuildingRestController {
         String Nickname = "moaguide";
         List<TypeDto> rent = rentService.findType(product_Id);
         BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
-        BuildingTypeResponseDto response = new BuildingTypeResponseDto(building, rent);
-        return ResponseEntity.ok(response);
+        if(!rent.isEmpty() && !rent.equals(null) && rent.get(0).equals("오피스")) {
+            building.setRentTpye(Boolean.TRUE);
+            return ResponseEntity.ok(building);
+        }else {
+            building.setRentTpye(Boolean.FALSE);
+            return ResponseEntity.ok(building);
+        }
     }
 
     @GetMapping("/base/{product_Id}")

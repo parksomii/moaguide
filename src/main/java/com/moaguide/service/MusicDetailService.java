@@ -181,9 +181,9 @@ public class MusicDetailService {
         if (month == 6) {
             day = day.minusMonths(month); // 6개월 전
         } else if (month == 12) {
-            day = day.minusYears(month); // 1년 전
+            day = day.minusMonths(month); // 1년 전
         } else if (month == 36) {
-            day = day.minusYears(month); // 3년 전
+            day = day.minusMonths(month); // 3년 전
         } else if (month == 100) {
             day = day.minusYears(100); // 전체 기간 조회를 위한 과거 날짜
         } else {
@@ -226,11 +226,11 @@ public class MusicDetailService {
         LocalDate day = LocalDate.now();
 
         if (month == 1) {
-            day = day.minusWeeks(month); // 1주일 전
+            day = day.minusMonths(month); // 1주일 전
         } else if (month == 6) {
-            day = day.minusYears(month); // 6개월 전
+            day = day.minusMonths(month); // 6개월 전
         } else if (month == 12) {
-            day = day.minusYears(month); // 1년 전
+            day = day.minusMonths(month); // 1년 전
         } else if (month == 100) {
             day = day.minusYears(100); // 전체 기간 조회를 위한 과거 날짜
         } else {
@@ -286,11 +286,11 @@ public class MusicDetailService {
         LocalDate day = LocalDate.now();
 
         if (month == 1) {
-            day = day.minusWeeks(month); // 일주일 전
+            day = day.minusMonths(month); // 일주일 전
         } else if (month == 6) {
-            day = day.minusYears(month); // 6개월 전
+            day = day.minusMonths(month); // 6개월 전
         } else if (month == 12) {
-            day = day.minusYears(month); // 1년 전
+            day = day.minusMonths(month); // 1년 전
         } else if (month == 100) {
             day = day.minusYears(100); // 전체 기간 조회를 위한 과거 날짜
         } else {
