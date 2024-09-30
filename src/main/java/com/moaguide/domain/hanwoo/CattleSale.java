@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -17,5 +18,5 @@ public class CattleSale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long value;
-    private LocalDate date;
+    private Date date;
 }
