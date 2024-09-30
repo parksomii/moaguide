@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
 public class CattleFarmDto {
-    private LocalDate day;
+    private Date day;
     private Long  value;
 
-    public CattleFarmDto(LocalDate date, Long  value) {
+    public CattleFarmDto(Date date, Long  value) {
         this.day = date;
         this.value = value;
     }
