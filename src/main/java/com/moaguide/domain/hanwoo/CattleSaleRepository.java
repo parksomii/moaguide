@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CattleSaleRepository extends JpaRepository<CattleSale, Long> {
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.CattleSaleDto(cs.date, SUM(cs.value))" +
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.CattleSaleDto(cs.date, CAST(SUM(cs.value) AS long))" +
             "FROM CattleSale cs " +
             "WHERE cs.date >= :date " +
             "GROUP BY YEAR(cs.date), MONTH(cs.date), cs.value " +
