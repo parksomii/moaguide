@@ -27,8 +27,6 @@ public class TransactionService {
             List<TransactionDto> historyDtos = historyRepository.findbyallday(productId, LocalDate.now().minusMonths(month));
             if (historyDtos != null && !historyDtos.isEmpty()) {
                 transactionDtos.addAll(historyDtos);  // 리스트를 이어붙임
-            }else           {
-                transactionDtos = null;
             }
         }else {
             transactionDtos = null;

@@ -16,7 +16,7 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     // 일별 거래내역 조회
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.TransactionDto(t.tradeDay,t.price) FROM Transaction t WHERE t.productId.productId = :productId AND t.tradeDay >= :day order by t.tradeDay")
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.TransactionDto(t.tradeDay,t.price) FROM Transaction t WHERE t.productId.productId = :productId AND t.tradeDay >= :day order by t.tradeDay desc")
     List<TransactionDto> findbyday(@Param("productId") String productId, @Param("day")LocalDate date);
 
 }
