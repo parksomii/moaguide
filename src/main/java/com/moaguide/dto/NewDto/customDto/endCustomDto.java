@@ -14,14 +14,16 @@ public class endCustomDto {
     private String category;
     private String platform;
     private long totalPrice;
+    private Boolean bookmark;
 
 
-    @ConstructorProperties({"productId", "name", "category", "platform", "totalPrice"})
-    public endCustomDto(String productId, String name, String category, String platform, long totalPrice) {
+    @ConstructorProperties({"productId", "name", "category", "platform", "totalPrice","bookmark"})
+    public endCustomDto(String productId, String name, String category, String platform, long totalPrice, Boolean bookmark) {
         this.productId = productId;
         this.name = name;
         this.category = category;
         this.platform = platform;
         this.totalPrice = totalPrice;
+        this.bookmark = bookmark;
     }
 }

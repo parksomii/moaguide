@@ -26,24 +26,10 @@ import lombok.Setter;
                         @ColumnResult(name = "priceRate", type = Double.class),
                         @ColumnResult(name = "lastDivide_rate", type = Double.class),
                         @ColumnResult(name = "category", type = String.class),
-                        @ColumnResult(name = "platform", type = String.class)
+                        @ColumnResult(name = "platform", type = String.class),
+                        @ColumnResult(name = "bookmark", type = Boolean.class)
                 }
         )
-)
-@NamedNativeQuery(
-        name = "findCustomList",
-        query = "CALL list(:page, :size, :sort)",
-        resultSetMapping = "SummaryCustomDtoMapping"
-)
-@NamedNativeQuery(
-        name = "findCustomListCategory",
-        query = "CALL list_category(:page, :size, :sort, :category)",
-        resultSetMapping = "SummaryCustomDtoMapping"
-)
-@NamedNativeQuery(
-        name = "findCustomListBookmark",
-        query = "CALL list_bookmark(:page, :size, :sort, :category,:nickname)",
-        resultSetMapping = "SummaryCustomDtoMapping"
 )
 public class Product {
     @Id

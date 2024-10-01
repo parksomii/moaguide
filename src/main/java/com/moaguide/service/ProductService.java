@@ -26,12 +26,13 @@ public class ProductService {
     private final IssuePriceRepository issuePriceRepository;
 
     @Transactional(readOnly = false)
-    public List<SummaryCustomDto> getlist(int page, int size, String sort) {
-        return genericRepository.findCustomList(page,size,sort);
+    public List<SummaryCustomDto> getlist(int page, int size, String sort,String nickname) {
+        return genericRepository.findCustomList(page,size,sort,nickname);
     }
 
-    public List<SummaryCustomDto> getcategorylist (int page, int size, String sort, String category) {
-        return genericRepository.findCustomListCategory(page,size,sort,category);
+    @Transactional
+    public List<SummaryCustomDto> getcategorylist (int page, int size, String sort, String category,String nickname) {
+        return genericRepository.findCustomListCategory(page,size,sort,category,nickname);
     }
 
     @Transactional
@@ -40,7 +41,7 @@ public class ProductService {
         Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
             if(category.equals("all")) {
                 int total =  issuePriceRepository.findissue(sqlDate);
-                List<IssueCustomDto> dto = genericRepository.findCustomIssue(page,size,sqlDate);
+                List<IssueCustomDto> dto = genericRepository.findCustomIssue(page,size,sqlDate,nickname);
                 return new SummaryResponseDto(dto,page,size,total);
             }else if (category.equals("bookmark")){
                 int total =  issuePriceRepository.findissuebyBookcark(sqlDate,nickname);
@@ -48,7 +49,7 @@ public class ProductService {
                 return new SummaryResponseDto(dto,page,size,total);
             } else {
                 int total =  issuePriceRepository.findissuebyCategroy(sqlDate,category);
-                List<IssueCustomDto> dto = genericRepository.findCustomIssueCategory(page, size, sqlDate, category);
+                List<IssueCustomDto> dto = genericRepository.findCustomIssueCategory(page, size, sqlDate, category,nickname);
                 return new SummaryResponseDto(dto,page,size,total);
             }
     }
@@ -59,7 +60,7 @@ public class ProductService {
         Date sqlDate = Date.valueOf(localDate); // LocalDate를 java.sql.Date로 변환
         if(category.equals("all")) {
             int total =  genericRepository.getStartCount(sqlDate);
-            List<IssueCustomDto> dto =  genericRepository.findCustomStart(page,size,sqlDate);
+            List<IssueCustomDto> dto =  genericRepository.findCustomStart(page,size,sqlDate,nickname);
             return new SummaryResponseDto(dto,page,size,total);
 
         }else if(category.equals("bookmark")){
@@ -68,16 +69,17 @@ public class ProductService {
             return new SummaryResponseDto(dto,page,size,total);
         }else {
             int total =  genericRepository.getStartCountCategory(sqlDate,category);
-            List<IssueCustomDto> dto = genericRepository.findCustomStartCategory(page, size, sqlDate, category);
+            List<IssueCustomDto> dto = genericRepository.findCustomStartCategory(page, size, sqlDate, category,nickname);
             return new SummaryResponseDto(dto,page,size,total);
 
         }
     }
 
+    @Transactional
     public SummaryResponseDto getfinish(int page, int size, String category, String nickname) {
         if(category.equals("all")){
             int total = productRepository.findlistTotal("매각완료");
-            List<finishCustomDto> dto =  genericRepository.findfinish(page,size);
+            List<finishCustomDto> dto =  genericRepository.findfinish(page,size,nickname);
             return new SummaryResponseDto(dto,page,size,total);
         }else if(category.equals("bookmark")){
             int total = productRepository.findlistTotalByBookmark("매각완료",nickname);
@@ -85,15 +87,16 @@ public class ProductService {
             return new SummaryResponseDto(dto,page,size,total);
         } else {
             int total = productRepository.findlistTotalCategory("매각완료",category);
-            List<finishCustomDto> dto = genericRepository.findfinishCategory(page,size,category);
+            List<finishCustomDto> dto = genericRepository.findfinishCategory(page,size,category,nickname);
             return new SummaryResponseDto(dto,page,size,total);
         }
     }
 
+    @Transactional
     public SummaryResponseDto getend(int page, int size , String category,String nickname) {
         if(category.equals("all")){
             int total = productRepository.findlistTotal("공모완료");
-            List<endCustomDto> dto = genericRepository.findend(page,size);
+            List<endCustomDto> dto = genericRepository.findend(page,size,nickname);
             return new SummaryResponseDto(dto,page,size,total);
         }else if(category.equals("bookmark")){
             int total = productRepository.findlistTotalByBookmark("공모완료",nickname);
@@ -101,12 +104,12 @@ public class ProductService {
             return new SummaryResponseDto(dto,page,size,total);
         } else {
             int total = productRepository.findlistTotalCategory("공모완료",category);
-            List<endCustomDto> dto = genericRepository.findendCategory(page, size, category);
+            List<endCustomDto> dto = genericRepository.findendCategory(page, size, category,nickname);
             return new SummaryResponseDto(dto,page,size,total);
         }
     }
 
-    public int getlistTotal(String status) {
+    public int getlistTotal(String status){
         return productRepository.findlistTotal(status);
     }
 

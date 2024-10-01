@@ -25,51 +25,10 @@ import java.sql.Date;
                         @ColumnResult(name = "day", type = Date.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
-                        @ColumnResult(name = "recruitmentRate", type = Double.class)
+                        @ColumnResult(name = "recruitmentRate", type = Double.class),
+                        @ColumnResult(name = "bookmark", type = Boolean.class)
                 }
         )
-)
-@NamedStoredProcedureQuery(
-        name = "findIssueList",
-        procedureName = "Issue",
-        resultSetMappings = "IssueCustomDtoMapping",
-        parameters = {
-            @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
-            @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
-            @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)
-        }
-)
-@NamedStoredProcedureQuery(
-        name = "findstartList",
-        procedureName = "start",
-        resultSetMappings = "IssueCustomDtoMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class)
-        }
-)
-@NamedStoredProcedureQuery(
-        name = "findIssueListbookMark",
-        procedureName = "IssueBybookMark",
-        resultSetMappings = "IssueCustomDtoMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = String.class)
-        }
-)
-@NamedStoredProcedureQuery(
-        name = "findstartListbookMark",
-        procedureName = "startBybookmark",
-        resultSetMappings = "IssueCustomDtoMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "page", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "day", type = Date.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "size", type = String.class)
-        }
 )
 public class IssuePrice {
 

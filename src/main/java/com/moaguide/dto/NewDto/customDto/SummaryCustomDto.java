@@ -29,4 +29,5 @@ public class SummaryCustomDto {
     private double lastDivide_rate;
     private String category;
     private String platform;
+    private Boolean bookmark;
 }

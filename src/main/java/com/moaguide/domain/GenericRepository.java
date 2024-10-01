@@ -30,90 +30,100 @@ public class GenericRepository {
 
 
     @Transactional
-    public List<SummaryCustomDto> findCustomList(int page, int size, String sort) {
-        return entityManager.createNativeQuery("CALL list(:page, :size, :sort)", "SummaryCustomDtoMapping")
+    public List<SummaryCustomDto> findCustomList(int page, int size, String sort, String nickname) {
+        return entityManager.createNativeQuery("CALL list(:page, :size, :sort,:nickname)", "SummaryCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("sort", sort)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<SummaryCustomDto> findCustomListCategory(int page, int size, String sort, String category) {
+    public List<SummaryCustomDto> findCustomListCategory(int page, int size, String sort, String category, String nickname)  {
         // 프로시저를 호출하는 네이티브 쿼리
-        return entityManager.createNativeQuery("CALL list_category(:page, :size, :sort, :category)", "SummaryCustomDtoMapping")
+        return entityManager.createNativeQuery("CALL list_category(:page, :size, :sort, :category,:nickname)", "SummaryCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("sort", sort)
                 .setParameter("category", category)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<IssueCustomDto> findCustomIssue(int page, int size, Date sqlDate) {
+    public List<IssueCustomDto> findCustomIssue(int page, int size, Date sqlDate,String nickname) {
         // 프로시저를 호출하는 네이티브 쿼리
-        return entityManager.createNativeQuery("CALL Issue(:page, :size, :day)", "IssueCustomDtoMapping")
+        return entityManager.createNativeQuery("CALL Issue(:page, :size, :day,:nickname)", "IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<IssueCustomDto> findCustomStart(int page, int size ,Date sqlDate) {
-        return entityManager.createNativeQuery("CALL start(:page, :size, :day)", "IssueCustomDtoMapping")
+    public List<IssueCustomDto> findCustomStart(int page, int size ,Date sqlDate,String nickname) {
+        return entityManager.createNativeQuery("CALL start(:page, :size, :day,:nickname)", "IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<IssueCustomDto> findCustomIssueCategory(int page, int size, Date sqlDate, String category) {
-        return entityManager.createNativeQuery("CALL Issue_category(:page, :size, :day, :category)", "IssueCustomDtoMapping")
-                .setParameter("page", page)
-                .setParameter("size", size)
-                .setParameter("day", sqlDate)
-                .setParameter("category", category)
-                .getResultList();
-    }
-
-    public List<IssueCustomDto> findCustomStartCategory(int page, int size, Date sqlDate, String category) {
-        return entityManager.createNativeQuery("CALL start_category(:page, :size, :day, :category)","IssueCustomDtoMapping")
+    public List<IssueCustomDto> findCustomIssueCategory(int page, int size, Date sqlDate, String category, String nickname) {
+        return entityManager.createNativeQuery("CALL Issue_category(:page, :size, :day, :category,:nickname)", "IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("day", sqlDate)
                 .setParameter("category", category)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<finishCustomDto> findfinish(int page, int size) {
-        String sql = "CALL finish(:page, :size)";
+    public List<IssueCustomDto> findCustomStartCategory(int page, int size, Date sqlDate, String category,String nickname) {
+        return entityManager.createNativeQuery("CALL start_category(:page, :size, :day, :category,:nickname)","IssueCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("day", sqlDate)
+                .setParameter("category", category)
+                .setParameter("nickname", nickname)
+                .getResultList();
+    }
+
+    public List<finishCustomDto> findfinish(int page, int size, String nickname) {
+        String sql = "CALL finish(:page, :size,:nickname)";
         return entityManager.createNativeQuery(sql, "SaleCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<endCustomDto> findend(int page, int size) {
-        String sql = "CALL endlist(:page, :size)";
+    public List<endCustomDto> findend(int page, int size, String nickname) {
+        String sql = "CALL endlist(:page, :size,:nickname)";
         return entityManager.createNativeQuery(sql, "endCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<finishCustomDto> findfinishCategory(int page, int size, String category) {
-        String sql = "CALL finish_category(:page, :size, :day, :category)";
+    public List<finishCustomDto> findfinishCategory(int page, int size, String category, String nickname) {
+        String sql = "CALL finish_category(:page, :size, :day, :category,:nickname)";
         return entityManager.createNativeQuery(sql, "SaleCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("category", category)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
-    public List<endCustomDto> findendCategory(int page, int size, String category) {
-        String sql = "CALL endlist_category(:page, :size, :day, :category)";
+    public List<endCustomDto> findendCategory(int page, int size, String category, String nickname) {
+        String sql = "CALL endlist_category(:page, :size, :day, :category,:nickname)";
         return entityManager.createNativeQuery(sql, "endCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
                 .setParameter("category", category)
+                .setParameter("nickname", nickname)
                 .getResultList();
     }
 
@@ -154,69 +164,28 @@ public class GenericRepository {
     }
 
     public int getStartCount(Date sqlDate) {
-        // 프로시저 호출을 위한 StoredProcedureQuery 생성
-        StoredProcedureQuery storedProcedure = entityManager
-                .createStoredProcedureQuery("startCount");
-
-        // IN 및 OUT 파라미터 등록
-        storedProcedure.registerStoredProcedureParameter("day", Date.class, ParameterMode.IN);
-        storedProcedure.registerStoredProcedureParameter("totalPages", Integer.class, ParameterMode.OUT);
-
-        // IN 파라미터 설정
-        storedProcedure.setParameter("day", sqlDate);
-
-        // 프로시저 실행
-        storedProcedure.execute();
-
-        // OUT 파라미터 값 반환
-        return (Integer) storedProcedure.getOutputParameterValue("totalPages");
+        String sql = "CALL startCount(:day)";
+        // 프로시저 호출 및 Integer로 결과 받기
+        return ((Number) entityManager.createNativeQuery(sql)
+                .setParameter("day", sqlDate)
+                .getSingleResult()).intValue();
     }
 
     public int getStartCountBookmark(Date sqlDate, String nickname) {
-        // 프로시저 호출을 위한 StoredProcedureQuery 생성
-        StoredProcedureQuery storedProcedure = entityManager
-                .createStoredProcedureQuery("startCountBookmark");
-
-        // IN 및 OUT 파라미터 등록
-        storedProcedure.registerStoredProcedureParameter("day", Date.class, ParameterMode.IN);
-        storedProcedure.registerStoredProcedureParameter("nickname", String.class, ParameterMode.IN);
-        storedProcedure.registerStoredProcedureParameter("totalPages", Integer.class, ParameterMode.OUT);
-
-        // IN 파라미터 설정
-        storedProcedure.setParameter("day", sqlDate);
-        storedProcedure.setParameter("nickname", nickname);
-
-        // 프로시저 실행
-        storedProcedure.execute();
-
-        // OUT 파라미터 값 반환
-        return (Integer) storedProcedure.getOutputParameterValue("totalPages");
+        String sql = "CALL startCountBookmark(:day,:nickname)";
+        // 프로시저 호출 및 Integer로 결과 받기
+        return ((Number) entityManager.createNativeQuery(sql)
+                .setParameter("day", sqlDate)
+                .setParameter("nickname", nickname)
+                .getSingleResult()).intValue();
     }
 
     public int getStartCountCategory(Date sqlDate, String category) {
-        // 프로시저 호출을 위한 StoredProcedureQuery 생성
-        StoredProcedureQuery storedProcedure = entityManager
-                .createStoredProcedureQuery("startCountCategory");
-
-        // IN 및 OUT 파라미터 등록
-        storedProcedure.registerStoredProcedureParameter("day", Date.class, ParameterMode.IN);
-        storedProcedure.registerStoredProcedureParameter("category", String.class, ParameterMode.IN);
-        storedProcedure.registerStoredProcedureParameter("totalPages", Integer.class, ParameterMode.OUT);
-
-        // IN 파라미터 설정
-        storedProcedure.setParameter("day", sqlDate);
-        storedProcedure.setParameter("category", category);
-
-        // 프로시저 실행
-        storedProcedure.execute();
-
-        // OUT 파라미터 값 반환
-        return (Integer) storedProcedure.getOutputParameterValue("totalPages");
+        String sql = "CALL startCountCategory(:day,:category)";
+        // 프로시저 호출 및 Integer로 결과 받기
+        return ((Number) entityManager.createNativeQuery(sql)
+                .setParameter("day", sqlDate)
+                .setParameter("category", category)
+                .getSingleResult()).intValue();
     }
-
-//    public List<MovieScheduleDto> findByschedule(String productId) {
-//        return entityManager.createNativeQuery("call GetMoviesInDateRange(movieId)", "MovieScheduleMapping")
-//                .setParameter("movieId",productId)
-//                .getResultList();
-//    }
 }

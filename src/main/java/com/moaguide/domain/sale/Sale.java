@@ -26,18 +26,9 @@ import java.time.LocalDate;
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
                         @ColumnResult(name = "sailRate", type = Double.class),
+                        @ColumnResult(name = "bookmark", type = Boolean.class)
                 }
         )
-)
-@NamedNativeQuery(
-        name = "saleCustomList",
-        query = "CALL finish(:page, :size)",
-        resultSetMapping = "SaleCustomDtoMapping"
-)
-@NamedNativeQuery(
-        name = "saleCustomListCategory",
-        query = "CALL finish_category(:page, :size, :category)",
-        resultSetMapping = "SaleCustomDtoMapping"
 )
 public class Sale {
     @Id

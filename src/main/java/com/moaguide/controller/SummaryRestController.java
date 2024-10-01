@@ -63,7 +63,7 @@ public class SummaryRestController {
     public ResponseEntity<SummaryRecentDto> getSummary() {
         Pageable pageable = PageRequest.of(0, 3);
         List<SummaryDivideCustomDto> divide = divideService.findrecent(pageable);
-        List<SummaryCustomDto> customDtos = productService.getlist(0,3,"lastDivide_rate desc");
+        List<SummaryCustomDto> customDtos = productService.getlist(0,3,"lastDivide_rate desc","null");
         return ResponseEntity.ok(new SummaryRecentDto(divide,customDtos));
     }
 
@@ -79,7 +79,7 @@ public class SummaryRestController {
         if(subcategory.equals("trade")){
             List<SummaryCustomDto> summary;
             if(category.equals("all")){
-                summary = productService.getlist(page,size,sort);
+                summary = productService.getlist(page,size,sort,nickname);
                 int total =  productService.getlistTotal("거래중");
                 return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size,total));
             }else if(category.equals("bookmark")){
@@ -87,7 +87,7 @@ public class SummaryRestController {
                 int total =  productService.getlistTotalByBookmark("거래중",nickname);
                 return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size,total));
             }else{
-                summary = productService.getcategorylist(page,size,sort,category);
+                summary = productService.getcategorylist(page,size,sort,category,nickname);
                 int total = productService.getlistTotalCategory("거래중",category);
                 return ResponseEntity.ok(new SummaryResponseDto(summary,page,size,total));
             }
