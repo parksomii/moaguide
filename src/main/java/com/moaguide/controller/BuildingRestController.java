@@ -52,10 +52,10 @@ public class BuildingRestController {
         List<TypeDto> rent = rentService.findType(product_Id);
         BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
         if(!rent.isEmpty() && !rent.equals(null) && rent.get(0).getType().equals("오피스")) {
-            building.setRentTpye(Boolean.TRUE);
+            building.setRentType(Boolean.TRUE);
             return ResponseEntity.ok(building);
         }else {
-            building.setRentTpye(Boolean.FALSE);
+            building.setRentType(Boolean.FALSE);
             return ResponseEntity.ok(building);
         }
     }
