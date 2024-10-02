@@ -24,7 +24,7 @@ public class ArticleRestController {
     private final StudyService studyService;
 
     @GetMapping("guide")
-    public ResponseEntity<?> getroadmap(@RequestParam int page , @RequestParam int size) {
+    public ResponseEntity<?> getroadmap() {
         List<Roadmap> roadmaps = studyService.findAll();
         HashMap<String,Object> response = new HashMap<>();
         response.put("roadmap",roadmaps);
