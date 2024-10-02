@@ -63,7 +63,6 @@ public class TokenRestController {
         String username = jwtUtil.getNickname(refresh);
         String role = jwtUtil.getRole(refresh);
 
-
         //make new JWT
         String newAccess = jwtUtil.createJwt("access", username, role, 60 * 1000L); // 1분
         boolean rememberMe = Boolean.parseBoolean(remember);

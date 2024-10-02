@@ -34,6 +34,12 @@ public class JWTUtil {
     public String getCategory(String accessToken) {
         return Jwts.parser().verifyWith(secretKey).build().parseClaimsJws(accessToken).getBody().get("category", String.class);
     }
+
+
+    public String getType(String refresh) {
+        return Jwts.parser().verifyWith(secretKey).build().parseClaimsJws(refresh).getBody().get("Logintype", String.class);
+    }
+
     public String createJwt(String category,String nickname, String role, Long expiredMs) {
 
         return Jwts.builder()

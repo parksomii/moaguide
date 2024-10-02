@@ -67,4 +67,9 @@ public class User {
         this.marketingConsent = marketingConsent;
         this.loginType = loginType;
     }
+
+    public User(String phone, String email) {
+        this.email = email;
+        this.phoneNumber = phone;
+    }
 }

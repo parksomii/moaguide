@@ -43,4 +43,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("select u.email FROM User u where u.phoneNumber = :phone and u.loginType = 'local'")
     String findUserByphone(@Param("phone") String phone);
+
 }

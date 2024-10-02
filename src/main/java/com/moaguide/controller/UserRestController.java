@@ -38,7 +38,7 @@ public class UserRestController {
         }
         //make new JWT
         String newAccess = jwtUtil.createJwt("access", changeuser.getNickname(), changeuser.getRole().name(), 30 * 60 * 1000L); // 30분
-        long refreshTokenValidity = 6 * 30 * 24 * 60 * 60 * 1000L; // 6달 또는 5시간
+        long refreshTokenValidity = 6 * 30 * 24 * 60 * 60 * 1000L; // 6달
         String refreshToken = jwtUtil.createJwt("refresh", changeuser.getNickname(), changeuser.getRole().name(), refreshTokenValidity);
 
         //response

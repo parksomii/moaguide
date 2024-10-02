@@ -6,11 +6,13 @@ import com.moaguide.config.handler.CustomAuthenticationEntryPointHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.moaguide.config.handler.CustomLogoutSuccessHandler;
+import com.moaguide.config.handler.OAuth2SuccessHandler;
 import com.moaguide.jwt.JWTFilter;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.oauth2.CustomClientRegistrationRepo;
 import com.moaguide.security.LoginFilter;
 import com.moaguide.service.CookieService;
+import com.moaguide.service.CustomOAuth2UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +43,7 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
-    private final CustomClientRegistrationRepo customClientRegistrationRepo ;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -79,11 +81,13 @@ public class SecurityConfig {
         http.
                 addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil,cookieService), UsernamePasswordAuthenticationFilter.class);
 
-//        http
-//                .oauth2Login((oauth2) -> oauth2
-//                        .clientRegistrationRepository(customClientRegistrationRepo.clientRegistrationRepository())
-//                        .userInfoEndpoint((userInfoEndpointConfig) ->
-//                                userInfoEndpointConfig.userService(customOAuth2UserService)));
+        http
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService) // 사용자 정보 가져오기
+                        )
+                        .successHandler(new OAuth2SuccessHandler(jwtUtil,cookieService)) // OAuth2 성공 핸들러 직접 호출
+                );
         http.
                 sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

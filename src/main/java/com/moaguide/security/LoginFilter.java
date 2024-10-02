@@ -63,7 +63,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
-
         // 토큰 생성 - rememberMe에 따라 리프레시 토큰의 만료 시간 설정
         //String accessToken = jwtUtil.createJwt("access", username, role, 30 * 60 * 1000L); // 30분
         String accessToken = jwtUtil.createJwt("access", username, role, 60 * 1000L);
