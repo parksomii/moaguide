@@ -39,7 +39,7 @@
             PrintWriter writer = response.getWriter();
 
             try {
-                if (user.getName() == null) {
+                if (user.getNickname() == null || user.getNickname().isEmpty()) {
                     // 이름이 없는 경우, 검증용 토큰 발급 및 JSON 응답 반환
                     String token = jwtUtil.createJwt("verify", user.getPhoneNumber(), "pass", 1000 * 60 * 30L);
                     response.setHeader("verify", token);  // 토큰을 헤더에 설정

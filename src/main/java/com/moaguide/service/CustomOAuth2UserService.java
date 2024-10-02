@@ -40,7 +40,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             return null;
         }
-        String email =oAuth2Response.getEmail();
+        String email = oAuth2Response.getEmail();
         User existData = userRepository.findByEmailAndLoginType(email,registrationId).orElse(null);
         if (existData == null) {
             return  new CustomOAuth2User(new User(oAuth2Response.getPhone(),oAuth2Response.getEmail()));

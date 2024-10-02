@@ -3,6 +3,7 @@ package com.moaguide.dto.NewDto.oauth;
 import com.moaguide.domain.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
@@ -21,7 +22,7 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return null;// 또는 다른 사용자 식별자를 반환하도록 변경 가능
+        return user.getEmail();// 또는 다른 사용자 식별자를 반환하도록 변경 가능
     }
 
     public String getEmail() {
@@ -39,7 +40,7 @@ public class CustomOAuth2User implements OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 사용자 권한을 반환
-        return null;
+        return List.of(new SimpleGrantedAuthority(user.getRole().toString()));
     }
 
     public User getUser() {
