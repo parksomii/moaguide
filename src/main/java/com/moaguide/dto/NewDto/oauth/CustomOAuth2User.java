@@ -21,7 +21,7 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return user.getNickname(); // 또는 다른 사용자 식별자를 반환하도록 변경 가능
+        return null;// 또는 다른 사용자 식별자를 반환하도록 변경 가능
     }
 
     public String getEmail() {
@@ -39,7 +39,7 @@ public class CustomOAuth2User implements OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 사용자 권한을 반환
-        return List.of(() -> user.getRole().name());
+        return null;
     }
 
     public User getUser() {
