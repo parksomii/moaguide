@@ -24,4 +24,5 @@ public class Roadmap {
 
     private String description;
 
+    private String link;
 }

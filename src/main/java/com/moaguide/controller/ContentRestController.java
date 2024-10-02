@@ -3,8 +3,8 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.content.movie.MoviePeople;
 import com.moaguide.domain.content.movie.MovieSchedule;
-import com.moaguide.domain.content.movie.MovieStats;
-import com.moaguide.dto.NewDto.ContentBaseResponseDto;
+import com.moaguide.dto.NewDto.ContentResponseDto;
+import com.moaguide.dto.NewDto.ContentTopResponseDto;
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -36,39 +35,35 @@ public class ContentRestController {
 //    public ResponseEntity<?> getContent(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
 //        String Nickname = jwtUtil.getNickname(auth.substring(7));
 //        ContentDetailDto contentDetailDto = contentService.findDetail(product_Id,Nickname);
-//        return ResponseEntity.ok(new ContentBaseResponseDto(contentDetailDto));
+//        return ResponseEntity.ok(new ContentTopResponseDto(contentDetailDto));
 //    }
 
     @GetMapping("/{product_Id}")
     public ResponseEntity<?> getContent(@PathVariable String product_Id) {
         String Nickname = "moaguide";
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id,Nickname);
-        return ResponseEntity.ok(new ContentBaseResponseDto(contentDetailDto));
+        return ResponseEntity.ok(new ContentTopResponseDto(contentDetailDto));
     }
+
 
 
     @GetMapping("/base/{product_Id}")
     public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {
         ContentBaseDto base = contentService.findBase(product_Id, genre);
-        return ResponseEntity.ok(base);
-    }
-
-    @GetMapping("/inform/{product_Id}")
-    public ResponseEntity<?> inform(@PathVariable String product_Id, @RequestParam String genre) {
         if(genre.equals("MOVIE")){
             MovieInfoDto movie = movieService.findmovie(product_Id);
-            return ResponseEntity.ok(movie);
+            return ResponseEntity.ok(new ContentResponseDto(base,movie));
         } else if (genre.equals("EXHIBITION")) {
             ExhibitInfoDto exhibitInfoDto = contentSubService.findexhibit(product_Id);
-            return ResponseEntity.ok(exhibitInfoDto);
+            return ResponseEntity.ok(new ContentResponseDto(base,exhibitInfoDto));
         }else if (genre.equals("Drama") || genre.equals("ANIMATION")) {
             BroadcastInfoDto broadcast = contentSubService.findbroadcast(product_Id);
-            return ResponseEntity.ok(broadcast);
+            return ResponseEntity.ok(new ContentResponseDto(base,broadcast));
         }  else if(genre.equals("CULTURE")){
             PerformanceInfoDto performance = contentSubService.findperformance(product_Id);
-            return ResponseEntity.ok(performance);
+            return ResponseEntity.ok(new ContentResponseDto(base,performance));
         }else{
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok(new ContentResponseDto(base));
         }
     }
 

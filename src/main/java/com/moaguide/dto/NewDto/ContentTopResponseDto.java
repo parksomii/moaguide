@@ -10,7 +10,7 @@ import java.sql.Date;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContentBaseResponseDto {
+public class ContentTopResponseDto {
     private String productId;
     private String name;
     private String genre;
@@ -24,7 +24,7 @@ public class ContentBaseResponseDto {
     private String link;
     private Boolean bookmark;
 
-    public ContentBaseResponseDto(ContentDetailDto contentDetailDto) {
+    public ContentTopResponseDto(ContentDetailDto contentDetailDto) {
         this.productId = contentDetailDto.getProductId();
         this.name = contentDetailDto.getName();
         this.genre = contentDetailDto.getGenre();;

@@ -35,7 +35,4 @@ public class StudyService {
         }
     }
 
-    public List<ArticleSummaryDto> findByRoadmap(int roadmapId) {
-        return articleRepository.findByRoadmap(roadmapId);
-    }
 }
