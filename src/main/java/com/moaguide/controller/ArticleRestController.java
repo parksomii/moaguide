@@ -24,10 +24,11 @@ public class ArticleRestController {
     private final StudyService studyService;
 
     @GetMapping("guide")
-    public ResponseEntity<RoadmapResponseDto> getroadmap(@RequestParam int page , @RequestParam int size) {
-        Pageable pageable = PageRequest.of(page-1, size);
-        Page<Roadmap> roadmaps = studyService.findAll(pageable);
-        return ResponseEntity.ok(new RoadmapResponseDto(roadmaps));
+    public ResponseEntity<?> getroadmap(@RequestParam int page , @RequestParam int size) {
+        List<Roadmap> roadmaps = studyService.findAll();
+        HashMap<String,Object> response = new HashMap<>();
+        response.put("roadmap",roadmaps);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("article")

@@ -28,7 +28,6 @@ public class Article {
 
     private Date date;
 
-    private String content;
     private String link;
     private String category;
 }

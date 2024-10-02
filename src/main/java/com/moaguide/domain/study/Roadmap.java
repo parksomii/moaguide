@@ -17,12 +17,7 @@ public class Roadmap {
     private Long id;
 
     @Column
-    private String difficulty;
-
-    @Column
     private String title;
-
-    private String description;
 
     private String link;
 }
