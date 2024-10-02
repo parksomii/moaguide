@@ -15,9 +15,8 @@ import java.time.LocalTime;
 public class Notification {
     @Id
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false,referencedColumnName="nickname",name="nickname")
-    private User nickName;
+    private String nickName;
+    @Column(name = "Product_Id")
     private String productId;
     private String message;
     private LocalTime nowDate;
