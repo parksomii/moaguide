@@ -22,7 +22,7 @@ public class StudyService {
     }
 
     public ArticlelistResponseDto findAllByarticle(int nextCursor) {
-        return new ArticlelistResponseDto(articleRepository.findArticle(nextCursor, PageRequest.of(0, 10)));
+        return new ArticlelistResponseDto(articleRepository.findArticle(nextCursor, PageRequest.of(0, 20)));
     }
 
     public List<ArticleSummaryDto> getSummary(String category, Pageable pageable) {

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.moaguide.config.handler.CustomLogoutSuccessHandler;
 import com.moaguide.jwt.JWTFilter;
 import com.moaguide.jwt.JWTUtil;
+import com.moaguide.oauth2.CustomClientRegistrationRepo;
 import com.moaguide.security.LoginFilter;
 import com.moaguide.service.CookieService;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,7 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
+    private final CustomClientRegistrationRepo customClientRegistrationRepo ;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -76,6 +78,12 @@ public class SecurityConfig {
                 addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         http.
                 addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil,cookieService), UsernamePasswordAuthenticationFilter.class);
+
+//        http
+//                .oauth2Login((oauth2) -> oauth2
+//                        .clientRegistrationRepository(customClientRegistrationRepo.clientRegistrationRepository())
+//                        .userInfoEndpoint((userInfoEndpointConfig) ->
+//                                userInfoEndpointConfig.userService(customOAuth2UserService)));
         http.
                 sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
