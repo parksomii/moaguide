@@ -12,7 +12,7 @@ public class SocialClientRegistration {
         return ClientRegistration.withRegistrationId("naver")
                 .clientId("QmiDAoPZrP8ao_7KZPg8")
                 .clientSecret("fLPIZrWMWN")
-                .redirectUri("http://api.moaguide.com/login/oauth2/code/naver")
+                .redirectUri("https://api.moaguide.com/login/oauth2/code/naver")
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .scope("name", "email")
                 .authorizationUri("https://nid.naver.com/oauth2.0/authorize")
