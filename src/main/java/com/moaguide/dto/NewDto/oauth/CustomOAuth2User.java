@@ -22,7 +22,7 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return null;
+        return user.getEmail();  // 예: principal로 사용할 이메일 반환
     }
 
     public String getEmail() {
