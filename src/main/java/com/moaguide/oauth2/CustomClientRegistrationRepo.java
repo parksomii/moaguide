@@ -18,6 +18,7 @@ public class CustomClientRegistrationRepo {
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
 
-        return new InMemoryClientRegistrationRepository(socialClientRegistration.naverClientRegistration());
+        return new InMemoryClientRegistrationRepository(socialClientRegistration.naverClientRegistration(),
+                socialClientRegistration.googleClientRegistration());
     }
 }
