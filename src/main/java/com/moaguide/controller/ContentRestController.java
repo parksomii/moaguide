@@ -56,7 +56,7 @@ public class ContentRestController {
         } else if (genre.equals("EXHIBITION")) {
             ExhibitInfoDto exhibitInfoDto = contentSubService.findexhibit(product_Id);
             return ResponseEntity.ok(new ContentResponseDto(base,exhibitInfoDto));
-        }else if (genre.equals("Drama") || genre.equals("ANIMATION")) {
+        }else if (genre.equals("DRAMA") || genre.equals("ANIMATION")) {
             BroadcastInfoDto broadcast = contentSubService.findbroadcast(product_Id);
             return ResponseEntity.ok(new ContentResponseDto(base,broadcast));
         }  else if(genre.equals("CULTURE")){
