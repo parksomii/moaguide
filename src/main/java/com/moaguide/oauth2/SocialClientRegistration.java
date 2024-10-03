@@ -35,4 +35,18 @@ public class SocialClientRegistration {
 //                .userNameAttributeName("id")
 //                .build();
 //    }
+
+    public ClientRegistration googleClientRegistration() {
+        return ClientRegistration.withRegistrationId("google")
+                .clientId("826354788321-kj10tmqge09a56v2h0dtkej4ntgc15hq.apps.googleusercontent.com")
+                .clientSecret("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")
+                .redirectUri("https://api.moaguide.com/login/oauth2/code/google")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .scope("openid", "email", "profile")
+                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+                .tokenUri("https://oauth2.googleapis.com/token")
+                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+                .userNameAttributeName("sub")
+                .build();
+    }
 }
