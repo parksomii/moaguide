@@ -4,12 +4,14 @@ import com.moaguide.domain.news.News;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 public class NewsCustomDto {
     // 메인 페이지의 최신 이슈를 보여주기 위한 DTO
     private Long id;
@@ -17,6 +19,7 @@ public class NewsCustomDto {
     private String category;
     private String link;
     private Date date;
+    private String description;
 
     // NewsCustomDto에 News를 담기 위한 생성자
     public NewsCustomDto(News news) {
@@ -25,5 +28,6 @@ public class NewsCustomDto {
         this.date = news.getDate();
         this.link = news.getLink();
         this.category = news.getCategory();
+        this.description = news.getDescription();
     }
 }

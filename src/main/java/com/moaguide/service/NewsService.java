@@ -104,9 +104,14 @@ public class NewsService {
         return newsRepository.findById(newsId).orElse(null);
     }
 
-    // 빌딩 뉴스 전체 조회
-    public Page<NewsCustomDto> findBydetail(String keyword, Pageable pageable) {
-        Page<NewsCustomDto> bydetail = newsRepository.findBydetail(keyword, pageable);
-        return bydetail;
+
+    @Transactional
+    public List<NewsCustomDto> findBydetail(String productId, int page, int size) {
+        return newsRepository.findBydetail(productId,page,size);
+    }
+
+    @Transactional
+    public int findByDetailCount(String productId) {
+        return newsRepository.findByDetailCount(productId);
     }
 }

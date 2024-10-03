@@ -12,10 +12,10 @@ public class DetailNewsResponseDto {
     private int page;
     private int size;
 
-    public DetailNewsResponseDto(Page<NewsCustomDto> news) {
-        this.news = news.getContent();
-        this.page = news.getNumber() + 1;
-        this.size = news.getSize();
-        this.total = news.getTotalPages();
+    public DetailNewsResponseDto(List<NewsCustomDto> news,int page,int size,int total) {
+        this.news = news;
+        this.page = page;
+        this.size = size;
+        this.total = total;
     }
 }

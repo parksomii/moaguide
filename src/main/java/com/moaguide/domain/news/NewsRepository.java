@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -41,6 +43,10 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     @Query("SELECT n FROM News n WHERE n.category = :category ORDER BY n.date DESC")
     Page<News> findAllByCategory(Pageable pageable, @Param("category") String category);
 
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.NewsCustomDto(n.id,n.title,n.category,n.link,n.date) FROM News n where n.keyword=:keyword  ORDER BY n.date DESC")
-    Page<NewsCustomDto> findBydetail(@Param("keyword") String keyword, Pageable pageable);
+
+    @Procedure(procedureName = "getNewsCount")
+    int findByDetailCount(@Param("productId")String productId);
+
+    @Query(name = "getBykeyword", nativeQuery = true)
+    List<NewsCustomDto> findBydetail(@Param("productId")String productId,@Param("page") int page,@Param("size") int size);
 }

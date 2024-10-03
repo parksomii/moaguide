@@ -33,11 +33,11 @@ public class DetailRestController {
         return ResponseEntity.ok(new DetailReportResponseDto(report));
     }
 
-    @GetMapping("/news")
-    public ResponseEntity<Object> news(@RequestParam String keyword, @RequestParam int page, @RequestParam int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<NewsCustomDto> newsDtos = newsService.findBydetail(keyword,pageable);
-        return ResponseEntity.ok(new DetailNewsResponseDto(newsDtos));
+    @GetMapping("/news/{product_Id}")
+    public ResponseEntity<Object> news(@PathVariable String product_Id, @RequestParam int page, @RequestParam int size) {
+        List<NewsCustomDto> newsDtos = newsService.findBydetail(product_Id,page-1,size);
+        int total = newsService.findByDetailCount(product_Id);
+        return ResponseEntity.ok(new DetailNewsResponseDto(newsDtos,page,size,total));
     }
 
     @GetMapping("/divide/{product_Id}")
