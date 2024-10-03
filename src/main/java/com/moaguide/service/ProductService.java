@@ -62,7 +62,6 @@ public class ProductService {
             int total =  genericRepository.getStartCount(sqlDate);
             List<IssueCustomDto> dto =  genericRepository.findCustomStart(page,size,sqlDate,nickname);
             return new SummaryResponseDto(dto,page,size,total);
-
         }else if(category.equals("bookmark")){
             int total = genericRepository.getStartCountBookmark(sqlDate,nickname);
             List<IssueCustomDto> dto = genericRepository.findCustomStartBookmark(page, size, sqlDate, nickname);

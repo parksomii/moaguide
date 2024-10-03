@@ -42,11 +42,12 @@
                 if (user.getNickname() == null || user.getNickname().isEmpty()) {
                     // 이름이 없는 경우, 검증용 토큰 발급 및 JSON 응답 반환
                     String token = jwtUtil.createJwt("verify", user.getPhoneNumber(), "pass", 1000 * 60 * 30L);
+                    String email = user.getEmail();
                     response.setHeader("verify", token);  // 토큰을 헤더에 설정
 
                     response.setStatus(HttpStatus.OK.value());
                     writer.write(objectMapper.writeValueAsString(
-                            Map.of("email", user.getEmail())  // JSON 응답에는 이메일만 포함
+                            Map.of("email", email)  // JSON 응답에는 이메일만 포함
                     ));
                     writer.flush();
                 } else {
