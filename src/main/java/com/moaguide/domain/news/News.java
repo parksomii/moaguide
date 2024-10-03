@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -24,7 +24,7 @@ import java.sql.Date;
                         @ColumnResult(name = "description", type = String.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "link", type = String.class),
-                        @ColumnResult(name = "date", type = Date.class)
+                        @ColumnResult(name = "date", type = Timestamp.class)
                 }
         )
 )
@@ -45,7 +45,7 @@ public class News {
 
     private String link;
 
-    private Date date;
+    private Timestamp date;
 
     private String description;
 

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Getter
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class NewsCustomDto {
     private String title;
     private String category;
     private String link;
-    private Date date;
+    private Timestamp date;
     private String description;
 
     // NewsCustomDto에 News를 담기 위한 생성자
