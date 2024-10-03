@@ -61,7 +61,7 @@ public class GenericRepository {
     }
 
     public List<IssueCustomDto> findCustomStart(int page, int size ,Date sqlDate,String nickname) {
-        log.info("세팅값",page,size,sqlDate,nickname);
+        log.info("세팅값 - page: {}, size: {}, sqlDate: {}, nickname: {}", page, size, sqlDate, nickname);
         return entityManager.createNativeQuery("CALL start(:page, :size, :day,:nickname)", "IssueCustomDtoMapping")
                 .setParameter("page", page)
                 .setParameter("size", size)
