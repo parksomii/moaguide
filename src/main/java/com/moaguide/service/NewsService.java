@@ -112,6 +112,12 @@ public class NewsService {
 
     @Transactional
     public int findByDetailCount(String productId) {
-        return newsRepository.findByDetailCount(productId);
+        Object result = newsRepository.findByDetailCount(productId);
+        int countResult = 0;
+
+        if (result != null) {
+            countResult = ((Number) result).intValue();  // Object를 int로 변환
+        }
+        return countResult;
     }
 }

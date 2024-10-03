@@ -43,9 +43,9 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     @Query("SELECT n FROM News n WHERE n.category = :category ORDER BY n.date DESC")
     Page<News> findAllByCategory(Pageable pageable, @Param("category") String category);
 
-
     @Procedure(procedureName = "getNewsCount")
-    int findByDetailCount(@Param("productId")String productId);
+    Object findByDetailCount(@Param("productId") String productId);
+
 
     @Query(name = "getBykeyword", nativeQuery = true)
     List<NewsCustomDto> findBydetail(@Param("productId")String productId,@Param("page") int page,@Param("size") int size);
