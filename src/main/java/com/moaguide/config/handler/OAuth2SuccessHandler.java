@@ -48,7 +48,7 @@
                     String jsonResponse = objectMapper.writeValueAsString(
                             Map.of(
                                     "email", email,
-                                    "URL", "https://moaguide.com/signup"  // URL 추가
+                                    "URL", "https://localhost:3000/signup"  // URL 추가
                             )
                     );
                     writer.write(jsonResponse);
