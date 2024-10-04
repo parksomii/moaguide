@@ -60,6 +60,12 @@ public class BuildingBaseResponseDto {
         );
 
         this.lease = leaseDtos; // Lease 정보는 그대로 사용
+        this.divide = new CurrentDivideDto(
+                building.getLastDivide(),
+                building.getDivideCycle(),
+                building.getPaymentDay(),
+                building.getDivideRate()
+        );
     }
 
 }
