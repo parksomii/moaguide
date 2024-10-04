@@ -66,20 +66,18 @@ public class SecurityConfig {
         http
                 .httpBasic((auth) -> auth.disable());
         http.
-                authorizeHttpRequests(request -> request
-                            .requestMatchers("/logout","/update/phone", "/user/update/nickname"). authenticated() // 로그아웃 요청도 인증 필요
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .anyRequest().permitAll())
-                .exceptionHandling(auth -> auth
-                .authenticationEntryPoint(new CustomAuthenticationEntryPointHandler())
-                .accessDeniedHandler(accessDeniedHandler())); // 접근 거부 핸들러
-        http.
                 addFilterBefore(new CorsFilter(corsConfigurationSource()), ChannelProcessingFilter.class);
-        http.
-                addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        http
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/logout", "/update/phone", "/user/update/nickname").authenticated() // 특정 경로에 대해서만 인증 필요
+                        .anyRequest().permitAll()
+                )
+                // 특정 경로에 대해서만 JWTFilter 적용
+                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests()
+                .requestMatchers("/logout", "/update/phone", "/user/update/nickname").authenticated();
         http.
                 addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil,cookieService), UsernamePasswordAuthenticationFilter.class);
-
         http
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
