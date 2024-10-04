@@ -174,18 +174,18 @@ public class MusicDetailService {
 
     // 유튜브 조회수
     public List<ViewDto> findView(String productId, int month) {
-        // 유튜브 조회수 (6개월, 1년, 3년, 전체)
+        // 유튜브 조회수 (3개월, 6개월, 1년, 전체)
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
 
-        if (month == 6) {
+        if (month == 3) {
+            day = day.minusMonths(month); // 3개월 전
+        } else if (month == 6) {
             day = day.minusMonths(month); // 6개월 전
         } else if (month == 12) {
             day = day.minusMonths(month); // 1년 전
-        } else if (month == 36) {
-            day = day.minusMonths(month); // 3년 전
         } else if (month == 100) {
-            day = day.minusYears(100); // 전체 기간 조회를 위한 과거 날짜
+            day = day.minusYears(10); // 전체 기간 조회를 위한 과거 날짜
         } else {
             return null;
         }
@@ -225,14 +225,14 @@ public class MusicDetailService {
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
 
-        if (month == 1) {
-            day = day.minusMonths(month); // 1주일 전
+        if (month == 3) {
+            day = day.minusMonths(month); // 3개월 전
         } else if (month == 6) {
             day = day.minusMonths(month); // 6개월 전
         } else if (month == 12) {
             day = day.minusMonths(month); // 1년 전
         } else if (month == 100) {
-            day = day.minusYears(100); // 전체 기간 조회를 위한 과거 날짜
+            day = day.minusYears(10); // 전체 기간 조회를 위한 과거 날짜
         } else {
             return null;
         }
@@ -281,18 +281,18 @@ public class MusicDetailService {
 
     // 스트리밍 수
     public List<SteamingDto> findStreaming(String productId, int month) {
-        // 스트리밍 수 (일주일, 6개월, 1년, 전체)
+        // 스트리밍 수 (3개월, 6개월, 1년, 전체)
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
 
-        if (month == 1) {
-            day = day.minusMonths(month); // 일주일 전
+        if (month == 3) {
+            day = day.minusMonths(month); // 3개월 전
         } else if (month == 6) {
             day = day.minusMonths(month); // 6개월 전
         } else if (month == 12) {
             day = day.minusMonths(month); // 1년 전
         } else if (month == 100) {
-            day = day.minusYears(100); // 전체 기간 조회를 위한 과거 날짜
+            day = day.minusYears(10); // 전체 기간 조회를 위한 과거 날짜
         } else {
             return null;
         }
