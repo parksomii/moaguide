@@ -1,15 +1,14 @@
 package com.moaguide.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.moaguide.config.handler.CustomAccessDeniedHandler;
 import com.moaguide.config.handler.CustomAuthenticationEntryPointHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.moaguide.config.handler.CustomLogoutSuccessHandler;
 import com.moaguide.config.handler.OAuth2SuccessHandler;
 import com.moaguide.jwt.JWTFilter;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.oauth2.CustomClientRegistrationRepo;
 import com.moaguide.security.LoginFilter;
 import com.moaguide.service.CookieService;
 import com.moaguide.service.CustomOAuth2UserService;

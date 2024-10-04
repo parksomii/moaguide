@@ -2,10 +2,10 @@ package com.moaguide.dto.NewDto;
 
 
 import com.moaguide.domain.building.landregistry.LandRegistry;
-import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
-import com.moaguide.dto.NewDto.customDto.BuildingDetailDto;
 import com.moaguide.dto.NewDto.BuildingDto.LeaseDto;
 import com.moaguide.dto.NewDto.BuildingDto.PublishDto;
+import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
+import com.moaguide.dto.NewDto.customDto.BuildingDetailDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

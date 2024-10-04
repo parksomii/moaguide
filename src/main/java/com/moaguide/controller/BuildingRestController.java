@@ -6,7 +6,6 @@ import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.BuildingDto.*;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
-import com.moaguide.dto.NewDto.customDto.BuildingTypeResponseDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.building.*;
 import lombok.AllArgsConstructor;

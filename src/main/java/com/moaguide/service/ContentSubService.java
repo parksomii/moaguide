@@ -38,11 +38,6 @@ public class ContentSubService {
         return performanceRepository.findByProductId(productId);
     }
 
-    public TravelInfoDto findtravel(String productId) {
-        return travelRepository.findByProductId(productId);
-
-    }
-
     public List<MovieSubDto> findScreen(String productId) {
         return movieScreenRepository.findByProductId(productId);
     }

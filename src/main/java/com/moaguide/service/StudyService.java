@@ -1,7 +1,9 @@
 package com.moaguide.service;
 
 
-import com.moaguide.domain.study.*;
+import com.moaguide.domain.study.ArticleRepository;
+import com.moaguide.domain.study.Roadmap;
+import com.moaguide.domain.study.RoadmapRepository;
 import com.moaguide.dto.NewDto.ArticlelistResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleSummaryDto;
 import lombok.AllArgsConstructor;

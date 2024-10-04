@@ -221,7 +221,7 @@ public class MusicDetailService {
 
     // 검색량
     public List<SearchDto> findSearch(String productId, int month) {
-        // 검색량 (일주일, 6개월, 1년, 전체)
+        // 검색량 (3개월, 6개월, 1년, 전체)
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
 

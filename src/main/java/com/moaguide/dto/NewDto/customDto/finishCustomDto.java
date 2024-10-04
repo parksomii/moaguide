@@ -1,6 +1,5 @@
 package com.moaguide.dto.NewDto.customDto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

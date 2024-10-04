@@ -1,15 +1,11 @@
 package com.moaguide.dto.NewDto;
 
-import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
 import com.moaguide.dto.NewDto.customDto.MusicDivideResponseDto;
 import com.moaguide.dto.NewDto.customDto.MusicPublishDto;
 import com.moaguide.dto.NewDto.customDto.MusicSongDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

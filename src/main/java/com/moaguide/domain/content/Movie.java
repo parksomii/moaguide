@@ -1,7 +1,6 @@
 package com.moaguide.domain.content;
 
 import com.moaguide.domain.product.Product;
-import com.moaguide.dto.NewDto.customDto.MovieScheduleDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

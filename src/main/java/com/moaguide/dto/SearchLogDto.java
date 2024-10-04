@@ -1,6 +1,5 @@
 package com.moaguide.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 

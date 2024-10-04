@@ -1,7 +1,6 @@
 package com.moaguide.domain.sale;
 
 import com.moaguide.domain.product.Product;
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

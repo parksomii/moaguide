@@ -1,10 +1,11 @@
 package com.moaguide.service.view;
 
 import com.moaguide.domain.news.News;
-import com.moaguide.domain.view.*;
+import com.moaguide.domain.view.NewsView;
+import com.moaguide.domain.view.NewsViewId;
+import com.moaguide.domain.view.NewsViewRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 

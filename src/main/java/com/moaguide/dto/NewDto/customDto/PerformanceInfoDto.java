@@ -1,6 +1,5 @@
 package com.moaguide.dto.NewDto.customDto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

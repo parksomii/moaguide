@@ -1,7 +1,9 @@
 package com.moaguide.service.view;
 
 import com.moaguide.domain.report.Report;
-import com.moaguide.domain.view.*;
+import com.moaguide.domain.view.ReportView;
+import com.moaguide.domain.view.ReportViewId;
+import com.moaguide.domain.view.ReportViewRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;

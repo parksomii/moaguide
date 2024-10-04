@@ -1,9 +1,6 @@
 package com.moaguide.dto.NewDto;
 
-import com.moaguide.domain.building.businessarea.BusinessArea;
-import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.dto.NewDto.BuildingDto.NearSubwayDto;
-import com.moaguide.dto.NewDto.BuildingDto.TypeDto;
 import lombok.Getter;
 
 import java.util.List;

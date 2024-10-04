@@ -3,7 +3,6 @@ package com.moaguide.dto.NewDto.customDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Getter

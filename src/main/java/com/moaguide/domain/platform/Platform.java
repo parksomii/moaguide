@@ -1,7 +1,9 @@
 package com.moaguide.domain.platform;
 
 import com.moaguide.dto.PlatformDto;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

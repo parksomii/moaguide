@@ -2,14 +2,11 @@ package com.moaguide.domain.building.location;
 
 import com.moaguide.domain.product.Product;
 import com.moaguide.dto.LocationDto;
-import com.moaguide.dto.NewDto.BusinessAreaDto;
-import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import jakarta.persistence.*;
-import jakarta.persistence.Entity;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "Location")

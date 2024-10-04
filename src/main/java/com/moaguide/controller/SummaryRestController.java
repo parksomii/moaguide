@@ -1,9 +1,15 @@
 package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.SummaryResponseDto;
-import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.dto.NewDto.customDto.ArticleSummaryDto;
+import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.SummaryDivideCustomDto;
+import com.moaguide.dto.NewDto.customDto.SummaryRecentDto;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.service.*;
+import com.moaguide.service.BookmarkService;
+import com.moaguide.service.CurrentDivideService;
+import com.moaguide.service.ProductService;
+import com.moaguide.service.StudyService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;

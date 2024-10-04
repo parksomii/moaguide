@@ -1,12 +1,10 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.bookmark.BookmarkRepository;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.domain.user.phoneHistory;
 import com.moaguide.domain.user.phoneHistoryRepository;
 import com.moaguide.dto.UserDto;
-import com.moaguide.dto.codeDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;

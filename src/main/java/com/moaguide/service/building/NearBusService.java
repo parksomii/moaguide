@@ -2,7 +2,6 @@ package com.moaguide.service.building;
 
 import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.domain.building.near.NearBusRepository;
-import com.moaguide.domain.building.near.NearSubway;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

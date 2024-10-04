@@ -2,9 +2,6 @@ package com.moaguide.dto;
 
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 import java.sql.Date;

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class SearchDto {
-    private String day;   // 검색날짜
     private String value;  // 검색량
+    private String day;   // 검색날짜
 }
