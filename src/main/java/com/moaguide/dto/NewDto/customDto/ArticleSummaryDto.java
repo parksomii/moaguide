@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +17,7 @@ public class ArticleSummaryDto {
 
     private String imageLink;
 
-    private Date date;
+    private Timestamp date;
 
     private String link;
 }

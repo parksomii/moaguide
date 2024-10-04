@@ -1,11 +1,11 @@
 package com.moaguide.dto.NewDto.customDto;
 
-import jakarta.persistence.Column;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class ArticleDto {
 
     private String imageLink;
 
-    private Date date;
+    private Timestamp date;
 
     private String link;
 }

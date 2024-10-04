@@ -25,12 +25,8 @@ public class StudyService {
         return new ArticlelistResponseDto(articleRepository.findArticle(nextCursor, PageRequest.of(0, 20)));
     }
 
-    public List<ArticleSummaryDto> getSummary(String category, Pageable pageable) {
-        if (category.equals("all")) {
+    public List<ArticleSummaryDto> getSummary(Pageable pageable) {
             return articleRepository.findSummaryAll(pageable);
-        } else {
-            return articleRepository.findSummary(category, pageable);
-        }
     }
 
 }

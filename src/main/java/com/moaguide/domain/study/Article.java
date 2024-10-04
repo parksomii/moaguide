@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 @Entity(name="article")
 @AllArgsConstructor
@@ -26,7 +25,7 @@ public class Article {
     @Column(name="image_link")
     private String imageLink;
 
-    private Date date;
+    private Timestamp date;
 
     private String link;
     private String category;
