@@ -35,7 +35,7 @@ import java.sql.Timestamp;
 )
 @NamedNativeQuery(
         name = "getNewsCount",
-        query = "call getBykeyword(:productId)",
+        query = "call getNewsCount(:productId)",
         resultClass = Integer.class
 )
 public class News {
