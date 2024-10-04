@@ -82,7 +82,7 @@ public class MusicRestController {
     // 유튜브 조회수
     @GetMapping("view/{product_Id}")
     public ResponseEntity<?> view(@PathVariable String product_Id, @RequestParam int month) {
-        // 조회수 (6개월, 1년, 3년, 전체)
+        // 조회수 (3개월, 6개월, 1년, 3년, 전체)
         List<ViewDto> youtubeView = musicService.findView(product_Id, month);
         // null 체크
         if (youtubeView == null) {
@@ -100,7 +100,7 @@ public class MusicRestController {
     // 검색량
     @GetMapping("search/{product_Id}")
     public ResponseEntity<?> search(@PathVariable String product_Id, @RequestParam int month) {
-        // 검색량 (일주일, 6개월, 1년, 전체)
+        // 검색량 (3개월, 6개월, 1년, 전체)
         List<SearchDto> search = musicService.findSearch(product_Id, month);
         // null 체크
         if (search == null) {
@@ -118,7 +118,7 @@ public class MusicRestController {
     // 스트리밍 수
     @GetMapping("streaming/{product_Id}")
     public ResponseEntity<?> streaming(@PathVariable String product_Id, @RequestParam int month) {
-        // 스트리밍 수 (일주일, 6개월, 1년, 전체)
+        // 스트리밍 수 (3개월, 6개월, 1년, 전체)
         List<SteamingDto> streaming = musicService.findStreaming(product_Id, month);
         // null 체크
         if (streaming == null) {
