@@ -4,9 +4,6 @@ import com.moaguide.domain.detail.BuildingDetail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 @Getter
 @AllArgsConstructor
 public class PublishDto {

@@ -1,10 +1,11 @@
 package com.moaguide.domain;
 
-import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
+import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
+import com.moaguide.dto.NewDto.customDto.endCustomDto;
+import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.StoredProcedureQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

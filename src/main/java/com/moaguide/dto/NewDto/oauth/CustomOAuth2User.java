@@ -3,11 +3,9 @@ package com.moaguide.dto.NewDto.oauth;
 import com.moaguide.domain.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor

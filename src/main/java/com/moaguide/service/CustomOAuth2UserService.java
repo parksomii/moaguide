@@ -1,13 +1,11 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.oauth.CustomOAuth2User;
 import com.moaguide.dto.NewDto.oauth.GoogleResponse;
 import com.moaguide.dto.NewDto.oauth.NaverResponse;
 import com.moaguide.dto.NewDto.oauth.OAuth2ResponseDto;
-import com.moaguide.jwt.JWTUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

@@ -2,8 +2,8 @@ package com.moaguide.service;
 
 import com.moaguide.domain.news.News;
 import com.moaguide.domain.news.NewsRepository;
-import com.moaguide.dto.PageRequestDTO;
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
+import com.moaguide.dto.PageRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

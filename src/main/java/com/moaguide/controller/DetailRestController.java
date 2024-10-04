@@ -1,6 +1,9 @@
 package com.moaguide.controller;
 
-import com.moaguide.dto.NewDto.*;
+import com.moaguide.dto.NewDto.DetailDivideResponseDto;
+import com.moaguide.dto.NewDto.DetailNoticeResponseDto;
+import com.moaguide.dto.NewDto.DetailReportResponseDto;
+import com.moaguide.dto.NewDto.DetailTransactionResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.service.*;
 import lombok.AllArgsConstructor;

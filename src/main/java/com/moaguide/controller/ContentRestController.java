@@ -3,9 +3,9 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.content.movie.MoviePeople;
 import com.moaguide.domain.content.movie.MovieSchedule;
+import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentResponseDto;
 import com.moaguide.dto.NewDto.ContentTopResponseDto;
-import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;

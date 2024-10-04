@@ -1,9 +1,7 @@
 package com.moaguide.dto.NewDto;
 
-import com.moaguide.domain.building.location.Location;
 import com.moaguide.dto.LocationDto;
 import com.moaguide.dto.NewDto.BuildingDto.AreaDto;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

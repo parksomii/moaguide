@@ -1,7 +1,6 @@
 package com.moaguide.domain.detail;
 
 import com.moaguide.domain.product.Product;
-import com.moaguide.dto.MusicDetailDto;
 import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

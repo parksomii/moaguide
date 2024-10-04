@@ -1,7 +1,6 @@
 package com.moaguide.dto.NewDto.customDto;
 
 import lombok.Getter;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 

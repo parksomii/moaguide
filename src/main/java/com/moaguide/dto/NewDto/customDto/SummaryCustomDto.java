@@ -1,18 +1,9 @@
 package com.moaguide.dto.NewDto.customDto;
 
-import com.moaguide.domain.divide.Divide;
-import com.moaguide.domain.transaction.Transaction;
-import jakarta.persistence.ColumnResult;
-import jakarta.persistence.ConstructorResult;
-import jakarta.persistence.SqlResultSetMapping;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
 
 
 @Getter

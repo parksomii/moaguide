@@ -2,14 +2,11 @@ package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
 import com.moaguide.dto.NewDto.HanwooDetailDto;
-import com.moaguide.dto.NewDto.HanwooMarketResponseDto;
-import com.moaguide.dto.NewDto.HanwooPriceResponseDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.hanwoo.HanwooPriceService;
 import com.moaguide.service.hanwoo.HanwooService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

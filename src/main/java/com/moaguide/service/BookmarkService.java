@@ -1,14 +1,11 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.bookmark.Bookmark;
 import com.moaguide.domain.bookmark.BookmarkRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.awt.print.Book;
 
 @AllArgsConstructor
 @Getter

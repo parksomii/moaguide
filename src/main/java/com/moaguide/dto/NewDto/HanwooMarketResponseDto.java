@@ -4,7 +4,6 @@ import com.moaguide.dto.NewDto.customDto.CattleFarmDto;
 import com.moaguide.dto.NewDto.customDto.CattlePopulationDto;
 import com.moaguide.dto.NewDto.customDto.CattleSaleDto;
 import com.moaguide.dto.NewDto.customDto.CattleTransactionDto;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -4,7 +4,6 @@ import com.moaguide.dto.NewDto.customDto.NoticeDto;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

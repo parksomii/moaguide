@@ -1,6 +1,5 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.landregistry.LandRegistry;
 import com.moaguide.domain.building.landregistry.LandRegistryRepository;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import lombok.AllArgsConstructor;

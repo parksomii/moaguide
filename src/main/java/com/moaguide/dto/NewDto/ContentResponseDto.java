@@ -1,9 +1,7 @@
 package com.moaguide.dto.NewDto;
 
-import com.moaguide.dto.NewDto.customDto.*;
-import lombok.AllArgsConstructor;
+import com.moaguide.dto.NewDto.customDto.ContentBaseDto;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class ContentResponseDto {
