@@ -2,10 +2,13 @@ package com.moaguide.dto.NewDto;
 
 
 import com.moaguide.domain.building.landregistry.LandRegistry;
+import com.moaguide.domain.divide.CurrentDivide;
 import com.moaguide.dto.NewDto.BuildingDto.LeaseDto;
 import com.moaguide.dto.NewDto.BuildingDto.PublishDto;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.dto.NewDto.customDto.BuildingDetailDto;
+import com.moaguide.dto.NewDto.customDto.CurrentDivideDto;
+import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -18,6 +21,7 @@ public class BuildingBaseResponseDto {
     private BuildingDetailDto buildingDetail;
     private LandRegistry landRegistry;
     private List<LeaseDto> lease;
+    private CurrentDivideDto divide;
 
     public BuildingBaseResponseDto(BuildingBaseDto building, List<LeaseDto> leaseDtos) {
         this.publish = new PublishDto(

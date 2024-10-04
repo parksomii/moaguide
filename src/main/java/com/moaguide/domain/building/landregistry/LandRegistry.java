@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "Land_Registry")
 @AllArgsConstructor
@@ -42,7 +44,10 @@ import lombok.NoArgsConstructor;
                         @ColumnResult(name = "basePrice", type = Integer.class),
                         @ColumnResult(name = "totalPrice", type = long.class),
                         @ColumnResult(name = "subscription", type = String.class),
-                        @ColumnResult(name = "listingDate", type = String.class)
+                        @ColumnResult(name = "listingDate", type = String.class),
+                        @ColumnResult(name = "divideCycle", type = Integer.class),
+                        @ColumnResult(name = "divideRate", type = Double.class),
+                        @ColumnResult(name = "paymentDay", type = Date.class)
                 }
         )
 )

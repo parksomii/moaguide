@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -61,4 +63,10 @@ public class BuildingBaseDto {
     private String subscription; // 청약일정 YYYY.MM.DD ~ YYYY.MM.DD
 
     private String listingDate; // 상장일 YYYY-MM-DD
+
+    private Integer divideCycle;
+
+    private Double divideRate;
+
+    private Date paymentDay;
 }
