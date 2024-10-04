@@ -45,12 +45,13 @@
                     response.setHeader("verify", token);  // 토큰을 헤더에 설정
 
                     response.setStatus(HttpStatus.OK.value());
-                    writer.write(objectMapper.writeValueAsString(
+                    String jsonResponse = objectMapper.writeValueAsString(
                             Map.of(
-                                    "email", email,  // JSON 응답
+                                    "email", email,
                                     "URL", "https://moaguide.com/signup"  // URL 추가
                             )
-                    ));
+                    );
+                    writer.write(jsonResponse);
                     writer.flush();
                 } else {
                     // 이름이 있는 경우, AccessToken 및 RefreshToken 발급
