@@ -47,7 +47,10 @@
 
                     response.setStatus(HttpStatus.OK.value());
                     writer.write(objectMapper.writeValueAsString(
-                            Map.of("email", email)  // JSON 응답에는 이메일만 포함
+                            Map.of(
+                                    "email", email,  // JSON 응답에는 이메일만 포함
+                                    "URL", "https://moaguide.com/signup"  // URL 추가
+                            )
                     ));
                     writer.flush();
                 } else {
@@ -61,8 +64,14 @@
                     cookieService.setCookieWithSameSite(response, "rememberMe", "false", 5 * 60 * 60 * 1000L);
 
                     response.setStatus(HttpStatus.OK.value());
-                    String userJson = objectMapper.writeValueAsString(user);  // 사용자 정보를 JSON으로 직렬화
-                    writer.write("{\"message\": \"Login successful\", \"user\": " + userJson + "}");
+                    String userJson = objectMapper.writeValueAsString(user);
+                    writer.write(objectMapper.writeValueAsString(
+                            Map.of(
+                                    "message", "Login successful",
+                                    "user", userJson,
+                                    "URL", "https://moaguide.com/signup"  // URL 추가
+                            )
+                    ));
                     writer.flush();
                 }
             } catch (IOException e) {
