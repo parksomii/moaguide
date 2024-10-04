@@ -68,14 +68,13 @@ public class SecurityConfig {
         http.
                 addFilterBefore(new CorsFilter(corsConfigurationSource()), ChannelProcessingFilter.class);
         http
+
+                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/logout", "/update/phone", "/user/update/nickname").authenticated() // 특정 경로에 대해서만 인증 필요
                         .anyRequest().permitAll()
-                )
+                );
                 // 특정 경로에 대해서만 JWTFilter 적용
-                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .requestMatchers("/logout", "/update/phone", "/user/update/nickname").authenticated();
         http.
                 addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil,cookieService), UsernamePasswordAuthenticationFilter.class);
         http
