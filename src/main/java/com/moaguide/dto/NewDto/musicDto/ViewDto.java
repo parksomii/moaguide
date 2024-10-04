@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class ViewDto {
-    private String day;    // 조회날짜
     private String value;  // 조회수
+    private String day;    // 조회날짜
 }
