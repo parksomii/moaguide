@@ -48,7 +48,7 @@
                     response.setStatus(HttpStatus.OK.value());
                     writer.write(objectMapper.writeValueAsString(
                             Map.of(
-                                    "email", email,  // JSON 응답에는 이메일만 포함
+                                    "email", email,  // JSON 응답
                                     "URL", "https://moaguide.com/signup"  // URL 추가
                             )
                     ));
