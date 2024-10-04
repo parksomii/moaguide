@@ -114,8 +114,8 @@ public class SummaryRestController {
     }
 
     // 관련 리포트
-    @GetMapping("/report")
-    public ResponseEntity<Object> summaryReport() {
+    @GetMapping("/report/{category}")
+    public ResponseEntity<Object> summaryReport(@PathVariable("category") String category) {
         Pageable pageable = PageRequest.of(0, 3);
         List<ArticleSummaryDto> reportList = articleService.getSummary( pageable);
         Map<String, Object> response = new HashMap<>();
