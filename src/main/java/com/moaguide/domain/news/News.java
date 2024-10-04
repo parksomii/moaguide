@@ -33,6 +33,11 @@ import java.sql.Timestamp;
         query = "CALL getkeyword(:productId,:page,:size)",
         resultSetMapping = "NewsCustomDtoMapping"
 )
+@NamedNativeQuery(
+        name = "getNewsCount",
+        query = "call getBykeyword(:productId)",
+        resultClass = Integer.class
+)
 public class News {
 
     @Id
