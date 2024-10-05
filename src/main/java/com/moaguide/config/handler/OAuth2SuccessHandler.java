@@ -57,6 +57,8 @@
                             .queryParams(queryParams)
                             .build()
                             .toString();
+                    response.sendRedirect(uri);
+
                 } else {
                     // 이름이 있는 경우, AccessToken 및 RefreshToken 발급
                     String accessToken = jwtUtil.createJwt("access", user.getName(), String.valueOf(user.getRole()), 60 * 1000L);
@@ -90,7 +92,7 @@
                             .queryParam("access", accessToken)
                             .build()
                             .toString();
-
+                    response.sendRedirect(uri);
                 }
             } catch (IOException e) {
                 // 에러 처리: 500 응답 전송
