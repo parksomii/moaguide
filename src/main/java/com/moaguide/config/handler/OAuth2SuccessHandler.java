@@ -11,9 +11,14 @@
     import org.springframework.http.HttpStatus;
     import org.springframework.security.core.Authentication;
     import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+    import org.springframework.util.LinkedMultiValueMap;
+    import org.springframework.util.MultiValueMap;
+    import org.springframework.web.util.UriComponentsBuilder;
 
     import java.io.IOException;
     import java.io.PrintWriter;
+    import java.net.URLEncoder;
+    import java.nio.charset.StandardCharsets;
     import java.util.Map;
 
     @AllArgsConstructor
@@ -29,9 +34,7 @@
             CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
             User user = customOAuth2User.getUser();  // User 정보 가져오기
 
-            // 공통 응답 설정
-            response.setContentType("application/json;charset=UTF-8");
-            response.setCharacterEncoding("UTF-8");
+
 
             // ObjectMapper와 PrintWriter를 한번만 생성
             ObjectMapper objectMapper = new ObjectMapper();
@@ -42,17 +45,19 @@
                     // 이름이 없는 경우, 검증용 토큰 발급 및 JSON 응답 반환
                     String token = jwtUtil.createJwt("verify", user.getPhoneNumber(), "pass", 1000 * 60 * 30L);
                     String email = user.getEmail();
-                    response.setHeader("verify", token);  // 토큰을 헤더에 설정
+                    MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+                    queryParams.add("verify",token);
+                    queryParams.add("email",email);
 
-                    response.setStatus(HttpStatus.OK.value());
-                    String jsonResponse = objectMapper.writeValueAsString(
-                            Map.of(
-                                    "email", email,
-                                    "URL", "https://localhost:3000/signup"  // URL 추가
-                            )
-                    );
-                    writer.write(jsonResponse);
-                    writer.flush();
+                    String uri = UriComponentsBuilder
+                            .newInstance()
+                            .scheme("https")
+                            .host("localhost")
+                            .port(3000)
+                            .path("/signup")
+                            .queryParams(queryParams)
+                            .build()
+                            .toString();
                 } else {
                     // 이름이 있는 경우, AccessToken 및 RefreshToken 발급
                     String accessToken = jwtUtil.createJwt("access", user.getName(), String.valueOf(user.getRole()), 60 * 1000L);
@@ -65,14 +70,29 @@
 
                     response.setStatus(HttpStatus.OK.value());
                     String userJson = objectMapper.writeValueAsString(user);
-                    writer.write(objectMapper.writeValueAsString(
+
+                    // JSON 직렬화
+                    String userjson = objectMapper.writeValueAsString(
                             Map.of(
                                     "message", "Login successful",
-                                    "user", userJson,
-                                    "URL", "https://moaguide.com/signup"  // URL 추가
+                                    "user", userJson
                             )
-                    ));
-                    writer.flush();
+                    );
+
+                    // URL에 JSON을 쿼리 파라미터로 추가
+                    String encodedJson = URLEncoder.encode(userjson, StandardCharsets.UTF_8);
+
+                    String uri = UriComponentsBuilder
+                            .newInstance()
+                            .scheme("https")
+                            .host("localhost")
+                            .port(3000)
+                            .path("/signup")
+                            .queryParam("user", encodedJson) // JSON을 하나의 파라미터로 추가
+                            .queryParam("access", accessToken)
+                            .build()
+                            .toString();
+
                 }
             } catch (IOException e) {
                 // 에러 처리: 500 응답 전송
