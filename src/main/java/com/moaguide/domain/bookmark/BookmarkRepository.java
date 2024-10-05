@@ -23,7 +23,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     @Query(value = "INSERT INTO Bookmark (product_Id, nickname) VALUES (:productId, :nickname)", nativeQuery = true)
     void insertBookmark(@Param("productId") String productId, @Param("nickname") String nickname);
 
-    @Query("select count(b) FROM Bookmark b where b.nickName=:nickname")
+    @Query("select count(b) FROM Bookmark b where b.nickName.nickname=:nickname")
     int getTotal(@Param("nickname") String nickname);
 
     @Procedure(name = "bookmarkProductProcedure")
