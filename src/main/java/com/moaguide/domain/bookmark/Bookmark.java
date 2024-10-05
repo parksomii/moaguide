@@ -35,7 +35,7 @@ import lombok.NoArgsConstructor;
         }
 )
 @NamedStoredProcedureQuery(
-        name = "bookmarkProductProcedure",
+        name = "bookmarkProductCategoryProcedure",
         procedureName = "bookmark_product_category",
         resultSetMappings = "BookmarkPRoduct",
         parameters = {
