@@ -80,7 +80,7 @@ public class SignUpRestController {
             if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
                 return ResponseEntity.badRequest().body("회원가입 실패");
             }
-            if(userDto.getPhoneNumber().isEmpty()){
+            if (userDto.getPhoneNumber() == null || userDto.getPhoneNumber().isEmpty()) {
                 userDto.setPhoneNumber(jwtUtil.getNickname(verifyToken));
             }
             userService.historySave(userDto.getPhoneNumber());
