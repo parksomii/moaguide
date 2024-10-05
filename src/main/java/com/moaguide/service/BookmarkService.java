@@ -1,11 +1,15 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.bookmark.BookmarkRepository;
+import com.moaguide.dto.NewDto.SummaryResponseDto;
+import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -41,6 +45,19 @@ public class BookmarkService {
         } catch (Exception e) {
             // 기타 예상치 못한 오류 처리
             throw new RuntimeException("북마크 삭제 중 오류 발생: " + e.getMessage());
+        }
+    }
+
+    @Transactional
+    public SummaryResponseDto getProductBybookmark(String category, String nickname, int page, int size) {
+        if (category.equals("all")){
+            int total = bookmarkRepository.getTotal(nickname);
+            List<BookmarkProductDto> bookmark = bookmarkRepository.getAllbookmark(page,size,nickname);
+            return new SummaryResponseDto(bookmark,page,size,total);
+        }else {
+            int total = bookmarkRepository.getTotalBycategory(nickname,category);
+            List<BookmarkProductDto> bookmark = bookmarkRepository.getAllbookmarkBycategory(page,size,nickname,category);
+            return new SummaryResponseDto(bookmark,page,size,total);
         }
     }
 }

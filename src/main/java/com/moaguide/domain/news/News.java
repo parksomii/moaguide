@@ -34,8 +34,8 @@ import java.sql.Timestamp;
         resultSetMapping = "NewsCustomDtoMapping"
 )
 @NamedNativeQuery(
-        name = "getNewsCount",
-        query = "call getNewsCount(:productId)",
+        name = "getbookmarkCategoryCount",
+        query = "call bookmarkCategoryCount(:nickname,:category)",
         resultClass = Integer.class
 )
 public class News {

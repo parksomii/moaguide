@@ -1,13 +1,17 @@
 package com.moaguide.domain.bookmark;
 
+import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    @Query("SELECT count(b) from Bookmark b where b.nickName.nickname=:nickname")
+    @Query("SELECT CEIL(count(b)/10) from Bookmark b where b.nickName.nickname=:nickname")
     int countByUser(@Param("nickname") String nickname);
 
 
@@ -19,4 +23,15 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     @Query(value = "INSERT INTO Bookmark (product_Id, nickname) VALUES (:productId, :nickname)", nativeQuery = true)
     void insertBookmark(@Param("productId") String productId, @Param("nickname") String nickname);
 
+    @Query("select count(b) FROM Bookmark b where b.nickName=:nickname")
+    int getTotal(@Param("nickname") String nickname);
+
+    @Procedure(name = "bookmarkProductProcedure")
+    List<BookmarkProductDto> getAllbookmark(@Param("page")int page, @Param("size")int size, @Param("nickname")String nickname);
+
+    @Procedure(name = "bookmarkProductCategoryProcedure")
+    List<BookmarkProductDto> getAllbookmarkBycategory(@Param("page")int page, @Param("size")int size, @Param("nickname")String nickname,@Param("category") String category);
+
+    @Procedure(name = "getbookmarkCategoryCount")
+    int getTotalBycategory(@Param("nickname")String nickname,@Param("category") String category);
 }

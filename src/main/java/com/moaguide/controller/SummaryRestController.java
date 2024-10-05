@@ -115,6 +115,9 @@ public class SummaryRestController {
                 inavete = productService.getfinish(page,size,category,nickname);
                 return ResponseEntity.ok(inavete);
             }
+        }else if(subcategory.equals("bookmark")){
+            SummaryResponseDto invate;
+            invate = bookmarkService.getProductBybookmark(category,nickname,page,size);
         }
         return ResponseEntity.badRequest().body("잘못된 요청입니다.");
     }
