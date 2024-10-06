@@ -2,6 +2,7 @@ package com.moaguide.oauth2;
 
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -42,11 +43,13 @@ public class SocialClientRegistration {
                 .clientSecret("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")
                 .redirectUri("https://api.moaguide.com/login/oauth2/code/google")
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .scope("openid", "email", "profile")
+                .scope("profile", "email")
                 .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
-                .tokenUri("https://oauth2.googleapis.com/token")
+                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+                .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
+                .issuerUri("https://accounts.google.com")
                 .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-                .userNameAttributeName("sub")
+                .userNameAttributeName(IdTokenClaimNames.SUB)
                 .build();
     }
 }
