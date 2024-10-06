@@ -45,9 +45,11 @@
                     // 이름이 없는 경우, 검증용 토큰 발급 및 JSON 응답 반환
                     String token = jwtUtil.createJwt("verify", user.getPhoneNumber(), "pass", 1000 * 60 * 30L);
                     String email = user.getEmail();
+                    String login = user.getLoginType();
                     MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
                     queryParams.add("verify",token);
                     queryParams.add("email",email);
+                    queryParams.add("loginType",login);
 
                     String uri = UriComponentsBuilder
                             .newInstance()

@@ -65,8 +65,9 @@ public class User {
         this.loginType = loginType;
     }
 
-    public User(String phone, String email) {
+    public User(String phone, String email,String registrationId) {
         this.email = email;
         this.phoneNumber = phone;
+        this.loginType = registrationId;
     }
 }
