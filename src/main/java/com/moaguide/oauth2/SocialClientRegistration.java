@@ -43,7 +43,7 @@ public class SocialClientRegistration {
                 .clientSecret("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")
                 .redirectUri("https://api.moaguide.com/login/oauth2/code/google")
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .scope("profile", "email")
+                .scope("email", "https://www.googleapis.com/auth/user.phonenumbers.read")
                 .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
                 .tokenUri("https://www.googleapis.com/oauth2/v4/token")
                 .jwkSetUri("https://www.googleapis.com/oauth2/v3/certs")
