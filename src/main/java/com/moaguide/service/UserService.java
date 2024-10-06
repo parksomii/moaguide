@@ -29,17 +29,31 @@ public class UserService {
 
     @Transactional
     public int save(UserDto userdto) {
-        try {
-            userdto.setPassword(passwordEncoder.encode(userdto.getPassword()));
-            userRepository.save(userdto.toUser());
-            return 1;
-        } catch (DataIntegrityViolationException e) {
-            log.info(e.getMessage());
-            return 0;
-        } catch (Exception e) {
-            log.info(e.getMessage());
-            return 0;
+        if (userdto.getLoginType().equals("local")) {
+            try {
+                userdto.setPassword(passwordEncoder.encode(userdto.getPassword()));
+                userRepository.save(userdto.toUser());
+                return 1;
+            } catch (DataIntegrityViolationException e) {
+                log.info(e.getMessage());
+                return 0;
+            } catch (Exception e) {
+                log.info(e.getMessage());
+                return 0;
+            }
+        } else {
+            try {
+                userRepository.save(userdto.toUser());
+                return 1;
+            } catch (DataIntegrityViolationException e) {
+                log.info(e.getMessage());
+                return 0;
+            } catch (Exception e) {
+                log.info(e.getMessage());
+                return 0;
+            }
         }
+
     }
 
     public User updateNickname(String findNickname, String changeNickname) {
