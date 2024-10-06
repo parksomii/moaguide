@@ -1,6 +1,7 @@
 package com.moaguide.domain.bookmark;
 
 import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
+import jakarta.persistence.NamedNativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +33,7 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     @Procedure(name = "bookmarkProductCategoryProcedure")
     List<BookmarkProductDto> getAllbookmarkBycategory(@Param("page")int page, @Param("size")int size, @Param("nickname")String nickname,@Param("category") String category);
 
-    @Procedure(name = "getbookmarkCategoryCount")
-    int getTotalBycategory(@Param("nickname")String nickname,@Param("category") String category);
+
+    @Query(name = "getbookmarkCategoryCount", nativeQuery = true)
+    int getTotalBycategory(@Param("nickname") String nickname, @Param("category") String category);
 }
