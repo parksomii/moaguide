@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.sql.Date;
+
 
 
 @Entity
@@ -24,7 +25,8 @@ import java.sql.Timestamp;
                         @ColumnResult(name = "description", type = String.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "link", type = String.class),
-                        @ColumnResult(name = "date", type = Timestamp.class)
+                        @ColumnResult(name = "date", type = Date.class),
+                        @ColumnResult(name = "imgUrl", type = String.class)
                 }
         )
 )
@@ -50,7 +52,7 @@ public class News {
 
     private String link;
 
-    private Timestamp date;
+    private Date date;
 
     private String description;
 
@@ -58,7 +60,9 @@ public class News {
 
     private String category;
 
+    private String img_url;
+
     public News toDto(){
-        return new News(id, keyword, title, link, date, description, views,category);
+        return new News(id, keyword, title, link, date, description, views,category,img_url);
     }
 }

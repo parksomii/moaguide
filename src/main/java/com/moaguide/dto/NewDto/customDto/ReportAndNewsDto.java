@@ -10,6 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReportAndNewsDto {
-    private List<ReportCustomDto> mainReport; // 주요 리포트
+    private List<ArticleSummaryDto> mainReport; // 주요 리포트
     private List<NewsCustomDto> mainNews; // 최신 이슈
 }

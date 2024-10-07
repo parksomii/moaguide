@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @Getter
 @AllArgsConstructor
@@ -18,8 +18,9 @@ public class NewsCustomDto {
     private String title;
     private String category;
     private String link;
-    private Timestamp date;
+    private Date date;
     private String description;
+    private String imgUrl;
 
     // NewsCustomDto에 News를 담기 위한 생성자
     public NewsCustomDto(News news) {
@@ -29,5 +30,6 @@ public class NewsCustomDto {
         this.link = news.getLink();
         this.category = news.getCategory();
         this.description = news.getDescription();
+        this.imgUrl = news.getImg_url();
     }
 }

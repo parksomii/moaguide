@@ -12,4 +12,5 @@ import java.util.List;
 public class SummaryRecentDto {
     private List<SummaryDivideCustomDto> divide; // 최근 배당금 발표
     private List<SummaryCustomDto> summary; // 최근 상품
+    private List<ArticleSummaryDto> article;
 }

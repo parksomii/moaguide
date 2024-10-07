@@ -70,7 +70,8 @@ public class SummaryRestController {
         Pageable pageable = PageRequest.of(0, 3);
         List<SummaryDivideCustomDto> divide = divideService.findrecent(pageable);
         List<SummaryCustomDto> customDtos = productService.getlist(0,3,"lastDivide_rate desc","null");
-        return ResponseEntity.ok(new SummaryRecentDto(divide,customDtos));
+        List<ArticleSummaryDto> reportList = articleService.getSummary(pageable);
+        return ResponseEntity.ok(new SummaryRecentDto(divide,customDtos,reportList));
     }
 
     // 카테고리별 상품현황 목록 조회
@@ -121,16 +122,6 @@ public class SummaryRestController {
             return ResponseEntity.ok(invate);
         }
         return ResponseEntity.badRequest().body("잘못된 요청입니다.");
-    }
-
-    // 관련 리포트
-    @GetMapping("/report/{category}")
-    public ResponseEntity<Object> summaryReport(@PathVariable("category") String category) {
-        Pageable pageable = PageRequest.of(0, 3);
-        List<ArticleSummaryDto> reportList = articleService.getSummary( pageable);
-        Map<String, Object> response = new HashMap<>();
-        response.put("article", reportList);
-        return ResponseEntity.ok(response);
     }
 
 }

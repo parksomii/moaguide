@@ -1,14 +1,8 @@
 package com.moaguide.controller;
 
-import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
-import com.moaguide.dto.NewDto.customDto.NotificationDto;
-import com.moaguide.dto.NewDto.customDto.ReportAndNewsDto;
-import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.service.NewsService;
-import com.moaguide.service.NotificationService;
-import com.moaguide.service.ProductService;
-import com.moaguide.service.ReportService;
+import com.moaguide.service.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -24,8 +18,7 @@ import java.util.List;
 @RequestMapping("/")
 public class HomeController {
     private final NewsService newsService;
-    private final ReportService reportService;
-    private final ProductService productService;
+    private final StudyService articleService;
     private final NotificationService notificationService;
     private final JWTUtil jwtUtil;
 
@@ -41,9 +34,9 @@ public class HomeController {
     public ResponseEntity<Object> home(@RequestParam(value = "page", defaultValue = "1") int page,
                                        @RequestParam(value = "size", defaultValue = "3") int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        List<ReportCustomDto> mainReport = reportService.getMainReport(pageable);
+        List<ArticleSummaryDto> reportList = articleService.getSummary(pageable);
         List<NewsCustomDto> mainNews = newsService.getMainNews(pageable);
-        ReportAndNewsDto reportAndNewsDto = new ReportAndNewsDto(mainReport, mainNews);
+        ReportAndNewsDto reportAndNewsDto = new ReportAndNewsDto(reportList, mainNews);
         return ResponseEntity.ok(reportAndNewsDto);
     }
 
