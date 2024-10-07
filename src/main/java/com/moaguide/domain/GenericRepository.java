@@ -189,4 +189,13 @@ public class GenericRepository {
                 .setParameter("category", category)
                 .getSingleResult()).intValue();
     }
+
+    public int findissuebyCategroy(Date sqlDate, String category) {
+        String sql = "CALL Issue_count_category(:day,:category)";
+        // 프로시저 호출 및 Integer로 결과 받기
+        return ((Number) entityManager.createNativeQuery(sql)
+                .setParameter("day", sqlDate)
+                .setParameter("category", category)
+                .getSingleResult()).intValue();
+    }
 }
