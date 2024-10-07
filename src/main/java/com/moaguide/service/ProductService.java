@@ -48,7 +48,8 @@ public class ProductService {
                 List<IssueCustomDto> dto = genericRepository.findCustomIssuebyBookmark(page,size,sqlDate,nickname);
                 return new SummaryResponseDto(dto,page,size,total);
             } else {
-                int total =  issuePriceRepository.findissuebyCategroy(sqlDate,category);
+//                int total =  issuePriceRepository.findissuebyCategroy(sqlDate,category);
+                int total =  genericRepository.findissuebyCategroy(sqlDate,category);
                 List<IssueCustomDto> dto = genericRepository.findCustomIssueCategory(page, size, sqlDate, category,nickname);
                 return new SummaryResponseDto(dto,page,size,total);
             }
