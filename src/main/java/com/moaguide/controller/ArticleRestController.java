@@ -25,6 +25,7 @@ public class ArticleRestController {
         List<Roadmap> roadmaps = studyService.findAll();
         HashMap<String,Object> response = new HashMap<>();
         response.put("roadmap",roadmaps);
+        response.put("nextCursor",null);
         return ResponseEntity.ok(response);
     }
 
