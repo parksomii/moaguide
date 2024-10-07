@@ -93,6 +93,10 @@ public class BuildingRestController {
     public ResponseEntity<Object> subway(@PathVariable String product_Id,@RequestParam int year,@RequestParam int month) {
         SubwayTimeDto subwayTimeDtos = subwayTimeService.findbydate(product_Id,year,month);
         List<SubwayWeekDto> subwayWeekDtos = subwayWeekService.findbydate(product_Id,year,month);
+        // null 처리
+        if(subwayTimeDtos == null) subwayTimeDtos = new SubwayTimeDto();
+        // 빈 리스트 처리
+        if(subwayWeekDtos.isEmpty()) subwayWeekDtos.add(new SubwayWeekDto());
         BuildingSubwayResponseDto subwayResponseDto = new BuildingSubwayResponseDto(subwayTimeDtos,subwayWeekDtos);
         return ResponseEntity.ok(subwayResponseDto);
     }
