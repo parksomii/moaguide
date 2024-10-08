@@ -37,7 +37,7 @@ jobs:
           ssh -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "
             docker pull moaguide/moaguide:back_last
             cd /home/ec2-user
-            docker-compose -f docker-compose-back up -d --no-deps \${{ steps.determine-target.outputs.new_target }}
+            docker-compose -f docker-compose-back.yml up -d --no-deps \${{ steps.determine-target.outputs.new_target }}
           "
 
       - name: Health check new environment
