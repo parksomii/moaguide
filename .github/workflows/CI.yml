@@ -43,7 +43,6 @@ jobs:
 
       - name: Build and push Docker image with cache
         run: |
-          docker build --build-arg JAR_FILE=build/libs/*.jar --build-arg PROFILES=blue --build-arg ENV=blue -t moaguide/moaguide_back:last .
-          docker tag moaguide/moaguide_back:last moaguide/moaguide_back:${{ github.sha }}
-          docker push moaguide/moaguide_back:${{ github.sha }}
-          docker push moaguide/moaguide_back:last
+          docker build --build-arg JAR_FILE=build/libs/*.jar --build-arg PROFILES=blue --build-arg ENV=blue -t moaguide/moaguide:back_last .
+          docker push moaguide/moaguide:back_last
+
