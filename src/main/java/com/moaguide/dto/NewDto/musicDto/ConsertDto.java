@@ -12,4 +12,5 @@ public class ConsertDto {
     private String place;
     private String period;
     private String imageUrl;
+    private String link;
 }

@@ -349,7 +349,8 @@ public class MusicDetailService {
                     result[0].toString(),  // title
                     (String) result[1],  // place
                     (String) result[2],  // period
-                    (String) result[3]   // imageUrl
+                    (String) result[3],  // imageUrl
+                    (String) result[4]   // link
             );
             consertList.add(consertDto);
         }
