@@ -81,21 +81,12 @@ jobs:
         if: success()
         run: |
           ssh -t -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "
-            # 1. Copy the current nginx.conf to a temporary file in another directory (e.g., /tmp)
-            docker-compose exec nginx cp /etc/nginx/nginx.conf /tmp/nginx.conf.tmp
-      
-            # 2. Modify the temporary file in the /tmp directory
             if [ '${{ steps.determine-target.outputs.new_target }}' = 'back_blue' ]; then
-              docker-compose exec nginx sed -i 's/server back_green:8081/server back_blue:8080/' /tmp/nginx.conf.tmp
+              sed -i 's/server back_green:8081/server back_blue:8080/' /home/ec2-user/nginx/nginx.conf
             else
-              docker-compose exec nginx sed -i 's/server back_blue:8080/server back_green:8081/' /tmp/nginx.conf.tmp
+              sed -i 's/server back_blue:8080/server back_green:8081/' /home/ec2-user/nginx/nginx.conf
             fi
-      
-            # 3. Atomic move: copy the modified file back to /etc/nginx/ with --remove-destination option
-            docker-compose exec nginx cp --remove-destination /tmp/nginx.conf.tmp /etc/nginx/nginx.conf
-      
-            # 4. Reload NGINX to apply the new configuration
-            docker-compose exec nginx nginx -s reload
+            docker-compose -f docker-compose-back.yml exec nginx nginx -s reload
           "
 
 
