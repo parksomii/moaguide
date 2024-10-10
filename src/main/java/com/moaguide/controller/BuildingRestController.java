@@ -10,6 +10,7 @@ import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.building.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,6 +64,14 @@ public class BuildingRestController {
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         BuildingBaseDto building = landRegistryService.findbase(product_Id);
         List<LeaseDto> leaseDtos = leaseService.detail(product_Id);
+        // null 처리
+        if(building == null) {
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
+        // 빈 리스트 처리
+        if(leaseDtos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        }
         return ResponseEntity.ok(new BuildingBaseResponseDto(building,leaseDtos));
     }
 
@@ -70,13 +79,25 @@ public class BuildingRestController {
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
         BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
+        // null 처리
+        if(businessArea == null) {
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
+        // 빈 리스트 처리
+        if(nearSubway.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        }
         BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway);
-        return ResponseEntity.ok(buildingSubResponseDto);
+                return ResponseEntity.ok(buildingSubResponseDto);
     }
 
     @GetMapping("/land/{product_Id}")
     public ResponseEntity<Object> land(@PathVariable String product_Id) {
         List<LandDto> landPrice = landPriceService.priceList(product_Id);
+        // null 처리
+        if (landPrice == null) {
+            return ResponseEntity.ok(new HashMap<>());
+        }
         Map<String, Object> response = new HashMap<>();
         response.put("lands", landPrice);
         return ResponseEntity.ok(response   );
@@ -86,6 +107,14 @@ public class BuildingRestController {
     public ResponseEntity<Object> area(@PathVariable String product_Id) {
         LocationDto location = locationService.locate(product_Id);
         List<AreaDto> areas = areaService.findpolygon(product_Id);
+        // null 처리
+        if(location == null) {
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
+        // 빈 리스트 처리
+        if(areas.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        }
         return ResponseEntity.ok(new BuildingAreaResponseDto(location,areas));
     }
 
@@ -94,9 +123,13 @@ public class BuildingRestController {
         SubwayTimeDto subwayTimeDtos = subwayTimeService.findbydate(product_Id,year,month);
         List<SubwayWeekDto> subwayWeekDtos = subwayWeekService.findbydate(product_Id,year,month);
         // null 처리
-        if(subwayTimeDtos == null) subwayTimeDtos = new SubwayTimeDto();
+        if(subwayTimeDtos == null) {
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
         // 빈 리스트 처리
-        if(subwayWeekDtos.isEmpty()) subwayWeekDtos.add(new SubwayWeekDto());
+        if(subwayWeekDtos.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        }
         BuildingSubwayResponseDto subwayResponseDto = new BuildingSubwayResponseDto(subwayTimeDtos,subwayWeekDtos);
         return ResponseEntity.ok(subwayResponseDto);
     }
@@ -104,6 +137,10 @@ public class BuildingRestController {
     @GetMapping("/population/{product_Id}")
     public ResponseEntity<Object> population(@PathVariable String product_Id, @RequestParam int year,@RequestParam int month) {
         List<PopulationDto> populationDto = populationService.findbydate(product_Id,year,month);
+        // null 처리
+        if (populationDto == null) {
+            return ResponseEntity.ok(new HashMap<>());
+        }
         Map<String, Object> response = new HashMap<>();
         response.put("populations", populationDto);
         return ResponseEntity.ok(response);
@@ -112,6 +149,10 @@ public class BuildingRestController {
     @GetMapping("/rentrate/{product_Id}")
     public ResponseEntity<Object> rentrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
         Map<String, List<RentDto>> rentDtos = rentService.getRentByRegion(product_Id,type,syear,eyear);
+        // null 처리
+        if (rentDtos == null) {
+            return ResponseEntity.ok(new HashMap<>());
+        }
         Map<String, Object> response = new HashMap<>();
         response.put("rent", rentDtos);
         return ResponseEntity.ok(response);
@@ -120,6 +161,10 @@ public class BuildingRestController {
     @GetMapping("/vacancyrate/{product_Id}")
     public ResponseEntity<Object> vacancyrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
         Map<String,List<VacancyrateDto>> vacancyrateDtos = vacancyRateService.findBase(product_Id,type,syear,eyear);
+        // null 처리
+        if (vacancyrateDtos == null) {
+            return ResponseEntity.ok(new HashMap<>());
+        }
         Map<String, Object> response = new HashMap<>();
         response.put("vacancyrate", vacancyrateDtos);
         return ResponseEntity.ok(response);

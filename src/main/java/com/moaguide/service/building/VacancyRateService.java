@@ -18,6 +18,10 @@ public class VacancyRateService {
     public Map<String,List<VacancyrateDto>> findBase(String product_Id, String type, int syear, int eyear){
         int regionCount = vacancyRateRepository.findDistinctRegionCount(product_Id);
         List<VacancyrateDto> vacancyList = vacancyRateRepository.findByLastmonth(product_Id,type,syear,eyear);
+        // 만약 regionCount가 0이거나 vacancyList가 비어있다면 null 반환
+        if (regionCount == 0 || vacancyList.isEmpty()) {
+            return new HashMap<>();
+        }
         // 전체 데이터를 지역별로 나눌 수 있는 크기 계산
         int sizePerRegion = vacancyList.size() / regionCount;
         Map<String, List<VacancyrateDto>> rentMap = new HashMap<>();

@@ -85,6 +85,10 @@ public class DetailRestController {
     @GetMapping("/notice/{notice_Id}")
     public ResponseEntity<Object> notice(@PathVariable long notice_Id){
         NoticeDto noticeDto = noticeService.findBydetail(notice_Id);
+        // null 체크
+        if (noticeDto == null) {
+            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+        }
         return ResponseEntity.ok().body(noticeDto);
     }
 
