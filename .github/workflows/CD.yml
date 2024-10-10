@@ -81,12 +81,13 @@ jobs:
         run: |
           ssh -t -i /tmp/ssh_key -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -o ConnectTimeout=10 ec2-user@${{ secrets.LIVE_SERVER_IP }} "
             if [ '${{ steps.determine-target.outputs.new_target }}' = 'back_blue' ]; then
-              sed -i 's/server back_green:8081/server back_blue:8080/' /home/ec2-user/nginx.conf
+              docker-compose exec nginx sed -i 's/server back_green:8081/server back_blue:8080/' /etc/nginx/nginx.conf
             else
-              sed -i 's/server back_blue:8080/server back_green:8081/' /home/ec2-user/nginx.conf
+              docker-compose exec nginx sed -i 's/server back_blue:8080/server back_green:8081/' /etc/nginx/nginx.conf
             fi
-            docker-compose -f docker-compose-back.yml exec nginx nginx -s reload
+            docker-compose exec nginx nginx -s reload
           "
+
 
       - name: Stop old environment
         if: success()
