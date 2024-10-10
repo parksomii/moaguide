@@ -85,7 +85,6 @@ jobs:
             else
               sed -i 's/server back_blue:8080/server back_green:8081/' /home/ec2-user/nginx.conf
             fi
-            docker-compose -f docker-compose-back.yml up -d nginx  # Restart NGINX container if not running.
             docker-compose -f docker-compose-back.yml exec nginx nginx -s reload
           "
 
