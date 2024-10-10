@@ -54,7 +54,7 @@
                     String uri = UriComponentsBuilder
                             .newInstance()
                             .scheme("https")
-                            .host("moaguide.vercel.app")
+                            .host("moaguide.com")
                             .path("/signup")
                             .queryParams(queryParams)
                             .build()
@@ -88,7 +88,7 @@
                     String uri = UriComponentsBuilder
                             .newInstance()
                             .scheme("https")
-                            .host("moaguide.vercel.app")
+                            .host("moaguide.com")
                             .path("/")
                             .queryParam("user", encodedJson) // JSON을 하나의 파라미터로 추가
                             .queryParam("access", accessToken)
