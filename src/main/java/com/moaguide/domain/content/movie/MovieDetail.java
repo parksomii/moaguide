@@ -31,12 +31,12 @@ public class MovieDetail {
     private Date day;
 
     @Column(name = "showtimes_count")
-    private int showtimesCount;
+    private Integer showtimesCount;
 
-    private int revenue;
+    private Long revenue;
 
     @Column(name = "audience_count")
-    private int audienceCount;
+    private Integer audienceCount;
 
-    private int ranking;
+    private Integer ranking;
 }

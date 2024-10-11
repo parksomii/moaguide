@@ -10,6 +10,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovieSubDto {
-    private int count;
+    private Long count;
     private Date day;
 }
