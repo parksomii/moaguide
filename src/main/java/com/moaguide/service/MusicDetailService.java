@@ -19,8 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class MusicDetailService {
     private final MusicDivideRepository musicDivideRepository;
     private final CurrentDivideRepository currentDivideRepository;
     private final DivideRepository divideRepository;
+    private final DataSource dataSource;
 
     @PersistenceContext
     private final EntityManager entityManager;
@@ -237,43 +239,34 @@ public class MusicDetailService {
             return null;
         }
 
-        // 1. MusicDetail에서 데이터 검색 (프로시저 호출)
-        StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("music_search")
-                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
-                .registerStoredProcedureParameter("in_Start_Date", Date.class, ParameterMode.IN)
-                .setParameter("in_Product_Id", productId)
-                .setParameter("in_Start_Date", Date.valueOf(day));
-
-        List<Object[]> resultList = query.getResultList();
-
-        // 2. MusicDetail에서 결과가 없으면 Product에서 검색
-        if (resultList.isEmpty()) {
-
-            // Product 프로시저 호출
-            query = entityManager
-                    .createStoredProcedureQuery("product_search")
-                    .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
-                    .registerStoredProcedureParameter("in_Start_Date", Date.class, ParameterMode.IN)
-                    .setParameter("in_Product_Id", productId)
-                    .setParameter("in_Start_Date", Date.valueOf(day));
-
-            resultList = query.getResultList();
-
-            // Product에서도 결과가 없으면 null 반환
-            if (resultList.isEmpty()) {
-                return null;
-            }
-        }
-
-        // 결과 처리
         List<SearchDto> searchList = new ArrayList<>();
-        for (Object[] result : resultList) {
-            SearchDto searchDto = new SearchDto(
-                    result[0].toString(),  // 검색량
-                    result[1].toString()   // 검색날짜
-            );
-            searchList.add(searchDto);
+
+        try (Connection connection = dataSource.getConnection()) {
+            // 첫 번째 프로시저 (music_search)
+            CallableStatement stmtMusicSearch = connection.prepareCall("{call music_search(?, ?)}");
+            stmtMusicSearch.setString(1, productId);
+            stmtMusicSearch.setDate(2, Date.valueOf(day));
+            ResultSet result = stmtMusicSearch.executeQuery();
+            while (result.next()) {
+                String value = result.getString("value");
+                String viewDay = result.getString("viewDay");
+                searchList.add(new SearchDto(value, viewDay));
+            }
+            result.close();
+
+            // 두 번째 프로시저 (product_search)
+            CallableStatement stmtProductSearch = connection.prepareCall("{call product_search(?, ?)}");
+            stmtProductSearch.setString(1, productId);
+            stmtProductSearch.setDate(2, Date.valueOf(day));
+            result = stmtProductSearch.executeQuery();
+            while (result.next()) {
+                String value = result.getString("value");
+                String viewDay = result.getString("viewDay");
+                searchList.add(new SearchDto(value, viewDay));
+            }
+            result.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         return searchList;
