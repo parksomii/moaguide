@@ -6,10 +6,7 @@ import com.moaguide.dto.NewDto.customDto.MusicDivideResponseDto;
 import com.moaguide.dto.NewDto.customDto.MusicPublishDto;
 import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
 import com.moaguide.dto.NewDto.customDto.MusicSongDto;
-import com.moaguide.dto.NewDto.musicDto.ConsertDto;
-import com.moaguide.dto.NewDto.musicDto.SearchDto;
-import com.moaguide.dto.NewDto.musicDto.SteamingDto;
-import com.moaguide.dto.NewDto.musicDto.ViewDto;
+import com.moaguide.dto.NewDto.musicDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CurrentDivideService;
 import com.moaguide.service.DivideService;
@@ -103,6 +100,7 @@ public class MusicRestController {
     public ResponseEntity<?> search(@PathVariable String product_Id, @RequestParam int month) {
         // 검색량 (3개월, 6개월, 1년, 전체)
         List<SearchDto> search = musicService.findSearch(product_Id, month);
+//        SearchResultDto search = musicService.findSearch(product_Id, month);
         // null 체크
         if (search == null) {
             return ResponseEntity.badRequest().body("Invalid request: No data found.");

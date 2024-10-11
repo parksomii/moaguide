@@ -6,10 +6,7 @@ import com.moaguide.domain.divide.DivideRepository;
 import com.moaguide.domain.divide.MusicDivideRepository;
 import com.moaguide.dto.NewDto.MusicSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
-import com.moaguide.dto.NewDto.musicDto.ConsertDto;
-import com.moaguide.dto.NewDto.musicDto.SearchDto;
-import com.moaguide.dto.NewDto.musicDto.SteamingDto;
-import com.moaguide.dto.NewDto.musicDto.ViewDto;
+import com.moaguide.dto.NewDto.musicDto.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;
@@ -239,34 +236,30 @@ public class MusicDetailService {
             return null;
         }
 
+        // StoredProcedureQuery 객체 생성
+        StoredProcedureQuery query = entityManager
+                .createStoredProcedureQuery("product_search")
+                .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("in_Start_Date", Date.class, ParameterMode.IN)
+                .setParameter("in_Product_Id", productId)
+                .setParameter("in_Start_Date", Date.valueOf(day));
+
+        // 프로시저 실행 및 결과 조회
+        List<Object[]> resultList = query.getResultList();
+
+        // 결과가 없을 경우 null 반환
+        if (resultList.isEmpty()) {
+            return null;
+        }
+
+        // 결과 처리
         List<SearchDto> searchList = new ArrayList<>();
-
-        try (Connection connection = dataSource.getConnection()) {
-            // 첫 번째 프로시저 (music_search)
-            CallableStatement stmtMusicSearch = connection.prepareCall("{call music_search(?, ?)}");
-            stmtMusicSearch.setString(1, productId);
-            stmtMusicSearch.setDate(2, Date.valueOf(day));
-            ResultSet result = stmtMusicSearch.executeQuery();
-            while (result.next()) {
-                String value = result.getString("value");
-                String viewDay = result.getString("viewDay");
-                searchList.add(new SearchDto(value, viewDay));
-            }
-            result.close();
-
-            // 두 번째 프로시저 (product_search)
-            CallableStatement stmtProductSearch = connection.prepareCall("{call product_search(?, ?)}");
-            stmtProductSearch.setString(1, productId);
-            stmtProductSearch.setDate(2, Date.valueOf(day));
-            result = stmtProductSearch.executeQuery();
-            while (result.next()) {
-                String value = result.getString("value");
-                String viewDay = result.getString("viewDay");
-                searchList.add(new SearchDto(value, viewDay));
-            }
-            result.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        for (Object[] result : resultList) {
+            SearchDto searchDto = new SearchDto(
+                    result[0].toString(),  // 검색량
+                    result[1].toString()   // 검색날짜
+            );
+            searchList.add(searchDto);
         }
 
         return searchList;
