@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@RequestMapping("/detail/contents")
+@RequestMapping("/detail/content")
 public class ContentRestController {
     private final ContentService contentService;
     private final MovieService movieService;

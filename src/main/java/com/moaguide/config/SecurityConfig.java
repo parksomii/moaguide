@@ -53,7 +53,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> {
-                    cors.configurationSource(corsConfigurationSource());
+                    cors.configurationSource(corsConfigurationzSource());
                 });
         //csrf disable
         http
@@ -65,7 +65,7 @@ public class SecurityConfig {
         http
                 .httpBasic((auth) -> auth.disable());
         http.
-                addFilterBefore(new CorsFilter(corsConfigurationSource()), ChannelProcessingFilter.class);
+                addFilterBefore(new CorsFilter(corsConfigurationzSource()), ChannelProcessingFilter.class);
         http
 
                 .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
@@ -116,7 +116,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationzSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용 메서드
