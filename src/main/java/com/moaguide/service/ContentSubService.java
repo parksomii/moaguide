@@ -19,12 +19,7 @@ public class ContentSubService {
     private final ExhibitionRepository exhibitionRepository;
     private final BroadcastingRepository broadcastingRepository;
     private final PerformanceRepository performanceRepository;
-    private final TravelRepository  travelRepository;
-    private final MovieScreenRepository movieScreenRepository;
-    private final MovieShowtimesRepository movieShowtimesRepository;
-    private final MovieAudienceRepository movieAudienceRepository;
-    private final MovieRankRepository movieRankRepository;
-    private final MovieRevenueRepository movieRevenueRepository;
+    private final MovieDetailRepository movieDetailRepository;
 
     public ExhibitInfoDto findexhibit(String productId) {
         return exhibitionRepository.findByProductId(productId);
@@ -39,42 +34,42 @@ public class ContentSubService {
     }
 
     public List<MovieSubDto> findScreen(String productId) {
-        return movieScreenRepository.findByProductId(productId);
+        return movieDetailRepository.findByScreen(productId);
     }
 
     public List<MovieSubDto> findScreenten(String productId, Pageable pageable) {
-        return movieScreenRepository.findByProductIdTop10(productId, pageable);
+        return movieDetailRepository.findByScreenTop10(productId, pageable);
     }
 
     public List<MovieSubDto> findshowtime(String productId) {
-        return movieShowtimesRepository.findByProductId(productId);
+        return movieDetailRepository.findByshowtime(productId);
     }
 
     public List<MovieSubDto> findshowtimeten(String productId, Pageable pageable) {
-        return movieShowtimesRepository.findByProductIdTop10(productId, pageable);
+        return movieDetailRepository.findByshowtimeTop10(productId, pageable);
     }
 
     public List<MovieSubDto> findaudience(String productId) {
-        return  movieAudienceRepository.findByProductId(productId);
+        return  movieDetailRepository.findByaudience(productId);
     }
 
     public List<MovieSubDto> findaudienceten(String productId, Pageable pageable) {
-        return movieAudienceRepository.findByProductIdTop10(productId,pageable);
+        return movieDetailRepository.findByaudienceTop10(productId,pageable);
     }
 
     public List<MovieSubDto> findrank(String productId) {
-        return  movieRankRepository.findByProductId(productId);
+        return  movieDetailRepository.findByrank(productId);
     }
 
     public List<MovieSubDto> findrankten(String productId, Pageable pageable) {
-        return movieRankRepository.findByProductIdTop10(productId,pageable);
+        return movieDetailRepository.findByrankTop10(productId,pageable);
     }
 
     public List<MovieSubDto> findrevenue(String productId) {
-        return  movieRevenueRepository.findByProductId(productId);
+        return  movieDetailRepository.findByrevenue(productId);
     }
 
     public List<MovieSubDto> findrevenueten(String productId, Pageable pageable) {
-        return movieRevenueRepository.findByProductIdTop10(productId,pageable);
+        return movieDetailRepository.findByrevenueTop10(productId,pageable);
     }
 }

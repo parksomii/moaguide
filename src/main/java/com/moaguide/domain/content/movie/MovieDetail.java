@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-@Entity
-@Table(name = "Movie_Screen")
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MovieScreen {
+@Getter
+@Entity
+@Table(name = "Movie_Detail")
+public class MovieDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +29,14 @@ public class MovieScreen {
     private Integer screenCount;
 
     private Date day;
+
+    @Column(name = "showtimes_count")
+    private int showtimesCount;
+
+    private int revenue;
+
+    @Column(name = "audience_count")
+    private int audienceCount;
+
+    private int ranking;
 }
