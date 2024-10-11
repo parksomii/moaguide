@@ -8,17 +8,9 @@ import java.sql.Date;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class MovieSubDto {
     private Long count;
     private Date day;
 
-    public MovieSubDto(int count,Date day){
-        this.count =(long) count;
-        this.day =day;
-    }
-
-    public MovieSubDto(Long count,Date day){
-        this.count = count;
-        this.day =day;
-    }
 }

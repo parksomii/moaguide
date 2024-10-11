@@ -26,17 +26,17 @@ public class MovieDetail {
     private Product productId;
 
     @Column(name = "screen_count")
-    private Integer screenCount;
+    private Long screenCount;
 
     private Date day;
 
     @Column(name = "showtimes_count")
-    private Integer showtimesCount;
+    private Long showtimesCount;
 
     private Long revenue;
 
     @Column(name = "audience_count")
-    private Integer audienceCount;
+    private Long audienceCount;
 
-    private Integer ranking;
+    private Long ranking;
 }
