@@ -30,9 +30,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
@@ -52,11 +49,10 @@ public class User {
     @Column(name = "loginType")
     private String loginType;
 
-    public User(String email, String name, String password, String phoneNumber, Role role, String nickname, Date birthDate, String investmentExperience, Boolean marketingConsent, String loginType) {
+    public User(String email, String name, String password, Role role, String nickname, Date birthDate, String investmentExperience, Boolean marketingConsent, String loginType) {
         this.email = email;
         this.name = name;
         this.password = password;
-        this.phoneNumber = phoneNumber;
         this.role = role;
         this.nickname = nickname;
         this.birthDate = birthDate;
@@ -65,9 +61,8 @@ public class User {
         this.loginType = loginType;
     }
 
-    public User(String phone, String email,String registrationId) {
+    public User(String email,String registrationId) {
         this.email = email;
-        this.phoneNumber = phone;
         this.loginType = registrationId;
     }
 }

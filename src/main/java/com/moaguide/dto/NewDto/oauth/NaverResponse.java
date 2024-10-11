@@ -29,8 +29,4 @@ public class NaverResponse implements OAuth2ResponseDto{
         return attribute.get("email").toString();
     }
 
-    @Override
-    public String getPhone(){
-        return attribute.get("mobile").toString();
-    }
 }

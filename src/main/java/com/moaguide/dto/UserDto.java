@@ -16,7 +16,6 @@ public class UserDto {
     private String email;
     private String name;
     private String password;
-    private String phoneNumber;
     private Role role;
     private String nickname;
     private Date birthDate;
@@ -29,7 +28,6 @@ public class UserDto {
             this.email,
             this.name,
             this.password,
-            this.phoneNumber,
             this.role,
             this.nickname,
             this.birthDate,

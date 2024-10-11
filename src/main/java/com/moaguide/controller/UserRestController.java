@@ -3,7 +3,6 @@ package com.moaguide.controller;
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.NewDto.customDto.mailDto;
 import com.moaguide.dto.UserDto;
-import com.moaguide.dto.codeDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BookmarkService;
 import com.moaguide.service.CookieService;
@@ -85,22 +84,6 @@ public class UserRestController {
         }
     }
 
-
-    // 전화번호 변경
-    @PatchMapping("/update/phone")
-    public ResponseEntity<?> updatePhone(HttpServletRequest request , @RequestBody codeDto codeDto) {
-        String verifyToken = request.getHeader("verify");
-        // JWT 토큰 검증
-        if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
-            return new ResponseEntity<>("앞선 인증을 완료해주세요", HttpStatus.BAD_REQUEST);
-        }else{
-            String nickname = jwtUtil.getNickname(request.getHeader("Authorization").substring(7));
-            String phone = codeDto.getPhone();
-            userService.updatePhone(nickname, phone);
-            return ResponseEntity.ok("success");
-        }
-    }
-
     @PostMapping("/send/mail")
     public ResponseEntity<?> sendMail(@RequestParam String email) {
         String code = emailService.generateVerificationCode();
@@ -133,17 +116,7 @@ public class UserRestController {
     }
 
 
-    @GetMapping("/email")
-    public ResponseEntity<?> getEmail(HttpServletRequest request) {
-        String verifyToken = request.getHeader("verify");
-        // JWT 토큰 검증
-        if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
-            return new ResponseEntity<>("앞선 인증을 완료해주세요", HttpStatus.BAD_REQUEST);
-        }else{
-            String email = userService.findemail(jwtUtil.getNickname(verifyToken));
-            return ResponseEntity.ok().body(email);
-        }
-    }
+
 
     @DeleteMapping("/Withdrawal")
     public ResponseEntity<?> withdrawa(HttpServletResponse response) {

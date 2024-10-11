@@ -3,9 +3,7 @@ package com.moaguide.controller;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.UserDto;
-import com.moaguide.dto.codeDto;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.security.MessageService;
 import com.moaguide.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -25,41 +23,8 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class SignUpRestController {
-    private final MessageService messageService;
     private final UserService userService;
     private final JWTUtil jwtUtil;
-
-    // 인증 코드 전송 요청 처리
-    @PostMapping("/send/code")
-    public ResponseEntity<String> sendCode(@RequestBody codeDto codeDto) {
-        // 인증 코드 생성 및 전송
-        try {
-            if (codeDto.getPhone() == null) {
-                return ResponseEntity.badRequest().body("인증 코드 전송에 실패하였습니다.");
-            }
-            String code = messageService.generateVerificationCode();
-            messageService.saveCodeToRedis(codeDto.getPhone(), code);
-            messageService.sendSms(codeDto.getPhone(), code);
-            return ResponseEntity.ok("인증 코드가 전송되었습니다.");
-        } catch (Exception e) {
-            // 모든 예외에 대해 "실패" 반환
-            return ResponseEntity.badRequest().body("인증 코드 전송에 실패하였습니다.");
-        }
-    }
-
-    // 인증 코드 검증 요청 처리
-    @PostMapping("/verify/code")
-    public ResponseEntity<String> verifyCode(@RequestBody codeDto codeDto) {
-        boolean success = messageService.verifyCode(codeDto.getPhone(), codeDto.getCode());
-        if (success) {
-            // 인증 성공 시 JWT 토큰 발급
-            String token = jwtUtil.createJwt("verify", codeDto.getPhone(), "pass", 1000 * 60 * 30L);
-            return ResponseEntity.ok().header("verify",  token).body("인증에 성공했습니다.");
-        }
-        else {
-            return ResponseEntity.badRequest().body("인증에 실패했습니다.");
-        }
-    }
 
     @PostMapping("/verify/nickname")
     public ResponseEntity<String> verifyName(@RequestBody UserDto userDto){
@@ -80,10 +45,6 @@ public class SignUpRestController {
             if (jwtUtil.isExpired(verifyToken) && !jwtUtil.getRole(verifyToken).equals("pass")) {
                 return ResponseEntity.badRequest().body("회원가입 실패");
             }
-            if (userDto.getPhoneNumber() == null || userDto.getPhoneNumber().isEmpty()) {
-                userDto.setPhoneNumber(jwtUtil.getNickname(verifyToken));
-            }
-            userService.historySave(userDto.getPhoneNumber());
             userDto.setRole(Role.USER);
             int res = userService.save(userDto);
             if(res == 1){

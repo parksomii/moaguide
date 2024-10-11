@@ -56,7 +56,4 @@ public class CustomUserDetails implements UserDetails {
         return user.getEmail();
     }
 
-    public String getphone(){
-        return user.getPhoneNumber();
-    }
 }

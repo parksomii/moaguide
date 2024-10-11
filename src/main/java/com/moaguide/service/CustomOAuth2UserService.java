@@ -39,7 +39,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User existData = userRepository.findByEmailAndLoginType(email, registrationId).orElse(null);
 
         if (existData == null) {
-            return new CustomOAuth2User(new User(oAuth2Response.getPhone(), oAuth2Response.getEmail(),registrationId));
+            return new CustomOAuth2User(new User(oAuth2Response.getEmail(),registrationId));
         } else {
             return new CustomOAuth2User(existData);
         }

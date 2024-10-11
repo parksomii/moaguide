@@ -10,6 +10,5 @@ import lombok.*;
 public class ProfileDto {
     public String nickname;
     public String email;
-    public String phonenumber;
     public String loginType;
 }

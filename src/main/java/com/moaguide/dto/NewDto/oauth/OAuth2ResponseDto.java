@@ -8,6 +8,4 @@ public interface OAuth2ResponseDto {
     String getProviderId();
     //이메일
     String getEmail();
-    //사용자 전화번호
-    String getPhone();
 }

@@ -25,8 +25,4 @@ public class GoogleResponse implements OAuth2ResponseDto {
         return attributes.get("email").toString();
     }
 
-    @Override
-    public String getPhone() {
-        return attributes.get("phone_number") != null ? attributes.get("phone_number").toString() : "";
-    }
 }
