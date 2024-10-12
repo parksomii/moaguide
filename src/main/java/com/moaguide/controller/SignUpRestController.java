@@ -36,7 +36,16 @@ public class SignUpRestController {
             return ResponseEntity.ok().body("사용가능한 닉네임입니다.");
         }
     }
-
+    @PostMapping("/verify/email")
+    public ResponseEntity<String> verifyEmail(@RequestBody UserDto userDto){
+        boolean duplication = userService.findDuplication(userDto.getEmail());
+        if(duplication){
+            return ResponseEntity.badRequest().body("중복된 이메일이 있습니다.");
+        }
+        else {
+            return ResponseEntity.ok("중복된 이메일이 없습니다.");
+        }
+    }
     @PostMapping()
     public ResponseEntity<String> signup(HttpServletRequest request, @RequestBody UserDto userDto){
         try {

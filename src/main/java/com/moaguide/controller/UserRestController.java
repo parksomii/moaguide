@@ -86,10 +86,6 @@ public class UserRestController {
 
     @PostMapping("/send/mail")
     public ResponseEntity<?> sendMail(@RequestParam String email) {
-        boolean duplication = userService.findDuplication(email);
-        if(duplication){
-            return ResponseEntity.badRequest().body("중복된 이메일이 있습니다.");
-        }
         String code = emailService.generateVerificationCode();
         emailService.saveCodeToRedis(email, code);
         String response = emailService.sendmail(email,code);
