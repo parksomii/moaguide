@@ -20,7 +20,7 @@ public class UserDto {
     private String nickname;
     private Date birthDate;
     private String investmentExperience;
-    private Boolean marketingConsent;
+    private Integer marketingConsent;
     private String loginType;
 
     public User toUser() {

@@ -44,12 +44,12 @@ public class User {
     private String investmentExperience;
 
     @Column(name = "marketing_consent")
-    private Boolean marketingConsent;
+    private Integer marketingConsent;
 
     @Column(name = "loginType")
     private String loginType;
 
-    public User(String email, String name, String password, Role role, String nickname, Date birthDate, String investmentExperience, Boolean marketingConsent, String loginType) {
+    public User(String email, String name, String password, Role role, String nickname, Date birthDate, String investmentExperience, Integer marketingConsent, String loginType) {
         this.email = email;
         this.name = name;
         this.password = password;
