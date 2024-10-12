@@ -90,4 +90,8 @@ public class UserService {
         }
     }
 
+    public boolean findDuplication(String email) {
+        Optional<User> duplication = userRepository.findByEmailAndLoginType(email, "Local");
+        return duplication.isPresent();
+    }
 }
