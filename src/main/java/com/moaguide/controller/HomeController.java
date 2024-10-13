@@ -1,5 +1,6 @@
 package com.moaguide.controller;
 
+import com.moaguide.domain.product.Product;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.*;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -21,13 +24,8 @@ public class HomeController {
     private final StudyService articleService;
     private final NotificationService notificationService;
     private final JWTUtil jwtUtil;
+    private final ProductService productService;
 
-    // 상품현황 북마크 처리
-    @PostMapping("summary/{category}/{productId}/BkMark")
-    public String addBookMark (@PathVariable("category") String category, @PathVariable("productId") String productId, @RequestHeader("Authorization") String token) {
-        // 북마크 추가
-        return null;
-    }
 
     // 주요 리포트와 최신 이슈
     @GetMapping
@@ -73,5 +71,17 @@ public class HomeController {
             return ResponseEntity.badRequest().body("알림을 삭제하는데 실패했습니다.");
         }
         return ResponseEntity.ok("success");
+    }
+
+    @GetMapping("/home/list")
+    public  ResponseEntity<?> homelist(@RequestParam String category){
+        List<SummaryCustomDto> result = productService.home(category,"moaguide");
+        if(result==null){
+            return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+        }else {
+            Map<String, Object> response = new HashMap<>();
+            response.put("product", result);
+            return ResponseEntity.ok(response);
+        }
     }
 }

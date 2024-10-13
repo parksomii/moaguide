@@ -10,6 +10,8 @@ import com.moaguide.dto.NewDto.customDto.endCustomDto;
 import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -124,5 +126,23 @@ public class ProductService {
 
     public int getlistTotalByBookmark(String status,String nickname) {
         return productRepository.findlistTotalByBookmark(status,nickname);
+    }
+
+    public List<SummaryCustomDto> home(String category,String nickname) {
+        switch (category){
+            case "building":
+                return genericRepository.findCustomListCategory(0,3,"lastDivide_rate","building",nickname);
+            case "music":
+                return genericRepository.findCustomListCategory(0,3,"lastDivide_rate","music",nickname);
+            case "content":
+                return genericRepository.findHometCategory("content",nickname);
+            case "art":
+                return genericRepository.findHometCategory("art",nickname);
+            case "cow":
+                return genericRepository.findHometCategory("cow",nickname);
+            default:
+                return null;
+        }
+
     }
 }
