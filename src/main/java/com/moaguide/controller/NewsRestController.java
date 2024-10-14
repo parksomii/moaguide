@@ -3,6 +3,7 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.news.News;
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.NewsService;
 import com.moaguide.service.view.NewsViewService;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 public class NewsRestController {
     private final NewsService newsService;
     private final NewsViewService newsViewService;
+    private final JWTUtil jwtUtil;
 
     // 뉴스 홈페이지
     @GetMapping()
@@ -47,14 +49,18 @@ public class NewsRestController {
     }
 
     @PostMapping("{news_Id}")
-    public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable Long news_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
-        News news = newsService.findById(news_Id);
-        log.info("뉴스 객체 체크 :  {}", news);
-        String response = newsViewService.insert(news,localStorageKey,date);
-        if(response != null) {
-            return ResponseEntity.ok();
-        }else{
-            return ResponseEntity.badRequest();
+    public ResponseEntity<?> detail_check(@PathVariable Long NewsId, @RequestHeader("Authorization") String jwt) {
+        if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
+            String nickname = jwtUtil.getNickname(jwt.substring(7));
+            try {
+                newsViewService.insert(NewsId,nickname);
+                newsService.viewupdate(NewsId);
+                return ResponseEntity.ok("조회수 추가 성공");
+            } catch (RuntimeException e) {
+                return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
+            }
+        } else {
+            return ResponseEntity.badRequest().body("유효하지 않은 토큰");
         }
     }
 }

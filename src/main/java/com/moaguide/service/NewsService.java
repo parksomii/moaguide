@@ -85,12 +85,6 @@ public class NewsService {
         return result;
     }
 
-    // 조회수 올리는 메소드
-    @Transactional
-    public void incrementViewCount(Long id) {
-        newsRepository.updateViewCount(id);
-    }
-
     public String getNewsLink(Long id) {
         return newsRepository.getNewsLink(id);
     }
@@ -113,5 +107,9 @@ public class NewsService {
     @Transactional
     public int findByDetailCount(String productId) {
         return newsRepository.findByDetailCount(productId);
+    }
+
+    public void viewupdate(Long newsId) {
+        newsRepository.updateViewCount(newsId);
     }
 }
