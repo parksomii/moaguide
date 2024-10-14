@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,9 +46,17 @@ public class HomeController {
 
     // 홈페이지 알림상태 조회
     @GetMapping("notification")
-    public ResponseEntity<Boolean> notification(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<Boolean> notification(@RequestHeader(value = "Authorization",required = false) String jwt) {
+        String Nickname;
         // 알림 상태 확인 true or false 반환
-        String Nickname = jwtUtil.getNickname(token.substring(7));
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(jwt.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = null;
+        }
         boolean status = notificationService.getNotification(Nickname);
         return ResponseEntity.ok(status);
     }

@@ -35,10 +35,10 @@ public class ContentRestController {
     @GetMapping("/{product_Id}")
     public ResponseEntity<?> getContent(@PathVariable String product_Id, @RequestHeader(value = "Authorization", required = false) String jwt) {
         String Nickname;
-        if(jwtUtil.isExpired(jwt.substring(7))){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
         if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(jwt.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
             Nickname = null;

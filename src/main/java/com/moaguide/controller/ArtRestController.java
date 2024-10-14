@@ -22,10 +22,10 @@ public class ArtRestController {
     @GetMapping("/{product_Id}")
     public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader(value = "Authorization", required = false) String jwt) {
         String Nickname;
-        if(jwtUtil.isExpired(jwt.substring(7))){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
         if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(jwt.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
             Nickname = null;
@@ -45,9 +45,4 @@ public class ArtRestController {
         return ResponseEntity.ok(artBaseResponse);
     }
 
-//    @GetMapping("/sub/{product_Id}")
-//    public ResponseEntity<Object> add(@PathVariable String product_Id) {
-//        // null 체크
-//        return ResponseEntity.ok().body(null);
-//    }
 }

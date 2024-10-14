@@ -84,10 +84,10 @@ public class SummaryRestController {
                                           @RequestParam int size,@RequestHeader(value="Authorization",required = false) String jwt) {
         page = page-1;
         String Nickname;
-        if(jwtUtil.isExpired(jwt.substring(7))){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
         if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(jwt.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
             Nickname = null;
