@@ -37,7 +37,7 @@ public class MusicRestController {
             }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
-            Nickname = null;
+            Nickname = "null";
         }
         MusicReponseDto music = musicService.findBydetail(product_Id,Nickname);
         return ResponseEntity.ok(music);

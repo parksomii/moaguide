@@ -48,7 +48,7 @@ public class BuildingRestController {
             }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
-            Nickname = null;
+            Nickname = "null";
         }
         BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
         return ResponseEntity.ok(building);

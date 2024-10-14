@@ -33,7 +33,7 @@ public class HanwooRestController {
             }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
-            Nickname = null;
+            Nickname = "null";
         }
         HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id,Nickname);
         return ResponseEntity.ok().body(hanwooDetail);

@@ -55,7 +55,7 @@ public class HomeController {
             }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
-            Nickname = null;
+            Nickname = "null";
         }
         boolean status = notificationService.getNotification(Nickname);
         return ResponseEntity.ok(status);

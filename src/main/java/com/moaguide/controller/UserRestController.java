@@ -147,7 +147,7 @@ public class UserRestController {
             }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
-            Nickname = null;
+            Nickname = "null";
         }
         int count = bookmarkService.countByUser(Nickname);
         return ResponseEntity.ok().body(count);

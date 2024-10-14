@@ -33,8 +33,7 @@ public class SummaryRestController {
     private final JWTUtil jwtUtil;
 
     @PostMapping("/bookmark/{productId}")
-    public ResponseEntity<String> bookmark(@PathVariable String productId,HttpServletRequest request) {
-        String jwt = request.getHeader("Authorization");
+    public ResponseEntity<String> bookmark(@PathVariable String productId,@RequestHeader(value = "Authorization", required = true) String jwt) {
         if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             try {
@@ -90,7 +89,7 @@ public class SummaryRestController {
             }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
-            Nickname = null;
+            Nickname = "null";
         }
         if(subcategory.equals("trade")){
             List<SummaryCustomDto> summary;

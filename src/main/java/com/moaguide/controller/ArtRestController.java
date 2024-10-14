@@ -28,7 +28,7 @@ public class ArtRestController {
             }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
-            Nickname = null;
+            Nickname = "null";
         }
         ArtDetailDto artDetail = artService.findArtDetail(product_Id,Nickname);
         return ResponseEntity.ok().body(artDetail);

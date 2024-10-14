@@ -41,7 +41,7 @@ public class ContentRestController {
             }
             Nickname = jwtUtil.getNickname(jwt.substring(7));
         }else{
-            Nickname = null;
+            Nickname = "null";
         }
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id,Nickname);
         return ResponseEntity.ok(new ContentTopResponseDto(contentDetailDto));
