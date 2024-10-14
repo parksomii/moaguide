@@ -86,6 +86,7 @@ public class HomeController {
             return ResponseEntity.ok(response);
         }
     }
+
     @GetMapping("product/{productId}")
     public ResponseEntity<String> InsertProductView(@PathVariable String productId, @RequestHeader("Authorization") String jwt) {
         if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
@@ -98,14 +99,19 @@ public class HomeController {
                 return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
             }
         } else {
-            String nickname = "null";
-            try {
-                productViewService.insert(productId,nickname);
-                productService.viewupdate(productId);
-                return ResponseEntity.ok("조회수 추가 성공");
-            } catch (RuntimeException e) {
-                return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
-            }
+            return ResponseEntity.badRequest().body("유효하지 않은 토큰");
+        }
+    }
+
+    @GetMapping("product/{productId}")
+    public ResponseEntity<String> InsertProductView(@PathVariable String productId) {
+        String nickname = "null";
+        try {
+            productViewService.insert(productId,nickname);
+            productService.viewupdate(productId);
+            return ResponseEntity.ok("조회수 추가 성공");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
         }
     }
 }

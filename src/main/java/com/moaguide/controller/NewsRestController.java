@@ -60,14 +60,19 @@ public class NewsRestController {
                 return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
             }
         } else {
-            String nickname ="null";
-            try {
-                newsViewService.insert(NewsId,nickname);
-                newsService.viewupdate(NewsId);
-                return ResponseEntity.ok("조회수 추가 성공");
-            } catch (RuntimeException e) {
-                return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
-            }
+            return ResponseEntity.badRequest().body("유효하지 않은 토큰");
+        }
+    }
+
+    @PostMapping("{NewsId}")
+    public ResponseEntity<?> detail_check(@PathVariable Long NewsId) {
+        String nickname ="null";
+        try {
+            newsViewService.insert(NewsId,nickname);
+            newsService.viewupdate(NewsId);
+            return ResponseEntity.ok("조회수 추가 성공");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
         }
     }
 }
