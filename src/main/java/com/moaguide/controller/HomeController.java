@@ -88,7 +88,7 @@ public class HomeController {
             return ResponseEntity.ok(response);
         }
     }
-    @GetMapping("/product/view/{productId}")
+    @PostMapping("/product/view/{productId}")
     public ResponseEntity<String> InsertProductView(@PathVariable String productId, @RequestHeader(value = "Authorization", required = false) String jwt) {
         String nickname = "null";
 
