@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
@@ -12,6 +12,6 @@ import java.util.Date;
 public class AnnouncementDto {
     private Long id;
     private String title;
-    private Date date;
+    private LocalDate date;
     private String content;
 }
