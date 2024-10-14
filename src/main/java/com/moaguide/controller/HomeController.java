@@ -86,32 +86,30 @@ public class HomeController {
             return ResponseEntity.ok(response);
         }
     }
-
-    @GetMapping("product/{productId}")
-    public ResponseEntity<String> InsertProductView(@PathVariable String productId, @RequestHeader("Authorization") String jwt) {
-        if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
-            String nickname = jwtUtil.getNickname(jwt.substring(7));
-            try {
-                productViewService.insert(productId,nickname);
-                productService.viewupdate(productId);
-                return ResponseEntity.ok("조회수 추가 성공");
-            } catch (RuntimeException e) {
-                return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
-            }
-        } else {
-            return ResponseEntity.badRequest().body("유효하지 않은 토큰");
-        }
-    }
-
-    @GetMapping("product/{productId}")
-    public ResponseEntity<String> InsertProductView(@PathVariable String productId) {
+    @GetMapping("/product/{productId}")
+    public ResponseEntity<String> InsertProductView(@PathVariable String productId, @RequestHeader(value = "Authorization", required = false) String jwt) {
         String nickname = "null";
+
+        // JWT가 존재하는지, 그리고 유효한지 확인
+        if (jwt != null && jwt.startsWith("Bearer ")) {
+            String token = jwt.substring(7); // "Bearer " 제거한 토큰
+            if (!jwtUtil.isExpired(token)) {
+                // 토큰이 유효한 경우 닉네임 추출
+                nickname = jwtUtil.getNickname(token);
+            } else {
+                // 토큰이 만료된 경우
+                return ResponseEntity.status(401).body("토큰이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+        }
+
         try {
-            productViewService.insert(productId,nickname);
+            // 닉네임과 관계없이 서비스 호출
+            productViewService.insert(productId, nickname);
             productService.viewupdate(productId);
             return ResponseEntity.ok("조회수 추가 성공");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
         }
     }
+
 }

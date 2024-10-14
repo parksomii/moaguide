@@ -49,30 +49,29 @@ public class NewsRestController {
     }
 
     @PostMapping("{NewsId}")
-    public ResponseEntity<?> detail_check(@PathVariable Long NewsId, @RequestHeader("Authorization") String jwt) {
-        if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
-            String nickname = jwtUtil.getNickname(jwt.substring(7));
-            try {
-                newsViewService.insert(NewsId,nickname);
-                newsService.viewupdate(NewsId);
-                return ResponseEntity.ok("조회수 추가 성공");
-            } catch (RuntimeException e) {
-                return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
-            }
-        } else {
-            return ResponseEntity.badRequest().body("유효하지 않은 토큰");
-        }
-    }
+    public ResponseEntity<?> detail_check(@PathVariable Long NewsId, @RequestHeader(value = "Authorization", required = false) String jwt) {
+        String nickname = "null";
 
-    @PostMapping("{NewsId}")
-    public ResponseEntity<?> detail_check(@PathVariable Long NewsId) {
-        String nickname ="null";
+        // JWT가 존재하는지, 그리고 유효한지 확인
+        if (jwt != null && jwt.startsWith("Bearer ")) {
+            String token = jwt.substring(7); // "Bearer " 제거한 토큰
+            if (!jwtUtil.isExpired(token)) {
+                // 토큰이 유효한 경우 닉네임 추출
+                nickname = jwtUtil.getNickname(token);
+            } else {
+                // 토큰이 만료된 경우
+                return ResponseEntity.status(401).body("토큰이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+        }
+
         try {
-            newsViewService.insert(NewsId,nickname);
+            // 닉네임과 관계없이 서비스 호출
+            newsViewService.insert(NewsId, nickname);
             newsService.viewupdate(NewsId);
             return ResponseEntity.ok("조회수 추가 성공");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
         }
     }
+
 }
