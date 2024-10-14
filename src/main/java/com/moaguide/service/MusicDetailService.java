@@ -39,7 +39,8 @@ public class MusicDetailService {
     // 최상단 기본정보
     @Transactional(readOnly = false)
     public MusicReponseDto findBydetail(String productId, String nickname) {
-        MusicReponseDto music = musicRepository.findMusicDetail(productId,nickname);
+        LocalDate localDate = LocalDate.now().minusYears(1);
+        MusicReponseDto music = musicRepository.findMusicDetail(productId,nickname,localDate.getYear());
         return music;
     }
 

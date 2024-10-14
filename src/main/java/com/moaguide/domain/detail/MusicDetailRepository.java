@@ -11,7 +11,7 @@ public interface MusicDetailRepository extends JpaRepository<MusicDetail, Long> 
 
     // music_detail 프로시저를 호출
     @Procedure(name = "music_detail")
-    MusicReponseDto findMusicDetail(@Param("in_Product_Id") String productId,@Param("nickname") String nickname);
+    MusicReponseDto findMusicDetail(@Param("in_Product_Id") String productId, @Param("nickname") String nickname,@Param("year") int year);
 
     @Query("SELECT new com.moaguide.dto.NewDto.MusicSubResponseDto(md.youtubeUrl, p.name) " +
             "FROM MusicDetail md, Product p " +
