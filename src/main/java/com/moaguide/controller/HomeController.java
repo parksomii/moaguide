@@ -86,7 +86,7 @@ public class HomeController {
             return ResponseEntity.ok(response);
         }
     }
-    @GetMapping("product/{product_Id}")
+    @GetMapping("product/{productId}")
     public ResponseEntity<String> InsertProductView(@PathVariable String productId, @RequestHeader("Authorization") String jwt) {
         if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
             String nickname = jwtUtil.getNickname(jwt.substring(7));

@@ -48,7 +48,7 @@ public class NewsRestController {
         return ResponseEntity.ok().body(newsList);
     }
 
-    @PostMapping("{news_Id}")
+    @PostMapping("{NewsId}")
     public ResponseEntity<?> detail_check(@PathVariable Long NewsId, @RequestHeader("Authorization") String jwt) {
         if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
