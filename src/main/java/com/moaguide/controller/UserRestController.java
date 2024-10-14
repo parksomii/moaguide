@@ -115,9 +115,6 @@ public class UserRestController {
         }
     }
 
-
-
-
     @DeleteMapping("/Withdrawal")
     public ResponseEntity<?> withdrawa(HttpServletResponse response) {
         Cookie refreshTokenCookie = new Cookie("refresh", null);
@@ -142,9 +139,17 @@ public class UserRestController {
 
     // 관심종목 갯수 조회
     @GetMapping("/bookmark")
-    public ResponseEntity<?> getBookmarkCount(@RequestHeader("Authorization") String auth) {
-        String nickname = jwtUtil.getNickname(auth.substring(7));
-        int count = bookmarkService.countByUser(nickname);
+    public ResponseEntity<?> getBookmarkCount(@RequestHeader(value = "Authorization",required = false) String jwt) {
+        String Nickname;
+        if(jwtUtil.isExpired(jwt.substring(7))){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        int count = bookmarkService.countByUser(Nickname);
         return ResponseEntity.ok().body(count);
     }
 }

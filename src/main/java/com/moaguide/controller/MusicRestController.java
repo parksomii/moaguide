@@ -2,10 +2,7 @@ package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.MusicBaseResponseDto;
 import com.moaguide.dto.NewDto.MusicSubResponseDto;
-import com.moaguide.dto.NewDto.customDto.MusicDivideResponseDto;
-import com.moaguide.dto.NewDto.customDto.MusicPublishDto;
-import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
-import com.moaguide.dto.NewDto.customDto.MusicSongDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.dto.NewDto.musicDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CurrentDivideService;
@@ -30,26 +27,21 @@ public class MusicRestController {
     private final CurrentDivideService currentDivideService;
     private final JWTUtil jwtUtil;
 
-    // 최상단 기본정보
-//    @GetMapping("{product_Id}")
-//    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-//        String Nickname = jwtUtil.getNickname(auth.substring(7));
-//        MusicReponseDto music = musicService.findBydetail(product_Id,Nickname);
-//        return ResponseEntity.ok(music);
-//    }
-
+//     최상단 기본정보
     @GetMapping("{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id) {
-//        String Nickname = jwtUtil.getNickname(auth.substring(7));
-        String Nickname = "moaguide";
-        MusicReponseDto music = musicService.findBydetail(product_Id,Nickname);
-        // null 체크
-        if (music == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+    public ResponseEntity<?> product(@PathVariable String product_Id,  @RequestHeader(value="Authorization",required = false) String jwt) {
+        String Nickname;
+        if(jwtUtil.isExpired(jwt.substring(7))){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = null;
+        }
+        MusicReponseDto music = musicService.findBydetail(product_Id,Nickname);
         return ResponseEntity.ok(music);
     }
-
 
     // 기본정보
     @GetMapping("base/{product_Id}")

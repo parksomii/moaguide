@@ -15,6 +15,7 @@ import com.moaguide.service.MovieService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,21 +32,20 @@ public class ContentRestController {
     private final JWTUtil jwtUtil;
 
 
-//    @GetMapping("/{product_Id}")
-//    public ResponseEntity<?> getContent(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-//        String Nickname = jwtUtil.getNickname(auth.substring(7));
-//        ContentDetailDto contentDetailDto = contentService.findDetail(product_Id,Nickname);
-//        return ResponseEntity.ok(new ContentTopResponseDto(contentDetailDto));
-//    }
-
     @GetMapping("/{product_Id}")
-    public ResponseEntity<?> getContent(@PathVariable String product_Id) {
-        String Nickname = "moaguide";
+    public ResponseEntity<?> getContent(@PathVariable String product_Id, @RequestHeader(value = "Authorization", required = false) String jwt) {
+        String Nickname;
+        if(jwtUtil.isExpired(jwt.substring(7))){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = null;
+        }
         ContentDetailDto contentDetailDto = contentService.findDetail(product_Id,Nickname);
         return ResponseEntity.ok(new ContentTopResponseDto(contentDetailDto));
     }
-
-
 
     @GetMapping("/base/{product_Id}")
     public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {

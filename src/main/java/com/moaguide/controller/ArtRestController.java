@@ -6,11 +6,9 @@ import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.art.ArtService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -21,22 +19,20 @@ public class ArtRestController {
     private final JWTUtil jwtUtil;
 
 
-//    @GetMapping("/{product_Id}")
-//    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-//        String Nickname = jwtUtil.getNickname(auth.substring(7));
-//        ArtDetailDto artDetail = artService.findArtDetail(product_Id,Nickname);
-//        return ResponseEntity.ok().body(artDetail);
-//    }
-
     @GetMapping("/{product_Id}")
-    public ResponseEntity<Object> detail(@PathVariable String product_Id) {
-        String Nickname = "moaguide";
-        ArtDetailDto artDetail = artService.findArtDetail(product_Id,Nickname);
-        // null 체크
-        if(artDetail == null){
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader(value = "Authorization", required = false) String jwt) {
+        String Nickname;
+        if(jwtUtil.isExpired(jwt.substring(7))){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = null;
+        }
+        ArtDetailDto artDetail = artService.findArtDetail(product_Id,Nickname);
         return ResponseEntity.ok().body(artDetail);
+
     }
 
     @GetMapping("/base/{product_Id}")

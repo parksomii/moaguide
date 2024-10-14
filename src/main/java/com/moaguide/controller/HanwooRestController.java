@@ -7,6 +7,7 @@ import com.moaguide.service.hanwoo.HanwooPriceService;
 import com.moaguide.service.hanwoo.HanwooService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,21 +24,18 @@ public class HanwooRestController {
     private final HanwooPriceService hanwooPriceService;
     private final JWTUtil jwtUtil;
 
-//    @GetMapping("{product_Id}")
-//    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-//        String Nickname = jwtUtil.getNickname(auth.substring(7));
-//        HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id,Nickname);
-//        return ResponseEntity.ok().body(hanwooDetail);
-//    }
-
     @GetMapping("{product_Id}")
-    public ResponseEntity<Object> detail(@PathVariable String product_Id) {
-        String Nickname = "moaguide";
-        HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id,Nickname);
-        // null 체크
-        if (hanwooDetail == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+    public ResponseEntity<Object> detail(@PathVariable String product_Id, @RequestHeader(value = "Authorization", required = false) String jwt) {
+        String Nickname;
+        if(jwtUtil.isExpired(jwt.substring(7))){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = null;
+        }
+        HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id,Nickname);
         return ResponseEntity.ok().body(hanwooDetail);
     }
 

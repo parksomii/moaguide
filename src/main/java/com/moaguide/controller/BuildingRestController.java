@@ -39,25 +39,19 @@ public class BuildingRestController {
     private final JWTUtil jwtUtil;
 
 
-//    @GetMapping("/{product_Id}")
-//    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader("Authorization") String auth) {
-//        String Nickname = jwtUtil.getNickname(auth.substring(7));
-//        BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
-//        return ResponseEntity.ok(building);
-//    }
-
     @GetMapping("/{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id) {
-        String Nickname = "moaguide";
-        List<TypeDto> rent = rentService.findType(product_Id);
-        BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
-        if(!rent.isEmpty() && !rent.equals(null) && rent.get(0).getType().equals("오피스")) {
-            building.setRentType(Boolean.TRUE);
-            return ResponseEntity.ok(building);
-        }else {
-            building.setRentType(Boolean.FALSE);
-            return ResponseEntity.ok(building);
+    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader(value="Authorization",required = false) String jwt) {
+        String Nickname;
+        if(jwtUtil.isExpired(jwt.substring(7))){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = null;
+        }
+        BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
+        return ResponseEntity.ok(building);
     }
 
     @GetMapping("/base/{product_Id}")
