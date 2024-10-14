@@ -29,6 +29,7 @@ public class HomeController {
     private final ProductService productService;
     private final ProductViewService productViewService;
     private final NewsViewService newsViewService;
+    private final AnnouncementService announcementService;
 
 
     // 주요 리포트와 최신 이슈
@@ -77,6 +78,7 @@ public class HomeController {
         return ResponseEntity.ok("success");
     }
 
+    // 홈페이지 상품 리스트 조회
     @GetMapping("/home/list")
     public  ResponseEntity<?> homelist(@RequestParam String category){
         List<SummaryCustomDto> result = productService.home(category,"moaguide");
@@ -88,6 +90,8 @@ public class HomeController {
             return ResponseEntity.ok(response);
         }
     }
+
+    // 상품 조회수 증가
     @PostMapping("/product/view/{productId}")
     public ResponseEntity<String> InsertProductView(@PathVariable String productId, @RequestHeader(value = "Authorization", required = false) String jwt) {
         String nickname = "null";
@@ -114,6 +118,7 @@ public class HomeController {
         }
     }
 
+    // 뉴스 조회수 추가
     @PostMapping("news/view/{NewsId}")
     public ResponseEntity<?> detail_check(@PathVariable Long NewsId, @RequestHeader(value = "Authorization", required = false) String jwt) {
         String nickname = "null";
@@ -140,4 +145,21 @@ public class HomeController {
         }
     }
 
+    // 공지사항 조회
+    @GetMapping("notice")
+    public ResponseEntity<List<AnnouncementDto>> noticeList() {
+        List<AnnouncementDto> noticeList = announcementService.getNotice();
+        // 공지가 없으면 빈 리스트 반환
+        if (noticeList == null) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.ok(noticeList);
+    }
+
+    // 공지사항 상세 조회
+    @GetMapping("notice/{id}")
+    public ResponseEntity<?> noticeDetail(@PathVariable Long id) {
+        AnnouncementDto notice = announcementService.getNoticeDetail(id);
+        return ResponseEntity.ok(notice);
+    }
 }
