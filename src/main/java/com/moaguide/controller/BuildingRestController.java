@@ -111,10 +111,6 @@ public class BuildingRestController {
         if(location == null) {
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-        // 빈 리스트 처리
-        if(areas.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
-        }
         return ResponseEntity.ok(new BuildingAreaResponseDto(location,areas));
     }
 
