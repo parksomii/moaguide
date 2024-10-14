@@ -145,4 +145,9 @@ public class ProductService {
         }
 
     }
+
+    @Transactional
+    public void viewupdate(String productId) {
+        productRepository.updateByProductId(productId);
+    }
 }

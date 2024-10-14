@@ -1,12 +1,14 @@
 package com.moaguide.domain.view;
 
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.moaguide.domain.product.Product;
+import com.moaguide.domain.user.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 
 @Entity
@@ -14,9 +16,28 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductView{
+public class ProductView {
 
-    @EmbeddedId
-    private ProductViewId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // nickname을 외래 키로 설정
+    @Column(name = "nickname", nullable = false)
+    private String nickname;
+
+    // Product_Id를 외래 키로 설정
+    @Column(name = "Product_Id", nullable = false)
+    private String productId;
+
+    @Column(name = "access_time")
+    private Timestamp accessTime;
+
+    public ProductView(String nickname, String productId, Timestamp accessTime) {
+        this.nickname = nickname;
+        this.productId = productId;
+        this.accessTime = accessTime;
+    }
+
 
 }

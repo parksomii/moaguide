@@ -4,6 +4,7 @@ import com.moaguide.domain.product.Product;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.*;
+import com.moaguide.service.view.ProductViewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -25,6 +26,7 @@ public class HomeController {
     private final NotificationService notificationService;
     private final JWTUtil jwtUtil;
     private final ProductService productService;
+    private final ProductViewService productViewService;
 
 
     // 주요 리포트와 최신 이슈
@@ -82,6 +84,21 @@ public class HomeController {
             Map<String, Object> response = new HashMap<>();
             response.put("product", result);
             return ResponseEntity.ok(response);
+        }
+    }
+    @GetMapping("/product/{product_Id}")
+    public ResponseEntity<String> InsertProductView(@PathVariable String productId, @RequestHeader("Authorization") String jwt) {
+        if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
+            String nickname = jwtUtil.getNickname(jwt.substring(7));
+            try {
+                productViewService.insert(productId,nickname);
+                productService.viewupdate(productId);
+                return ResponseEntity.ok("조회수 추가 성공");
+            } catch (RuntimeException e) {
+                return ResponseEntity.badRequest().body("조회수 추가 실패: " + e.getMessage());
+            }
+        } else {
+            return ResponseEntity.badRequest().body("유효하지 않은 토큰");
         }
     }
 }
