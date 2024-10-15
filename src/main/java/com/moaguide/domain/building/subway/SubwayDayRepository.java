@@ -16,6 +16,6 @@ import java.util.List;
 @Repository
 public interface SubwayDayRepository extends JpaRepository<SubwayDay, Long> {
 
-    @Procedure( name ="GetSubwayDay")
-    List<SubwayDto> findByProductId(@Param("productId") String productId);
+    @Query(value = "CALL GetSubwayDay(:productId)", nativeQuery = true)
+    List<SubwayDto> callSubwayDayProcedure(@Param("productId") String productId);
 }

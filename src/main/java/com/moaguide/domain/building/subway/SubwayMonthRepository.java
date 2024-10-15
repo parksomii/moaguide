@@ -14,6 +14,6 @@ import java.util.List;
 public interface SubwayMonthRepository extends JpaRepository<SubwayMonth, Long> {
 
 
-    @Procedure( name ="GetSubwayMonth", outputParameterName = "subwayMapping")
-    List<SubwayDto> findByProductId(@Param("productId") String productId);
+    @Query(value = "CALL GetSubwayMonth(:productId)", nativeQuery = true)
+    List<SubwayDto> callSubwayMonthProcedure(@Param("productId") String productId);
 }
