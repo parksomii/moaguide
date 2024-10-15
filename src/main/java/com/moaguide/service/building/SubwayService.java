@@ -9,6 +9,7 @@ import com.moaguide.dto.NewDto.BuildingSubwayResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,9 +19,10 @@ public class SubwayService {
     private final SubwayDayRepository subwayDayRepository;
     private final SubwayMonthRepository subwayMonthRepository;
 
+    @Transactional
     public BuildingSubwayResponseDto findByProductId(String productId) {
-        List<SubwayDto> SubwayDay = subwayDayRepository.findByProductId(productId);
-        List<SubwayDto> SubwayMonth = subwayMonthRepository.findByProductId(productId);
+        List<SubwayDto> SubwayDay = subwayDayRepository.callSubwayDayProcedure(productId);
+        List<SubwayDto> SubwayMonth = subwayMonthRepository.callSubwayMonthProcedure(productId);
         return new BuildingSubwayResponseDto(SubwayDay,SubwayMonth);
     }
 }
