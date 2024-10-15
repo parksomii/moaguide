@@ -118,7 +118,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationzSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("https://moaguide.com", "https://moaguide.vercel.app/"));
+//        configuration.setAllowedOriginPatterns(Arrays.asList("https://moaguide.com", "https://moaguide.vercel.app/"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // 허용 메서드
         configuration.setAllowedHeaders(Arrays.asList("Authorization","verify", "Content-Type","cookie")); // 허용 헤더
         configuration.setExposedHeaders(Arrays.asList("Authorization","verify")); // 클라이언트가 접근할 수 있는 응답 헤더
