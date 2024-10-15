@@ -6,29 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+
 @Entity
-@Table(name = "Subway_Week")
+@Table(name = "Subway_Day")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class SubwayWeek {
+public class SubwayDay {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String keyword;
 
-    private int Year;
+    private Date day;
 
-    private int Month;
+    private int boarding;
 
-    @Column(name="day_of_week")
-    private String weekDay;
-
-    @Column(name="total_boarding")
-    private int totalBoarding;
-
-    @Column(name="total_alighting")
-    private int totalAlighting;
-
+    private int alighting;
 }

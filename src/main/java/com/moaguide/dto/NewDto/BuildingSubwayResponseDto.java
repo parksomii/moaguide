@@ -1,7 +1,7 @@
 package com.moaguide.dto.NewDto;
 
-import com.moaguide.dto.NewDto.BuildingDto.SubwayTimeDto;
-import com.moaguide.dto.NewDto.BuildingDto.SubwayWeekDto;
+import com.moaguide.dto.NewDto.BuildingDto.SubwayDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,14 +9,13 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 public class BuildingSubwayResponseDto {
-    private SubwayTimeresponseDto subwayTime;
-    private List<SubwayWeekDto> subwayWeek;
+    private List<SubwayDto> subwayDay;
+    private List<SubwayDto> subwayMonth;
 
-    public BuildingSubwayResponseDto(SubwayTimeDto subwayTime,List<SubwayWeekDto> subwayWeek){
-        this.subwayTime = new SubwayTimeresponseDto(subwayTime);
-        this.subwayWeek = subwayWeek;
+    public BuildingSubwayResponseDto(List<SubwayDto> subwayDay,List<SubwayDto> subwayMonth){
+        this.subwayDay = subwayDay;
+        this.subwayMonth = subwayMonth;
     }
 }

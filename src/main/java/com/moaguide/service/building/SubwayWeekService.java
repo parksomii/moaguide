@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.subway.SubwayWeekRepository;
+import com.moaguide.domain.building.subway.SubwayMonthRepository;
 import com.moaguide.dto.NewDto.BuildingDto.SubwayWeekDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 @Slf4j
 public class SubwayWeekService {
-    private final SubwayWeekRepository subwayWeekRepository;
+    private final SubwayMonthRepository subwayMonthRepository;
 
     public List<SubwayWeekDto> findbydate(String productId, Integer year, Integer month) {
-        List<SubwayWeekDto> subwayWeek = subwayWeekRepository.findByLastmonth(productId, year, month);
+        List<SubwayWeekDto> subwayWeek = subwayMonthRepository.findByLastmonth(productId, year, month);
         return subwayWeek;
     }
 }

@@ -31,8 +31,7 @@ public class BuildingRestController {
     private final NearSubwayService nearSubwayService;
     private final LandPriceService landPriceService;
     private final AreaService areaService;
-    private final SubwayTimeService subwayTimeService;
-    private final SubwayWeekService subwayWeekService;
+    private final SubwayService subwayService;
     private final PopulationService populationService;
     private final VacancyRateService vacancyRateService;
     private final LandRegistryService landRegistryService;
@@ -108,19 +107,13 @@ public class BuildingRestController {
         return ResponseEntity.ok(new BuildingAreaResponseDto(location,areas));
     }
 
-    @GetMapping("/subway/{product_Id}")
-    public ResponseEntity<Object> subway(@PathVariable String product_Id,@RequestParam int year,@RequestParam int month) {
-        SubwayTimeDto subwayTimeDtos = subwayTimeService.findbydate(product_Id,year,month);
-        List<SubwayWeekDto> subwayWeekDtos = subwayWeekService.findbydate(product_Id,year,month);
+    @GetMapping("/subway/{productId}")
+    public ResponseEntity<Object> subway(@PathVariable String productId) {
+        BuildingSubwayResponseDto subwayResponseDto= subwayService.findByProductId(productId);
         // null 처리
-        if(subwayTimeDtos == null) {
+        if(subwayResponseDto == null || subwayResponseDto.getSubwayDay().isEmpty() || subwayResponseDto.getSubwayMonth().isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-        // 빈 리스트 처리
-        if(subwayWeekDtos.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
-        }
-        BuildingSubwayResponseDto subwayResponseDto = new BuildingSubwayResponseDto(subwayTimeDtos,subwayWeekDtos);
         return ResponseEntity.ok(subwayResponseDto);
     }
 
