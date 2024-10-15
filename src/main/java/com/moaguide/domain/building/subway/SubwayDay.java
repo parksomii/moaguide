@@ -1,6 +1,7 @@
 package com.moaguide.domain.building.subway;
 
 
+import com.moaguide.dto.NewDto.BuildingDto.SubwayDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,17 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@SqlResultSetMapping(
+        name = "subwayDayMapping",
+        classes = @ConstructorResult(
+                targetClass = SubwayDto.class,
+                columns = {
+                        @ColumnResult(name = "day", type = Date.class),
+                        @ColumnResult(name = "boarding", type = Integer.class),
+                        @ColumnResult(name = "alighting", type = Integer.class)
+                }
+        )
+)
 public class SubwayDay {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -14,7 +14,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @SqlResultSetMapping(
-        name = "subwayMapping",
+        name = "subwayMonthMapping",
         classes = @ConstructorResult(
                 targetClass =SubwayDto.class,
                 columns = {
