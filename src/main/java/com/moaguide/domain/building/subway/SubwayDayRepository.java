@@ -16,6 +16,6 @@ import java.util.List;
 @Repository
 public interface SubwayDayRepository extends JpaRepository<SubwayDay, Long> {
 
-    @Procedure( name ="GetSubwayDay", outputParameterName = "subwayMapping")
+    @Procedure( name ="GetSubwayDay")
     List<SubwayDto> findByProductId(@Param("productId") String productId);
 }
