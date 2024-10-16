@@ -30,7 +30,8 @@ import java.sql.Date;
         procedureName = "GetSubwayDay",
         resultSetMappings = "subwayDayMapping",
         parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "productId", type = String.class)
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "productId", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "date", type = Date.class)
         }
 )
 public class SubwayDay {
