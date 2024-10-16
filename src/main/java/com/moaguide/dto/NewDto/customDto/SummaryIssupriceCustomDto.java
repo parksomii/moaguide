@@ -15,6 +15,6 @@ public class SummaryIssupriceCustomDto {
         this.product_Id = product_Id;
         this.category = category;
         this.name = name;
-        this.recruitmentRate = Math.round((recruitmentRate * 100.0 * 100.0))/ 100.0;
+        this.recruitmentRate = Math.round(recruitmentRate * 100.0) / 100.0; // 소수점 두 자리 반올림
     }
 }
