@@ -60,7 +60,7 @@ public class HanwooRestController {
         if (result.isEmpty()){
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-        response.put("object",result);
+        response.put(category,result);
         return ResponseEntity.ok(response);
     }
 
@@ -75,7 +75,8 @@ public class HanwooRestController {
         if (hanwooMarket.isEmpty()){
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-        response.put("object",hanwooMarket);
+
+        response.put(category,hanwooMarket);
         return ResponseEntity.ok(response);
     }
 }
