@@ -198,4 +198,12 @@ public class GenericRepository {
                 .setParameter("category", category)
                 .getSingleResult()).intValue();
     }
+
+    public List<SummaryCustomDto> findHometCategory(String category, String nickname) {
+        String sql = "Call home_Category(:category,:nickname)";
+        return entityManager.createNativeQuery(sql, "SummaryCustomDtoMapping")
+                .setParameter("category", category)
+                .setParameter("nickname", nickname)
+                .getResultList();
+    }
 }

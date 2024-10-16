@@ -30,7 +30,9 @@ import java.util.Date;
                         @ColumnResult(name = "lastDivide_rate", type = Double.class),
                         @ColumnResult(name = "divideCycle", type = Integer.class),
                         @ColumnResult(name = "link", type =String.class),
-                        @ColumnResult(name = "bookmark", type = Boolean.class)
+                        @ColumnResult(name = "bookmark", type = Boolean.class),
+                        @ColumnResult(name = "yearDvide", type = Integer.class),
+                        @ColumnResult(name = "yearDvideRate", type = Double.class)
                 }
         )
 )
@@ -40,7 +42,8 @@ import java.util.Date;
         resultSetMappings = "musicDetailDtoMapping",
         parameters = {
                 @StoredProcedureParameter(mode = ParameterMode.IN, name = "in_Product_Id", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "nickname", type = String.class)
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "nickname", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "year", type = int.class)
         }
 )
 @Table(name = "MusicDetail")

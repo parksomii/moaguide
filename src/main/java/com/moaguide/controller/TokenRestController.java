@@ -71,10 +71,10 @@ public class TokenRestController {
 
         //response
         response.setHeader("Authorization", "Bearer " + newAccess);
-//        response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
-//        response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
-        cookieService.setCookieWithSameSite(response, "refresh", refreshToken, refreshTokenValidity);
-        cookieService.setCookieWithSameSite(response, "rememberMe", "true", refreshTokenValidity);
+        response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
+        response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
+//        cookieService.setCookieWithSameSite(response, "refresh", refreshToken, refreshTokenValidity);
+//        cookieService.setCookieWithSameSite(response, "rememberMe", "true", refreshTokenValidity);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 

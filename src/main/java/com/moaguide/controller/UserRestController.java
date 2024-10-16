@@ -115,9 +115,6 @@ public class UserRestController {
         }
     }
 
-
-
-
     @DeleteMapping("/Withdrawal")
     public ResponseEntity<?> withdrawa(HttpServletResponse response) {
         Cookie refreshTokenCookie = new Cookie("refresh", null);
@@ -142,9 +139,35 @@ public class UserRestController {
 
     // 관심종목 갯수 조회
     @GetMapping("/bookmark")
-    public ResponseEntity<?> getBookmarkCount(@RequestHeader("Authorization") String auth) {
-        String nickname = jwtUtil.getNickname(auth.substring(7));
-        int count = bookmarkService.countByUser(nickname);
+    public ResponseEntity<?> getBookmarkCount(@RequestHeader(value = "Authorization",required = false) String jwt) {
+        String Nickname;
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(jwt.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = "null";
+        }
+        int count = bookmarkService.countByUser(Nickname);
         return ResponseEntity.ok().body(count);
+    }
+
+    @PostMapping("/update/notify")
+    public ResponseEntity<?> getNotify(@RequestParam int status ,@RequestHeader(value = "Authorization") String jwt) {
+        jwt = jwt.substring(7);
+        if (jwtUtil.isExpired(jwt) || jwtUtil.getNickname(jwt).equals("null") || !jwtUtil.getCategory(jwt).equals("access")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }else{
+            if(status>7){
+                return ResponseEntity.badRequest().body("badRequest");
+            }
+            String result = userService.updateMarketing(jwtUtil.getNickname(jwt),status);
+            if(result.equals("success")){
+                return ResponseEntity.ok().body(result);
+            }else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
     }
 }

@@ -23,9 +23,11 @@ public class MusicReponseDto {
     private Integer divideCycle;
     private String link;
     private Boolean bookmark;
+    private Integer yearDvide;
+    private Double yearDvideRate;
 
-    @ConstructorProperties({"product_Id", "category", "platform", "name", "singer", "price", "priceRate", "totalPrice", "lastDivide", "lastDivide_rate", "divideCycle","link","bookmark"})
-    public MusicReponseDto(String product_Id, String category, String platform, String name, String singer, Integer price, Double priceRate, Long totalPrice, Double lastDivide, Double lastDivide_rate, Integer divideCycle, String link, Boolean bookmark) {
+    @ConstructorProperties({"product_Id", "category", "platform", "name", "singer", "price", "priceRate", "totalPrice", "lastDivide", "lastDivide_rate", "divideCycle","link","bookmark","yearDvide","yearDvideRate"})
+    public MusicReponseDto(String product_Id, String category, String platform, String name, String singer, Integer price, Double priceRate, Long totalPrice, Double lastDivide, Double lastDivide_rate, Integer divideCycle, String link, Boolean bookmark,Integer yearDvide, Double yearDvideRate) {
         this.product_Id = product_Id;
         this.category = category;
         this.platform = platform;
@@ -39,5 +41,7 @@ public class MusicReponseDto {
         this.divideCycle = divideCycle;
         this.link = link;
         this.bookmark = bookmark;
+        this.yearDvide = yearDvide;
+        this.yearDvideRate = yearDvideRate;
     }
 }

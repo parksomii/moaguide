@@ -4,12 +4,12 @@ import com.moaguide.domain.GenericRepository;
 import com.moaguide.domain.issueprice.IssuePriceRepository;
 import com.moaguide.domain.product.ProductRepository;
 import com.moaguide.dto.NewDto.SummaryResponseDto;
-import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
-import com.moaguide.dto.NewDto.customDto.endCustomDto;
-import com.moaguide.dto.NewDto.customDto.finishCustomDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -124,5 +124,32 @@ public class ProductService {
 
     public int getlistTotalByBookmark(String status,String nickname) {
         return productRepository.findlistTotalByBookmark(status,nickname);
+    }
+
+    public List<SummaryCustomDto> home(String category,String nickname) {
+        switch (category){
+            case "building":
+                return genericRepository.findCustomListCategory(0,3,"lastDivide_rate desc","building",nickname);
+            case "music":
+                return genericRepository.findCustomListCategory(0,3,"lastDivide_rate desc","music",nickname);
+            case "content":
+                return genericRepository.findHometCategory("content",nickname);
+            case "art":
+                return genericRepository.findHometCategory("art",nickname);
+            case "cow":
+                return genericRepository.findHometCategory("cow",nickname);
+            default:
+                return null;
+        }
+
+    }
+
+    @Transactional
+    public void viewupdate(String productId) {
+        productRepository.updateByProductId(productId);
+    }
+
+    public List<SummaryIssupriceCustomDto> findrecent(Pageable pageable) {
+        return productRepository.findrecent(pageable);
     }
 }

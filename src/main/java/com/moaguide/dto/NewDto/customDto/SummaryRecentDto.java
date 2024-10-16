@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SummaryRecentDto {
-    private List<SummaryDivideCustomDto> divide; // 최근 배당금 발표
+    private List<SummaryIssupriceCustomDto> divide; // 최근 배당금 발표
     private List<SummaryCustomDto> summary; // 최근 상품
     private List<ArticleSummaryDto> article;
 }

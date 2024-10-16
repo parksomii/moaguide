@@ -1,8 +1,10 @@
 package com.moaguide.dto.NewDto;
 
 import com.moaguide.dto.NewDto.BuildingDto.NearSubwayDto;
+import com.moaguide.dto.NewDto.BuildingDto.NearSubwayListDto;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,7 +21,7 @@ public class BuildingSubResponseDto {
     private String ybdDistance;
     private String ybdCar;
     private String ybdSubway;
-    private List<NearSubwayDto> nearSubway;
+    private List<NearSubwayListDto> nearSubway;
     private int busLine;
     private int busNode;
 
@@ -36,7 +38,13 @@ public class BuildingSubResponseDto {
         this.ybdDistance = businessArea.getYbdDistance();
         this.ybdCar = businessArea.getYbdCar();
         this.ybdSubway = businessArea.getYbdSubway();
-        this.nearSubway = nearSubway;
+        // nearSubway 리스트를 초기화
+        this.nearSubway = new ArrayList<>();
+
+        // nearSubway 리스트에 NearSubwayListDto 객체를 추가
+        for(NearSubwayDto near : nearSubway) {
+            this.nearSubway.add(new NearSubwayListDto(near));
+        }
         this.busLine = businessArea.getLine();
         this.busNode = businessArea.getNode();
     }

@@ -3,7 +3,7 @@ package com.moaguide.controller;
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleSummaryDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
-import com.moaguide.dto.NewDto.customDto.SummaryDivideCustomDto;
+import com.moaguide.dto.NewDto.customDto.SummaryIssupriceCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryRecentDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BookmarkService;
@@ -14,12 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -32,8 +31,7 @@ public class SummaryRestController {
     private final JWTUtil jwtUtil;
 
     @PostMapping("/bookmark/{productId}")
-    public ResponseEntity<String> bookmark(@PathVariable String productId, HttpServletRequest request) {
-        String jwt = request.getHeader("Authorization");
+    public ResponseEntity<String> bookmark(@PathVariable String productId,@RequestHeader(value = "Authorization", required = true) String jwt) {
         if (jwt != null && jwt.startsWith("Bearer ") && !jwtUtil.isExpired(jwt.substring(7))) {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             try {
@@ -67,8 +65,8 @@ public class SummaryRestController {
 
     @GetMapping
     public ResponseEntity<SummaryRecentDto> getSummary() {
-        Pageable pageable = PageRequest.of(0, 3);
-        List<SummaryDivideCustomDto> divide = divideService.findrecent(pageable);
+        Pageable pageable = PageRequest.of(0, 10);
+        List<SummaryIssupriceCustomDto> divide = productService.findrecent(pageable);
         List<SummaryCustomDto> customDtos = productService.getlist(0,3,"lastDivide_rate desc","null");
         List<ArticleSummaryDto> reportList = articleService.getSummary(pageable);
         return ResponseEntity.ok(new SummaryRecentDto(divide,customDtos,reportList));
@@ -80,45 +78,53 @@ public class SummaryRestController {
                                           @RequestParam String subcategory,
                                           @RequestParam String sort,
                                           @RequestParam int page,
-                                          @RequestParam int size) {
+                                          @RequestParam int size,@RequestHeader(value="Authorization",required = false) String jwt) {
         page = page-1;
-        String nickname = "moaguide";
+        String Nickname;
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(jwt.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = "null";
+        }
         if(subcategory.equals("trade")){
             List<SummaryCustomDto> summary;
             if(category.equals("all")){
-                summary = productService.getlist(page,size,sort,nickname);
+                summary = productService.getlist(page,size,sort,Nickname);
                 int total =  productService.getlistTotal("거래중");
                 return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size,total));
             }else if(category.equals("bookmark")){
-                summary = productService.getlistBookmark(page,size,sort,nickname);
-                int total =  productService.getlistTotalByBookmark("거래중",nickname);
+                summary = productService.getlistBookmark(page,size,sort,Nickname);
+                int total =  productService.getlistTotalByBookmark("거래중",Nickname);
                 return ResponseEntity.ok().body(new SummaryResponseDto(summary,page,size,total));
             }else{
-                summary = productService.getcategorylist(page,size,sort,category,nickname);
+                summary = productService.getcategorylist(page,size,sort,category,Nickname);
                 int total = productService.getlistTotalCategory("거래중",category);
                 return ResponseEntity.ok(new SummaryResponseDto(summary,page,size,total));
             }
         } else if (subcategory.equals("start")) {
             SummaryResponseDto inavete;
             if(sort.equals("ready")){
-                inavete = productService.getreadylist(page,size,category,nickname);
+                inavete = productService.getreadylist(page,size,category,Nickname);
                 return ResponseEntity.ok(inavete);
             }else if(sort.equals("start")){
-                inavete = productService.getstartlisty(page,size,category,nickname);
+                inavete = productService.getstartlisty(page,size,category,Nickname);
                 return ResponseEntity.ok(inavete);
             }
         } else if (subcategory.equals("end")){
             SummaryResponseDto inavete;
             if(sort.equals("end")){
-                inavete = productService.getend(page,size,category,nickname);
+                inavete = productService.getend(page,size,category,Nickname);
                 return ResponseEntity.ok(inavete);
             }else if(sort.equals("finish")){
-                inavete = productService.getfinish(page,size,category,nickname);
+                inavete = productService.getfinish(page,size,category,Nickname);
                 return ResponseEntity.ok(inavete);
             }
         }else if(subcategory.equals("bookmark") && sort.equals("bookmark")){
             SummaryResponseDto invate;
-            invate = bookmarkService.getProductBybookmark(category,nickname,page,size);
+            invate = bookmarkService.getProductBybookmark(category,Nickname,page,size);
             return ResponseEntity.ok(invate);
         }
         return ResponseEntity.badRequest().body("잘못된 요청입니다.");

@@ -3,6 +3,7 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.news.News;
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.NewsService;
 import com.moaguide.service.view.NewsViewService;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class NewsRestController {
     private final NewsService newsService;
-    private final NewsViewService newsViewService;
+    private final JWTUtil jwtUtil;
 
     // 뉴스 홈페이지
     @GetMapping()
@@ -46,15 +47,6 @@ public class NewsRestController {
         return ResponseEntity.ok().body(newsList);
     }
 
-    @PostMapping("{news_Id}")
-    public ResponseEntity.HeadersBuilder<ResponseEntity.BodyBuilder> detail_check(@PathVariable Long news_Id, @RequestHeader("Local-Storage-Key") String localStorageKey, @RequestHeader("Local-date") String date){
-        News news = newsService.findById(news_Id);
-        log.info("뉴스 객체 체크 :  {}", news);
-        String response = newsViewService.insert(news,localStorageKey,date);
-        if(response != null) {
-            return ResponseEntity.ok();
-        }else{
-            return ResponseEntity.badRequest();
-        }
-    }
+
+
 }
