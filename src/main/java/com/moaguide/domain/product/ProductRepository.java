@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Query("update Product p set p.views = p.views + 1 where p.productId = :productId")
     void updateByProductId(@Param("productId") String productId);
 
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.SummaryIssupriceCustomDto(p.productId, pl.category, p.name, (p.nowPiece / p.piece) * 100) " +
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.SummaryIssupriceCustomDto(p.productId, pl.category, p.name, (p.nowPiece / p.piece)) " +
             "FROM Product p JOIN Platform pl on pl.PlatformId = p.PlatformId.PlatformId JOIN IssuePrice ip on ip.id.productId = p.productId " +
             "WHERE pl.PlatformId = p.PlatformId.PlatformId " +
             "AND pl.status = '공모 중' " +
