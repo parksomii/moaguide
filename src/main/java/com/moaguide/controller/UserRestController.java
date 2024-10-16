@@ -159,6 +159,9 @@ public class UserRestController {
         if (jwtUtil.isExpired(jwt) || jwtUtil.getNickname(jwt).equals("null") || !jwtUtil.getType(jwt).equals("access")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }else{
+            if(status>7){
+                return ResponseEntity.badRequest().body("badRequest");
+            }
             String result = userService.updateMarketing(jwtUtil.getNickname(jwt),status);
             if(result.equals("success")){
                 return ResponseEntity.ok().body(result);

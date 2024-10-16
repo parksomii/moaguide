@@ -4,13 +4,11 @@ import com.moaguide.domain.GenericRepository;
 import com.moaguide.domain.issueprice.IssuePriceRepository;
 import com.moaguide.domain.product.ProductRepository;
 import com.moaguide.dto.NewDto.SummaryResponseDto;
-import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
-import com.moaguide.dto.NewDto.customDto.endCustomDto;
-import com.moaguide.dto.NewDto.customDto.finishCustomDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -149,5 +147,9 @@ public class ProductService {
     @Transactional
     public void viewupdate(String productId) {
         productRepository.updateByProductId(productId);
+    }
+
+    public List<SummaryIssupriceCustomDto> findrecent(Pageable pageable) {
+        return productRepository.findrecent(pageable);
     }
 }

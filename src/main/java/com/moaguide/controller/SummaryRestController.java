@@ -3,7 +3,7 @@ package com.moaguide.controller;
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleSummaryDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
-import com.moaguide.dto.NewDto.customDto.SummaryDivideCustomDto;
+import com.moaguide.dto.NewDto.customDto.SummaryIssupriceCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryRecentDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BookmarkService;
@@ -18,9 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -68,7 +66,7 @@ public class SummaryRestController {
     @GetMapping
     public ResponseEntity<SummaryRecentDto> getSummary() {
         Pageable pageable = PageRequest.of(0, 10);
-        List<SummaryDivideCustomDto> divide = divideService.findrecent(pageable);
+        List<SummaryIssupriceCustomDto> divide = productService.findrecent(pageable);
         List<SummaryCustomDto> customDtos = productService.getlist(0,3,"lastDivide_rate desc","null");
         List<ArticleSummaryDto> reportList = articleService.getSummary(pageable);
         return ResponseEntity.ok(new SummaryRecentDto(divide,customDtos,reportList));
