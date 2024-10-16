@@ -12,12 +12,6 @@ public class SummaryDivideCustomDto {
     private String product_Id;
     private String category;
     private String name;
-    private double dividend;
+    private double recruitmentRate;
 
-    public SummaryDivideCustomDto(Divide findDivide) {
-        this.product_Id = findDivide.getProductId();
-        this.category = findDivide.getCategory();
-        this.name = findDivide.getName();
-        this.dividend = findDivide.getDividend();
-    }
 }

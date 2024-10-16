@@ -103,7 +103,7 @@ public class BuildingRestController {
         // null 처리
         if(location == null) {
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
-            }
+        }
         return ResponseEntity.ok(new BuildingAreaResponseDto(location,areas));
     }
 
