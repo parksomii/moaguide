@@ -30,7 +30,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.SummaryIssupriceCustomDto(p.productId, pl.category, p.name, (p.nowPiece / p.piece * 100)) " +
             "FROM Product p JOIN Platform pl on pl.PlatformId = p.PlatformId.PlatformId JOIN IssuePrice ip on ip.id.productId.productId = p.productId " +
             "WHERE pl.PlatformId = p.PlatformId.PlatformId " +
-            "AND pl.status = '공모 중' " +
+            "AND pl.status = '공모중' " +
             "AND ip.id.productId.productId = p.productId " +
             "ORDER BY ip.day DESC")
     List<SummaryIssupriceCustomDto> findrecent(Pageable pageable);
