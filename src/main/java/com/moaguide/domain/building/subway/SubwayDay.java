@@ -25,6 +25,14 @@ import java.sql.Date;
                 }
         )
 )
+@NamedStoredProcedureQuery(
+        name = "SubwayDay",
+        procedureName = "GetSubwayDay",
+        resultSetMappings = "subwayDayMapping",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "productId", type = String.class)
+        }
+)
 public class SubwayDay {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
