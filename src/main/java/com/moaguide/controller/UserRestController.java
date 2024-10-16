@@ -152,4 +152,18 @@ public class UserRestController {
         int count = bookmarkService.countByUser(Nickname);
         return ResponseEntity.ok().body(count);
     }
+
+    @PostMapping("update/notify")
+    public ResponseEntity<?> getNotify(@RequestParam int status ,@RequestHeader(value = "Authorization") String jwt) {
+        if (jwtUtil.isExpired(jwt) || jwtUtil.getNickname(jwt).equals("null") || !jwtUtil.getType(jwt).equals("access")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }else{
+            String result = userService.updateMarketing(jwtUtil.getNickname(jwt),status);
+            if(result.equals("success")){
+                return ResponseEntity.ok().body(result);
+            }else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+    }
 }

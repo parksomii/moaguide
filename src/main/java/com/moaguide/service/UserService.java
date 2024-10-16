@@ -94,4 +94,13 @@ public class UserService {
         Optional<User> duplication = userRepository.findByEmailAndLoginType(email, "Local");
         return duplication.isPresent();
     }
+
+    public String updateMarketing(String nickname, int status) {
+        try {
+            userRepository.updateMarketting(nickname,status);
+            return "success";
+        }catch (Exception e) {
+            return "fail";
+        }
+    }
 }
