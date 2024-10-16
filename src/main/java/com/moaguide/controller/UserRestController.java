@@ -156,7 +156,7 @@ public class UserRestController {
     @PostMapping("/update/notify")
     public ResponseEntity<?> getNotify(@RequestParam int status ,@RequestHeader(value = "Authorization") String jwt) {
         jwt = jwt.substring(7);
-        if (jwtUtil.isExpired(jwt) || jwtUtil.getNickname(jwt).equals("null") || !jwtUtil.getType(jwt).equals("access")) {
+        if (jwtUtil.isExpired(jwt) || jwtUtil.getNickname(jwt).equals("null") || !jwtUtil.getCategory(jwt).equals("access")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }else{
             if(status>7){
