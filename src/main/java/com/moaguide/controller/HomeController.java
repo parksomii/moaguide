@@ -89,8 +89,17 @@ public class HomeController {
 
     // 홈페이지 상품 리스트 조회
     @GetMapping("/home/list")
-    public  ResponseEntity<?> homelist(@RequestParam String category){
-        List<SummaryCustomDto> result = productService.home(category,"moaguide");
+    public  ResponseEntity<?> homelist(@RequestParam String category,@RequestHeader(value="Authorization",required = false) String jwt) {
+        String Nickname;
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(jwt.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = "null";
+        }
+        List<SummaryCustomDto> result = productService.home(category,Nickname);
         if(result==null){
             return ResponseEntity.badRequest().body("잘못된 요청입니다.");
         }else {
