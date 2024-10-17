@@ -4,9 +4,9 @@ import com.moaguide.domain.Announcement.AnnouncementRepository;
 import com.moaguide.dto.NewDto.customDto.AnnouncementDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -14,8 +14,9 @@ import java.util.List;
 public class AnnouncementService {
     private final AnnouncementRepository announcementRepository;
 
-    public List<AnnouncementDto> getNotice() {
-        return announcementRepository.findAllNotice();
+    public Page<AnnouncementDto> getNotice(Pageable pageable) {
+
+        return announcementRepository.findAllNotice(pageable);
     }
 
     public AnnouncementDto getNoticeDetail(Long id) {
