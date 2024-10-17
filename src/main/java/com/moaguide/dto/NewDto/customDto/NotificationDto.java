@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.sql.Date;
 
 @Getter
 @NoArgsConstructor
@@ -13,5 +13,5 @@ public class NotificationDto {
     private Long id;
     private String productId;
     private String message;
-    private LocalTime nowDate;
+    private Date nowDate;
 }

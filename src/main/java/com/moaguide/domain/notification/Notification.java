@@ -7,7 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.sql.Date;
+
 
 @Entity
 @NoArgsConstructor
@@ -20,5 +21,5 @@ public class Notification {
     @Column(name = "Product_Id")
     private String productId;
     private String message;
-    private LocalTime nowDate;
+    private Date nowDate;
 }
