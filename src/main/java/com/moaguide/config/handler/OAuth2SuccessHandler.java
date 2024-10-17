@@ -63,8 +63,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
             } else {
                 // 이름이 있는 경우, AccessToken 및 RefreshToken 발급
-                String accessToken = jwtUtil.createJwt("access", user.getName(), String.valueOf(user.getRole()), 60 * 1000L);
-                String refreshToken = jwtUtil.createJwt("refresh", user.getName(), String.valueOf(user.getRole()), 5 * 60 * 60 * 1000L);
+                String accessToken = jwtUtil.createJwt("access", user.getNickname(), String.valueOf(user.getRole()), 60 * 1000L);
+                String refreshToken = jwtUtil.createJwt("refresh", user.getNickname(), String.valueOf(user.getRole()), 5 * 60 * 60 * 1000L);
 
                 // 응답 설정: AccessToken은 헤더, RefreshToken은 쿠키로 설정
                 response.setHeader("Authorization", "Bearer " + accessToken);
@@ -78,7 +78,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 String userjson = objectMapper.writeValueAsString(
                         Map.of(
                                 "message", "Login successful",
-                                "user", userJson
+                                "user", userJson,
+                                "loginType",user.getLoginType()
                         )
                 );
 
