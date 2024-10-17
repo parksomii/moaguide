@@ -52,7 +52,7 @@ public class BookmarkService {
     @Transactional
     public SummaryResponseDto getProductBybookmark(String category, String nickname, int page, int size) {
         if (category.equals("all")){
-            int total = bookmarkRepository.getTotal(nickname);
+            int total = (int) Math.ceil((double) bookmarkRepository.getTotal(nickname) / 10);
             List<BookmarkProductDto> bookmark = bookmarkRepository.getAllbookmark(page,size,nickname);
             return new SummaryResponseDto(bookmark,page,size,total);
         }else {
