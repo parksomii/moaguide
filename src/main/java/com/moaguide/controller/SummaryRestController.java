@@ -37,8 +37,10 @@ public class SummaryRestController {
             try {
                 bookmarkService.postBookmark(productId, nickname);
                 return ResponseEntity.ok("북마크 성공");
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest().body("북마크 실패:중복" );
             } catch (RuntimeException e) {
-                return ResponseEntity.badRequest().body("북마크 실패: " + e.getMessage());
+                return ResponseEntity.internalServerError().body("서버오류");
             }
         } else {
             return ResponseEntity.badRequest().body("유효하지 않은 토큰");
