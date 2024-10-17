@@ -30,7 +30,7 @@ public class BookmarkService {
             throw new RuntimeException("이미 북마크가 되어 있습니다.");
         } catch (Exception e) {
             // 기타 예상치 못한 오류 처리
-            throw new RuntimeException("북마크 저장 중 오류 발생: " + e.getMessage());
+            throw new RuntimeException("북마크 저장 중 오류 발생");
         }
     }
 
