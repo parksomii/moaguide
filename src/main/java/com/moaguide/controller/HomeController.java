@@ -1,6 +1,5 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.product.Product;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.*;
@@ -8,6 +7,7 @@ import com.moaguide.service.view.NewsViewService;
 import com.moaguide.service.view.ProductViewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -156,8 +156,9 @@ public class HomeController {
 
     // 공지사항 조회
     @GetMapping("notice")
-    public ResponseEntity<List<AnnouncementDto>> noticeList() {
-        List<AnnouncementDto> noticeList = announcementService.getNotice();
+    public ResponseEntity<Object> noticeList(@RequestParam int page,@RequestParam int size) {
+        Pageable pageable = PageRequest.of(page-1, size);
+        Page<AnnouncementDto> noticeList = announcementService.getNotice(pageable);
         // 공지가 없으면 빈 리스트 반환
         if (noticeList == null) {
             return ResponseEntity.ok().build();
