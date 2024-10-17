@@ -52,6 +52,7 @@ public class HanwooRestController {
     @GetMapping("sub/hanwooPrice")
     public ResponseEntity<Object> getHanwooPriceData(@RequestParam String category, @RequestParam int month) {
         List<?> result = hanwooPriceService.getHanwooPriceData(category, month);
+//        Map<String, Object> data = new HashMap<>();
         Map<String, Object> response = new HashMap<>();
         // null 체크
         if (result == null) {
@@ -60,7 +61,26 @@ public class HanwooRestController {
         if (result.isEmpty()){
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
-        response.put(category,result);
+        // name 필드 추가
+        if ("grade1Rate".equals(category)) {
+            String name = "1등급이상 출현율";
+            response.put("name", name);
+        } else if ("productionCost".equals(category)) {
+            String name = "두당 생산비";
+            response.put("name", name);
+        } else if ("averagePrice".equals(category)) {
+            String name = "두당 평균 도매가격";
+            response.put("name", name);
+        } else if ("cattlePrice".equals(category)) {
+            String name = "거세우 평균가격";
+            response.put("name", name);
+        } else {
+            return null;
+        }
+        // object 필드에 hanwooMarket 리스트 추가
+        response.put("object", result);
+
+        // 응답 반환
         return ResponseEntity.ok(response);
     }
 
@@ -75,8 +95,25 @@ public class HanwooRestController {
         if (hanwooMarket.isEmpty()){
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
+        if ("cattlePopulation".equals(category)) {
+            String name = "한우 사육두수";
+            response.put("name", name);
+        } else if ("cattleSale".equals(category)) {
+            String name = "연간 매각두수";
+            response.put("name", name);
+        } else if ("cattleFarm".equals(category)) {
+            String name = "한우 사육농가수";
+            response.put("name", name);
+        } else if ("cattleTransaction".equals(category)) {
+            String name = "한우 거래정육량";
+            response.put("name", name);
+        } else {
+            return null;
+        }
+        // object 필드에 hanwooMarket 리스트 추가
+        response.put("object", hanwooMarket);
 
-        response.put(category,hanwooMarket);
+        // 응답 반환
         return ResponseEntity.ok(response);
     }
 }
