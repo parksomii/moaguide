@@ -12,12 +12,14 @@ import com.moaguide.service.ProductService;
 import com.moaguide.service.StudyService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -37,7 +39,7 @@ public class SummaryRestController {
             try {
                 bookmarkService.postBookmark(productId, nickname);
                 return ResponseEntity.ok("북마크 성공");
-            } catch (IllegalArgumentException e) {
+            } catch (DataIntegrityViolationException e) {
                 return ResponseEntity.badRequest().body("북마크 실패:중복" );
             } catch (RuntimeException e) {
                 return ResponseEntity.internalServerError().body("서버오류");

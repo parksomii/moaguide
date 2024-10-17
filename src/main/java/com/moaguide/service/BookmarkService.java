@@ -5,6 +5,7 @@ import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +26,9 @@ public class BookmarkService {
     public void postBookmark(String productId, String nickname) {
         try {
             bookmarkRepository.insertBookmark(productId, nickname);
-        } catch (IllegalArgumentException e) {
+        } catch (DataIntegrityViolationException e) {
             // 중복 북마크가 있을 경우 예외 처리
-            throw new IllegalArgumentException("이미 북마크가 되어 있습니다.");
+            throw new DataIntegrityViolationException("이미 북마크가 되어 있습니다.");
         } catch (Exception e) {
             // 기타 예상치 못한 오류 처리
             throw new RuntimeException("북마크 저장 중 오류 발생");
