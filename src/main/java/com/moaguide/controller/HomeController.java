@@ -173,10 +173,10 @@ public class HomeController {
             return ResponseEntity.ok().build();
         }
         Map<String,Object> response = new HashMap<>();
-        response.put("notice", noticeList.getContent());
-        response.put("page", page);
         response.put("size", size);
-        response.put("total", noticeList.getTotalElements());
+        response.put("page", page);
+        response.put("total", (int)Math.ceil((double)noticeList.getTotalElements()/10));
+        response.put("notice", noticeList.getContent());
         return ResponseEntity.ok(response);
     }
 
