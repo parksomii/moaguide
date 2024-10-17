@@ -18,8 +18,7 @@ public class Notification {
     @Id
     private Long id;
     private String nickName;
-    @Column(name = "Product_Id")
-    private String productId;
+    private String link;
     private String message;
-    private Date nowDate;
+    private Date Date;
 }

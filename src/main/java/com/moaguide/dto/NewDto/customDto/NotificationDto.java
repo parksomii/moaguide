@@ -11,7 +11,7 @@ import java.sql.Date;
 @AllArgsConstructor
 public class NotificationDto {
     private Long id;
-    private String productId;
+    private String link;
     private String message;
-    private Date nowDate;
+    private Date Date;
 }

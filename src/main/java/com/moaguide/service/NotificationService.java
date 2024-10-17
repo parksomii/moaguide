@@ -5,6 +5,8 @@ import com.moaguide.domain.notification.NotificationRepository;
 import com.moaguide.dto.NewDto.customDto.NotificationDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,9 @@ public class NotificationService {
     }
 
     // 알림창 리스트 조회
-    public List<NotificationDto> getNotificationList(String nickname) {
-        return notificationRepository.getNotificationList(nickname);
+    public List<NotificationDto> getNotificationList(String nickname,int nextCursor) {
+        Pageable pageable = PageRequest.of(0,10);
+        return notificationRepository.getNotificationList(nickname,pageable,nextCursor);
     }
 
     // 알림 삭제

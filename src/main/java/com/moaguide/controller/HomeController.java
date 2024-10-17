@@ -63,15 +63,32 @@ public class HomeController {
 
     // 알림창 리스트 조회
     @GetMapping("notificationList")
-    public ResponseEntity<List<NotificationDto>> notificationList(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> notificationList(@RequestHeader(value = "Authorization", required = false) String jwt,@RequestParam(defaultValue = "0") Integer nextCursor) {
+        String Nickname;
+        // 알림 상태 확인 true or false 반환
+        if ( jwt!= null && jwt.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(jwt.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            Nickname = jwtUtil.getNickname(jwt.substring(7));
+        }else{
+            Nickname = "null";
+        }
         // 알림창 리스트 반환
-        String Nickname = jwtUtil.getNickname(token.substring(7));
-        List<NotificationDto> notificationList = notificationService.getNotificationList(Nickname);
+        List<NotificationDto> notificationList = notificationService.getNotificationList(Nickname,nextCursor);
         // 알림이 없으면 빈 리스트 반환
         if (notificationList == null) {
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.ok(notificationList);
+        Map<String,Object> map = new HashMap<>();
+        if(notificationList.size() != 10){
+            map.put("nextCursor",null);
+            map.put("notification",notificationList);
+        }else{
+            map.put("nextCursor",notificationList.get(notificationList.size()-1).getId());
+            map.put("notification",notificationList);
+        }
+        return ResponseEntity.ok(map);
     }
 
     // 알림 읽으면 삭제
