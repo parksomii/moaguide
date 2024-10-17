@@ -172,7 +172,12 @@ public class HomeController {
         if (noticeList == null) {
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.ok(noticeList);
+        Map<String,Object> response = new HashMap<>();
+        response.put("notice", noticeList.getContent());
+        response.put("page", page);
+        response.put("size", size);
+        response.put("total", noticeList.getTotalElements());
+        return ResponseEntity.ok(response);
     }
 
     // 공지사항 상세 조회
