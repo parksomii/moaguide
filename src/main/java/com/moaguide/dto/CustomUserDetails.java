@@ -52,6 +52,8 @@ public class CustomUserDetails implements UserDetails {
         return user.getLoginType();
     }
 
+    public String getNickname(){return user.getNickname();}
+
     public String getemail(){
         return user.getEmail();
     }
