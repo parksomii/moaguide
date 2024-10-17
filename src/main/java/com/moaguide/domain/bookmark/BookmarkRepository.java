@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    @Query("SELECT CEIL(count(b)/10) from Bookmark b where b.nickName.nickname=:nickname")
+    @Query("SELECT count(b) from Bookmark b where b.nickName.nickname=:nickname")
     int countByUser(@Param("nickname") String nickname);
 
 
