@@ -11,4 +11,5 @@ public class ProfileDto {
     public String nickname;
     public String email;
     public String loginType;
+    public Integer Marketing;
 }

@@ -153,7 +153,7 @@ public class UserRestController {
         return ResponseEntity.ok().body(count);
     }
 
-    @PostMapping("/update/notify")
+    @PatchMapping("/update/notify")
     public ResponseEntity<?> getNotify(@RequestParam int status ,@RequestHeader(value = "Authorization") String jwt) {
         jwt = jwt.substring(7);
         if (jwtUtil.isExpired(jwt) || jwtUtil.getNickname(jwt).equals("null") || !jwtUtil.getCategory(jwt).equals("access")) {
