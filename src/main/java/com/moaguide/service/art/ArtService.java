@@ -101,7 +101,7 @@ public class ArtService {
         ArtAuthorDto artAuthorDto = new ArtAuthorDto(
                 (String) result[2], // author_name
                 (String) result[7], // nationality
-                (LocalDate) result[8], // birth
+                ((Date) result[8]).toLocalDate(), // birth
                 (String) result[9], // academic_ability
                 (String) result[10], // award_career
                 (String) result[11], // major
