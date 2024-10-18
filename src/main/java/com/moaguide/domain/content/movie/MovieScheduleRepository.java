@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface MovieScheduleRepository extends JpaRepository<MovieSchedule, Long> {
 
-    @Procedure(name = "GetMoviesInDateRange")
+    @Procedure(name = "GetMoviesIntenDateRange")
     List<MovieSchedule> findByschedule(@Param("movieId") String productId);
 
 }

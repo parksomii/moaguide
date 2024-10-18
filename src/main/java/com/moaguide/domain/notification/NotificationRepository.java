@@ -15,6 +15,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     boolean getNotification(@Param("nickname") String nickname);
 
     // 알림창 리스트 조회
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.NotificationDto(n.id, n.link, n.message, n.Date) FROM Notification n WHERE n.nickName = :nickname and n.id>:Cursor order by n.id")
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.NotificationDto(n.id, n.link, n.message, n.Date    ) FROM Notification n WHERE n.nickName = :nickname and n.id>:Cursor order by n.id")
     List<NotificationDto> getNotificationList(@Param("nickname") String nickname, Pageable pageable, @Param("Cursor") int nextCursor);
 }
