@@ -54,7 +54,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         //유저 정보
         String username = authentication.getName();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        ProfileDto user = new ProfileDto(username,userDetails.getemail(),userDetails.getLoginType());
+        ProfileDto user = new ProfileDto(username,userDetails.getemail(),userDetails.getLoginType(),userDetails.getMarketing());
 
         // rememberMe 여부 확인
         boolean rememberMe = Boolean.parseBoolean(request.getParameter("rememberMe"));

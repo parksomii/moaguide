@@ -58,4 +58,7 @@ public class CustomUserDetails implements UserDetails {
         return user.getEmail();
     }
 
+    public int getMarketing() {
+        return user.getMarketingConsent();
+    }
 }

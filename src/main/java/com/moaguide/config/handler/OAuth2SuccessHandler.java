@@ -79,7 +79,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                         Map.of(
                                 "message", "Login successful",
                                 "user", userJson,
-                                "loginType",user.getLoginType()
+                                "loginType",user.getLoginType(),
+                                "Marketing",user.getMarketingConsent()
                         )
                 );
 
