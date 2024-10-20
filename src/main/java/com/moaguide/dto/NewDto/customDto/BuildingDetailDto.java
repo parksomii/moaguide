@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BuildingDetailDto {
 
-    private String productId;
+    private String name;
 
     private String address;
 
@@ -44,7 +44,7 @@ public class BuildingDetailDto {
     public BuildingDetailDto(String name,String useArea, String mainUse, String completionDate, String landArea, String floorArea,
                              Double floorAreaRate, Double dryRatio, Double height, String scale, String mainStructure,
                              Integer parking, Integer lift, String location) {
-        this.productId = name;
+        this.name = name;
         this.useArea = useArea;
         this.mainUse = mainUse;
         this.completionDate = completionDate;
