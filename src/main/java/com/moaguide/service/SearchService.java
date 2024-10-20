@@ -48,16 +48,17 @@ public class SearchService {
 // MultiMatchQuery로 검색 가능한 필드에 대해 검색, 플랫폼에 가중치 1.5배 적용
         searchSourceBuilder.query(QueryBuilders.multiMatchQuery(keyword)
                 .field("name", 3.0f)
-                .field("platform", 2.0f)  // 플랫폼에 가중치 1.5배
+                .field("platform", 3.0f)  // 플랫폼에 가중치 1.5배
                 .field("address", 1.0f)
                 .field("Director", 1.0f)
                 .field("Cast", 1.0f)
                 .field("Writer", 1.0f)
-                .field("Singer", 1.0f)
+                .field("Singer", 2.0f)
                 .field("Lyricist", 1.0f)
                 .field("Composer", 1.0f)
                 .field("Arranger", 1.0f)
                 .field("Farm", 1.0f)
+                .field("kr_category", 1.0f)
                 .field("Introduction", 1.0f)).size(10);
 
         // 필요한 필드만 반환

@@ -17,6 +17,7 @@ public class ProductsEntity {
 
     private String name;
     private String category;
+    private String kr_category ;
     private String platform;
     private String address;
     private String director;
