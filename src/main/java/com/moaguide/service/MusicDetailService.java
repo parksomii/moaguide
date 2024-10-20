@@ -76,7 +76,7 @@ public class MusicDetailService {
                 (Integer) result[3],  // piece
                 (Integer) result[4],  // basePrice
                 (Long) result[5],     // totalPrice
-                result[6] == null || "0000-00-00".equals(result[6].toString()) ? null : ((Date) result[6]).toLocalDate()
+                result[6] == null || "1990-01-01".equals(result[6].toString()) ? null : ((Date) result[6]).toLocalDate()
         );
 
         return publishDto;
