@@ -36,6 +36,7 @@ public class BuildingRestController {
     private final VacancyRateService vacancyRateService;
     private final LandRegistryService landRegistryService;
     private final JWTUtil jwtUtil;
+    private final NearBusService nearBusService;
 
 
     @GetMapping("/{product_Id}")
@@ -68,9 +69,10 @@ public class BuildingRestController {
         return ResponseEntity.ok(new BuildingBaseResponseDto(building,leaseDtos));
     }
 
-        @GetMapping("/sub/{product_Id}")
+    @GetMapping("/sub/{product_Id}")
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
         BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
+        List<NearBusDto> bus = nearBusService.findBykeyword(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
         // null 처리
         if(businessArea == null) {

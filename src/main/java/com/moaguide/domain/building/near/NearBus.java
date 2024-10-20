@@ -18,6 +18,5 @@ public class NearBus {
 
     private String keyword;
 
-    private int line;
-    private int node;
+    private String node;
 }

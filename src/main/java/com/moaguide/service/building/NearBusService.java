@@ -2,9 +2,12 @@ package com.moaguide.service.building;
 
 import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.domain.building.near.NearBusRepository;
+import com.moaguide.dto.NewDto.BuildingDto.NearBusDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -12,8 +15,8 @@ import org.springframework.stereotype.Service;
 public class NearBusService {
     private final NearBusRepository nearBusRepository;
 
-    public NearBus findBykeyword(String keyword) {
-        NearBus nearBus = nearBusRepository.findBykeyword(keyword);
+    public List<NearBusDto>  findBykeyword(String keyword) {
+        List<NearBusDto> nearBus = nearBusRepository.findBykeyword(keyword);
         log.info("keyword:{} nearBus:{}", keyword, nearBus);
         return nearBus;
     }
