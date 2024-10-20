@@ -51,6 +51,12 @@ public class BuildingRestController {
             Nickname = "null";
         }
         BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
+        List<TypeDto> type  = rentService.findType(product_Id);
+        if(type.size() == 1){
+            building.setRentType(Boolean.TRUE);
+        }else{
+            building.setRentType(Boolean.FALSE);
+        }
         return ResponseEntity.ok(building);
     }
 
