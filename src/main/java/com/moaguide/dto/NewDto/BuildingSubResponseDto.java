@@ -1,5 +1,6 @@
 package com.moaguide.dto.NewDto;
 
+import com.moaguide.dto.NewDto.BuildingDto.NearBusDto;
 import com.moaguide.dto.NewDto.BuildingDto.NearSubwayDto;
 import com.moaguide.dto.NewDto.BuildingDto.NearSubwayListDto;
 import lombok.Getter;
@@ -22,10 +23,9 @@ public class BuildingSubResponseDto {
     private String ybdCar;
     private String ybdSubway;
     private List<NearSubwayListDto> nearSubway;
-    private int busLine;
-    private int busNode;
+    private List<NearBusDto> busNode;
 
-    public BuildingSubResponseDto(BusinessAreaDto businessArea, List<NearSubwayDto> nearSubway) {
+    public BuildingSubResponseDto(BusinessAreaDto businessArea, List<NearBusDto> bus, List<NearSubwayDto> nearSubway) {
         this.cbd = businessArea.getCbd();
         this.cbdDistance = businessArea.getCbdDistance();
         this.cbdCar = businessArea.getCbdCar();
@@ -45,8 +45,7 @@ public class BuildingSubResponseDto {
         for(NearSubwayDto near : nearSubway) {
             this.nearSubway.add(new NearSubwayListDto(near));
         }
-        this.busLine = businessArea.getLine();
-        this.busNode = businessArea.getNode();
+        this.busNode = bus;
     }
 
 }

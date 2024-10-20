@@ -82,7 +82,7 @@ public class BuildingRestController {
         if(nearSubway.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
         }
-        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway);
+        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,bus,nearSubway);
                 return ResponseEntity.ok(buildingSubResponseDto);
     }
 
