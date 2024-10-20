@@ -36,6 +36,7 @@ public class BuildingBaseResponseDto {
         );
 
         this.buildingDetail = new BuildingDetailDto(
+                building.getName(),
                 building.getUseArea(),
                 building.getMainUse(),
                 building.getCompletionDate(),

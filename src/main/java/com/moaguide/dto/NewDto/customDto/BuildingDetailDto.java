@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BuildingDetailDto {
 
-    private Product productId;
+    private String productId;
 
     private String address;
 
@@ -41,9 +41,10 @@ public class BuildingDetailDto {
 
 
     // 필요한 필드를 받는 새로운 생성자 추가
-    public BuildingDetailDto(String useArea, String mainUse, String completionDate, String landArea, String floorArea,
+    public BuildingDetailDto(String name,String useArea, String mainUse, String completionDate, String landArea, String floorArea,
                              Double floorAreaRate, Double dryRatio, Double height, String scale, String mainStructure,
                              Integer parking, Integer lift, String location) {
+        this.productId = name;
         this.useArea = useArea;
         this.mainUse = mainUse;
         this.completionDate = completionDate;
