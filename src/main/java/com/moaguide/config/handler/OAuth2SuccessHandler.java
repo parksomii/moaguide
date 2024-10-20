@@ -80,7 +80,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                                 "message", "Login successful",
                                 "user", userJson,
                                 "loginType",user.getLoginType(),
-                                "Marketing",user.getMarketingConsent()
+                                "marketing",user.getMarketingConsent()
                         )
                 );
 

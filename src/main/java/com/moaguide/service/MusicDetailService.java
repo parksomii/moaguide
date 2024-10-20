@@ -76,7 +76,7 @@ public class MusicDetailService {
                 (Integer) result[3],  // piece
                 (Integer) result[4],  // basePrice
                 (Long) result[5],     // totalPrice
-                ((Date) result[6]).toLocalDate()  // issuDay
+                result[6] != null ? ((Date) result[6]).toLocalDate() : null  // issuDay
         );
 
         return publishDto;
