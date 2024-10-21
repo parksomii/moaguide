@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -32,7 +33,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "WHERE pl.PlatformId = p.PlatformId.PlatformId " +
             "AND pl.status = '공모중' " +
             "AND ip.id.productId.productId = p.productId " +
+            "AND ip.day < :date " +
             "ORDER BY ip.day DESC")
-    List<SummaryIssupriceCustomDto> findrecent(Pageable pageable);
+    List<SummaryIssupriceCustomDto> findrecent(Pageable pageable,@Param("date")Date date);
 }
 

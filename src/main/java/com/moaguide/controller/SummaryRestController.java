@@ -19,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -69,7 +71,8 @@ public class SummaryRestController {
     @GetMapping
     public ResponseEntity<SummaryRecentDto> getSummary() {
         Pageable pageable = PageRequest.of(0, 10);
-        List<SummaryIssupriceCustomDto> divide = productService.findrecent(pageable);
+        Date date = Date.valueOf(LocalDate.now());
+        List<SummaryIssupriceCustomDto> divide = productService.findrecent(pageable,date);
         List<SummaryCustomDto> customDtos = productService.getlist(0,3,"lastDivide_rate desc","null");
         List<ArticleSummaryDto> reportList = articleService.getSummary(pageable);
         return ResponseEntity.ok(new SummaryRecentDto(divide,customDtos,reportList));

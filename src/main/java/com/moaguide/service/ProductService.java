@@ -7,9 +7,7 @@ import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -149,7 +147,7 @@ public class ProductService {
         productRepository.updateByProductId(productId);
     }
 
-    public List<SummaryIssupriceCustomDto> findrecent(Pageable pageable) {
-        return productRepository.findrecent(pageable);
+    public List<SummaryIssupriceCustomDto> findrecent(Pageable pageable, Date date) {
+        return productRepository.findrecent(pageable,date);
     }
 }
