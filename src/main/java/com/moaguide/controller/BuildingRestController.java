@@ -82,7 +82,7 @@ public class BuildingRestController {
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
         // 빈 리스트 처리
         if(nearSubway.isEmpty() || businessArea == null) {
-            return ResponseEntity.ok(new ArrayList<>());
+            return ResponseEntity.ok(new HashMap<>());
         }
         BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway);
         return ResponseEntity.ok(buildingSubResponseDto);
