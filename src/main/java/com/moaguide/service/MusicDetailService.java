@@ -28,6 +28,10 @@ import java.util.List;
 @Service
 public class MusicDetailService {
     private final MusicDetailRepository musicRepository;
+    private final MusicDivideRepository musicDivideRepository;
+    private final CurrentDivideRepository currentDivideRepository;
+    private final DivideRepository divideRepository;
+    private final DataSource dataSource;
 
     @PersistenceContext
     private final EntityManager entityManager;
