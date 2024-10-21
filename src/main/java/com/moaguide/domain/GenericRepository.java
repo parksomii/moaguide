@@ -7,9 +7,12 @@ import com.moaguide.dto.NewDto.customDto.finishCustomDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.jdbc.connections.spi.JdbcConnectionAccess;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
