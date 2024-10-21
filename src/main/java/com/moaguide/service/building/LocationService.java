@@ -12,7 +12,6 @@ public class LocationService {
     private LocationRepository locationRepository;
 
     public LocationDto locate(String id) {
-        LocationDto location = locationRepository.findByProductId(id);
-        return location;
+        return locationRepository.findByProductId(id);
     }
 }
