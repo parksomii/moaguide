@@ -89,7 +89,7 @@ public class ArtService {
         // ArtPublishDto 매핑
         ArtPublishDto artPublishDto = new ArtPublishDto(
                 (String) result[0],  // product_name
-                (String) result[1],  // publisher -> type
+                result[1] == null ? "" : (String) result[1],  // publisher -> type
                 (String) result[2], // author_name
                 ((Integer) result[3]),  // piece (Integer 그대로 사용)
                 ((Integer) result[4]),  // basePrice (Integer -> Long 변환)
@@ -100,12 +100,12 @@ public class ArtService {
         // ArtAuthorDto 매핑
         ArtAuthorDto artAuthorDto = new ArtAuthorDto(
                 (String) result[2], // author_name
-                (String) result[7], // nationality
-                ((Date) result[8]).toLocalDate(), // birth
-                (String) result[9], // academic_ability
-                (String) result[10], // award_career
-                (String) result[11], // major
-                (String) result[12]  // introduction
+                result[7] == null ? "" : (String) result[7], // nationality
+                result[8] == null ? "" : ((Date) result[8]).toLocalDate().toString(), // birth
+                result[9] == null ? "" : (String) result[9], // academic_ability
+                result[10] == null ? "" : (String) result[10], // award_career
+                result[11] == null ? "" : (String) result[11], // major
+                result[12] == null ? "" : (String) result[12]  // introduction
         );
 
         // ArtWorkDto 매핑
