@@ -14,25 +14,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SqlResultSetMapping(
-        name = "LocationDtoMapping",
-        classes = @ConstructorResult(
-                targetClass = LocationDto.class,
-                columns = {
-                        @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "longitude", type = double.class),
-                        @ColumnResult(name = "latitude", type = double.class)
-                }
-        )
-)
-@NamedStoredProcedureQuery(
-        name = "AreaProcedure",
-        procedureName = "locate",
-        resultSetMappings = "LocationDtoMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = String.class)
-        }
-)
 public class Location {
 
     @Id
@@ -48,9 +29,5 @@ public class Location {
 
     @Column(name = "latitude")
     private double latitude;
-
-    public LocationDto toDto(){
-        return new LocationDto(this.productId.getName(), this.longitude, this.latitude);
-    };
 
 }
