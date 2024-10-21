@@ -111,7 +111,7 @@ public class BuildingRestController {
         BuildingSubwayResponseDto subwayResponseDto= subwayService.findByProductId(productId);
         // null 처리
         if(subwayResponseDto == null || subwayResponseDto.getSubwayDay().isEmpty() || subwayResponseDto.getSubwayMonth().isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            return ResponseEntity.ok(new HashMap<>());
         }
         return ResponseEntity.ok(subwayResponseDto);
     }
