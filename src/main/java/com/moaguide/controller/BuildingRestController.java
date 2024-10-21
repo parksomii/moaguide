@@ -79,10 +79,6 @@ public class BuildingRestController {
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
         BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
-        // null 처리
-        if(businessArea == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
-        }
         // 빈 리스트 처리
         if(nearSubway.isEmpty() || businessArea == null) {
             return ResponseEntity.ok(new BuildingSubResponseDto());
