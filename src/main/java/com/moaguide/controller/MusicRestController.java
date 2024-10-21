@@ -68,8 +68,8 @@ public class MusicRestController {
     public ResponseEntity<?> view(@PathVariable String product_Id, @RequestParam int month) {
         // 조회수 (3개월, 6개월, 1년, 3년, 전체)
         List<ViewDto> youtubeView = musicService.findView(product_Id, month);
-        // 빈 리스트 체크
-        if (youtubeView.isEmpty()) {
+        // null & 빈 리스트 체크
+        if (youtubeView == null || youtubeView.isEmpty()) {
             return ResponseEntity.ok(new HashMap<>());
         }
         return ResponseEntity.ok(youtubeView);
@@ -80,8 +80,8 @@ public class MusicRestController {
     public ResponseEntity<?> search(@PathVariable String product_Id, @RequestParam int month) {
         // 검색량 (3개월, 6개월, 1년, 전체)
         List<SearchDto> search = musicService.findSearch(product_Id, month);
-        // 빈 리스트 체크
-        if (search.isEmpty()) {
+        // null & 빈 리스트 체크
+        if (search == null || search.isEmpty()) {
             return ResponseEntity.ok(new HashMap<>());
         }
         return ResponseEntity.ok(search);
@@ -92,8 +92,8 @@ public class MusicRestController {
     public ResponseEntity<?> streaming(@PathVariable String product_Id, @RequestParam int month) {
         // 스트리밍 수 (3개월, 6개월, 1년, 전체)
         List<SteamingDto> streaming = musicService.findStreaming(product_Id, month);
-        // 빈 리스트 체크
-        if (streaming.isEmpty()) {
+        // null & 빈 리스트 체크
+        if (streaming == null || streaming.isEmpty()) {
             return ResponseEntity.ok(new HashMap<>());
         }
         return ResponseEntity.ok(streaming);
@@ -104,8 +104,8 @@ public class MusicRestController {
     public ResponseEntity<?> consert(@PathVariable String product_Id) {
         // 공연일정 최신순 8개
         List<ConsertDto> consert = musicService.findConsert(product_Id);
-        // 빈 리스트 체크
-        if (consert.isEmpty()) {
+        // null & 빈 리스트 체크
+        if (consert == null || consert.isEmpty()) {
             return ResponseEntity.ok(new HashMap<>());
         }
         return ResponseEntity.ok(consert);
