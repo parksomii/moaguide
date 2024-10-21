@@ -76,7 +76,7 @@ public class HanwooService {
                 ((Date) result[8]).toLocalDate(),  // paymentDate
                 ((Date) result[9]).toLocalDate(),  // subscriptionDate
                 ((Date) result[10]).toLocalDate(), // allocationDate
-                ((Date) result[11]).toLocalDate()  // criteriaDate
+                result == null ? null :((Date) result[11]).toLocalDate() // criteriaDate
         );
 
         // HanwooFarmDto 생성
