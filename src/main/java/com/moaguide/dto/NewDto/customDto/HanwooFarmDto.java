@@ -13,10 +13,10 @@ public class HanwooFarmDto {
     private String manager; // 관리책임자
     private String certifiedHeads; // 인증두수
     private String cattleBreed; // 축종
-    private LocalDate initialDate; // 최초인증일
+    private String initialDate; // 최초인증일
 
     public HanwooFarmDto(String certificationNumber, String certificationAgency, String manager,
-                         String certifiedHeads, String cattleBreed, LocalDate initialDate) {
+                         String certifiedHeads, String cattleBreed, String initialDate) {
         this.certificationNumber = certificationNumber;
         this.certificationAgency = certificationAgency;
         this.manager = manager;
