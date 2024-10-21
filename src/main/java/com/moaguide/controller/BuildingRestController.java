@@ -84,11 +84,12 @@ public class BuildingRestController {
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
         // 빈 리스트 처리
-        if(nearSubway.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+        if(nearSubway.isEmpty() || businessArea == null) {
+            return ResponseEntity.ok(new BuildingSubResponseDto());
+
         }
         BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway);
-                return ResponseEntity.ok(buildingSubResponseDto);
+        return ResponseEntity.ok(buildingSubResponseDto);
     }
 
     @GetMapping("/land/{product_Id}")

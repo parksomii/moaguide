@@ -4,11 +4,13 @@ import com.moaguide.dto.NewDto.BuildingDto.NearBusDto;
 import com.moaguide.dto.NewDto.BuildingDto.NearSubwayDto;
 import com.moaguide.dto.NewDto.BuildingDto.NearSubwayListDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class BuildingSubResponseDto {
     private String cbd;
     private String cbdDistance;

@@ -18,9 +18,10 @@ public class NearSubwayDto {
 
     private String route;
 
+    private Integer distance;
+
     private Integer time;
 
-    private Integer distance;
 
     public List<String> getRoutes() {
         // route가 null이 아니면 ','로 나누어 리스트로 반환
