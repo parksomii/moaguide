@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface BusinessAreaRepository extends JpaRepository<BusinessArea, Long> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.BusinessAreaDto( b.cbd, b.cbdDistance , b.cbdCar , b.cbdSubway, b.gbd , b.gbdDistance , b.cbdCar , b.cbdSubway, b.ybd, b.ybdDistance, b.ybdCar, b.ybdSubway ) " +
-            "FROM BusinessArea b,BuildingDetail bd " +
-            "WHERE bd.productId.productId =  b.productId.productId " +
-            "and b.productId.productId = :id ")
+    @Query("SELECT new com.moaguide.dto.NewDto.BusinessAreaDto( b.cbd, b.cbdDistance , b.cbdCar , b.cbdSubway, b.gbd , b.gbdDistance , b.cbdCar , b.cbdSubway, b.ybd, b.ybdDistance, b.ybdCar, b.ybdSubway,n.node,n.line ) " +
+            "FROM BusinessArea b,BuildingDetail bd, NearBus n " +
+            "WHERE bd.productId.productId =  b.productId.productId and bd.keyword = n.keyword and " +
+            "b.productId.productId = :id ")
     BusinessAreaDto findByproductId(@Param("id") String product_Id);
 }

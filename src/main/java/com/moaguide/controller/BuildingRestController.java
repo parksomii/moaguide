@@ -78,7 +78,6 @@ public class BuildingRestController {
     @GetMapping("/sub/{product_Id}")
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
         BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
-        List<NearBusDto> bus = nearBusService.findBykeyword(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
         // null 처리
         if(businessArea == null) {
@@ -88,7 +87,7 @@ public class BuildingRestController {
         if(nearSubway.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
         }
-        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,bus,nearSubway);
+        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway);
                 return ResponseEntity.ok(buildingSubResponseDto);
     }
 

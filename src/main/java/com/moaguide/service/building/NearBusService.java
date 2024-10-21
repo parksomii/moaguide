@@ -15,9 +15,5 @@ import java.util.List;
 public class NearBusService {
     private final NearBusRepository nearBusRepository;
 
-    public List<NearBusDto>  findBykeyword(String keyword) {
-        List<NearBusDto> nearBus = nearBusRepository.findBykeyword(keyword);
-        log.info("keyword:{} nearBus:{}", keyword, nearBus);
-        return nearBus;
-    }
+
 }

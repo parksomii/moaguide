@@ -23,9 +23,11 @@ public class BuildingSubResponseDto {
     private String ybdCar;
     private String ybdSubway;
     private List<NearSubwayListDto> nearSubway;
-    private List<NearBusDto> busNode;
+    private String node;
+    private String line;
 
-    public BuildingSubResponseDto(BusinessAreaDto businessArea, List<NearBusDto> bus, List<NearSubwayDto> nearSubway) {
+
+    public BuildingSubResponseDto(BusinessAreaDto businessArea, List<NearSubwayDto> nearSubway) {
         this.cbd = businessArea.getCbd();
         this.cbdDistance = businessArea.getCbdDistance();
         this.cbdCar = businessArea.getCbdCar();
@@ -45,7 +47,8 @@ public class BuildingSubResponseDto {
         for(NearSubwayDto near : nearSubway) {
             this.nearSubway.add(new NearSubwayListDto(near));
         }
-        this.busNode = bus;
+        this.node = businessArea.getNode();
+        this.line = businessArea.getLine();
     }
 
 }

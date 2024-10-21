@@ -23,4 +23,6 @@ public class BusinessAreaDto {
     private String ybdDistance;
     private String ybdCar;
     private String ybdSubway;
+    private String line;
+    private String node;
 }
