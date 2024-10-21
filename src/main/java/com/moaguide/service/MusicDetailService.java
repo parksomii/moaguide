@@ -71,7 +71,7 @@ public class MusicDetailService {
         // MusicPublishDto
         MusicPublishDto publishDto = new MusicPublishDto(
                 (String) result[0],  // name
-                (String) result[1],  // type
+                result[1] == null ? "" : (String) result[1],  // type
                 (String) result[2],  // singer
                 (Integer) result[3],  // piece
                 (Integer) result[4],  // basePrice
