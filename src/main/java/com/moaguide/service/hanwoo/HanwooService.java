@@ -81,11 +81,11 @@ public class HanwooService {
 
         // HanwooFarmDto 생성
         HanwooFarmDto farmDto = new HanwooFarmDto(
-                (String) result[12],  // certificationNumber
-                (String) result[13],  // certificationAgency
-                (String) result[14],  // manager
-                String.valueOf(result[15]),  // certifiedHeads
-                (String) result[16],  // cattleBreed
+                result[12] == null ? "" :(String) result[12],  // certificationNumber
+                result[13] == null ? "" :(String) result[13],  // certificationAgency
+                result[14] == null ? "" :(String) result[14],  // manager
+                result[15] == null ? "" :(String) result[15],  // certifiedHeads
+                result[16] == null ? "" :(String) result[16],  // cattleBreed
                 result[17] == null ? "" : ((Date) result[17]).toLocalDate().toString() // initialDate
         );
 
