@@ -73,7 +73,11 @@ public class UserService {
     }
 
     public void updatePassword(String nickname, String changePassword) {
-        userRepository.updatePassword(nickname, passwordEncoder.encode(changePassword));
+        if(nickname.endsWith(".com")){
+            userRepository.updatePasswordbyEmail(nickname, passwordEncoder.encode(changePassword));
+        }else{
+            userRepository.updateNickname(nickname, passwordEncoder.encode(changePassword));
+        }
     }
 
     public void updatePasswordbyEmail(String email, String changePassword) {
