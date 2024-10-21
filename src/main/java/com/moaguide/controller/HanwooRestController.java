@@ -42,10 +42,6 @@ public class HanwooRestController {
     @GetMapping("base/{product_Id}")
     public ResponseEntity<Object> Base(@PathVariable String product_Id) {
         HanwooBaseResponseDto hanwoo = hanwooService.findDetail(product_Id);
-        // null 체크
-        if (hanwoo == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
-        }
         return ResponseEntity.ok(hanwoo);
     }
 

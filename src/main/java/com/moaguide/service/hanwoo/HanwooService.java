@@ -76,17 +76,17 @@ public class HanwooService {
                 ((Date) result[8]).toLocalDate(),  // paymentDate
                 ((Date) result[9]).toLocalDate(),  // subscriptionDate
                 ((Date) result[10]).toLocalDate(), // allocationDate
-                result[11] == null ? null :((Date) result[11]).toLocalDate() // criteriaDate
+                ((Date) result[11]).toLocalDate() // criteriaDate
         );
 
         // HanwooFarmDto 생성
         HanwooFarmDto farmDto = new HanwooFarmDto(
-                (String) result[12],  // certificationNumber
-                (String) result[13],  // certificationAgency
-                (String) result[14],  // manager
-                String.valueOf(result[15]),  // certifiedHeads
-                (String) result[16],  // cattleBreed
-                result[17]  == null ? null :((Date) result[17]).toLocalDate() // criteriaDate
+                result[12] == null ? "" :(String) result[12],  // certificationNumber
+                result[13] == null ? "" :(String) result[13],  // certificationAgency
+                result[14] == null ? "" :(String) result[14],  // manager
+                result[15] == null ? "" :(String) result[15],  // certifiedHeads
+                result[16] == null ? "" :(String) result[16],  // cattleBreed
+                result[17] == null ? "" : ((Date) result[17]).toLocalDate().toString() // initialDate
         );
 
         // HanwooBaseResponseDto 생성 및 반환
