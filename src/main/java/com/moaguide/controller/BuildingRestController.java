@@ -106,11 +106,7 @@ public class BuildingRestController {
     @GetMapping("/area/{product_Id}")
     public ResponseEntity<Object> area(@PathVariable String product_Id) {
         LocationDto location = locationService.locate(product_Id);
-        // null 처리
-        if(location == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
-        }
-        return ResponseEntity.ok(new BuildingAreaResponseDto(location));
+        return ResponseEntity.ok(location);
     }
 
     @GetMapping("/subway/{productId}")
