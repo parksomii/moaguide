@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,8 +82,7 @@ public class BuildingRestController {
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
         // 빈 리스트 처리
         if(nearSubway.isEmpty() || businessArea == null) {
-            return ResponseEntity.ok(new BuildingSubResponseDto());
-
+            return ResponseEntity.ok(new ArrayList<>());
         }
         BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway);
         return ResponseEntity.ok(buildingSubResponseDto);
