@@ -55,6 +55,9 @@ public class SignUpRestController {
                 return ResponseEntity.badRequest().body("회원가입 실패");
             }
             userDto.setRole(Role.USER);
+            if(userDto.getMarketingConsent()==null){
+                userDto.setMarketingConsent(0);
+            }
             int res = userService.save(userDto);
             if(res == 1){
                 return ResponseEntity.ok().body("회원가입 완료");
