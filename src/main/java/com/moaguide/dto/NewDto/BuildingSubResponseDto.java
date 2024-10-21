@@ -53,4 +53,49 @@ public class BuildingSubResponseDto {
         this.line = businessArea.getLine();
     }
 
+    public BuildingSubResponseDto(List<NearSubwayDto> nearSubway) {
+        // nearSubway 리스트를 초기화
+        this.nearSubway = new ArrayList<>();
+
+        // nearSubway 리스트에 NearSubwayListDto 객체를 추가
+        for(NearSubwayDto near : nearSubway) {
+            this.nearSubway.add(new NearSubwayListDto(near));
+        }
+        this.cbd ="";
+        this.cbdDistance ="";
+        this.cbdCar ="";
+        this.cbdSubway ="";
+        this.gbd ="";
+        this.gbdDistance ="";
+        this.gbdCar ="";
+        this.gbdSubway ="";
+        this.ybd ="";
+        this.ybdDistance ="";
+        this.ybdCar ="";
+        this.ybdSubway ="";
+        this.nearSubway = new ArrayList<>();
+        this.node = "";
+        this.line = "";
+    }
+
+    public BuildingSubResponseDto(BusinessAreaDto businessArea) {
+        this.cbd = businessArea.getCbd();
+        this.cbdDistance = businessArea.getCbdDistance();
+        this.cbdCar = businessArea.getCbdCar();
+        this.cbdSubway = businessArea.getCbdSubway();
+        this.gbd = businessArea.getGbd();
+        this.gbdDistance = businessArea.getGbdDistance();
+        this.gbdCar = businessArea.getGbdCar();
+        this.gbdSubway = businessArea.getGbdSubway();
+        this.ybd = businessArea.getYbd();
+        this.ybdDistance = businessArea.getYbdDistance();
+        this.ybdCar = businessArea.getYbdCar();
+        this.ybdSubway = businessArea.getYbdSubway();
+        // nearSubway 리스트를 초기화
+        this.nearSubway = new ArrayList<>();
+        this.node = businessArea.getNode();
+        this.line = businessArea.getLine();
+    }
+
+
 }

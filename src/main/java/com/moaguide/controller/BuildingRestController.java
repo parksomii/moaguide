@@ -67,11 +67,11 @@ public class BuildingRestController {
         List<LeaseDto> leaseDtos = leaseService.detail(product_Id);
         // null 처리
         if(building == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            return ResponseEntity.ok(new HashMap<>());
         }
         // 빈 리스트 처리
         if(leaseDtos.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+            return ResponseEntity.ok(new HashMap<>());
         }
         return ResponseEntity.ok(new BuildingBaseResponseDto(building,leaseDtos));
     }
