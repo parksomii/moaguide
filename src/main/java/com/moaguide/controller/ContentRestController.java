@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -143,6 +144,10 @@ public class ContentRestController {
     public ResponseEntity<?> people(@PathVariable String keyword,@RequestParam  int page) {
         Pageable pageable = Pageable.ofSize(3).withPage(page-1);
         List<MoviePeople> moviePeople =  movieService.findPeople(keyword,pageable);
+        // null이나 빈 리스트 체크
+        if (moviePeople == null) {
+            return ResponseEntity.ok(new HashMap<>());
+        }
         return ResponseEntity.ok(moviePeople);
     }
 
