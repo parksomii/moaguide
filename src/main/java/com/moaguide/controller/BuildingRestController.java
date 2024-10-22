@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class BuildingRestController {
     private final BusinessAreaService businessAreaService;
     private final NearSubwayService nearSubwayService;
     private final LandPriceService landPriceService;
-    private final StayDayService stayDayService;
+    private final StayService stayService;
     private final SubwayService subwayService;
     private final PopulationService populationService;
     private final VacancyRateService vacancyRateService;
@@ -162,13 +161,13 @@ public class BuildingRestController {
         String keyword;
         if(productId.equals("sou.6")){
             keyword = "전주 시화연풍";
-            List<StayDayDto> stayday = stayDayService.findbykeyword(keyword,syear,eyear);
+            List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
             Map<String, Object> response = new HashMap<>();
             response.put("object", stayday);
             return ResponseEntity.ok(response);
         } else if (productId.equals("kasa.KR011A20000052")) {
             keyword = "부티크호텔 더 페이즈";
-            List<StayDayDto> stayday = stayDayService.findbykeyword(keyword,syear,eyear);
+            List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
             Map<String, Object> response = new HashMap<>();
             response.put("object", stayday);
             return ResponseEntity.ok(response);
@@ -176,4 +175,25 @@ public class BuildingRestController {
             return ResponseEntity.ok(new HashMap<>());
         }
     }
+
+    @GetMapping("/stay/rate/{productId}")
+    public ResponseEntity<Object> stayrate(@PathVariable String productId,@RequestParam int syear,@RequestParam int eyear) {
+        String keyword;
+        if(productId.equals("sou.6")){
+            keyword = "전주 시화연풍";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            Map<String, Object> response = new HashMap<>();
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else if (productId.equals("kasa.KR011A20000052")) {
+            keyword = "부티크호텔 더 페이즈";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            Map<String, Object> response = new HashMap<>();
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        }else{
+            return ResponseEntity.ok(new HashMap<>());
+        }
+    }
+
 }

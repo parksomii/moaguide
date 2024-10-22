@@ -9,11 +9,9 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class StayDayDto {
+public class StayRateDto {
     private Date day;
-    private int noday;
-    private int oneday;
-    private int twoday;
-    private int threeday;
-    private int total;
+    private Double rate;
+    private Double value;
 }
+
