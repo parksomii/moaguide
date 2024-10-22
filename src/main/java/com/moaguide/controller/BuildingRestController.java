@@ -31,7 +31,7 @@ public class BuildingRestController {
     private final BusinessAreaService businessAreaService;
     private final NearSubwayService nearSubwayService;
     private final LandPriceService landPriceService;
-    private final AreaService areaService;
+    private final StayDayService stayDayService;
     private final SubwayService subwayService;
     private final PopulationService populationService;
     private final VacancyRateService vacancyRateService;
@@ -155,5 +155,25 @@ public class BuildingRestController {
         Map<String, Object> response = new HashMap<>();
         response.put("vacancyrate", vacancyrateDtos);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/stay/day/{productId}")
+    public ResponseEntity<Object> stayday(@PathVariable String productId,@RequestParam int syear,@RequestParam int eyear) {
+        String keyword;
+        if(productId.equals("sou.6")){
+            keyword = "전주 시화연풍";
+            List<StayDayDto> stayday = stayDayService.findbykeyword(keyword,syear,eyear);
+            Map<String, Object> response = new HashMap<>();
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else if (productId.equals("kasa.KR011A20000052")) {
+            keyword = "부티크호텔 더 페이즈";
+            List<StayDayDto> stayday = stayDayService.findbykeyword(keyword,syear,eyear);
+            Map<String, Object> response = new HashMap<>();
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        }else{
+            return ResponseEntity.ok(new HashMap<>());
+        }
     }
 }
