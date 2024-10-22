@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface StayRateRepository extends JpaRepository<StayRate, Integer> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.StayRateDto(s.day,s.rate,s.value) FROM StayRate s where s.keyword =:keyword and YEAR(s.day) between :startyear and :endyear")
+    @Query("SELECT new com.moaguide.dto.NewDto.BuildingDto.StayRateDto(s.day,s.rate,s.value) FROM StayRate s where s.keyword =:keyword and YEAR(s.day) between :startyear and :endyear order by s.day")
     List<StayRateDto> findByKeywordandyear(@Param("keyword") String keyword, @Param("startyear") int syear, @Param("endyear") int eyear);
 }
