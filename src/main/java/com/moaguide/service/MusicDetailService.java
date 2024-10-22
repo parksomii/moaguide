@@ -71,12 +71,12 @@ public class MusicDetailService {
         // MusicPublishDto
         MusicPublishDto publishDto = new MusicPublishDto(
                 (String) result[0],  // name
-                (String) result[1],  // type
+                result[1] == null ? "" : (String) result[1],  // type
                 (String) result[2],  // singer
                 (Integer) result[3],  // piece
                 (Integer) result[4],  // basePrice
                 (Long) result[5],     // totalPrice
-                result[6] == null || "1990-01-01".equals(result[6].toString()) ? null : ((Date) result[6]).toLocalDate()
+                result[6] == null || "1990-01-01".equals(result[6].toString()) ? "" : ((Date) result[6]).toLocalDate().toString()
         );
 
         return publishDto;
@@ -109,7 +109,7 @@ public class MusicDetailService {
         // MusicSongDto
         MusicSongDto songDto = new MusicSongDto(
                 (String) result[7],  // introduceSong
-                (String) result[8],  // genre
+                result[8] == null ? "" : (String) result[8],  // genre
                 (String) result[2],  // singer
                 (String) result[9], // writer
                 (String) result[10], // composing

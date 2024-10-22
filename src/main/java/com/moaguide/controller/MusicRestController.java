@@ -51,7 +51,6 @@ public class MusicRestController {
         MusicPublishDto music = musicService.findBase(product_Id);
         MusicSongDto musicSong = musicService.findSong(product_Id);
         MusicDivideResponseDto musicDivide = musicService.findDivide(product_Id);
-        // TODO
         return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong, musicDivide));
     }
 
@@ -59,7 +58,6 @@ public class MusicRestController {
     @GetMapping("sub/{product_Id}")
     public ResponseEntity<Object> Sub(@PathVariable String product_Id) {
         MusicSubResponseDto youtube = musicService.findYoutube(product_Id);
-        // TODO
         return ResponseEntity.ok(youtube);
     }
 
