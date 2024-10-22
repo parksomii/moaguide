@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class MusicRestController {
         List<ViewDto> youtubeView = musicService.findView(product_Id, month);
         // null & 빈 리스트 체크
         if (youtubeView == null || youtubeView.isEmpty()) {
-            return ResponseEntity.ok(new HashMap<>());
+            return ResponseEntity.ok(new ArrayList<ViewDto>());
         }
         return ResponseEntity.ok(youtubeView);
     }
@@ -80,7 +81,7 @@ public class MusicRestController {
         List<SearchDto> search = musicService.findSearch(product_Id, month);
         // null & 빈 리스트 체크
         if (search == null || search.isEmpty()) {
-            return ResponseEntity.ok(new HashMap<>());
+            return ResponseEntity.ok(new ArrayList<ViewDto>());
         }
         return ResponseEntity.ok(search);
     }
@@ -92,7 +93,7 @@ public class MusicRestController {
         List<SteamingDto> streaming = musicService.findStreaming(product_Id, month);
         // null & 빈 리스트 체크
         if (streaming == null || streaming.isEmpty()) {
-            return ResponseEntity.ok(new HashMap<>());
+            return ResponseEntity.ok(new ArrayList<ViewDto>());
         }
         return ResponseEntity.ok(streaming);
     }
@@ -104,7 +105,7 @@ public class MusicRestController {
         List<ConsertDto> consert = musicService.findConsert(product_Id);
         // null & 빈 리스트 체크
         if (consert == null || consert.isEmpty()) {
-            return ResponseEntity.ok(new HashMap<>());
+            return ResponseEntity.ok(new ArrayList<ViewDto>());
         }
         return ResponseEntity.ok(consert);
     }
