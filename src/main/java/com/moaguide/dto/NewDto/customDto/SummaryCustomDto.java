@@ -21,4 +21,5 @@ public class SummaryCustomDto {
     private String category;
     private String platform;
     private Boolean bookmark;
+    private Boolean sale;
 }

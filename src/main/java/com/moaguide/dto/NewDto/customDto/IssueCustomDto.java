@@ -20,4 +20,5 @@ public class IssueCustomDto {
     private String platform;
     private double recruitmentRate;
     private Boolean bookmark;
+    private Boolean sale;
 }

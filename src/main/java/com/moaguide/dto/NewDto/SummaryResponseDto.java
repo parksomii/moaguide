@@ -12,7 +12,7 @@ public class SummaryResponseDto {
     private List<?> product;
     private int page;
     private int size;
-    private int totalPages ;
+    private int totalPages;
 
     public SummaryResponseDto(List<?> product, int page, int size,int total) {
         this.product = product;

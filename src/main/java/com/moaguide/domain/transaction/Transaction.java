@@ -24,7 +24,8 @@ import java.time.LocalDate;
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
                         @ColumnResult(name = "totalPrice", type = Long.class),
-                        @ColumnResult(name = "bookmark", type = Boolean.class)
+                        @ColumnResult(name = "bookmark", type = Boolean.class),
+                        @ColumnResult(name = "sale", type = Boolean.class)
                 }
         )
 )

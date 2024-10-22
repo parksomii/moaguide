@@ -13,4 +13,5 @@ public class BookmarkProductDto {
     private String name;
     private String category;
     private String platform;
+    private Boolean sale;
 }

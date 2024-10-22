@@ -27,7 +27,8 @@ import lombok.Setter;
                         @ColumnResult(name = "lastDivide_rate", type = Double.class),
                         @ColumnResult(name = "category", type = String.class),
                         @ColumnResult(name = "platform", type = String.class),
-                        @ColumnResult(name = "bookmark", type = Boolean.class)
+                        @ColumnResult(name = "bookmark", type = Boolean.class),
+                        @ColumnResult(name = "sale", type = Boolean.class)
                 }
         )
 )

@@ -20,7 +20,8 @@ import lombok.NoArgsConstructor;
                         @ColumnResult(name = "product_Id", type = String.class),
                         @ColumnResult(name = "name", type = String.class),
                         @ColumnResult(name = "category", type = String.class),
-                        @ColumnResult(name = "platform", type = String.class)
+                        @ColumnResult(name = "platform", type = String.class),
+                        @ColumnResult(name = "sale", type = Boolean.class)
                 }
         )
 )
