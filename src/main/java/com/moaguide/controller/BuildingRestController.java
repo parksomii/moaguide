@@ -55,7 +55,12 @@ public class BuildingRestController {
         List<TypeDto> type  = rentService.findType(product_Id);
         if(type.size() == 1){
             building.setRentType(Boolean.TRUE);
+            building.setStayType(Boolean.FALSE);
+        }else if(type.size()==2){
+            building.setRentType(Boolean.FALSE);
+            building.setStayType(Boolean.FALSE);
         }else{
+            building.setStayType(Boolean.TRUE);
             building.setRentType(Boolean.FALSE);
         }
         return ResponseEntity.ok(building);

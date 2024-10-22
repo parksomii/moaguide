@@ -24,6 +24,7 @@ public class BuildingReponseDto {
     private String link;
     private Boolean bookmark;
     private Boolean rentType;
+    private Boolean stayType;
 
 
     @ConstructorProperties({"product_Id", "category", "platform", "name", "price", "priceRate", "totalPrice", "lastDivide", "lastDivide_rate", "divideCycle","link","bookmark"})
