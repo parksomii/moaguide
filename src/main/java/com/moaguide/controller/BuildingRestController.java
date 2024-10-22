@@ -170,7 +170,7 @@ public class BuildingRestController {
             List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
             Map<String, Object> response = new HashMap<>();
             response.put("object", stayday);
-            return ResponseEntity.ok(stayday);
+            return ResponseEntity.ok(response);
         }else{
             return ResponseEntity.ok(new HashMap<>());
         }
@@ -190,7 +190,7 @@ public class BuildingRestController {
             List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
             Map<String, Object> response = new HashMap<>();
             response.put("object", stayday);
-            return ResponseEntity.ok(stayday);
+            return ResponseEntity.ok(response);
         }else{
             return ResponseEntity.ok(new HashMap<>());
         }
