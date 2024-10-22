@@ -25,77 +25,51 @@ public class BuildingSubResponseDto {
     private String ybdCar;
     private String ybdSubway;
     private List<NearSubwayListDto> nearSubway;
-    private String node;
-    private String line;
+    private List<NearBusDto> nearBus;
 
 
-    public BuildingSubResponseDto(BusinessAreaDto businessArea, List<NearSubwayDto> nearSubway) {
-        this.cbd = businessArea.getCbd();
-        this.cbdDistance = businessArea.getCbdDistance();
-        this.cbdCar = businessArea.getCbdCar();
-        this.cbdSubway = businessArea.getCbdSubway();
-        this.gbd = businessArea.getGbd();
-        this.gbdDistance = businessArea.getGbdDistance();
-        this.gbdCar = businessArea.getGbdCar();
-        this.gbdSubway = businessArea.getGbdSubway();
-        this.ybd = businessArea.getYbd();
-        this.ybdDistance = businessArea.getYbdDistance();
-        this.ybdCar = businessArea.getYbdCar();
-        this.ybdSubway = businessArea.getYbdSubway();
-        // nearSubway 리스트를 초기화
-        this.nearSubway = new ArrayList<>();
-
-        // nearSubway 리스트에 NearSubwayListDto 객체를 추가
-        for(NearSubwayDto near : nearSubway) {
-            this.nearSubway.add(new NearSubwayListDto(near));
+    public BuildingSubResponseDto(BusinessAreaDto businessArea, List<NearSubwayDto> nearSubway, List<NearBusDto> bus) {
+        if(businessArea != null) {
+            this.cbd = businessArea.getCbd();
+            this.cbdDistance = businessArea.getCbdDistance();
+            this.cbdCar = businessArea.getCbdCar();
+            this.cbdSubway = businessArea.getCbdSubway();
+            this.gbd = businessArea.getGbd();
+            this.gbdDistance = businessArea.getGbdDistance();
+            this.gbdCar = businessArea.getGbdCar();
+            this.gbdSubway = businessArea.getGbdSubway();
+            this.ybd = businessArea.getYbd();
+            this.ybdDistance = businessArea.getYbdDistance();
+            this.ybdCar = businessArea.getYbdCar();
+            this.ybdSubway = businessArea.getYbdSubway();
+        }else{
+            this.cbd ="";
+            this.cbdDistance ="";
+            this.cbdCar ="";
+            this.cbdSubway ="";
+            this.gbd ="";
+            this.gbdDistance ="";
+            this.gbdCar ="";
+            this.gbdSubway ="";
+            this.ybd ="";
+            this.ybdDistance ="";
+            this.ybdCar ="";
+            this.ybdSubway ="";
         }
-        this.node = businessArea.getNode();
-        this.line = businessArea.getLine();
-    }
 
-    public BuildingSubResponseDto(List<NearSubwayDto> nearSubway) {
-        // nearSubway 리스트를 초기화
         this.nearSubway = new ArrayList<>();
-
-        // nearSubway 리스트에 NearSubwayListDto 객체를 추가
-        for(NearSubwayDto near : nearSubway) {
-            this.nearSubway.add(new NearSubwayListDto(near));
+        if(nearSubway != null) {
+            // nearSubway 리스트에 NearSubwayListDto 객체를 추가
+            for(NearSubwayDto near : nearSubway) {
+                this.nearSubway.add(new NearSubwayListDto(near));
+            }
         }
-        this.cbd ="";
-        this.cbdDistance ="";
-        this.cbdCar ="";
-        this.cbdSubway ="";
-        this.gbd ="";
-        this.gbdDistance ="";
-        this.gbdCar ="";
-        this.gbdSubway ="";
-        this.ybd ="";
-        this.ybdDistance ="";
-        this.ybdCar ="";
-        this.ybdSubway ="";
-        this.nearSubway = new ArrayList<>();
-        this.node = "";
-        this.line = "";
-    }
 
-    public BuildingSubResponseDto(BusinessAreaDto businessArea) {
-        this.cbd = businessArea.getCbd();
-        this.cbdDistance = businessArea.getCbdDistance();
-        this.cbdCar = businessArea.getCbdCar();
-        this.cbdSubway = businessArea.getCbdSubway();
-        this.gbd = businessArea.getGbd();
-        this.gbdDistance = businessArea.getGbdDistance();
-        this.gbdCar = businessArea.getGbdCar();
-        this.gbdSubway = businessArea.getGbdSubway();
-        this.ybd = businessArea.getYbd();
-        this.ybdDistance = businessArea.getYbdDistance();
-        this.ybdCar = businessArea.getYbdCar();
-        this.ybdSubway = businessArea.getYbdSubway();
-        // nearSubway 리스트를 초기화
-        this.nearSubway = new ArrayList<>();
-        this.node = businessArea.getNode();
-        this.line = businessArea.getLine();
+        if(bus != null) {
+            this.nearBus = bus;
+        }else{
+            this.nearBus = new ArrayList<>();
+        }
     }
-
 
 }

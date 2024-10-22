@@ -20,5 +20,4 @@ public class NearBus {
 
     private String node;
 
-    private String line;
 }

@@ -16,4 +16,7 @@ public class NearBusService {
     private final NearBusRepository nearBusRepository;
 
 
+    public List<NearBusDto> findNearBus(String productId) {
+        return  nearBusRepository.findBykeyword(productId);
+    }
 }

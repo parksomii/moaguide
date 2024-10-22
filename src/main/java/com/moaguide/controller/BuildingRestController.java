@@ -83,12 +83,9 @@ public class BuildingRestController {
     @GetMapping("/sub/{product_Id}")
     public ResponseEntity<Object> add(@PathVariable String product_Id) {
         BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
+        List<NearBusDto> bus  = nearBusService.findNearBus(product_Id);
         List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
-        // 빈 리스트 처리
-        if(nearSubway.isEmpty() || businessArea == null) {
-            return ResponseEntity.ok(new HashMap<>());
-        }
-        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway);
+        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway,bus);
         return ResponseEntity.ok(buildingSubResponseDto);
     }
 
