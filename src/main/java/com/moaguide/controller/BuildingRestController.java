@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,9 @@ public class BuildingRestController {
         }
         BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
         List<TypeDto> type  = rentService.findType(product_Id);
+        if(building == null){
+            return ResponseEntity.ok(new HashMap<>());
+        }
         if(type.size() == 1){
             building.setRentType(Boolean.TRUE);
             building.setStayType(Boolean.FALSE);
@@ -92,11 +96,12 @@ public class BuildingRestController {
     @GetMapping("/land/{product_Id}")
     public ResponseEntity<Object> land(@PathVariable String product_Id) {
         List<LandDto> landPrice = landPriceService.priceList(product_Id);
+        Map<String, Object> response = new HashMap<>();
         // null 처리
         if (landPrice == null) {
-            return ResponseEntity.ok(new HashMap<>());
+            response.put("lands", new ArrayList<>());
+            return ResponseEntity.ok(response);
         }
-        Map<String, Object> response = new HashMap<>();
         response.put("lands", landPrice);
         return ResponseEntity.ok(response   );
     }
@@ -112,7 +117,7 @@ public class BuildingRestController {
         BuildingSubwayResponseDto subwayResponseDto= subwayService.findByProductId(productId);
         // null 처리
         if(subwayResponseDto == null || subwayResponseDto.getSubwayDay().isEmpty() || subwayResponseDto.getSubwayMonth().isEmpty()) {
-            return ResponseEntity.ok(new HashMap<>());
+            return ResponseEntity.ok(new BuildingSubwayResponseDto());
         }
         return ResponseEntity.ok(subwayResponseDto);
     }
@@ -120,11 +125,12 @@ public class BuildingRestController {
     @GetMapping("/population/{product_Id}")
     public ResponseEntity<Object> population(@PathVariable String product_Id, @RequestParam int year,@RequestParam int month) {
         List<PopulationDto> populationDto = populationService.findbydate(product_Id,year,month);
+        Map<String, Object> response = new HashMap<>();
         // null 처리
         if (populationDto == null) {
-            return ResponseEntity.ok(new HashMap<>());
+            response.put("populations", new ArrayList<>());
+            return ResponseEntity.ok(response);
         }
-        Map<String, Object> response = new HashMap<>();
         response.put("populations", populationDto);
         return ResponseEntity.ok(response);
     }
@@ -132,11 +138,13 @@ public class BuildingRestController {
     @GetMapping("/rentrate/{product_Id}")
     public ResponseEntity<Object> rentrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
         Map<String, List<RentDto>> rentDtos = rentService.getRentByRegion(product_Id,type,syear,eyear);
+        Map<String, Object> response = new HashMap<>();
+
         // null 처리
         if (rentDtos == null) {
-            return ResponseEntity.ok(new HashMap<>());
+            response.put("populations", new ArrayList<>());
+            return ResponseEntity.ok(response);
         }
-        Map<String, Object> response = new HashMap<>();
         response.put("rent", rentDtos);
         return ResponseEntity.ok(response);
     }
@@ -145,10 +153,12 @@ public class BuildingRestController {
     public ResponseEntity<Object> vacancyrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
         Map<String,List<VacancyrateDto>> vacancyrateDtos = vacancyRateService.findBase(product_Id,type,syear,eyear);
         // null 처리
-        if (vacancyrateDtos == null) {
-            return ResponseEntity.ok(new HashMap<>());
-        }
         Map<String, Object> response = new HashMap<>();
+
+        if (vacancyrateDtos == null) {
+            response.put("populations", new ArrayList<>());
+            return ResponseEntity.ok(response);
+        }
         response.put("vacancyrate", vacancyrateDtos);
         return ResponseEntity.ok(response);
     }
@@ -156,41 +166,41 @@ public class BuildingRestController {
     @GetMapping("/stay/day/{productId}")
     public ResponseEntity<Object> stayday(@PathVariable String productId,@RequestParam int syear,@RequestParam int eyear) {
         String keyword;
+        Map<String, Object> response = new HashMap<>();
+
         if(productId.equals("sou.6")){
             keyword = "전주 시화연풍";
             List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
-            Map<String, Object> response = new HashMap<>();
             response.put("object", stayday);
             return ResponseEntity.ok(response);
         } else if (productId.equals("kasa.KR011A20000052")) {
             keyword = "부티크호텔 더 페이즈";
             List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
-            Map<String, Object> response = new HashMap<>();
             response.put("object", stayday);
             return ResponseEntity.ok(response);
         }else{
-            return ResponseEntity.ok(new HashMap<>());
+            response.put("object", new ArrayList<>());
+            return ResponseEntity.ok(response);
         }
     }
 
     @GetMapping("/stay/rate/{productId}")
     public ResponseEntity<Object> stayrate(@PathVariable String productId,@RequestParam int syear,@RequestParam int eyear) {
         String keyword;
+        Map<String, Object> response = new HashMap<>();
         if(productId.equals("sou.6")){
             keyword = "전주 시화연풍";
             List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
-            Map<String, Object> response = new HashMap<>();
             response.put("object", stayday);
             return ResponseEntity.ok(response);
         } else if (productId.equals("kasa.KR011A20000052")) {
             keyword = "부티크호텔 더 페이즈";
             List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
-            Map<String, Object> response = new HashMap<>();
             response.put("object", stayday);
             return ResponseEntity.ok(response);
         }else{
-            return ResponseEntity.ok(new HashMap<>());
-        }
+            response.put("object", new ArrayList<>());
+            return ResponseEntity.ok(response);        }
     }
 
 }
