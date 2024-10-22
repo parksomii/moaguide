@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @AllArgsConstructor
 @Slf4j
@@ -40,7 +42,7 @@ public class ArtRestController {
         ArtBaseResponseDto artBaseResponse = artService.findArtBase(product_Id);
         // null 체크
         if(artBaseResponse == null){
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            return ResponseEntity.ok(new HashMap<>());
         }
         return ResponseEntity.ok(artBaseResponse);
     }

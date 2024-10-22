@@ -8,6 +8,7 @@ import com.moaguide.dto.NewDto.ContentResponseDto;
 import com.moaguide.dto.NewDto.ContentTopResponseDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.dto.NewDto.musicDto.ViewDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.ContentService;
 import com.moaguide.service.ContentSubService;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,6 +66,9 @@ public class ContentRestController {
             PerformanceInfoDto performance = contentSubService.findperformance(product_Id);
             return ResponseEntity.ok(new ContentResponseDto(base,performance));
         }else{
+            if (base == null){
+                return ResponseEntity.ok(new HashMap<>());
+            }
             return ResponseEntity.ok(new ContentResponseDto(base));
         }
     }
@@ -78,6 +83,9 @@ public class ContentRestController {
     @GetMapping("/screen/{product_Id}")
     public ResponseEntity<?> screen(@PathVariable String product_Id) {
         List<MovieSubDto>  screen = contentSubService.findScreen(product_Id);
+        if(screen.isEmpty() || screen == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(screen);
     }
 
@@ -85,12 +93,18 @@ public class ContentRestController {
     public ResponseEntity<?> screenten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findScreenten(product_Id,pageable);
+        if(screen.isEmpty() || screen == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(screen);
     }
 
     @GetMapping("/showtime/{product_Id}")
     public ResponseEntity<?> showtime(@PathVariable String product_Id) {
         List<MovieSubDto> showtimes = contentSubService.findshowtime(product_Id);
+        if(showtimes.isEmpty() || showtimes == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(showtimes);
     }
 
@@ -98,12 +112,18 @@ public class ContentRestController {
     public ResponseEntity<?> showtimeten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findshowtimeten(product_Id,pageable);
+        if(screen.isEmpty() || screen == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(screen);
     }
 
     @GetMapping("/audience/{product_Id}")
     public ResponseEntity<?> Audience(@PathVariable String product_Id) {
         List<MovieSubDto> showtimes = contentSubService.findaudience(product_Id);
+        if(showtimes.isEmpty() || showtimes == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(showtimes);
     }
 
@@ -111,12 +131,18 @@ public class ContentRestController {
     public ResponseEntity<?> Audienceten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findaudienceten(product_Id,pageable);
+        if(screen.isEmpty() || screen == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(screen);
     }
 
     @GetMapping("/revenue/{product_Id}")
     public ResponseEntity<?> revenue(@PathVariable String product_Id) {
         List<MovieSubDto> showtimes = contentSubService.findrevenue(product_Id);
+        if(showtimes.isEmpty() || showtimes == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(showtimes);
     }
 
@@ -124,12 +150,18 @@ public class ContentRestController {
     public ResponseEntity<?> revenueten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findrevenueten(product_Id,pageable);
+        if(screen.isEmpty() || screen == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(screen);
     }
 
     @GetMapping("/rank/{product_Id}")
     public ResponseEntity<?> rank(@PathVariable String product_Id) {
         List<MovieSubDto> showtimes = contentSubService.findrank(product_Id);
+        if(showtimes.isEmpty() || showtimes == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(showtimes);
     }
 
@@ -137,6 +169,9 @@ public class ContentRestController {
     public ResponseEntity<?> rankten(@PathVariable String product_Id) {
         Pageable pageable = Pageable.ofSize(10);
         List<MovieSubDto>  screen = contentSubService.findrankten(product_Id,pageable);
+        if(screen.isEmpty() || screen == null){
+            return ResponseEntity.ok(new ArrayList<>());
+        }
         return ResponseEntity.ok(screen);
     }
 
@@ -146,7 +181,7 @@ public class ContentRestController {
         List<MoviePeople> moviePeople =  movieService.findPeople(keyword,pageable);
         // null이나 빈 리스트 체크
         if (moviePeople == null) {
-            return ResponseEntity.ok(new HashMap<>());
+            return ResponseEntity.ok(new ArrayList<>());
         }
         return ResponseEntity.ok(moviePeople);
     }

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,10 +53,10 @@ public class HanwooRestController {
         Map<String, Object> response = new HashMap<>();
         // null 체크
         if (result == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            return ResponseEntity.ok(new ArrayList<>());
         }
         if (result.isEmpty()){
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            return ResponseEntity.ok(new ArrayList<>());
         }
         // name 필드 추가
         if ("grade1Rate".equals(category)) {
@@ -86,10 +87,10 @@ public class HanwooRestController {
         Map<String, Object> response = new HashMap<>();
         // null 체크
         if (hanwooMarket == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            return ResponseEntity.ok(new ArrayList<>());
         }
         if (hanwooMarket.isEmpty()){
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            return ResponseEntity.ok(new ArrayList<>());
         }
         if ("cattlePopulation".equals(category)) {
             String name = "한우 사육두수";
