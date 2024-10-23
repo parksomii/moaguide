@@ -37,6 +37,9 @@ public class HanwooDetail {
     @Column(name = "revenueStructure", length = 50)
     private String revenueStructure; // 수익구조
 
+    @Column(name = "endDate")
+    private LocalDate endDate; // 모집마감일
+
     @Column(name = "paymentDate")
     private LocalDate paymentDate; // 납입기일
 

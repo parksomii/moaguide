@@ -86,7 +86,7 @@ public class HanwooService {
                 result[14] == null ? "" :(String) result[14],  // manager
                 result[15] == null ? "" :(String) result[15],  // certifiedHeads
                 result[16] == null ? "" :(String) result[16],  // cattleBreed
-                result[17] == null ? "" : ((Date) result[17]).toLocalDate().toString() // initialDate
+                result[17] == null ? "" : String.valueOf(result[17])  // initialDate
         );
 
         // HanwooBaseResponseDto 생성 및 반환
