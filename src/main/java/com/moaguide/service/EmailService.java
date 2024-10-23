@@ -5,6 +5,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -21,10 +22,17 @@ import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@AllArgsConstructor
 public class EmailService {
     private final RedisTemplate<String, String> redisTemplate;
     private final JavaMailSender mailSender;
+    @Value("${spring.mail.username}")
+    private String senderEmail;
+
+    // 생성자 주입
+    public EmailService(RedisTemplate<String, String> redisTemplate, JavaMailSender mailSender) {
+        this.redisTemplate = redisTemplate;
+        this.mailSender = mailSender;
+    }
 
     // 인증 코드 생성
     public String generateVerificationCode() {
@@ -71,7 +79,8 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             String decodedEmail = URLDecoder.decode(email, StandardCharsets.UTF_8);
 
-            helper.setTo(new InternetAddress(decodedEmail, "모아가이드", StandardCharsets.UTF_8.name()));
+            helper.setTo(decodedEmail);
+            helper.setFrom(new InternetAddress(senderEmail, "모아가이드", StandardCharsets.UTF_8.name()));
             helper.setSubject("모아가이드 이메일 인증");
 
             ClassPathResource resource = new ClassPathResource("/templates/email/sendmail.html");
