@@ -82,7 +82,6 @@ public class EmailService {
             helper.setTo(decodedEmail);
             helper.setFrom(new InternetAddress(senderEmail, "모아가이드", StandardCharsets.UTF_8.name()));
             helper.setSubject("모아가이드 이메일 인증");
-
             ClassPathResource resource = new ClassPathResource("/templates/email/sendmail.html");
             String htmlContent = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
 
