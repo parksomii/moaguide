@@ -2,6 +2,7 @@ package com.moaguide.service;
 
 
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
@@ -70,7 +71,7 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             String decodedEmail = URLDecoder.decode(email, StandardCharsets.UTF_8);
 
-            helper.setTo("모아가이드");
+            helper.setTo(new InternetAddress(decodedEmail, "모아가이드", StandardCharsets.UTF_8.name()));
             helper.setSubject("모아가이드 이메일 인증");
 
             ClassPathResource resource = new ClassPathResource("/templates/email/sendmail.html");
