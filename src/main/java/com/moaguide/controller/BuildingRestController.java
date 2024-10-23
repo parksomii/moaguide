@@ -120,8 +120,8 @@ public class BuildingRestController {
     }
 
     @GetMapping("/population/{product_Id}")
-    public ResponseEntity<Object> population(@PathVariable String product_Id, @RequestParam int year,@RequestParam int month) {
-        List<PopulationDto> populationDto = populationService.findbydate(product_Id,year,month);
+    public ResponseEntity<Object> population(@PathVariable String product_Id) {
+        List<PopulationDto> populationDto = populationService.findbydate(product_Id);
         Map<String, Object> response = new HashMap<>();
         // null 처리
         if (populationDto == null) {
