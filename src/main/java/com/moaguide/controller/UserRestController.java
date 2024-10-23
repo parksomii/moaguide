@@ -82,8 +82,8 @@ public class UserRestController {
     @PostMapping("/send/mail")
     public ResponseEntity<?> sendMail(@RequestParam String email) {
         String code = emailService.generateVerificationCode();
-        emailService.saveCodeToRedis(email, code);
         String response = emailService.sendmail(email,code);
+        emailService.saveCodeToRedis(email, code);
         // 예외 처리에 따라 적절한 HTTP 상태 코드 반환
         if (response.equals("이메일 전송 완료")) {
             return ResponseEntity.ok(response);  // 200 OK
