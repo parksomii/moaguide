@@ -70,7 +70,7 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             String decodedEmail = URLDecoder.decode(email, StandardCharsets.UTF_8);
 
-            helper.setTo(decodedEmail);
+            helper.setTo("모아가이드");
             helper.setSubject("모아가이드 이메일 인증");
 
             ClassPathResource resource = new ClassPathResource("/templates/email/sendmail.html");
