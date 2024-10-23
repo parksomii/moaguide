@@ -17,8 +17,8 @@ public class ArticlelistResponseDto {
         this.articleList = article.getContent();
 
         // 10번째 요소의 id를 nextCursur에 할당, 없으면 null 처리
-        if (articleList.size() == 10) {
-            this.nextCursor = articleList.get(9).getId(); // 10번째 요소 (index 9)
+        if (articleList.size() == 20) {
+            this.nextCursor = articleList.get(19).getId(); // 10번째 요소 (index 9)
         } else {
             this.nextCursor = null; // 10번째 요소가 없으면 null 처리
         }
