@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "WHERE pl.PlatformId = p.PlatformId.PlatformId " +
             "AND pl.status = '공모중' " +
             "AND ip.id.productId.productId = p.productId " +
-            "AND ip.day < :date " +
+            "AND ip.day <= :date " +
             "ORDER BY ip.day DESC")
     List<SummaryIssupriceCustomDto> findrecent(Pageable pageable,@Param("date")Date date);
 }
