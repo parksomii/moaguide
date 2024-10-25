@@ -22,4 +22,12 @@ public class StayDay {
     private int twoday;
     private int threeday;
     private int total;
+    @Column(name = "noday_rate")
+    private double nodayRate;
+    @Column(name = "oneday_rate")
+    private double onedayRate;
+    @Column(name = "twoday_rate")
+    private double twodayRate;
+    @Column(name = "threeday_rate")
+    private double threedayRate;
 }

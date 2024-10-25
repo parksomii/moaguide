@@ -16,4 +16,8 @@ public class StayDayDto {
     private int twoday;
     private int threeday;
     private int total;
+    private double nodayRate;
+    private double onedayRate;
+    private double twodayRate;
+    private double threedayRate;
 }
