@@ -308,10 +308,13 @@ public class MusicDetailService {
                     (Integer) result[0],  // 스트리밍수
                     result[1].toString()   // 스트리밍날짜
             );
+            if (steamingDto.getValue() > max) max = steamingDto.getValue();
+            if (steamingDto.getValue() < min) min = steamingDto.getValue();
             streamingList.add(steamingDto);
         }
 
-        return new MaxAndMinDto(streamingList, max, min);    }
+        return new MaxAndMinDto(streamingList, max, min);
+    }
 
     // 공연일정
     public List<ConsertDto> findConsert(String productId) {
