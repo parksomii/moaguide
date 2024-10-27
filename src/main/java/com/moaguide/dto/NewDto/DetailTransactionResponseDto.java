@@ -10,4 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DetailTransactionResponseDto {
     private List<TransactionDto> transaction;
+    private long max;
+    private long min;
+
 }

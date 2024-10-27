@@ -62,17 +62,17 @@ public class DetailRestController {
 
     @GetMapping("/transaction/{product_Id}")
     public ResponseEntity<Object> transaction(@PathVariable String product_Id,@RequestParam int month){
-        List<TransactionDto> transaction = transactionService.findbymonth(product_Id,month);
-        if (transaction == null) {
+        DetailTransactionResponseDto transaction = transactionService.findbymonth(product_Id,month);
+        if (transaction.getTransaction() == null) {
             return ResponseEntity.badRequest().body("Invalid request: No data found.");
         }
 
         // 빈 리스트 체크
-        if (transaction.isEmpty()) {
+        if (transaction.getTransaction().isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
         }
 
-        return ResponseEntity.ok().body(new DetailTransactionResponseDto(transaction));
+        return ResponseEntity.ok().body(transaction);
     }
 
     @GetMapping("/notice/list/{product_Id}")
