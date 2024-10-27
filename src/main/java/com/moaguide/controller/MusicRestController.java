@@ -2,10 +2,7 @@ package com.moaguide.controller;
 
 import com.moaguide.dto.NewDto.MusicBaseResponseDto;
 import com.moaguide.dto.NewDto.MusicSubResponseDto;
-import com.moaguide.dto.NewDto.customDto.MusicDivideResponseDto;
-import com.moaguide.dto.NewDto.customDto.MusicPublishDto;
-import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
-import com.moaguide.dto.NewDto.customDto.MusicSongDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.dto.NewDto.musicDto.ConsertDto;
 import com.moaguide.dto.NewDto.musicDto.SearchDto;
 import com.moaguide.dto.NewDto.musicDto.SteamingDto;
@@ -90,9 +87,9 @@ public class MusicRestController {
     @GetMapping("streaming/{product_Id}")
     public ResponseEntity<?> streaming(@PathVariable String product_Id, @RequestParam int month) {
         // 스트리밍 수 (3개월, 6개월, 1년, 전체)
-        List<SteamingDto> streaming = musicService.findStreaming(product_Id, month);
+        MaxAndMinDto streaming = musicService.findStreaming(product_Id, month);
         // null & 빈 리스트 체크
-        if (streaming == null || streaming.isEmpty()) {
+        if (streaming.getSteamingDto() == null || streaming.getSteamingDto().isEmpty()) {
             return ResponseEntity.ok(new ArrayList<>());
         }
         return ResponseEntity.ok(streaming);

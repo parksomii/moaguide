@@ -267,7 +267,7 @@ public class MusicDetailService {
     }
 
     // 스트리밍 수
-    public List<SteamingDto> findStreaming(String productId, int month) {
+    public MaxAndMinDto findStreaming(String productId, int month) {
         // 스트리밍 수 (3개월, 6개월, 1년, 전체)
         // 현재 날짜 기준으로 날짜 계산
         LocalDate day = LocalDate.now();
@@ -279,7 +279,7 @@ public class MusicDetailService {
         } else if (month == 12) {
             day = day.minusMonths(month); // 1년 전
         } else if (month == 100) {
-            day = day.minusYears(10); // 전체 기간 조회를 위한 과거 날짜
+            day = day.minusYears(15); // 전체 기간 조회를 위한 과거 날짜
         } else {
             return null;
         }
@@ -294,7 +294,8 @@ public class MusicDetailService {
 
         // 프로시저 실행 및 결과 조회
         List<Object[]> resultList = query.getResultList();
-
+        int max = (Integer) resultList.get(0)[0];
+        int min = (Integer) resultList.get(0)[0];
         // 결과가 없을 경우 null 반환
         if (resultList.isEmpty()) {
             return null;
@@ -304,14 +305,13 @@ public class MusicDetailService {
         List<SteamingDto> streamingList = new ArrayList<>();
         for (Object[] result : resultList) {
             SteamingDto steamingDto = new SteamingDto(
-                    result[0].toString(),  // 스트리밍수
+                    (Integer) result[0],  // 스트리밍수
                     result[1].toString()   // 스트리밍날짜
             );
             streamingList.add(steamingDto);
         }
 
-        return streamingList;
-    }
+        return new MaxAndMinDto(streamingList, max, min);    }
 
     // 공연일정
     public List<ConsertDto> findConsert(String productId) {
