@@ -42,7 +42,7 @@ public class UserRestController {
 
         //response
         response.setHeader("Authorization", "Bearer " + newAccess);
-        response .addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
+        response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
         return new ResponseEntity<>(changeuser.getNickname(), HttpStatus.OK);
     }
 
