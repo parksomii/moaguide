@@ -60,40 +60,15 @@ public class TransactionService {
         }else if(month==100) {
             LocalDate day = LocalDate.now().minusMonths(month);
 
-            // 히스토리 테이블에서 데이터를 가져옵니다.
-            List<Object[]> historyResults = entityManager.createNativeQuery(
-                            "SELECT h.trade_day, h.price FROM History h WHERE h.product_id = ?1 AND h.trade_day >= ?2")
-                    .setParameter(1, productId)
-                    .setParameter(2, day)
+            // 쿼리를 작성하여 EntityManager를 통해 데이터를 가져옵니다.
+            List<Object[]> results = entityManager.createNativeQuery(
+                            "SELECT t.trade_day, t.price FROM Transaction t WHERE t.product_id = ?1 AND t.trade_day >= ?2")
+                    .setParameter(1, productId)  // 매개변수 이름 일치
+                    .setParameter(2, day)  // 변수 day 사용
                     .getResultList();
-            if(historyResults.size()>0) {
-                long maxValue = (Long)historyResults.get(0)[1];
-                long minValue = (Long)historyResults.get(0)[1];
-
-                // 히스토리 테이블의 결과를 TransactionDto로 변환하고 병합
-                for (Object[] result : historyResults) {
-                    LocalDate tradeDay = ((Date) result[0]).toLocalDate();
-                    long price = ((Number) result[1]).longValue();
-
-                    TransactionDto dto = new TransactionDto(tradeDay, price);
-                    transactionDtos.add(dto);
-
-                    // 최대값과 최소값 계산
-                    if (price > maxValue) {
-                        maxValue = price;
-                    }
-                    if (price < minValue) {
-                        minValue = price;
-                    }
-                }
-
-                // 쿼리를 작성하여 EntityManager를 통해 데이터를 가져옵니다.
-                List<Object[]> results = entityManager.createNativeQuery(
-                                "SELECT t.trade_day, t.price FROM Transaction t WHERE t.product_id = ?1 AND t.trade_day >= ?2")
-                        .setParameter(1, productId)  // 매개변수 이름 일치
-                        .setParameter(2, day)  // 변수 day 사용
-                        .getResultList();
-
+            if(results.size()>0) {
+                long maxValue = (Long)results.get(0)[1];
+                long minValue = (Long)results.get(0)[1];
 
                 for (Object[] result : results) {
                     LocalDate tradeDay = ((Date) result[0]).toLocalDate();
@@ -111,22 +86,16 @@ public class TransactionService {
                     }
                 }
 
-                return new DetailTransactionResponseDto(transactionDtos, maxValue, minValue);
-            }else {
-
-                // 쿼리를 작성하여 EntityManager를 통해 데이터를 가져옵니다.
-                List<Object[]> results = entityManager.createNativeQuery(
-                                "SELECT t.trade_day, t.price FROM Transaction t WHERE t.product_id = ?1 AND t.trade_day >= ?2")
-                        .setParameter(1, productId)  // 매개변수 이름 일치
-                        .setParameter(2, day)  // 변수 day 사용
+                // 히스토리 테이블에서 데이터를 가져옵니다.
+                List<Object[]> historyResults = entityManager.createNativeQuery(
+                                "SELECT h.trade_day, h.price FROM History h WHERE h.product_id = ?1 AND h.trade_day >= ?2")
+                        .setParameter(1, productId)
+                        .setParameter(2, day)
                         .getResultList();
+                if(historyResults.size()>0) {
 
-                if(results.size()>0) {
-
-                    long maxValue = (Long)results.get(0)[1];
-                    long minValue = (Long)results.get(0)[1];
-
-                    for (Object[] result : results) {
+                    // 히스토리 테이블의 결과를 TransactionDto로 변환하고 병합
+                    for (Object[] result : historyResults) {
                         LocalDate tradeDay = ((Date) result[0]).toLocalDate();
                         long price = ((Number) result[1]).longValue();
 
@@ -141,8 +110,9 @@ public class TransactionService {
                             minValue = price;
                         }
                     }
-                    return new DetailTransactionResponseDto(transactionDtos, maxValue, minValue);
 
+
+                    return new DetailTransactionResponseDto(transactionDtos, maxValue, minValue);
                 }
             }
         }
