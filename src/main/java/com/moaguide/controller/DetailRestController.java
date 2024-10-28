@@ -15,7 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -48,13 +51,16 @@ public class DetailRestController {
         List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id,month);
         // null 체크
         if (divideCustomDtos == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            Map<String,Object> response= new HashMap<>();
+            response.put("divide",new ArrayList<>());
+            return ResponseEntity.badRequest().body(response);
         }
 
         // 빈 리스트 체크
         if (divideCustomDtos.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
-        }
+            Map<String,Object> response= new HashMap<>();
+            response.put("divide",new ArrayList<>());
+            return ResponseEntity.badRequest().body(response);        }
 
         // 정상적인 경우 데이터 반환
         return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos));
@@ -64,12 +70,16 @@ public class DetailRestController {
     public ResponseEntity<Object> transaction(@PathVariable String product_Id,@RequestParam int month){
         DetailTransactionResponseDto transaction = transactionService.findbymonth(product_Id,month);
         if (transaction.getTransaction() == null) {
-            return ResponseEntity.badRequest().body("Invalid request: No data found.");
+            Map<String,Object> response= new HashMap<>();
+            response.put("transaction",new ArrayList<>());
+            return ResponseEntity.badRequest().body(response);
         }
 
         // 빈 리스트 체크
         if (transaction.getTransaction().isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No content available.");
+            Map<String,Object> response= new HashMap<>();
+            response.put("transaction",new ArrayList<>());
+            return ResponseEntity.badRequest().body(response);
         }
 
         return ResponseEntity.ok().body(transaction);
