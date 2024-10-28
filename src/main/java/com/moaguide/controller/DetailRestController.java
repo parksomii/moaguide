@@ -53,14 +53,13 @@ public class DetailRestController {
         if (divideCustomDtos == null) {
             Map<String,Object> response= new HashMap<>();
             response.put("divide",new ArrayList<>());
-            return ResponseEntity.badRequest().body(response);
-        }
+            return ResponseEntity.ok(response);        }
 
         // 빈 리스트 체크
         if (divideCustomDtos.isEmpty()) {
             Map<String,Object> response= new HashMap<>();
             response.put("divide",new ArrayList<>());
-            return ResponseEntity.badRequest().body(response);        }
+            return ResponseEntity.ok(response);        }
 
         // 정상적인 경우 데이터 반환
         return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos));
@@ -72,14 +71,13 @@ public class DetailRestController {
         if (transaction.getTransaction() == null) {
             Map<String,Object> response= new HashMap<>();
             response.put("transaction",new ArrayList<>());
-            return ResponseEntity.badRequest().body(response);
-        }
+            return ResponseEntity.ok(response);        }
 
         // 빈 리스트 체크
         if (transaction.getTransaction().isEmpty()) {
             Map<String,Object> response= new HashMap<>();
             response.put("transaction",new ArrayList<>());
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.ok(response);
         }
 
         return ResponseEntity.ok().body(transaction);
