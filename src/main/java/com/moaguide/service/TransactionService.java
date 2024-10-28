@@ -111,9 +111,8 @@ public class TransactionService {
                         }
                     }
 
-
-                    return new DetailTransactionResponseDto(transactionDtos, maxValue, minValue);
                 }
+                return new DetailTransactionResponseDto(transactionDtos, maxValue, minValue);
             }
         }
         return new DetailTransactionResponseDto(null,0,0);
