@@ -25,6 +25,7 @@ public class TransactionService {
     public DetailTransactionResponseDto findbymonth(String productId, int month) {
         List<TransactionDto> transactionDtos = new ArrayList<>();
         if(month<=12) {
+
             LocalDate day = LocalDate.now().minusMonths(month);
             // 쿼리를 작성하여 EntityManager를 통해 데이터를 가져옵니다.
             List<Object[]> results = entityManager.createNativeQuery(
@@ -32,29 +33,30 @@ public class TransactionService {
                     .setParameter(1, productId)  // 매개변수 이름 일치
                     .setParameter(2, day)  // 변수 day 사용
                     .getResultList();
+            if(results.size()>0) {
 
-            long maxValue = (Long)results.get(0)[1];
-            long minValue = (Long)results.get(0)[1];
+                long maxValue = (Long)results.get(0)[1];
+                long minValue = (Long)results.get(0)[1];
 
-            for (Object[] result : results) {
-                LocalDate tradeDay = ((Date) result[0]).toLocalDate();
-                long price = ((Number) result[1]).longValue();
+                for (Object[] result : results) {
+                    LocalDate tradeDay = ((Date) result[0]).toLocalDate();
+                    long price = ((Number) result[1]).longValue();
 
-                TransactionDto dto = new TransactionDto(tradeDay, price);
-                transactionDtos.add(dto);
+                    TransactionDto dto = new TransactionDto(tradeDay, price);
+                    transactionDtos.add(dto);
 
-                // 최대값과 최소값 계산
-                if (price > maxValue) {
-                    maxValue = price;
+                    // 최대값과 최소값 계산
+                    if (price > maxValue) {
+                        maxValue = price;
+                    }
+                    if (price < minValue) {
+                        minValue = price;
+                    }
                 }
-                if (price < minValue) {
-                    minValue = price;
-                }
+
+
+                return new DetailTransactionResponseDto(transactionDtos, maxValue, minValue);
             }
-
-
-
-            return new DetailTransactionResponseDto(transactionDtos, maxValue, minValue);
         }else if(month==100) {
             LocalDate day = LocalDate.now().minusMonths(month);
 
