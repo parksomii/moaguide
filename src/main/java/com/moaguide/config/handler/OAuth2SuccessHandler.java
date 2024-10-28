@@ -5,6 +5,7 @@ import com.moaguide.domain.user.User;
 import com.moaguide.dto.NewDto.oauth.CustomOAuth2User;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CookieService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
