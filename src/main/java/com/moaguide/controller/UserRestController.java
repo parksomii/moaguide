@@ -40,6 +40,9 @@ public class UserRestController {
         long refreshTokenValidity = 6 * 30 * 24 * 60 * 60 * 1000L; // 6달
         String refreshToken = jwtUtil.createJwt("refresh", changeuser.getNickname(), changeuser.getRole().name(), refreshTokenValidity);
 
+        Cookie expiredRefreshCookie = new Cookie("refresh", null);
+        expiredRefreshCookie.setMaxAge(0); // 즉시 만료
+        response.addCookie(expiredRefreshCookie);
         //response
         response.setHeader("Authorization", "Bearer " + newAccess);
         response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));

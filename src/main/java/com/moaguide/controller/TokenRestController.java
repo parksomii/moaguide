@@ -63,6 +63,10 @@ public class TokenRestController {
         String username = jwtUtil.getNickname(refresh);
         String role = jwtUtil.getRole(refresh);
 
+        Cookie expiredRefreshCookie = new Cookie("refresh", null);
+        expiredRefreshCookie.setMaxAge(0); // 즉시 만료
+        response.addCookie(expiredRefreshCookie);
+
         //make new JWT
         String newAccess = jwtUtil.createJwt("access", username, role, 60*60 * 1000L); // 1시간
         boolean rememberMe = Boolean.parseBoolean(remember);
@@ -72,9 +76,6 @@ public class TokenRestController {
         //response
         response.setHeader("Authorization", "Bearer " + newAccess);
         response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
-        response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
-//        cookieService.setCookieWithSameSite(response, "refresh", refreshToken, refreshTokenValidity);
-//        cookieService.setCookieWithSameSite(response, "rememberMe", "true", refreshTokenValidity);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
