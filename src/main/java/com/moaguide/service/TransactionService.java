@@ -29,7 +29,7 @@ public class TransactionService {
             LocalDate day = LocalDate.now().minusMonths(month);
             // 쿼리를 작성하여 EntityManager를 통해 데이터를 가져옵니다.
             List<Object[]> results = entityManager.createNativeQuery(
-                            "SELECT t.trade_day, t.price FROM Transaction t WHERE t.product_id = ?1 AND t.trade_day >= ?2")
+                            "SELECT t.trade_day, t.price FROM Transaction t WHERE t.product_id = ?1 AND t.trade_day >= ?2  order by t.trade_day desc ")
                     .setParameter(1, productId)  // 매개변수 이름 일치
                     .setParameter(2, day)  // 변수 day 사용
                     .getResultList();
@@ -62,7 +62,7 @@ public class TransactionService {
 
             // 쿼리를 작성하여 EntityManager를 통해 데이터를 가져옵니다.
             List<Object[]> results = entityManager.createNativeQuery(
-                            "SELECT t.trade_day, t.price FROM Transaction t WHERE t.product_id = ?1 AND t.trade_day >= ?2")
+                            "SELECT t.trade_day, t.price FROM Transaction t WHERE t.product_id = ?1 AND t.trade_day >= ?2  order by t.trade_day desc")
                     .setParameter(1, productId)  // 매개변수 이름 일치
                     .setParameter(2, day)  // 변수 day 사용
                     .getResultList();
@@ -88,7 +88,7 @@ public class TransactionService {
 
                 // 히스토리 테이블에서 데이터를 가져옵니다.
                 List<Object[]> historyResults = entityManager.createNativeQuery(
-                                "SELECT h.trade_day, h.price FROM History h WHERE h.product_id = ?1 AND h.trade_day >= ?2")
+                                "SELECT h.trade_day, h.price FROM History h WHERE h.product_id = ?1 AND h.trade_day >= ?2  order by t.trade_day desc")
                         .setParameter(1, productId)
                         .setParameter(2, day)
                         .getResultList();
