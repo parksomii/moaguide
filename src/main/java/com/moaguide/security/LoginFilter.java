@@ -7,6 +7,7 @@ import com.moaguide.dto.ProfileDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CookieService;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
@@ -72,7 +73,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         //응답 설정
         response.setHeader("Authorization", "Bearer " + accessToken);
-        response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));
+        Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken, refreshTokenValidity);
+        refreshCookie.setPath("/");
+        response.addCookie(refreshCookie);
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json;charset=UTF-8");
