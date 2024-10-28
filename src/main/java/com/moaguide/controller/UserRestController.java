@@ -88,13 +88,13 @@ public class UserRestController {
         if (response.equals("이메일 전송 완료")) {
             return ResponseEntity.ok(response);  // 200 OK
         } else if (response.equals("이메일 메시지를 생성하는 중 오류가 발생했습니다.")) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류 발생");  // 500 Internal Server Error
         } else if (response.equals("HTML 템플릿 파일을 읽는 중 오류가 발생했습니다.")) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류 발생");  // 500 Internal Server Error
         } else if (response.equals("이메일을 전송하는 중 오류가 발생했습니다.")) {
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);  // 503 Service Unavailable
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("오류 발생");  // 503 Service Unavailable
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);  // 500 Internal Server Error for unexpected errors
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류 발생");  // 500 Internal Server Error for unexpected errors
         }
     }
 
