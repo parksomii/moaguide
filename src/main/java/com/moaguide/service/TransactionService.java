@@ -88,7 +88,7 @@ public class TransactionService {
 
                 // 히스토리 테이블에서 데이터를 가져옵니다.
                 List<Object[]> historyResults = entityManager.createNativeQuery(
-                                "SELECT h.trade_day, h.price FROM History h WHERE h.product_id = ?1 AND h.trade_day >= ?2  order by t.trade_day desc")
+                                "SELECT h.trade_day, h.price FROM History h WHERE h.product_id = ?1 AND h.trade_day >= ?2  order by h.trade_day desc")
                         .setParameter(1, productId)
                         .setParameter(2, day)
                         .getResultList();
