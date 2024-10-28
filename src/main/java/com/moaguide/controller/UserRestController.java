@@ -42,7 +42,11 @@ public class UserRestController {
 
         Cookie expiredRefreshCookie = new Cookie("refresh", null);
         expiredRefreshCookie.setMaxAge(0); // 즉시 만료
+        expiredRefreshCookie.setPath("/"); // 기존의 경로와 동일하게 설정
+        expiredRefreshCookie.setHttpOnly(true);
+        expiredRefreshCookie.setSecure(true); // 기존과 동일한 보안 설정
         response.addCookie(expiredRefreshCookie);
+
         //response
         response.setHeader("Authorization", "Bearer " + newAccess);
         response.addCookie(cookieService.createCookie("refresh", refreshToken, refreshTokenValidity));

@@ -65,6 +65,9 @@ public class TokenRestController {
 
         Cookie expiredRefreshCookie = new Cookie("refresh", null);
         expiredRefreshCookie.setMaxAge(0); // 즉시 만료
+        expiredRefreshCookie.setPath("/"); // 기존의 경로와 동일하게 설정
+        expiredRefreshCookie.setHttpOnly(true);
+        expiredRefreshCookie.setSecure(true); // 기존과 동일한 보안 설정
         response.addCookie(expiredRefreshCookie);
 
         //make new JWT
