@@ -111,7 +111,7 @@ public class UserRestController {
     }
 
     @DeleteMapping("/Withdrawal")
-    public ResponseEntity<?> withdrawa(HttpServletResponse response) {
+    public ResponseEntity<?> withdrawa(HttpServletRequest request,HttpServletResponse response) {
         Cookie refreshTokenCookie = new Cookie("refresh", null);
         refreshTokenCookie.setHttpOnly(true);
         refreshTokenCookie.setSecure(true); // HTTPS 사용 시
@@ -126,7 +126,7 @@ public class UserRestController {
         rememberMeCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
         rememberMeCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
         response.addCookie(rememberMeCookie);
-        String auth = response.getHeader("Authorization");
+        String auth = request.getHeader("Authorization");
         String nickname = jwtUtil.getNickname(auth.substring(7));
         String result = userService.delete(nickname);
         return ResponseEntity.ok().body(result);
