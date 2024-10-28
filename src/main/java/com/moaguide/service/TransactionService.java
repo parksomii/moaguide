@@ -121,26 +121,28 @@ public class TransactionService {
                         .setParameter(2, day)  // 변수 day 사용
                         .getResultList();
 
-                long maxValue = (Long)results.get(0)[1];
-                long minValue = (Long)results.get(0)[1];
+                if(results.size()>0) {
 
-                for (Object[] result : results) {
-                    LocalDate tradeDay = ((Date) result[0]).toLocalDate();
-                    long price = ((Number) result[1]).longValue();
+                    long maxValue = (Long)results.get(0)[1];
+                    long minValue = (Long)results.get(0)[1];
 
-                    TransactionDto dto = new TransactionDto(tradeDay, price);
-                    transactionDtos.add(dto);
+                    for (Object[] result : results) {
+                        LocalDate tradeDay = ((Date) result[0]).toLocalDate();
+                        long price = ((Number) result[1]).longValue();
 
-                    // 최대값과 최소값 계산
-                    if (price > maxValue) {
-                        maxValue = price;
+                        TransactionDto dto = new TransactionDto(tradeDay, price);
+                        transactionDtos.add(dto);
+
+                        // 최대값과 최소값 계산
+                        if (price > maxValue) {
+                            maxValue = price;
+                        }
+                        if (price < minValue) {
+                            minValue = price;
+                        }
                     }
-                    if (price < minValue) {
-                        minValue = price;
-                    }
-                }
-                if(transactionDtos.size()>0) {
                     return new DetailTransactionResponseDto(transactionDtos, maxValue, minValue);
+
                 }
             }
         }
