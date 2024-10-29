@@ -127,4 +127,4 @@ server:
   servlet:
     session:
       timeout: 3600
-
+  timezone: Asia/Seoul
