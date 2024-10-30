@@ -14,9 +14,9 @@ import java.util.List;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleDto(a.id,a.title,a.description,a.imageLink,a.date,a.link) FROM article a where a.category ='재테크_ \uD83D\uDCBC 사회초년생 가이드' and a.id<:nextCursor order by a.id desc")
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleDto(a.id,a.title,a.description,a.imageLink,a.date,a.link) FROM article a where a.category ='\uD83D\uDCBC 사회초년생 재테크 가이드' and a.id<:nextCursor order by a.id desc")
     Page<ArticleDto> findArticle(@Param("nextCursor") int nextCursor, Pageable pageable);
 
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleSummaryDto(a.title,a.description,a.imageLink,a.date,a.link) FROM article a where not a.category = '재테크_ \uD83D\uDCBC 사회초년생 가이드' order by a.id Desc")
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.ArticleSummaryDto(a.title,a.description,a.imageLink,a.date,a.link) FROM article a where not a.category = '\uD83D\uDCBC 사회초년생 재테크 가이드' order by a.id Desc")
     List<ArticleSummaryDto> findSummaryAll(Pageable pageable);
 }
