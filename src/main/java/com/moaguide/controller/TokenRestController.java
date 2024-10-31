@@ -82,7 +82,7 @@ public class TokenRestController {
         Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken, refreshTokenValidity);
         refreshCookie.setPath("/");
         refreshCookie.setSecure(false);
-        refreshCookie.setDomain("192.168.200.100");
+        refreshCookie.setDomain("localhost");
         response.addCookie(refreshCookie);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
