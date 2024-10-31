@@ -82,7 +82,6 @@ public class TokenRestController {
         Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken, refreshTokenValidity);
         refreshCookie.setPath("/");
         refreshCookie.setSecure(false);
-        refreshCookie.setHttpOnly(true);
         response.addCookie(refreshCookie);
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
