@@ -76,7 +76,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken, refreshTokenValidity);
         refreshCookie.setPath("/");
         refreshCookie.setSecure(false);
-        refreshCookie.setDomain("192.168.200.100");
+        refreshCookie.setDomain("localhost");
         response.addCookie(refreshCookie);
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         response.setStatus(HttpStatus.OK.value());
