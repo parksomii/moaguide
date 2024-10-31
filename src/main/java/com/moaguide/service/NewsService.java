@@ -48,7 +48,7 @@ public class NewsService {
             Page<NewsCustomDto> findNewsByLatest = newsData.map(news -> new NewsCustomDto(news));
             return findNewsByLatest;
         }
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("date").descending());
         Page<News> newsData = newsRepository.findAllByCategory(pageable, category);
         Page<NewsCustomDto> findNewsByLatest = newsData.map(news -> new NewsCustomDto(news));
         return findNewsByLatest;
@@ -62,7 +62,7 @@ public class NewsService {
             Page<NewsCustomDto> findNewsByViews = newsData.map(news -> new NewsCustomDto(news));
             return findNewsByViews;
         }
-        Pageable pageable = PageRequest.of(page - 1, size);
+        Pageable pageable = PageRequest.of(page - 1, size, Sort.by("views").descending());
         Page<News> newsData = newsRepository.findAllByCategory(pageable, category);
         Page<NewsCustomDto> findNewsByViews = newsData.map(news -> new NewsCustomDto(news));
         return findNewsByViews;
