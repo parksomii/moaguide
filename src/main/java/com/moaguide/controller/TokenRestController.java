@@ -83,7 +83,15 @@ public class TokenRestController {
         refreshCookie.setPath("/");
         refreshCookie.setSecure(false);
         refreshCookie.setDomain("localhost");
-        response.addCookie(refreshCookie);
+        response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
+        response.setHeader("Set-Cookie",
+                String.format("%s=%s; Max-Age=%d; Path=%s; Domain=localhost; SameSite=None; Secure",
+                        refreshCookie.getName(),
+                        refreshCookie.getValue(),
+                        refreshCookie.getMaxAge(),
+                        refreshCookie.getPath()
+                )
+        );
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 

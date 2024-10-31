@@ -20,7 +20,7 @@ public class CookieService {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge((int) (maxAge / 1000)); // 밀리초를 초 단위로 변환
         cookie.setHttpOnly(false);
-        cookie.setSecure(true); // HTTPS 사용 시
+        cookie.setSecure(false); // HTTPS 사용 시
         // cookie.setPath("/");
 
         return cookie;

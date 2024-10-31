@@ -77,8 +77,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         refreshCookie.setPath("/");
         refreshCookie.setSecure(false);
         refreshCookie.setDomain("localhost");
-        response.addCookie(refreshCookie);
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
+        response.setHeader("Set-Cookie",
+                String.format("%s=%s; Max-Age=%d; Path=%s; Domain=localhost; SameSite=None; Secure",
+                        refreshCookie.getName(),
+                        refreshCookie.getValue(),
+                        refreshCookie.getMaxAge(),
+                        refreshCookie.getPath()
+                )
+        );
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
