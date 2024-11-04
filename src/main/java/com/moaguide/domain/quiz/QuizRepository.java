@@ -5,9 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
 
     @Query("select q FROM Quiz q order by q.id desc")
-    Quiz findQuiz(Pageable pageable);
+    List<Quiz> findQuiz(Pageable pageable);
 }

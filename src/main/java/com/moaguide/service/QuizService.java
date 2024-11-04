@@ -21,7 +21,7 @@ public class QuizService {
 
     public Quiz findQuiz() {
         Pageable pageable = Pageable.ofSize(1);
-        return quizRepository.findQuiz(pageable);
+        return quizRepository.findQuiz(pageable).get(0);
     }
 
     public List<QuestionDto> findquestion(Integer id, String type) {
