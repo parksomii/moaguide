@@ -5,6 +5,7 @@ import com.moaguide.dto.NewDto.customDto.QuestionCheckResponseDto;
 import com.moaguide.dto.NewDto.customDto.QuestionDto;
 import com.moaguide.dto.NewDto.customDto.QuestionLinkDto;
 import com.moaguide.dto.NewDto.customDto.QuestionResponseDto;
+import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.QuizService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class QuizController {
     private final QuizService quizService;
+    private final JWTUtil jwtUtil;
 
     @GetMapping()
     public ResponseEntity<?> quiz() {
@@ -30,7 +32,7 @@ public class QuizController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> quizById(@PathVariable Integer id) {
+    public ResponseEntity<?> quizById(@PathVariable long id) {
         int seed = (int) (Math.random() * 3);
         String type;
         switch (seed) {
@@ -51,29 +53,33 @@ public class QuizController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> quizSubmit(@PathVariable Integer id,@RequestParam String type,@RequestBody QuestionResponseDto questionResponseDto) {
+    public ResponseEntity<?> quizSubmit(@PathVariable long id,@RequestParam String type,@RequestBody QuestionResponseDto question,@RequestHeader("Authorization") String auth) {
+        String token = auth.substring(7);
+        String nickname = jwtUtil.getNickname(token);
         int score = 0;
         Boolean insta = false;
         Boolean naver = false;
-        if(questionResponseDto.getInsta().isEmpty() || questionResponseDto.getInsta().equals("null")) {
+        quizService.insertUserAnswer(nickname,question.getAnswer(),id);
+        if(question.getInsta().isEmpty() || question.getInsta().equals("null")) {
             insta = true;
             score += 5;
         }
 
-        if(questionResponseDto.getNaver().isEmpty() || questionResponseDto.getNaver().equals("null")) {
+        if(question.getNaver().isEmpty() || question.getNaver().equals("null")) {
             naver = true;
             score += 5;
         }
         List<Long> faillist = new ArrayList<>();
         List<QuestionCheckResponseDto> questionDtos = quizService.Checkquestion(id,type);
         for(int i=0;i<questionDtos.size();i++) {
-            Boolean Response = questionResponseDto.getAnswer().get(i) == questionDtos.get(i).getSolution();
+            Boolean Response = question.getAnswer().get(i) == questionDtos.get(i).getSolution();
             if (Response) {
                 score += questionDtos.get(i).getScore();
             } else {
                 faillist.add(questionDtos.get(i).getQuestionId());
             }
         }
+        quizService.insertUserRank(nickname,question.getTime(),question.getNaver(),question.getInsta(),score,id);
         Map<String,Object> map = new HashMap<>();
         map.put("score",score);
         map.put("insta",insta);

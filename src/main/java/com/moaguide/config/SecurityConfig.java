@@ -70,7 +70,7 @@ public class SecurityConfig {
 
                 .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/logout", "/user/update/nickname").authenticated() // 특정 경로에 대해서만 인증 필요
+                        .requestMatchers("/logout", "/user/update/nickname","/quiz/").authenticated() // 특정 경로에 대해서만 인증 필요
                         .anyRequest().permitAll()
                 );
                 // 특정 경로에 대해서만 JWTFilter 적용

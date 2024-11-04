@@ -1,16 +1,15 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.quiz.QuestionRepository;
-import com.moaguide.domain.quiz.Quiz;
-import com.moaguide.domain.quiz.QuizRepository;
+import com.moaguide.domain.quiz.*;
 import com.moaguide.dto.NewDto.customDto.QuestionCheckResponseDto;
 import com.moaguide.dto.NewDto.customDto.QuestionDto;
 import com.moaguide.dto.NewDto.customDto.QuestionLinkDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -19,6 +18,8 @@ import java.util.List;
 public class QuizService {
     private final QuizRepository quizRepository;
     private final QuestionRepository questionRepository;
+    private final QuizResponseRepository history;
+    private final QuzeHistoryRepository quzeHistory;
 
 
     public Quiz findQuiz() {
@@ -26,7 +27,7 @@ public class QuizService {
         return quizRepository.findQuiz(pageable).get(0);
     }
 
-    public List<QuestionDto> findquestion(Integer id, String type) {
+    public List<QuestionDto> findquestion(long id, String type) {
         switch (type) {
             case "b":
                 return questionRepository.findByTypeB(id);
@@ -37,7 +38,7 @@ public class QuizService {
         }
     }
 
-    public List<QuestionCheckResponseDto> Checkquestion(Integer id, String type) {
+    public List<QuestionCheckResponseDto> Checkquestion(long id, String type) {
         switch (type) {
             case "b":
                 return questionRepository.findByTypeBcheck(id);
@@ -50,5 +51,16 @@ public class QuizService {
 
     public List<QuestionLinkDto> link(List<Long> faillist) {
         return questionRepository.findByFailId(faillist);
+    }
+
+    @Async
+    public void insertUserRank(String nickname, LocalTime time, String naver, String insta, int score, long id) {
+        quzeHistory.save(new QuzeHistory(nickname,score,naver,insta,time,id));
+    }
+
+    @Async
+    public void insertUserAnswer(String nickname, List<Integer> answer, long quizId) {
+        String answers = answer.toString();
+        history.save(new QuizResponse(nickname,answers,quizId));
     }
 }
