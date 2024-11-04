@@ -19,10 +19,9 @@ public class CookieService {
     public Cookie createCookie(String key, String value, long maxAge) {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge((int) (maxAge / 1000)); // 밀리초를 초 단위로 변환
-        cookie.setHttpOnly(false);
+        cookie.setHttpOnly(true);
         cookie.setSecure(true); // HTTPS 사용 시
-        // cookie.setPath("/");
-
+        cookie.setPath("/");
         return cookie;
     }
 
@@ -41,7 +40,7 @@ public class CookieService {
         String value = Boolean.toString(rememberMe); // true 또는 false 값을 문자열로 변환
         Cookie cookie = new Cookie("rememberMe", value);
         cookie.setMaxAge((int) (maxAge / 1000)); // 밀리초를 초 단위로 변환
-        cookie.setHttpOnly(false);
+        cookie.setHttpOnly(true);
         cookie.setSecure(true); // HTTPS 사용 시
         cookie.setPath("/");
         return cookie;
@@ -51,7 +50,7 @@ public class CookieService {
     public void setCookieWithSameSite(HttpServletResponse response, String key, String value, long maxAge) {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge((int) (maxAge / 1000)); // 밀리초를 초 단위로 변환
-        cookie.setHttpOnly(false);
+        cookie.setHttpOnly(true);
         cookie.setSecure(true); // HTTPS 사용 시
         cookie.setPath("/");
         // SameSite 설정
