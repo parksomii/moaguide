@@ -3,7 +3,9 @@ package com.moaguide.service;
 import com.moaguide.domain.quiz.QuestionRepository;
 import com.moaguide.domain.quiz.Quiz;
 import com.moaguide.domain.quiz.QuizRepository;
+import com.moaguide.dto.NewDto.customDto.QuestionCheckResponseDto;
 import com.moaguide.dto.NewDto.customDto.QuestionDto;
+import com.moaguide.dto.NewDto.customDto.QuestionLinkDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -33,5 +35,20 @@ public class QuizService {
             default:
                 return questionRepository.findByTypeA(id);
         }
+    }
+
+    public List<QuestionCheckResponseDto> Checkquestion(Integer id, String type) {
+        switch (type) {
+            case "b":
+                return questionRepository.findByTypeBcheck(id);
+            case "c":
+                return questionRepository.findByTypeCcheck(id);
+            default:
+                return questionRepository.findByTypeAcheck(id);
+        }
+    }
+
+    public List<QuestionLinkDto> link(List<Long> faillist) {
+        return questionRepository.findByFailId(faillist);
     }
 }

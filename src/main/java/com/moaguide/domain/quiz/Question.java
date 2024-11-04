@@ -31,6 +31,8 @@ public class Question {
 
     private String type;
 
+    private Integer solution;
+
     @Column(name = "quiz_id")
     private Long quizId;
 }
