@@ -127,6 +127,8 @@ public class QuizController {
         map.put("avag",avag);
         QuizHistory quizRankDtos = quizService.findrankbyNickname(nickname);
         if(quizRankDtos != null) {
+            map.put("nickname",nickname);
+            map.put("time",quizRankDtos.getTime());
             map.put("score",quizRankDtos.getScore());
             map.put("fail",quizRankDtos.getFail());
             int count = 0;
@@ -138,6 +140,8 @@ public class QuizController {
             }
             map.put("plus",count);
         }else{
+            map.put("nickname",nickname);
+            map.put("time",null);
             map.put("fail", null);
             map.put("score", null);
             map.put("plus", null);
