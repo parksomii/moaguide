@@ -31,7 +31,7 @@ public class QuizHistory {
         this.naver = naver;
         this.insta = insta;
         this.time = time;
-        this.id = quizId;
+        this.quizId = quizId;
         this.fail = fail;
     }
 }
