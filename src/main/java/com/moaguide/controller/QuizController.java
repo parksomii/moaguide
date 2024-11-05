@@ -120,8 +120,16 @@ public class QuizController {
     }
 
     @GetMapping("/rank/detail")
-    public ResponseEntity<?> quizRankDetail(@RequestHeader("Authorization") String auth) {
-        String nickname = jwtUtil.getNickname(auth.substring(7));
+    public ResponseEntity<?> quizRankDetail(@RequestHeader(value = "Authorization",required = false) String auth) {
+        String nickname;
+        if ( auth!= null && auth.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(auth.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            nickname = jwtUtil.getNickname(auth.substring(7));
+        }else{
+            nickname = "null";
+        }
         double avag = quizService.findAvarage();
         Map<String,Object> map = new HashMap<>();
         map.put("avag",avag);
