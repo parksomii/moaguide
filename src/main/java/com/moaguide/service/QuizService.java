@@ -61,9 +61,9 @@ public class QuizService {
     }
 
     @Async
-    public void insertUserAnswer(String nickname, List<Integer> answer, long quizId) {
+    public void insertUserAnswer(String nickname, List<Integer> answer, long quizId, String type) {
         String answers = answer.toString();
-        history.save(new QuizResponse(nickname,answers,quizId));
+        history.save(new QuizResponse(nickname,answers,quizId,type));
     }
 
     public List<QuizRankDto> findrank() {

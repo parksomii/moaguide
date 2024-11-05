@@ -50,13 +50,13 @@ public class QuizController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> quizSubmit(@PathVariable long id,@RequestParam String type,@RequestBody QuestionResponseDto question,@RequestHeader("Authorization") String auth) {
+    public ResponseEntity<?> quizSubmit(@PathVariable long id,@RequestBody QuestionResponseDto question,@RequestHeader("Authorization") String auth) {
         String token = auth.substring(7);
         String nickname = jwtUtil.getNickname(token);
         int score = 0;
         Boolean insta = false;
         Boolean naver = false;
-        quizService.insertUserAnswer(nickname,question.getAnswer(),id);
+        quizService.insertUserAnswer(nickname,question.getAnswer(),id,question.getType());
         if(question.getInsta().isEmpty() || question.getInsta().equals("null")) {
             insta = true;
             score += 5;
@@ -67,7 +67,7 @@ public class QuizController {
             score += 5;
         }
         List<Long> faillist = new ArrayList<>();
-        List<QuestionCheckResponseDto> questionDtos = quizService.Checkquestion(id,type);
+        List<QuestionCheckResponseDto> questionDtos = quizService.Checkquestion(id,question.getType());
         for(int i=0;i<questionDtos.size();i++) {
             Boolean Response = question.getAnswer().get(i) == questionDtos.get(i).getSolution();
             if (Response) {

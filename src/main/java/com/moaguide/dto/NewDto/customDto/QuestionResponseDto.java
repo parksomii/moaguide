@@ -15,4 +15,5 @@ public class QuestionResponseDto {
     private String insta;
     private String naver;
     private LocalTime time;
+    private String type;
 }

@@ -20,11 +20,13 @@ public class QuizResponse {
     private String nickname;
     private String answer;
     private long quizId;
+    private String type;
 
     // 필요한 필드만 초기화하는 생성자 추가
-    public QuizResponse(String nickname, String answer, long quizId) {
+    public QuizResponse(String nickname, String answer, long quizId, String type) {
         this.nickname = nickname;
         this.answer = answer;
         this.quizId = quizId;
+        this.type = type;
     }
 }
