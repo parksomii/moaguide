@@ -60,9 +60,16 @@ public class QuizController {
     }
 
     @PostMapping("/{quizId}")
-    public ResponseEntity<?> quizSubmit(@PathVariable long quizId,@RequestBody QuestionResponseDto question,@RequestHeader("Authorization") String auth) {
-        String token = auth.substring(7);
-        String nickname = jwtUtil.getNickname(token);
+    public ResponseEntity<?> quizSubmit(@PathVariable long quizId,@RequestBody QuestionResponseDto question,@RequestHeader(value = "Authorization",required = false) String auth) {
+        String nickname;
+        if ( auth!= null && auth.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(auth.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            nickname = jwtUtil.getNickname(auth.substring(7));
+        }else{
+            nickname = "null";
+        }
         int score = 0;
         Boolean insta = false;
         Boolean naver = false;
