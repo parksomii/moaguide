@@ -11,9 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class QuestionResponseDto {
-    private List<Integer> answer;
-    private String insta;
-    private String naver;
-    private LocalTime time;
-    private String type;
+    private List<Integer> answer;private String insta, naver; private LocalTime time; private String type;
 }

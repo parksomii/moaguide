@@ -57,12 +57,12 @@ public class QuizController {
         Boolean insta = false;
         Boolean naver = false;
         quizService.insertUserAnswer(nickname,question.getAnswer(),id,question.getType());
-        if(question.getInsta().isEmpty() || question.getInsta().equals("null")) {
+        if(!question.getInsta().isEmpty() && !question.getInsta().equals("null")) {
             insta = true;
             score += 5;
         }
 
-        if(question.getNaver().isEmpty() || question.getNaver().equals("null")) {
+        if(!question.getNaver().isEmpty() && !question.getNaver().equals("null")) {
             naver = true;
             score += 5;
         }
