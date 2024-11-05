@@ -1,6 +1,5 @@
 package com.moaguide.service;
 
-import co.elastic.clients.transport.rest_client.RestClientTransport;
 import com.moaguide.domain.quiz.*;
 import com.moaguide.dto.NewDto.customDto.QuestionCheckResponseDto;
 import com.moaguide.dto.NewDto.customDto.QuestionDto;
@@ -58,7 +57,7 @@ public class QuizService {
 
     @Async
     public void insertUserRank(String nickname, LocalTime time, String naver, String insta, int score, long id) {
-        quzeHistory.save(new QuizeHistory(nickname,score,naver,insta,time,id));
+        quzeHistory.save(new QuizHistory(nickname,score,naver,insta,time,id));
     }
 
     @Async

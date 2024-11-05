@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Entity
-public class QuizeHistory {
+public class QuizHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class QuizeHistory {
     @Column(name = "quiz_Id")
     private Long quizId;
 
-    public QuizeHistory(String nickname, int score, String naver, String insta, LocalTime time, long quizId) {
+    public QuizHistory(String nickname, int score, String naver, String insta, LocalTime time, long quizId) {
         this.nickname = nickname;
         this.score = score;
         this.naver = naver;
