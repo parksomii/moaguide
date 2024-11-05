@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface QuzeHistoryRepository extends JpaRepository<QuzeHistory, Long> {
+public interface QuzeHistoryRepository extends JpaRepository<QuizeHistory, Long> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.QuizRankDto(q.nickname,q.score) from QuzeHistory q order by q.quizId desc,q.score desc,q.time")
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.QuizRankDto(q.nickname,q.score) from QuizeHistory q order by q.quizId desc,q.score desc,q.time")
     List<QuizRankDto> findtop5(Pageable pageable);
 }

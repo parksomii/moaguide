@@ -58,7 +58,7 @@ public class QuizService {
 
     @Async
     public void insertUserRank(String nickname, LocalTime time, String naver, String insta, int score, long id) {
-        quzeHistory.save(new QuzeHistory(nickname,score,naver,insta,time,id));
+        quzeHistory.save(new QuizeHistory(nickname,score,naver,insta,time,id));
     }
 
     @Async
