@@ -1,9 +1,6 @@
 package com.moaguide.domain.quiz;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +21,7 @@ public class QuzeHistory {
     private String naver;
     private String insta;
     private LocalTime time;
+    @Column(name = "quiz_Id")
     private Long quizId;
 
     public QuzeHistory(String nickname, int score, String naver, String insta, LocalTime time, long quizId) {

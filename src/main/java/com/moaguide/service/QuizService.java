@@ -1,10 +1,13 @@
 package com.moaguide.service;
 
+import co.elastic.clients.transport.rest_client.RestClientTransport;
 import com.moaguide.domain.quiz.*;
 import com.moaguide.dto.NewDto.customDto.QuestionCheckResponseDto;
 import com.moaguide.dto.NewDto.customDto.QuestionDto;
 import com.moaguide.dto.NewDto.customDto.QuestionLinkDto;
+import com.moaguide.dto.NewDto.customDto.QuizRankDto;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -62,5 +65,10 @@ public class QuizService {
     public void insertUserAnswer(String nickname, List<Integer> answer, long quizId) {
         String answers = answer.toString();
         history.save(new QuizResponse(nickname,answers,quizId));
+    }
+
+    public List<QuizRankDto> findrank() {
+        Pageable pageable = PageRequest.of(0,5);
+        return quzeHistory.findtop5(pageable);
     }
 }

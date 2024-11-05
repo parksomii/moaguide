@@ -1,10 +1,7 @@
 package com.moaguide.controller;
 
 import com.moaguide.domain.quiz.Quiz;
-import com.moaguide.dto.NewDto.customDto.QuestionCheckResponseDto;
-import com.moaguide.dto.NewDto.customDto.QuestionDto;
-import com.moaguide.dto.NewDto.customDto.QuestionLinkDto;
-import com.moaguide.dto.NewDto.customDto.QuestionResponseDto;
+import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.QuizService;
 import lombok.AllArgsConstructor;
@@ -92,5 +89,13 @@ public class QuizController {
             map.put("fail", new ArrayList<>());
             return ResponseEntity.ok(map);
         }
+    }
+
+    @GetMapping("rank")
+    public ResponseEntity<?> quizRank() {
+        List<QuizRankDto> quizRankDtos = quizService.findrank();
+        Map<String,Object> map = new HashMap<>();
+        map.put("Rankgin",quizRankDtos);
+        return ResponseEntity.ok(map);
     }
 }
