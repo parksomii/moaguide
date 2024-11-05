@@ -5,6 +5,7 @@ import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.QuizService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,13 @@ public class QuizController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> quizById(@PathVariable long id) {
+    public ResponseEntity<?> quizById(@PathVariable long id,@RequestHeader("Authorization") String auth) {
+        String token = auth.substring(7);
+        String nickname = jwtUtil.getNickname(token);
+        Boolean overlap = quizService.findoverlap(nickname,id);
+        if(overlap == true){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 참여했습니다.");
+        }
         int seed = (int) (Math.random() * 3);
         String type;
         switch (seed) {
@@ -49,14 +56,14 @@ public class QuizController {
         return ResponseEntity.ok(map);
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<?> quizSubmit(@PathVariable long id,@RequestBody QuestionResponseDto question,@RequestHeader("Authorization") String auth) {
+    @PostMapping("/{quizId}")
+    public ResponseEntity<?> quizSubmit(@PathVariable long quizId,@RequestBody QuestionResponseDto question,@RequestHeader("Authorization") String auth) {
         String token = auth.substring(7);
         String nickname = jwtUtil.getNickname(token);
         int score = 0;
         Boolean insta = false;
         Boolean naver = false;
-        quizService.insertUserAnswer(nickname,question.getAnswer(),id,question.getType());
+        quizService.insertUserAnswer(nickname,question.getAnswer(),quizId,question.getType());
         if(!question.getInsta().isEmpty() && !question.getInsta().equals("null")) {
             insta = true;
             score += 5;
@@ -68,7 +75,7 @@ public class QuizController {
         }
         List<Long> faillist = new ArrayList<>();
         List<Integer> failanswer = new ArrayList<>();
-        List<QuestionCheckResponseDto> questionDtos = quizService.Checkquestion(id,question.getType());
+        List<QuestionCheckResponseDto> questionDtos = quizService.Checkquestion(quizId,question.getType());
         for(int i=0;i<questionDtos.size();i++) {
             Boolean Response = question.getAnswer().get(i) == questionDtos.get(i).getSolution();
             if (Response) {
@@ -78,7 +85,7 @@ public class QuizController {
                 failanswer.add(question.getAnswer().get(i));
             }
         }
-        quizService.insertUserRank(nickname,question.getTime(),question.getNaver(),question.getInsta(),score,id);
+        quizService.insertUserRank(nickname,question.getTime(),question.getNaver(),question.getInsta(),score,quizId,faillist.size());
         Map<String,Object> map = new HashMap<>();
         map.put("score",score);
         map.put("insta",insta);
@@ -101,4 +108,6 @@ public class QuizController {
         map.put("Rankgin",quizRankDtos);
         return ResponseEntity.ok(map);
     }
+
+
 }

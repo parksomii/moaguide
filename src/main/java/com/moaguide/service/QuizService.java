@@ -56,8 +56,8 @@ public class QuizService {
     }
 
     @Async
-    public void insertUserRank(String nickname, LocalTime time, String naver, String insta, int score, long id) {
-        quzeHistory.save(new QuizHistory(nickname,score,naver,insta,time,id));
+    public void insertUserRank(String nickname, LocalTime time, String naver, String insta, int score, long id, int size) {
+        quzeHistory.save(new QuizHistory(nickname,score,naver,insta,time,id,size));
     }
 
     @Async
@@ -69,5 +69,9 @@ public class QuizService {
     public List<QuizRankDto> findrank() {
         Pageable pageable = PageRequest.of(0,5);
         return quzeHistory.findtop5(pageable);
+    }
+
+    public Boolean findoverlap(String nickname, long id) {
+        return quzeHistory.findByNickname(nickname,id);
     }
 }

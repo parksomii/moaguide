@@ -23,13 +23,15 @@ public class QuizHistory {
     private LocalTime time;
     @Column(name = "quiz_Id")
     private Long quizId;
+    private int fail;
 
-    public QuizHistory(String nickname, int score, String naver, String insta, LocalTime time, long quizId) {
+    public QuizHistory(String nickname, int score, String naver, String insta, LocalTime time, long quizId, int fail) {
         this.nickname = nickname;
         this.score = score;
         this.naver = naver;
         this.insta = insta;
         this.time = time;
         this.id = quizId;
+        this.fail = fail;
     }
 }
