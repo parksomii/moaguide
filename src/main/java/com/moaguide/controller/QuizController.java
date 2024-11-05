@@ -67,6 +67,7 @@ public class QuizController {
             score += 5;
         }
         List<Long> faillist = new ArrayList<>();
+        List<Integer> failanswer = new ArrayList<>();
         List<QuestionCheckResponseDto> questionDtos = quizService.Checkquestion(id,question.getType());
         for(int i=0;i<questionDtos.size();i++) {
             Boolean Response = question.getAnswer().get(i) == questionDtos.get(i).getSolution();
@@ -74,6 +75,7 @@ public class QuizController {
                 score += questionDtos.get(i).getScore();
             } else {
                 faillist.add(questionDtos.get(i).getQuestionId());
+                failanswer.add(question.getAnswer().get(i));
             }
         }
         quizService.insertUserRank(nickname,question.getTime(),question.getNaver(),question.getInsta(),score,id);
@@ -84,6 +86,7 @@ public class QuizController {
         if (faillist.size() > 0) {
             List<QuestionLinkDto> questionCheckResponseDtos = quizService.link(faillist);
             map.put("faillist",questionCheckResponseDtos);
+            map.put("failanswer",failanswer);
             return ResponseEntity.ok(map);
         }else {
             map.put("fail", new ArrayList<>());
