@@ -21,7 +21,7 @@ public class QuizService {
     private final QuizRepository quizRepository;
     private final QuestionRepository questionRepository;
     private final QuizResponseRepository history;
-    private final QuzeHistoryRepository quzeHistory;
+    private final QuzeHistoryRepository quizHistory;
 
 
     public Quiz findQuiz() {
@@ -57,7 +57,7 @@ public class QuizService {
 
     @Async
     public void insertUserRank(String nickname, LocalTime time, String naver, String insta, int score, long id, int size) {
-        quzeHistory.save(new QuizHistory(nickname,score,naver,insta,time,id,size));
+        quizHistory.save(new QuizHistory(nickname,score,naver,insta,time,id,size));
     }
 
     @Async
@@ -68,10 +68,23 @@ public class QuizService {
 
     public List<QuizRankDto> findrank() {
         Pageable pageable = PageRequest.of(0,5);
-        return quzeHistory.findtop5(pageable);
+        return quizHistory.findtop5(pageable);
     }
 
     public Boolean findoverlap(String nickname, long id) {
-        return quzeHistory.findByNickname(nickname,id);
+        return quizHistory.findByNickname(nickname,id);
+    }
+
+    public QuizHistory findrankbyNickname(String nickname) {
+        return quizHistory.findBynick(nickname).orElse(null);
+    }
+
+    public double findAvarage() {
+        return  quizHistory.findAvarage();
+    }
+
+    public List<QuizRankDto> findRankList(long id) {
+        Pageable pageable = PageRequest.of((int) id,20);
+        return quizHistory.findList(pageable);
     }
 }

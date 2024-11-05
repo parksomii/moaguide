@@ -1,10 +1,13 @@
 package com.moaguide.controller;
 
 import com.moaguide.domain.quiz.Quiz;
+import com.moaguide.domain.quiz.QuizHistory;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.QuizService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -105,9 +108,41 @@ public class QuizController {
     public ResponseEntity<?> quizRank() {
         List<QuizRankDto> quizRankDtos = quizService.findrank();
         Map<String,Object> map = new HashMap<>();
-        map.put("Rankgin",quizRankDtos);
+        map.put("Ranking",quizRankDtos);
         return ResponseEntity.ok(map);
     }
 
+    @GetMapping("/rank/detail")
+    public ResponseEntity<?> quizRankDetail(@RequestHeader("Authorization") String auth) {
+        String nickname = jwtUtil.getNickname(auth.substring(7));
+        double avag = quizService.findAvarage();
+        Map<String,Object> map = new HashMap<>();
+        map.put("avag",avag);
+        QuizHistory quizRankDtos = quizService.findrankbyNickname(nickname);
+        if(quizRankDtos != null) {
+            map.put("score",quizRankDtos.getScore());
+            map.put("fail",quizRankDtos.getFail());
+            int count = 0;
+            if(!quizRankDtos.getInsta().isEmpty() && !quizRankDtos.getInsta().equals("null")) {
+                count+=1;
+            }
+            if(!quizRankDtos.getNaver().isEmpty() && !quizRankDtos.getNaver().equals("null")) {
+                count+=1;
+            }
+            map.put("plus",count);
+        }else{
+            map.put("fail", null);
+            map.put("score", null);
+            map.put("plus", null);
+        }
+        return ResponseEntity.ok(map);
+    }
 
+    @GetMapping("/rank/list")
+    public ResponseEntity<?> quizRankList(@RequestParam(defaultValue = "0") long id) {
+        List<QuizRankDto> quisrank = quizService.findRankList(id);
+        Map<String,Object> map = new HashMap<>();
+        map.put("Ranking",quisrank);
+        return ResponseEntity.ok(map);
+    }
 }

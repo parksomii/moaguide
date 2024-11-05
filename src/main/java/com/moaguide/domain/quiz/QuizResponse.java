@@ -1,9 +1,6 @@
 package com.moaguide.domain.quiz;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,7 @@ public class QuizResponse {
     private long id; // final 제거
     private String nickname;
     private String answer;
+    @Column(name = "quiz_Id")
     private long quizId;
     private String type;
 

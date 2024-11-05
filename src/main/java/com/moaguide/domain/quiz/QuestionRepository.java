@@ -33,4 +33,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @Query("SELECT new com.moaguide.dto.NewDto.customDto.QuestionLinkDto(q.explanation,q.choice1,q.choice2,q.choice3,q.choice4,q.choice5,q.link) FROM Question q where q.id in :fail ")
     List<QuestionLinkDto> findByFailId(@Param("fail")List<Long> faillist);
+
+
 }
