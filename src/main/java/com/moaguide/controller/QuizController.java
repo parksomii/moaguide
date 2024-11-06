@@ -139,14 +139,14 @@ public class QuizController {
             map.put("time",quizRankDtos.getTime());
             map.put("score",quizRankDtos.getScore());
             map.put("fail",quizRankDtos.getFail());
-            int count = 0;
+            int plus = 0;
             if(!quizRankDtos.getInsta().isEmpty() && !quizRankDtos.getInsta().equals("null")) {
-                count+=1;
+                plus+=5;
             }
             if(!quizRankDtos.getNaver().isEmpty() && !quizRankDtos.getNaver().equals("null")) {
-                count+=1;
+                plus+=5;
             }
-            map.put("plus",count);
+            map.put("plus",plus);
         }else{
             map.put("nickname",nickname);
             map.put("time",null);
