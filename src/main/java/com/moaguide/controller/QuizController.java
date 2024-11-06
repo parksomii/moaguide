@@ -71,17 +71,20 @@ public class QuizController {
             nickname = "null";
         }
         int score = 0;
+        int plus =0;
         Boolean insta = false;
         Boolean naver = false;
         quizService.insertUserAnswer(nickname,question.getAnswer(),quizId,question.getType());
         if(!question.getInsta().isEmpty() && !question.getInsta().equals("null")) {
             insta = true;
             score += 5;
+            plus += 5;
         }
 
         if(!question.getNaver().isEmpty() && !question.getNaver().equals("null")) {
             naver = true;
             score += 5;
+            plus += 5;
         }
         List<Long> faillist = new ArrayList<>();
         List<Integer> failanswer = new ArrayList<>();
@@ -98,8 +101,8 @@ public class QuizController {
         quizService.insertUserRank(nickname,question.getTime(),question.getNaver(),question.getInsta(),score,quizId,faillist.size());
         Map<String,Object> map = new HashMap<>();
         map.put("score",score);
-        map.put("insta",insta);
-        map.put("naver",naver);
+        map.put("plus",plus);
+        map.put("time",question.getTime());
         if (faillist.size() > 0) {
             List<QuestionLinkDto> questionCheckResponseDtos = quizService.link(faillist);
             map.put("faillist",questionCheckResponseDtos);
