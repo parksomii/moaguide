@@ -19,12 +19,16 @@ public class QuizResponse {
     @Column(name = "quiz_Id")
     private long quizId;
     private String type;
+    @Column(name = "fail_list")
+    private String failList;
+
 
     // 필요한 필드만 초기화하는 생성자 추가
-    public QuizResponse(String nickname, String answer, long quizId, String type) {
+    public QuizResponse(String nickname, String answer, long quizId, String type, String failList) {
         this.nickname = nickname;
         this.answer = answer;
         this.quizId = quizId;
         this.type = type;
+        this.failList = failList;
     }
 }

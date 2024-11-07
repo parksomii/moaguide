@@ -61,9 +61,10 @@ public class QuizService {
     }
 
     @Async
-    public void insertUserAnswer(String nickname, List<Integer> answer, long quizId, String type) {
+    public void insertUserAnswer(String nickname, List<Integer> answer, long quizId, String type, List<Long> faillist) {
         String answers = answer.toString();
-        history.save(new QuizResponse(nickname,answers,quizId,type));
+        String fail = faillist.toString();
+        history.save(new QuizResponse(nickname,answers,quizId,type,fail));
     }
 
     public List<QuizRankDto> findrank() {
@@ -86,5 +87,16 @@ public class QuizService {
     public List<QuizRankDto> findRankList(long id) {
         Pageable pageable = PageRequest.of((int) id,20);
         return quizHistory.findList(pageable);
+    }
+
+    public String findByNickname(String nickname) {
+        try {
+            quizHistory.deleteByNickname(nickname);
+            history.deleteByNickname(nickname);
+            return "성공";
+        }catch (Exception e){
+            return e+"오류 발생";
+        }
+
     }
 }

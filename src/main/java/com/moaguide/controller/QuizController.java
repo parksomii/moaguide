@@ -33,7 +33,7 @@ public class QuizController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> quizById(@PathVariable long id{
+    public ResponseEntity<?> quizById(@PathVariable long id){
         int seed = (int) (Math.random() * 3);
         String type;
         switch (seed) {
@@ -65,6 +65,18 @@ public class QuizController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> quizDelete(@PathVariable long id,@RequestHeader("Authorization") String auth) {
+        String token = auth.substring(7);
+        String nickname = jwtUtil.getNickname(token);
+        String result = quizService.findByNickname(nickname);
+        if(result.equals("성공")){
+            return ResponseEntity.ok("성공적으로 삭제되었습니다.");
+        }else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(result);
+        }
+    }
+
     @PostMapping("/{quizId}")
     public ResponseEntity<?> quizSubmit(@PathVariable long quizId,@RequestBody QuestionResponseDto question,@RequestHeader(value = "Authorization",required = false) String auth) {
         String nickname;
@@ -80,7 +92,6 @@ public class QuizController {
         int plus =0;
         Boolean insta = false;
         Boolean naver = false;
-        quizService.insertUserAnswer(nickname,question.getAnswer(),quizId,question.getType());
         if(!question.getInsta().isEmpty() && !question.getInsta().equals("null")) {
             insta = true;
             score += 5;
@@ -95,6 +106,7 @@ public class QuizController {
         List<Long> faillist = new ArrayList<>();
         List<Integer> failanswer = new ArrayList<>();
         List<QuestionCheckResponseDto> questionDtos = quizService.Checkquestion(quizId,question.getType());
+        quizService.insertUserAnswer(nickname,question.getAnswer(),quizId,question.getType(),faillist);
         for(int i=0;i<questionDtos.size();i++) {
             Boolean Response = question.getAnswer().get(i) == questionDtos.get(i).getSolution();
             if (Response) {

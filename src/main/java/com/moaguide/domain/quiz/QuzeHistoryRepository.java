@@ -27,4 +27,7 @@ public interface QuzeHistoryRepository extends JpaRepository<QuizHistory, Long> 
 
     @Query("select new com.moaguide.dto.NewDto.customDto.QuizRankDto(q.nickname,q.score,q.time) from QuizHistory q order by q.score desc,q.time")
     List<QuizRankDto> findList(Pageable pageable);
+
+    @Query("delete FROM QuizHistory q where q.nickname = :nickname")
+    void deleteByNickname(@Param("nickname") String nickname);
 }
