@@ -6,8 +6,6 @@ import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.QuizService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,7 +67,7 @@ public class QuizController {
     public ResponseEntity<?> quizDelete(@PathVariable long id,@RequestHeader("Authorization") String auth) {
         String token = auth.substring(7);
         String nickname = jwtUtil.getNickname(token);
-        String result = quizService.findByNickname(nickname);
+        String result = quizService.deleteByNickname(nickname);
         if(result.equals("성공")){
             return ResponseEntity.ok("성공적으로 삭제되었습니다.");
         }else {

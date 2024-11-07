@@ -89,7 +89,7 @@ public class QuizService {
         return quizHistory.findList(pageable);
     }
 
-    public String findByNickname(String nickname) {
+    public String deleteByNickname(String nickname) {
         try {
             quizHistory.deleteByNickname(nickname);
             history.deleteByNickname(nickname);
