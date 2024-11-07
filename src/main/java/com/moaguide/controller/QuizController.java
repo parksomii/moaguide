@@ -33,13 +33,7 @@ public class QuizController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> quizById(@PathVariable long id,@RequestHeader("Authorization") String auth) {
-        String token = auth.substring(7);
-        String nickname = jwtUtil.getNickname(token);
-        Boolean overlap = quizService.findoverlap(nickname,id);
-        if(overlap == true){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 참여했습니다.");
-        }
+    public ResponseEntity<?> quizById(@PathVariable long id{
         int seed = (int) (Math.random() * 3);
         String type;
         switch (seed) {
@@ -57,6 +51,18 @@ public class QuizController {
         map.put("question",questionDtos);
         map.put("type",type);
         return ResponseEntity.ok(map);
+    }
+
+    @GetMapping("/check/{id}")
+    public ResponseEntity<?> check(@PathVariable long id,@RequestHeader("Authorization") String auth) {
+        String token = auth.substring(7);
+        String nickname = jwtUtil.getNickname(token);
+        Boolean overlap = quizService.findoverlap(nickname,id);
+        if(overlap == true){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 참여했습니다.");
+        }else{
+            return ResponseEntity.ok("참여한적이 없습니다.");
+        }
     }
 
     @PostMapping("/{quizId}")
