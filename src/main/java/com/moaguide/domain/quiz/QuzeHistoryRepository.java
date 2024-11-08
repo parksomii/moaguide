@@ -1,5 +1,6 @@
 package com.moaguide.domain.quiz;
 
+import com.moaguide.dto.NewDto.customDto.QuizHistoryDto;
 import com.moaguide.dto.NewDto.customDto.QuizRankDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,4 +35,7 @@ public interface QuzeHistoryRepository extends JpaRepository<QuizHistory, Long> 
     @Transactional
     @Query("delete FROM QuizHistory q where q.nickname = :nickname")
     void deleteByNickname(@Param("nickname") String nickname);
+
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.QuizHistoryDto(q.score,q.naver,q.insta,q.time) FROM QuizHistory q where q.nickname=:nickname")
+    Optional<QuizHistoryDto> findByresponse(@Param("nickname") String nickname);
 }

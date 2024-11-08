@@ -5,15 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
-import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
-public class QuestionResponseDto {
-    private List<Integer> answer;
-    private String insta;
+@NoArgsConstructor
+public class QuizHistoryDto {
+    private int score;
     private String naver;
+    private String insta;
     private LocalTime time;
-    private String type;
 }

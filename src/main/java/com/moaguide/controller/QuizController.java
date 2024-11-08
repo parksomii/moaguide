@@ -83,28 +83,24 @@ public class QuizController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
             nickname = jwtUtil.getNickname(auth.substring(7));
-        }else{
-            nickname = "null";
+        }else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("액세스 오류");
         }
         int score = 0;
-        int plus =0;
         Boolean insta = false;
         Boolean naver = false;
         if(!question.getInsta().isEmpty() && !question.getInsta().equals("null")) {
             insta = true;
             score += 5;
-            plus += 5;
         }
 
         if(!question.getNaver().isEmpty() && !question.getNaver().equals("null")) {
             naver = true;
             score += 5;
-            plus += 5;
         }
         List<Long> faillist = new ArrayList<>();
         List<Integer> failanswer = new ArrayList<>();
         List<QuestionCheckResponseDto> questionDtos = quizService.Checkquestion(quizId,question.getType());
-        quizService.insertUserAnswer(nickname,question.getAnswer(),quizId,question.getType(),faillist);
         for(int i=0;i<questionDtos.size();i++) {
             Boolean Response = question.getAnswer().get(i) == questionDtos.get(i).getSolution();
             if (Response) {
@@ -114,20 +110,54 @@ public class QuizController {
                 failanswer.add(question.getAnswer().get(i));
             }
         }
+        quizService.insertUserAnswer(nickname,question.getAnswer(),quizId,question.getType(),faillist,failanswer);
         quizService.insertUserRank(nickname,question.getTime(),question.getNaver(),question.getInsta(),score,quizId,faillist.size());
-        Map<String,Object> map = new HashMap<>();
-        map.put("score",score);
-        map.put("plus",plus);
-        map.put("time",question.getTime());
-        if (faillist.size() > 0) {
-            List<QuestionLinkDto> questionCheckResponseDtos = quizService.link(faillist);
-            map.put("faillist",questionCheckResponseDtos);
-            map.put("failanswer",failanswer);
+        return ResponseEntity.ok("제출이 완료되었습니다.");
+    }
+
+    @GetMapping("/myscore")
+    public ResponseEntity<?> myscore(@RequestHeader("Authorization") String auth) {
+        String nickname;
+        if ( auth!= null && auth.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(auth.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            nickname = jwtUtil.getNickname(auth.substring(7));
+        }else{
+            nickname = "null";
+        }
+
+        QuizResponseDto quizresponse = quizService.findQuizResponse(nickname);
+        QuizHistoryDto quizHistoryDto = quizService.findQuizHistory(nickname);
+        if(quizresponse == null || quizHistoryDto == null) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("failList",null);
+            map.put("plus",null);
+            map.put("score",null);
+            map.put("failanswer",null);
+            map.put("time",null);
+            map.put("naver",null);
             return ResponseEntity.ok(map);
         }else {
-            map.put("fail", new ArrayList<>());
+            List<QuestionLinkDto> questionDto = quizService.link(quizresponse.getQuizId(),quizresponse.getFailList(),quizresponse.getType());
+            int plus = 0;
+            if (!quizHistoryDto.getNaver().isEmpty() && !quizHistoryDto.getNaver().equals("null")) {
+                plus+=5;
+            }
+            if (!quizHistoryDto.getInsta().isEmpty() && !quizHistoryDto.getInsta().equals("null")) {
+                plus+=5;
+            }
+            Map<String,Object> map = new HashMap<>();
+            map.put("failList",questionDto);
+            map.put("plus",plus);
+            map.put("score",quizHistoryDto.getScore());
+            map.put("failanswer",quizresponse.getFail_answer());
+            map.put("time",quizHistoryDto.getTime());
+            map.put("naver",quizHistoryDto.getNaver());
             return ResponseEntity.ok(map);
         }
+
+
     }
 
     @GetMapping("rank")

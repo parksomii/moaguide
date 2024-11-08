@@ -21,14 +21,16 @@ public class QuizResponse {
     private String type;
     @Column(name = "fail_list")
     private String failList;
-
+    @Column(name = "fail_answer")
+    private String failAnswer;
 
     // 필요한 필드만 초기화하는 생성자 추가
-    public QuizResponse(String nickname, String answer, long quizId, String type, String failList) {
+    public QuizResponse(String nickname, String answer, long quizId, String type, String failList, String failAnswer) {
         this.nickname = nickname;
         this.answer = answer;
         this.quizId = quizId;
         this.type = type;
         this.failList = failList;
+        this.failAnswer = failAnswer;
     }
 }
