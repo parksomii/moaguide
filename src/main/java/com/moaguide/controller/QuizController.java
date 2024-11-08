@@ -52,7 +52,7 @@ public class QuizController {
     }
 
     @GetMapping("/check/{id}")
-    public ResponseEntity<?> check(@PathVariable long id,@RequestHeader("Authorization") String auth) {
+    public ResponseEntity<?> check(@PathVariable long id,@RequestHeader(value = "Authorization",required = false) String auth) {
         String token = auth.substring(7);
         String nickname = jwtUtil.getNickname(token);
         Boolean overlap = quizService.findoverlap(nickname,id);
@@ -65,8 +65,15 @@ public class QuizController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> quizDelete(@PathVariable long id,@RequestHeader("Authorization") String auth) {
-        String token = auth.substring(7);
-        String nickname = jwtUtil.getNickname(token);
+        String nickname;
+        if ( auth!= null && auth.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(auth.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            nickname = jwtUtil.getNickname(auth.substring(7));
+        }else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("액세스 오류");
+        }
         String result = quizService.deleteByNickname(nickname);
         if(result.equals("성공")){
             return ResponseEntity.ok("성공적으로 삭제되었습니다.");
