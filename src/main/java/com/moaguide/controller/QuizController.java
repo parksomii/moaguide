@@ -136,7 +136,6 @@ public class QuizController {
             map.put("score",null);
             map.put("failanswer",null);
             map.put("time",null);
-            map.put("naver",null);
             return ResponseEntity.ok(map);
         }else {
             List<QuestionLinkDto> questionDto = quizService.link(quizresponse.getQuizId(),quizresponse.getFailList(),quizresponse.getType());
@@ -153,7 +152,6 @@ public class QuizController {
             map.put("score",quizHistoryDto.getScore());
             map.put("failanswer",quizresponse.getFail_answer());
             map.put("time",quizHistoryDto.getTime());
-            map.put("naver",quizHistoryDto.getNaver());
             return ResponseEntity.ok(map);
         }
 
