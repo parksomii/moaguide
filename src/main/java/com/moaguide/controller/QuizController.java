@@ -116,7 +116,7 @@ public class QuizController {
     }
 
     @GetMapping("/myscore")
-    public ResponseEntity<?> myscore(@RequestHeader("Authorization") String auth) {
+    public ResponseEntity<?> myscore(@RequestHeader(value = "Authorization",required = false) String auth) {
         String nickname;
         if ( auth!= null && auth.startsWith("Bearer ")) {
             if(jwtUtil.isExpired(auth.substring(7))){
