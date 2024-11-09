@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface QuzeHistoryRepository extends JpaRepository<QuizHistory, Long> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.customDto.QuizRankDto(q.nickname,q.score) from QuizHistory q order by q.score desc,q.time")
+    @Query("SELECT new com.moaguide.dto.NewDto.customDto.QuizRankDto(q.nickname,q.score,q.time) from QuizHistory q order by q.score desc,q.time")
     List<QuizRankDto> findtop5(Pageable pageable);
 
     @Query("SELECT COUNT(q) > 0 FROM QuizHistory q WHERE q.nickname = :nickname AND q.quizId = :quizId")

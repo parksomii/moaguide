@@ -12,4 +12,5 @@ import java.time.LocalTime;
 public class QuizRankDto {
     private String name;
     private int score;
+    private LocalTime time;
 }
