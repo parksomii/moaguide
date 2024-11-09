@@ -82,15 +82,11 @@ public class QuizController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("액세스 오류");
         }
         int score = 0;
-        Boolean insta = false;
-        Boolean naver = false;
         if(!question.getInsta().isEmpty() && !question.getInsta().equals("null")) {
-            insta = true;
             score += 5;
         }
 
         if(!question.getNaver().isEmpty() && !question.getNaver().equals("null")) {
-            naver = true;
             score += 5;
         }
         List<Long> faillist = new ArrayList<>();
