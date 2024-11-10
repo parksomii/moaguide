@@ -72,6 +72,9 @@ public class QuizService {
     public Boolean findoverlap(String nickname, long id) {
         return quizHistory.findByNickname(nickname,id);
     }
+    public Boolean findoverlap(String nickname) {
+        return quizHistory.findByNickname(nickname);
+    }
 
     public QuizHistory findrankbyNickname(String nickname) {
         return quizHistory.findBynick(nickname).orElse(null);

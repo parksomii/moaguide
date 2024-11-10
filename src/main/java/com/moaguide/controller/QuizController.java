@@ -69,6 +69,24 @@ public class QuizController {
             return ResponseEntity.ok("참여한적이 없습니다.");
         }
     }
+    @PostMapping("/confirm")
+    public ResponseEntity<?> check(@RequestHeader(value = "Authorization",required = false) String auth) {
+        String nickname;
+        if ( auth!= null && auth.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(auth.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            nickname = jwtUtil.getNickname(auth.substring(7));
+        }else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("로그인 안됨");
+        }
+        Boolean overlap = quizService.findoverlap(nickname);
+        if(overlap == true){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 참여했습니다.");
+        }else{
+            return ResponseEntity.ok("참여한적이 없습니다.");
+        }
+    }
 
     @PostMapping("/{quizId}")
     public ResponseEntity<?> quizSubmit(@PathVariable long quizId,@RequestBody QuestionResponseDto question,@RequestHeader(value = "Authorization",required = false) String auth) {
@@ -115,13 +133,19 @@ public class QuizController {
             }
             nickname = jwtUtil.getNickname(auth.substring(7));
         }else{
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("로그인 해주세요.");
+            nickname = "null";
         }
 
         QuizResponseDto quizresponse = quizService.findQuizResponse(nickname);
         QuizHistoryDto quizHistoryDto = quizService.findQuizHistory(nickname);
         if(quizresponse == null || quizHistoryDto == null) {
-            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("시험을 치르지 않았습니다.");
+            Map<String,Object> map = new HashMap<>();
+            map.put("failList",null);
+            map.put("plus",null);
+            map.put("score",null);
+            map.put("failanswer",null);
+            map.put("time",null);
+            return ResponseEntity.ok(map);
         }else {
             List<QuestionLinkDto> questionDto = quizService.link(quizresponse.getQuizId(),quizresponse.getFailList(),quizresponse.getType());
             int plus = 0;
