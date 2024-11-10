@@ -115,19 +115,13 @@ public class QuizController {
             }
             nickname = jwtUtil.getNickname(auth.substring(7));
         }else{
-            nickname = "null";
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("로그인 해주세요.");
         }
 
         QuizResponseDto quizresponse = quizService.findQuizResponse(nickname);
         QuizHistoryDto quizHistoryDto = quizService.findQuizHistory(nickname);
         if(quizresponse == null || quizHistoryDto == null) {
-            Map<String,Object> map = new HashMap<>();
-            map.put("failList",null);
-            map.put("plus",null);
-            map.put("score",null);
-            map.put("failanswer",null);
-            map.put("time",null);
-            return ResponseEntity.ok(map);
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("시험을 치르지 않았습니다.");
         }else {
             List<QuestionLinkDto> questionDto = quizService.link(quizresponse.getQuizId(),quizresponse.getFailList(),quizresponse.getType());
             int plus = 0;
