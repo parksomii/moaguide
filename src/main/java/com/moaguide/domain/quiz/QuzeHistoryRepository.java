@@ -22,6 +22,9 @@ public interface QuzeHistoryRepository extends JpaRepository<QuizHistory, Long> 
     @Query("SELECT COUNT(q) > 0 FROM QuizHistory q WHERE q.nickname = :nickname AND q.quizId = :quizId")
     Boolean findByNickname(@Param("nickname") String nickname, @Param("quizId") long quizId);
 
+    @Query("SELECT COUNT(q) > 0 FROM QuizHistory q WHERE q.nickname = :nickname")
+    Boolean findByNickname(@Param("nickname") String nickname);
+
     @Query("SELECT q FROM QuizHistory q where q.nickname =:nickname")
     Optional<QuizHistory> findBynick(String nickname);
 

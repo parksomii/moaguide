@@ -63,6 +63,26 @@ public class QuizController {
         }
     }
 
+    @PostMapping("/confirm")
+    public ResponseEntity<?> check(@RequestHeader(value = "Authorization",required = false) String auth) {
+        String nickname;
+        if ( auth!= null && auth.startsWith("Bearer ")) {
+            if(jwtUtil.isExpired(auth.substring(7))){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+            nickname = jwtUtil.getNickname(auth.substring(7));
+        }else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("로그인 안됨");
+        }
+        Boolean overlap = quizService.findoverlap(nickname);
+        if(overlap == true){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 참여했습니다.");
+        }else{
+            return ResponseEntity.ok("참여한적이 없습니다.");
+        }
+    }
+
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> quizDelete(@PathVariable long id,@RequestHeader("Authorization") String auth) {
         String nickname;
