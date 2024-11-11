@@ -23,7 +23,7 @@ public class NewsService {
     private final  NewsRepository newsRepository;
     // 많이 본 뉴스
     public List<NewsCustomDto> findNews() {
-        Pageable pageable = PageRequest.of(0, 3, Sort.by("views").descending());
+        Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Order.desc("views"), Sort.Order.desc("id")));
         return newsRepository.findTop3ByOrderByViewsDesc(pageable)
                 .stream()
                 .map(NewsCustomDto::new)
