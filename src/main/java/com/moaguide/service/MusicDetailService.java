@@ -184,6 +184,8 @@ public class MusicDetailService {
             day = day.minusMonths(month); // 6개월 전
         } else if (month == 12) {
             day = day.minusMonths(month); // 1년 전
+        } else if(month == 36){
+            day = day.minusMonths(month); // 1년 전
         } else if (month == 100) {
             day = day.minusYears(10); // 전체 기간 조회를 위한 과거 날짜
         } else {
