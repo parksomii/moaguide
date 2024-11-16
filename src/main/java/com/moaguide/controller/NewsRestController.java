@@ -73,6 +73,6 @@ public class NewsRestController {
         map.put("total",newsList.getTotalPages());
         map.put("page",page);
         map.put("size",size);
-        return ResponseEntity.ok().body(newsList);
+        return ResponseEntity.ok().body(map);
     }
 }
