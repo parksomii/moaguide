@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -67,6 +68,11 @@ public class NewsRestController {
         else {
             newsList = newsService.getByCategory(page, size, sort,category);
         }
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("news",newsList.getContent());
+        map.put("total",newsList.getTotalPages());
+        map.put("page",page);
+        map.put("size",size);
         return ResponseEntity.ok().body(newsList);
     }
 }
