@@ -23,7 +23,7 @@ public class NewsRestController {
     private final JWTUtil jwtUtil;
 
     // 뉴스 홈페이지
-    @GetMapping("/content/news")
+    @GetMapping("/content/news/")
     public ResponseEntity<List<NewsCustomDto>> newsHome() {
         List<NewsCustomDto> newsData = newsService.findNews();
         return ResponseEntity.ok().body(newsData);
