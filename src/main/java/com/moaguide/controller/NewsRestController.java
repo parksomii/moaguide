@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/content/news/")
+@RequestMapping("")
 @AllArgsConstructor
 @Slf4j
 public class NewsRestController {
@@ -23,14 +23,14 @@ public class NewsRestController {
     private final JWTUtil jwtUtil;
 
     // 뉴스 홈페이지
-    @GetMapping()
+    @GetMapping("/content/news")
     public ResponseEntity<List<NewsCustomDto>> newsHome() {
         List<NewsCustomDto> newsData = newsService.findNews();
         return ResponseEntity.ok().body(newsData);
     }
 
     // 카테고리별 뉴스 조회
-    @GetMapping("/{category}")
+    @GetMapping("/content/news/{category}")
     public ResponseEntity<?> newsListByCategory(@PathVariable String category,
                                                 @RequestParam String sort,
                                                 @RequestParam int page,
@@ -47,6 +47,27 @@ public class NewsRestController {
         return ResponseEntity.ok().body(newsList);
     }
 
+    @GetMapping("/news")
+    public ResponseEntity<List<NewsCustomDto>> NewsHome() {
+        List<NewsCustomDto> newsData = newsService.findNews();
+        return ResponseEntity.ok().body(newsData);
+    }
 
 
+    @GetMapping("/news/{category}")
+    public ResponseEntity<?> NewsListByCategorys(@PathVariable String category,
+                                                @RequestParam String sort,
+                                                @RequestParam int page,
+                                                @RequestParam int size) {
+        Page<NewsCustomDto> newsList;
+        // 전체
+        if (category.equals("all")) {
+            newsList = newsService.getAll(page, size, sort);
+        }
+        // 카테고리별
+        else {
+            newsList = newsService.getByCategory(page, size, sort,category);
+        }
+        return ResponseEntity.ok().body(newsList);
+    }
 }

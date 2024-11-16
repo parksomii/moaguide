@@ -112,4 +112,22 @@ public class NewsService {
     public void viewupdate(Long newsId) {
         newsRepository.updateViewCount(newsId);
     }
+
+    public Page<NewsCustomDto> getAll(int page, int size, String sort) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        if(sort.equals("views")) {
+            return newsRepository.findBynewsByView(pageable);
+        }else {
+            return newsRepository.findBynewsById(pageable);
+        }
+    }
+
+    public Page<NewsCustomDto> getByCategory(int page, int size, String sort, String category) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        if(sort.equals("views")) {
+            return newsRepository.findBynewsByViewAndCategory(category,pageable);
+        }else {
+            return newsRepository.findBynewsByIdAndCategory(category,pageable);
+        }
+    }
 }
