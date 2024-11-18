@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,14 +39,14 @@ public class DivideService {
                     .getResultList();
 
             if(results.size()>0) {
-                max_rate = (double)results.get(0)[2];
-                min_rate = (double)results.get(0)[2];
-                max_value = (double)results.get(0)[1];
-                min_value = (double)results.get(0)[1];
+                max_rate = ((BigDecimal) results.get(0)[2]).doubleValue();
+                min_rate = ((BigDecimal) results.get(0)[2]).doubleValue();
+                max_value = ((BigDecimal) results.get(0)[1]).doubleValue();
+                min_value = ((BigDecimal) results.get(0)[1]).doubleValue();
                 // DTO로 매핑
                 for (Object[] result : results) {
-                    double currentRate = (double) result[2];
-                    double currentValue = (double) result[1];
+                    double currentRate = ((BigDecimal) results.get(0)[2]).doubleValue();
+                    double currentValue = ((BigDecimal) results.get(0)[1]).doubleValue();
                     DivideCustomDto dto = new DivideCustomDto(
                             (Date) result[0],        // Payment_Day
                             currentValue, // dividend
