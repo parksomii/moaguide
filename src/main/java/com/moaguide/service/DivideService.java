@@ -30,7 +30,7 @@ public class DivideService {
 
         if(month<=12 ||month==100) {
             Date date = Date.valueOf(LocalDate.now().minusMonths(month));
-            String sql = "SELECT d.Payment_Day,d.dividend,d.dividend_Rate FROM Divide d where d.Payment_Day >= :?1 and d.product_Id = :?2 order by Payment_Day";
+            String sql = "SELECT d.Payment_Day,d.dividend,d.dividend_Rate FROM Divide d where d.Payment_Day >= ?1 and d.product_Id = ?2 order by Payment_Day";
 
             List<Object[]> results = entityManager.createNativeQuery(sql)
                     .setParameter(1, date)
