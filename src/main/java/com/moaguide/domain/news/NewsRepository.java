@@ -47,4 +47,16 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     @Query(name = "getBykeyword", nativeQuery = true)
     List<NewsCustomDto> findBydetail(@Param("productId")String productId,@Param("page") int page,@Param("size") int size);
+
+    @Query("Select n FROM News n where n.keyword='Latest' order by n.views desc")
+    Page<NewsCustomDto> findBynewsByView(Pageable pageable);
+
+    @Query("Select n FROM News n where n.keyword='Latest' order by n.id desc")
+    Page<NewsCustomDto> findBynewsById(Pageable pageable);
+
+    @Query("Select n FROM News n where n.keyword='Latest' and n.category=:category order by n.views desc")
+    Page<NewsCustomDto> findBynewsByViewAndCategory(@Param("category") String category ,Pageable pageable);
+
+    @Query("Select n FROM News n where n.keyword='Latest' and n.category=:category order by n.id desc")
+    Page<NewsCustomDto> findBynewsByIdAndCategory(@Param("category") String category ,Pageable pageable);
 }
