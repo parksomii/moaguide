@@ -37,7 +37,7 @@ public class MovieInfoDto {
         this.runningTime = screeningTime;
         this.director = director;
         this.distributor = distributor;
-        this.originalInfo = movieInfo;
+        this.originalInfo = originalInfo;
         this.actor = new ArrayList<>();
         for (String actorString:actor.split(",")) {
             this.actor.add(actorString.trim());
