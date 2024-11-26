@@ -65,6 +65,13 @@ public class DetailRestController {
         return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos));
     }
 
+    @GetMapping("/divides/{product_Id}")
+    public ResponseEntity<Object> new_divide(@PathVariable String product_Id, @RequestParam int month) {
+        DivideGraphDto divideCustomDtos = divideService.getGraphData(product_Id,month);
+        // 정상적인 경우 데이터 반환
+        return ResponseEntity.ok().body(divideCustomDtos);
+    }
+
     @GetMapping("/transaction/{product_Id}")
     public ResponseEntity<Object> transaction(@PathVariable String product_Id,@RequestParam int month){
         DetailTransactionResponseDto transaction = transactionService.findbymonth(product_Id,month);
