@@ -14,5 +14,6 @@ public class ContentDto {
     private int views;
     private Date date;
     private int likes;
-    private int comments;
+    private String description;
+    private String img_link;
 }
