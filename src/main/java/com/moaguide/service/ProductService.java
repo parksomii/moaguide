@@ -127,7 +127,7 @@ public class ProductService {
     public List<SummaryCustomDto> home(String category,String nickname) {
         switch (category){
             case "building":
-                return genericRepository.findCustomListCategory(0,3,"lastDivide_rate desc","building",nickname);
+                return genericRepository.funble(0,3,"lastDivide_rate desc",nickname);
             case "music":
                 return genericRepository.findCustomListCategory(0,3,"lastDivide_rate desc","music",nickname);
             case "content":

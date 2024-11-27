@@ -206,4 +206,14 @@ public class GenericRepository {
                 .setParameter("nickname", nickname)
                 .getResultList();
     }
+
+    public List<SummaryCustomDto> funble(int page, int size, String sort, String nickname)  {
+        // 프로시저를 호출하는 네이티브 쿼리
+        return entityManager.createNativeQuery("CALL funble(:page, :size, :sort,:nickname)", "SummaryCustomDtoMapping")
+                .setParameter("page", page)
+                .setParameter("size", size)
+                .setParameter("sort", sort)
+                .setParameter("nickname", nickname)
+                .getResultList();
+    }
 }
