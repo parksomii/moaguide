@@ -31,5 +31,6 @@ public class ArticleContent {
 
     private int views;
     private int likes;
-    private int comments;
+    private String description;
+    private String img_link;
 }
