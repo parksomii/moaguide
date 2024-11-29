@@ -24,8 +24,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class ArtService {
-    private final ArtDetailRepository artRepository;
-    private final ArtAuthorRepository authorRepository;
     @PersistenceContext
     private final EntityManager entityManager;
 

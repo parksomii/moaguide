@@ -6,6 +6,4 @@ import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
 public interface ArtAuthorRepository extends JpaRepository<ArtAuthor, Long> {
-    @Procedure(name = "art_base")
-    ArtAuthorDto findAuthorDetail(@Param("in_Product_Id") String productId);
 }
