@@ -18,6 +18,7 @@ public class ArtPublishDto {
     private int basePrice; // 1주당 발행액
     private String totalPrice;    // 총 모집액
     private LocalDate issuanceDate;    // 청약기간 YYYY.MM.DD ~ YYYY.MM.DD
+    private String userPrice;
 
     /*public ArtPublishDto(String name, String publisher, String authorName, int piece, int basePrice, String totalPrice, String subscriptionDate) {
         this.name = name;

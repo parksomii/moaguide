@@ -32,7 +32,7 @@ public class ArtService {
     public ArtDetailDto findArtDetail(String productId, String nickname) {
         // StoredProcedureQuery 객체 생성
         StoredProcedureQuery query = entityManager
-                .createStoredProcedureQuery("art_detail")
+                .createStoredProcedureQuery("art_details")
                 .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
                 .registerStoredProcedureParameter("nickname", String.class, ParameterMode.IN)
                 .setParameter("in_Product_Id", productId)
@@ -69,7 +69,7 @@ public class ArtService {
 
     public ArtBaseResponseDto findArtBase(String productId) {
         // StoredProcedureQuery 객체 생성
-        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("art_base");
+        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("art_bases");
 
         // IN 파라미터 등록
         storedProcedure.registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN);
@@ -94,7 +94,8 @@ public class ArtService {
                 ((Integer) result[3]),  // piece (Integer 그대로 사용)
                 ((Integer) result[4]),  // basePrice (Integer -> Long 변환)
                 String.valueOf(result[5]),  // totalPrice
-                ((Date) result[6]).toLocalDate()  // issuanceDate
+                ((Date) result[6]).toLocalDate(),  // issuanceDate
+                String.valueOf(result[17])
         );
 
         // ArtAuthorDto 매핑

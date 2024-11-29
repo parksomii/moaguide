@@ -51,4 +51,7 @@ public class ArtDetail {
 
     @Column(name = "presumptive", length = 30)
     private String presumptive;     // 추정가
+
+    @Column(name="total_piece")
+    private Integer totalPiece;
 }
