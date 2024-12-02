@@ -66,7 +66,7 @@ public class CouponRestController {
     }
 
     //쿠폰 리스트 API
-    @PostMapping("/list")
+    @GetMapping("/list")
     public ResponseEntity list(HttpServletRequest request) {
         try {
             String jwt = request.getHeader("Authorization");
