@@ -65,12 +65,12 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             } else {
                 // 이름이 있는 경우, AccessToken 및 RefreshToken 발급
                 String accessToken = jwtUtil.createJwt("access", user.getNickname(), String.valueOf(user.getRole()), 60 * 1000L);
-                String refreshToken = jwtUtil.createJwt("refresh", user.getNickname(), String.valueOf(user.getRole()), 5 * 60 * 60 * 1000L);
+                String refreshToken = jwtUtil.createJwt("refresh", user.getNickname(), String.valueOf(user.getRole()), 24 * 60 * 60 * 1000L);
 
                 // 응답 설정: AccessToken은 헤더, RefreshToken은 쿠키로 설정
                 response.setHeader("Authorization", "Bearer " + accessToken);
-                cookieService.setCookieWithSameSite(response, "refresh", refreshToken, 5 * 60 * 60 * 1000L);
-                cookieService.setCookieWithSameSite(response, "rememberMe", "false", 5 * 60 * 60 * 1000L);
+                cookieService.setCookieWithSameSite(response, "refresh", refreshToken, 24 * 60 * 60 * 1000L);
+                cookieService.setCookieWithSameSite(response, "rememberMe", "false", 24 * 60 * 60 * 1000L);
 
                 response.setStatus(HttpStatus.OK.value());
                 String userJson = objectMapper.writeValueAsString(user);
