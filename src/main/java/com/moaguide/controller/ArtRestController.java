@@ -46,5 +46,4 @@ public class ArtRestController {
         }
         return ResponseEntity.ok(artBaseResponse);
     }
-
 }

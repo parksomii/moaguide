@@ -86,7 +86,7 @@ serverName: green_server
 
 spring:
   datasource:
-    url: jdbc:mysql://host.docker.internal:3305/moaguide?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3305/moaguide?serverTimezone=Asia/Seoul
     username: moaguide
     password: whrkrxnwkahdkrkdlem
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -138,15 +138,12 @@ spring:
       on-profile: develop
   elasticsearch:
     uris: https://3.39.131.102:9201
+    ssl:
+      verification-mode: none
     username: elastic
     password: moaguide1!
     connection-timeout: 50000
     socket-timeout: 100000
-    ssl:
-      enabled: true
-      trust-store-location: /app/resources/certs/ca/ca.crt
-      trust-store-type: PEM
-
 logging:
   level:
     root: DEBUG
