@@ -137,7 +137,7 @@ spring:
     activate:
       on-profile: develop
   elasticsearch:
-    uris: https://3.39.131.102:9200
+    uris: https://3.39.131.102:9201
     username: elastic
     password: moaguide1!
     connection-timeout: 50000
