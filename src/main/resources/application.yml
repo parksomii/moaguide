@@ -5,6 +5,7 @@ spring:
       local: local
       blue: blue,common,secret
       green: green,common,secret
+      develop: develop
 
 server:
   env: local # 기본값으로 local 설정
@@ -81,6 +82,81 @@ server:
 
 serverName: green_server
 
+---
+
+spring:
+  datasource:
+    url: jdbc:mysql://moa.ctwmmmi82b0n.ap-northeast-2.rds.amazonaws.com:3306/moaguide?serverTimezone=Asia/Seoul
+    username: moaguide
+    password: whrkrxnwkahdkrkdlem
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 10
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      connection-timeout: 20000
+      validation-timeout: 5000
+      leak-detection-threshold: 2000
+      keepalive-time: 0
+      connection-test-query: SELECT 1
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      repositories:
+        enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        auto_quote_keyword: true
+  open-in-view: false  # 중요: Hibernate의 Open Session In View를 비활성화합니다.
+  jwt:
+    secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
+  jackson:
+    time-zone: Asia/Seoul
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ssang2247@moaguide.com
+    password: ocjumyhnocmgdnhv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  config:
+    activate:
+      on-profile: develop
+
+logging:
+  level:
+    root: DEBUG
+    org:
+      hibernate:
+        SQL:
+          DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+server:
+  servlet:
+    session:
+      timeout: 3600
+  port: 80
+
+  timezone: Asia/Seoul
+
+serverName: develop_server
 ---
 
 spring:
