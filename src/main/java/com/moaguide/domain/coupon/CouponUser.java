@@ -26,10 +26,9 @@ public class CouponUser {
     @Column(name = "coupon_Id", nullable = false)
     private Long couponId; // 쿠폰 ID (외래 키로 사용)
 
-    @Column(nullable = false)
     private Boolean redeemed = false; // 쿠폰 사용 여부, 기본값 FALSE
 
-    @Column(name = "redeemedAt")
+    @Column(name = "redeemed_At")
     private LocalDate redeemedAt; // 쿠폰 사용 날짜 (NULL 가능)
 
 }
