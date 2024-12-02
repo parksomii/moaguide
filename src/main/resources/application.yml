@@ -43,7 +43,7 @@ spring:
     secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
 
 server:
-  port: 8080
+  port: 80
 
 serverName: local_server
 
@@ -61,7 +61,7 @@ spring:
 
 
 server:
-  port: 80
+  port: 8080
 
 serverName: blue_server
 
