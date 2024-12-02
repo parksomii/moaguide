@@ -23,7 +23,7 @@ public class CouponUser {
 
     private String nickname; // 사용자 닉네임 (외래 키로 사용)
 
-    @Column(name = "couponId", nullable = false)
+    @Column(name = "coupon_Id", nullable = false)
     private Long couponId; // 쿠폰 ID (외래 키로 사용)
 
     @Column(nullable = false)
