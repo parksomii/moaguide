@@ -1,5 +1,7 @@
 package com.moaguide.controller;
 
+import com.moaguide.domain.coupon.CouponUser;
+import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CouponService;
 import io.jsonwebtoken.JwtException;
@@ -8,6 +10,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -27,7 +34,7 @@ public class CouponRestController {
         }
     }
     //쿠폰 등록 API
-    @PostMapping("register")
+    @PostMapping("/register")
     public ResponseEntity register(@RequestParam String code, HttpServletRequest request) {
         try {
             String jwt = request.getHeader("Authorization");
@@ -57,5 +64,33 @@ public class CouponRestController {
         }
     }
     //쿠폰 리스트 API
+    @PostMapping("/list")
+    public ResponseEntity list(HttpServletRequest request) {
+        try {
+            String jwt = request.getHeader("Authorization");
+            if (jwt == null || jwt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            if (jwtUtil.isExpired(jwt)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            String nickname = jwtUtil.getNickname(jwt);
+            List<CouponUserDto> list = couponService.findByNickname(nickname);
+            if(!list.isEmpty() || list.size()>0 ){
+                Map<String,Object> map = new HashMap<>();
+                map.put("coupons",list);
+                return ResponseEntity.ok().body(map);
+            }else{
+                Map<String,Object> map = new HashMap<>();
+                map.put("coupons",new ArrayList<>());
+                return ResponseEntity.ok().body(map);
+            }
+        }catch (JwtException je){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().body("fail");
+        }
+    }
 
 }

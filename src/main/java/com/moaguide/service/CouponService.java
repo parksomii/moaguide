@@ -5,6 +5,7 @@ import com.moaguide.domain.coupon.CouponAdmin;
 import com.moaguide.domain.coupon.CouponAdminRepository;
 import com.moaguide.domain.coupon.CouponUser;
 import com.moaguide.domain.coupon.CouponUserRepository;
+import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import jakarta.persistence.EntityExistsException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -55,5 +57,9 @@ public class CouponService {
                 return -1; // 기타 예외
             }
         }
+    }
+
+    public List<CouponUserDto> findByNickname(String nickname) {
+        return couponUserRepository.findByNickname(nickname,false);
     }
 }

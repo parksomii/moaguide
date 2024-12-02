@@ -23,6 +23,7 @@ public class CouponAdmin {
 
     private String name; // 쿠폰 이름
 
+    @Column(name = "coupon_code")
     private String couponCode; // 쿠폰 고유 번호
 
     private LocalDate createdAt; // 발행일
