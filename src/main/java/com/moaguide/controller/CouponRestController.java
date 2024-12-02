@@ -33,6 +33,7 @@ public class CouponRestController {
             return ResponseEntity.internalServerError().body("fail");
         }
     }
+
     //쿠폰 등록 API
     @PostMapping("/register")
     public ResponseEntity register(@RequestParam String code, HttpServletRequest request) {
@@ -63,6 +64,7 @@ public class CouponRestController {
             return ResponseEntity.internalServerError().body("fail");
         }
     }
+
     //쿠폰 리스트 API
     @PostMapping("/list")
     public ResponseEntity list(HttpServletRequest request) {

@@ -26,6 +26,7 @@ public class CouponAdmin {
     @Column(name = "coupon_code")
     private String couponCode; // 쿠폰 고유 번호
 
+    @Column(name="created_at")
     private LocalDate createdAt; // 발행일
 
     private Integer months; // 쿠폰 적용 기간 (개월수)
