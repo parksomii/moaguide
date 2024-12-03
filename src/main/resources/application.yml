@@ -138,14 +138,14 @@ spring:
       on-profile: develop
   elasticsearch:
     uris: https://3.39.131.102:9201
-    ssl:
-      verification-mode: none
     username: elastic
     password: moaguide1!
     connection-timeout: 50000
     socket-timeout: 100000
-    repositories:
-      enabled: false
+    ssl:
+      enabled: true
+      trust-store-location: /app/resources/certs/ca/ca.crt
+      trust-store-type: PEM
 logging:
   level:
     root: DEBUG
