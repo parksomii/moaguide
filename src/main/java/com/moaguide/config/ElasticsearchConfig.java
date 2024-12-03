@@ -39,11 +39,18 @@ public class ElasticsearchConfig {
         credentialsProvider.setCredentials(AuthScope.ANY,
                 new UsernamePasswordCredentials(username, password));
 
+//        RestClientBuilder builder = RestClient.builder(HttpHost.create(elasticsearchUrl))
+//                .setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder
+//                        .setSSLContext(sslContext)
+//                        .setDefaultCredentialsProvider(credentialsProvider));  // 인증 정보 설정
         RestClientBuilder builder = RestClient.builder(HttpHost.create(elasticsearchUrl))
                 .setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder
                         .setSSLContext(sslContext)
-                        .setDefaultCredentialsProvider(credentialsProvider));  // 인증 정보 설정
+                        .setDefaultCredentialsProvider(credentialsProvider)  // 인증 정보 설정
+                        .setSSLHostnameVerifier((hostname, session) -> true)); // 호스트 이름 검증 비활성화
+
 
         return new RestHighLevelClient(builder);
     }
 }
+
