@@ -146,6 +146,7 @@ spring:
       enabled: true
       trust-store-location: /app/resources/certs/ca/ca.crt
       trust-store-type: PEM
+      trust-store-password: moaguide1!
 logging:
   level:
     root: DEBUG
