@@ -5,82 +5,9 @@ spring:
       local: local
       blue: blue,common,secret
       green: green,common,secret
-      develop: develop
 
 server:
   env: local # 기본값으로 local 설정
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: local
-  jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        auto_quote_keyword: true
-  datasource:
-    url: jdbc:mysql://localhost:3305/moaguide?serverTimezone=UTC
-    username: moaguide
-    password: whrkrxnwkahdkrkdlem
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  data:
-    redis:
-      host: localhost
-      port: 6379
-      repositories:
-        enabled: false
-      coolsms:
-        apiKey: ${COOLSMS_API_KEY:NCS6DIOVFX0WIBEE}
-        apiSecret: ${COOLSMS_API_SECRET:4DWOYEGVJ3MPVSE8ZRWQYCG4ZSD9Y1MY}
-        senderNumber: ${COOLSMS_SENDER_NUMBER:01022476408}
-  jwt:
-    secret: 3sGuraC8zLS9wkbN2QWtygvXV5JHjqM6DeP4ERTBZYnmfFcAdK
-
-server:
-  port: 80
-
-serverName: local_server
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: blue
-  data:
-    redis:
-      host: localhost
-      port: 6379
-
-
-
-server:
-  port: 8080
-
-serverName: blue_server
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: green
-  data:
-    redis:
-      host: localhost
-      port: 6379
-
-server:
-  port: 8081
-
-serverName: green_server
 
 ---
 
@@ -137,16 +64,7 @@ spring:
     activate:
       on-profile: develop
   elasticsearch:
-    uris: https://3.39.131.102:9201
-    username: elastic
-    password: moaguide1!
-    connection-timeout: 50000
-    socket-timeout: 100000
-    ssl:
-      enabled: true
-      trust-store-location: /app/resources/certs/ca/ca.crt
-      trust-store-type: PEM
-      trust-store-password: moaguide1!
+    enabled: false
 logging:
   level:
     root: DEBUG
@@ -166,7 +84,42 @@ server:
 
   timezone: Asia/Seoul
 
-serverName: develop_server
+serverName: local_server
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: blue
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+
+
+server:
+  port: 8080
+
+serverName: blue_server
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: green
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+server:
+  port: 8081
+
+serverName: green_server
+
 ---
 
 spring:

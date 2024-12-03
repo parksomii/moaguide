@@ -15,6 +15,7 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Profile({"blue", "green"})
 public class SearchService {
 
     private final RestHighLevelClient restHighLevelClient;

@@ -4,6 +4,7 @@ import com.moaguide.dto.SearchRankDto;
 import com.moaguide.dto.searchProductDto;
 import com.moaguide.service.SearchService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Profile({"blue", "green"})
 public class SearchRestController {
     private final SearchService searchService;
 

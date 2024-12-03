@@ -3,6 +3,7 @@ package com.moaguide.domain.elasticsearch.products;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
@@ -10,6 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Profile({"blue", "green"})
 public class ProductsEntity {
 
     @Id

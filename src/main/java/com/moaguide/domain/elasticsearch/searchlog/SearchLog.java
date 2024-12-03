@@ -3,6 +3,7 @@ package com.moaguide.domain.elasticsearch.searchlog;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -14,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(indexName = "search-logs")
+@Profile({"blue", "green"})
 public class SearchLog {
 
     @Id

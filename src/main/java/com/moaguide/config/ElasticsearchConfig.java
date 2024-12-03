@@ -11,11 +11,13 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import javax.net.ssl.SSLContext;
 import java.security.KeyStore;
 
 @Configuration
+@Profile({"blue", "green"})
 public class ElasticsearchConfig {
 
     @Value("${spring.elasticsearch.username}")  // application.yml에서 값을 가져옴
