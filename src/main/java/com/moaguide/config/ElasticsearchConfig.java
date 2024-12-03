@@ -13,41 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.net.ssl.SSLContext;
-import java.io.FileInputStream;
 import java.security.KeyStore;
-//
-//@Configuration
-//public class ElasticsearchConfig {
-//
-//    @Value("${spring.elasticsearch.username}")  // application.yml에서 값을 가져옴
-//    private String username;
-//
-//    @Value("${spring.elasticsearch.password}")  // application.yml에서 값을 가져옴
-//    private String password;
-//
-//    @Value("${spring.elasticsearch.uris}")  // application.yml에서 Elasticsearch URL을 가져옴
-//    private String elasticsearchUrl;
-//
-//    @Bean
-//    public RestHighLevelClient client() throws Exception {
-//        // SSLContextBuilder를 사용해 SSL 컨텍스트 생성
-//        SSLContext sslContext = SSLContextBuilder.create()
-//                .loadTrustMaterial(KeyStore.getInstance(KeyStore.getDefaultType()), (chain, authType) -> true) // 모든 인증서 신뢰
-//                .build();
-//
-//        // 인증 정보를 설정
-//        BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-//        credentialsProvider.setCredentials(AuthScope.ANY,
-//                new UsernamePasswordCredentials(username, password));
-//
-//        RestClientBuilder builder = RestClient.builder(HttpHost.create(elasticsearchUrl))
-//                .setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder
-//                        .setSSLContext(sslContext)
-//                        .setDefaultCredentialsProvider(credentialsProvider));  // 인증 정보 설정
-//
-//        return new RestHighLevelClient(builder);
-//    }
-//}
 
 @Configuration
 public class ElasticsearchConfig {
@@ -61,26 +27,14 @@ public class ElasticsearchConfig {
     @Value("${spring.elasticsearch.uris}")  // application.yml에서 Elasticsearch URL을 가져옴
     private String elasticsearchUrl;
 
-    @Value("${spring.elasticsearch.ssl.trust-store-location}") // TrustStore 경로
-    private String trustStorePath;
-
-    @Value("${spring.elasticsearch.ssl.trust-store-password}") // TrustStore 비밀번호
-    private String trustStorePassword;
-
     @Bean
     public RestHighLevelClient client() throws Exception {
-        // TrustStore 로드
-        KeyStore trustStore = KeyStore.getInstance("PKCS12"); // PEM을 사용하려면 설정 변경 가능
-        try (FileInputStream fis = new FileInputStream(trustStorePath)) {
-            trustStore.load(fis, trustStorePassword.toCharArray());
-        }
-
-        // SSLContext 생성
+        // SSLContextBuilder를 사용해 SSL 컨텍스트 생성
         SSLContext sslContext = SSLContextBuilder.create()
-                .loadTrustMaterial(trustStore, null)  // TrustStore 사용
+                .loadTrustMaterial(KeyStore.getInstance(KeyStore.getDefaultType()), (chain, authType) -> true) // 모든 인증서 신뢰
                 .build();
 
-        // 인증 정보 설정
+        // 인증 정보를 설정
         BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY,
                 new UsernamePasswordCredentials(username, password));

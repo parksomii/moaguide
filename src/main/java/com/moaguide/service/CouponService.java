@@ -5,11 +5,13 @@ import com.moaguide.domain.coupon.CouponAdmin;
 import com.moaguide.domain.coupon.CouponAdminRepository;
 import com.moaguide.domain.coupon.CouponUser;
 import com.moaguide.domain.coupon.CouponUserRepository;
+import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
-import jakarta.persistence.EntityExistsException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -61,5 +63,9 @@ public class CouponService {
 
     public List<CouponUserDto> findByNickname(String nickname) {
         return couponUserRepository.findByNickname(nickname,false);
+    }
+
+    public Page<CouponAdminDto> findByAdmin(Pageable pages) {
+        return couponAdminRepository.findByAll(pages);
     }
 }

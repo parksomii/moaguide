@@ -1,12 +1,15 @@
 package com.moaguide.controller;
 
 import com.moaguide.domain.coupon.CouponUser;
+import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CouponService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -95,4 +98,17 @@ public class CouponRestController {
         }
     }
 
+
+    //쿠폰 발급 내역 API
+    @GetMapping("/admin/list")
+    public ResponseEntity list(@RequestParam int page, @RequestParam int size) {
+        Pageable pages = Pageable.ofSize(size).withPage(page-1);
+        Page<CouponAdminDto> couponAdminDtos = couponService.findByAdmin(pages);
+        Map<String,Object> map = new HashMap<>();
+        map.put("couponlist",couponAdminDtos.getContent());
+        map.put("page",page);
+        map.put("size",size);
+        map.put("total",couponAdminDtos.getTotalElements());
+        return ResponseEntity.ok().body(map);
+    }
 }
