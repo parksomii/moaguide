@@ -40,7 +40,7 @@ public class TokenRestController {
         if (refresh == null) {
 
             //response status code
-            return ResponseEntity.status(401).body("");
+            return new ResponseEntity<>("refresh token null", HttpStatus.BAD_REQUEST);
         }
 
         //expired check
@@ -48,7 +48,7 @@ public class TokenRestController {
             jwtUtil.isExpired(refresh);
         } catch (ExpiredJwtException e) {
             //response status code
-            return ResponseEntity.status(401).body("");
+            return new ResponseEntity<>("refresh token expired", HttpStatus.BAD_REQUEST);
         }
 
         // 토큰이 refresh인지 확인 (발급시 페이로드에 명시)
@@ -57,7 +57,7 @@ public class TokenRestController {
         if (!category.equals("refresh")) {
 
             //response status code
-            return ResponseEntity.status(401).body("");
+            return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
         String username = jwtUtil.getNickname(refresh);
@@ -82,16 +82,8 @@ public class TokenRestController {
         Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken, refreshTokenValidity);
         refreshCookie.setPath("/");
         refreshCookie.setSecure(false);
-        refreshCookie.setDomain("localhost");
+        refreshCookie.setDomain("api.moaguide.com");
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
-        response.setHeader("Set-Cookie",
-                String.format("%s=%s; Max-Age=%d; Path=%s; Domain=localhost; SameSite=None; Secure",
-                        refreshCookie.getName(),
-                        refreshCookie.getValue(),
-                        refreshCookie.getMaxAge(),
-                        refreshCookie.getPath()
-                )
-        );
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
