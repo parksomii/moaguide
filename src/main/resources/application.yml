@@ -144,6 +144,8 @@ spring:
     password: moaguide1!
     connection-timeout: 50000
     socket-timeout: 100000
+    repositories:
+      enabled: false
 logging:
   level:
     root: DEBUG
