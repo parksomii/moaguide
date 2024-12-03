@@ -15,6 +15,39 @@ import org.springframework.context.annotation.Configuration;
 import javax.net.ssl.SSLContext;
 import java.security.KeyStore;
 
+//@Configuration
+//public class ElasticsearchConfig {
+//
+//    @Value("${spring.elasticsearch.username}")  // application.yml에서 값을 가져옴
+//    private String username;
+//
+//    @Value("${spring.elasticsearch.password}")  // application.yml에서 값을 가져옴
+//    private String password;
+//
+//    @Value("${spring.elasticsearch.uris}")  // application.yml에서 Elasticsearch URL을 가져옴
+//    private String elasticsearchUrl;
+//
+//    @Bean
+//    public RestHighLevelClient client() throws Exception {
+//        // SSLContextBuilder를 사용해 SSL 컨텍스트 생성
+//        SSLContext sslContext = SSLContextBuilder.create()
+//                .loadTrustMaterial(KeyStore.getInstance(KeyStore.getDefaultType()), (chain, authType) -> true) // 모든 인증서 신뢰
+//                .build();
+//
+//        // 인증 정보를 설정
+//        BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+//        credentialsProvider.setCredentials(AuthScope.ANY,
+//                new UsernamePasswordCredentials(username, password));
+//
+//        RestClientBuilder builder = RestClient.builder(HttpHost.create(elasticsearchUrl))
+//                .setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder
+//                        .setSSLContext(sslContext)
+//                        .setDefaultCredentialsProvider(credentialsProvider));  // 인증 정보 설정
+//
+//        return new RestHighLevelClient(builder);
+//    }
+//}
+
 @Configuration
 public class ElasticsearchConfig {
 
@@ -29,28 +62,24 @@ public class ElasticsearchConfig {
 
     @Bean
     public RestHighLevelClient client() throws Exception {
-        // SSLContextBuilder를 사용해 SSL 컨텍스트 생성
+        // 1. 모든 인증서를 신뢰하도록 SSLContext 구성
         SSLContext sslContext = SSLContextBuilder.create()
-                .loadTrustMaterial(KeyStore.getInstance(KeyStore.getDefaultType()), (chain, authType) -> true) // 모든 인증서 신뢰
+                .loadTrustMaterial((chain, authType) -> true) // 모든 인증서 신뢰
                 .build();
 
-        // 인증 정보를 설정
+        // 2. 인증 정보 설정
         BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(AuthScope.ANY,
                 new UsernamePasswordCredentials(username, password));
 
-//        RestClientBuilder builder = RestClient.builder(HttpHost.create(elasticsearchUrl))
-//                .setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder
-//                        .setSSLContext(sslContext)
-//                        .setDefaultCredentialsProvider(credentialsProvider));  // 인증 정보 설정
+        // 3. RestClientBuilder 생성
         RestClientBuilder builder = RestClient.builder(HttpHost.create(elasticsearchUrl))
                 .setHttpClientConfigCallback(httpAsyncClientBuilder -> httpAsyncClientBuilder
-                        .setSSLContext(sslContext)
-                        .setDefaultCredentialsProvider(credentialsProvider)  // 인증 정보 설정
+                        .setSSLContext(sslContext) // SSLContext 적용
+                        .setDefaultCredentialsProvider(credentialsProvider) // 인증 정보 추가
                         .setSSLHostnameVerifier((hostname, session) -> true)); // 호스트 이름 검증 비활성화
 
-
+        // 4. RestHighLevelClient 반환
         return new RestHighLevelClient(builder);
     }
 }
-
