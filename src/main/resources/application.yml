@@ -62,7 +62,7 @@ spring:
             enable: true
   config:
     activate:
-      on-profile: develop
+      on-profile: local
   elasticsearch:
     enabled: false
 logging:
