@@ -92,7 +92,6 @@ public class LocalSecurityConfig {
                         .logoutUrl("/logout") // 로그아웃 요청 URL
                         .deleteCookies("JSESSIONID", "refresh", "rememberMe")
                         .logoutSuccessHandler(new CustomLogoutSuccessHandler()) // 로그아웃 성공 후 메시지 반환
-
                 );
         return http.build();
     }

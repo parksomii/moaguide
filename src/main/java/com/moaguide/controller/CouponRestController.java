@@ -41,62 +41,47 @@ public class CouponRestController {
     //쿠폰 등록 API
     @PostMapping("/register")
     public ResponseEntity register(@RequestParam String code, HttpServletRequest request) {
-        try {
-            String jwt = request.getHeader("Authorization");
-            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
-            }
-            if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
-            }
-            String nickname = jwtUtil.getNickname(jwt);
-            int res = couponService.valid(code,nickname);
-            switch (res) {
-                case -1:
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("쿠폰이 잘못 입력되었습니다.");
-                case 1:
-                    return ResponseEntity.ok().body("success");
-                case -2:
-                    return ResponseEntity.status(HttpStatus.CONFLICT).body("쿠폰이 이미 존재합니다.");
-                default:
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류가 발생했습니다.");
-            }
-        }catch (JwtException je){
+        String jwt = request.getHeader("Authorization");
+        if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
         }
-        catch (Exception e) {
-            return ResponseEntity.internalServerError().body("fail");
+        if (jwtUtil.isExpired(jwt.substring(7))) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+        String nickname = jwtUtil.getNickname(jwt);
+        int res = couponService.valid(code,nickname);
+        switch (res) {
+            case -1:
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("쿠폰이 잘못 입력되었습니다.");
+            case 1:
+                return ResponseEntity.ok().body("success");
+            case -2:
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("쿠폰이 이미 존재합니다.");
+            default:
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류가 발생했습니다.");
         }
     }
 
     //쿠폰 리스트 API
     @GetMapping("/list")
     public ResponseEntity list(HttpServletRequest request) {
-        try {
-            String jwt = request.getHeader("Authorization");
-            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
-            }
-            if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthoriz");
-            }
-            String nickname = jwtUtil.getNickname(jwt);
-            List<CouponUserDto> list = couponService.findByNickname(nickname);
-            if(!list.isEmpty() || list.size()>0 ){
-                Map<String,Object> map = new HashMap<>();
-                map.put("coupons",list);
-                return ResponseEntity.ok().body(map);
-            }else{
-                Map<String,Object> map = new HashMap<>();
-                map.put("coupons",new ArrayList<>());
-                return ResponseEntity.ok().body(map);
-            }
-        }catch (JwtException je){
-            log.error("JWT 처리 중 오류 발생: {}", je.getMessage(), je);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorize");
+        String jwt = request.getHeader("Authorization");
+        if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
         }
-        catch (Exception e) {
-            return ResponseEntity.internalServerError().body("fail");
+        if (jwtUtil.isExpired(jwt.substring(7))) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthoriz");
+        }
+        String nickname = jwtUtil.getNickname(jwt);
+        List<CouponUserDto> list = couponService.findByNickname(nickname);
+        if(!list.isEmpty() || list.size()>0 ){
+            Map<String,Object> map = new HashMap<>();
+            map.put("coupons",list);
+            return ResponseEntity.ok().body(map);
+        }else{
+            Map<String,Object> map = new HashMap<>();
+            map.put("coupons",new ArrayList<>());
+            return ResponseEntity.ok().body(map);
         }
     }
 
