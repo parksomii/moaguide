@@ -13,33 +13,33 @@ import java.util.List;
 @Repository
 public interface MovieDetailRepository  extends JpaRepository<MovieDetail, Long> {
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.screenCount,ms.day)  FROM MovieDetail ms where ms.productId.productId =:Id order by ms.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.screenCount,ms.day)  FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByScreen(@Param("Id") String productId);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.screenCount,ms.day)  FROM MovieDetail ms where ms.productId.productId =:Id order by ms.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.screenCount,ms.day)  FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByScreenTop10(@Param("Id") String productId, Pageable pageable);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.showtimesCount,ms.day) FROM MovieDetail ms where ms.productId.productId =:Id order by ms.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.showtimesCount,ms.day) FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByshowtime(@Param("Id") String productId);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.showtimesCount,ms.day) FROM MovieDetail ms where ms.productId.productId =:Id order by ms.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.showtimesCount,ms.day) FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByshowtimeTop10(@Param("Id") String productId, Pageable pageable);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ma.audienceCount,ma.day) FROM MovieDetail ma where ma.productId.productId =:Id order by ma.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.audienceCount,ms.day) FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByaudience(@Param("Id") String productId);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ma.audienceCount,ma.day)  FROM MovieDetail ma where ma.productId.productId =:Id order by ma.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.audienceCount,ms.day)  FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByaudienceTop10(@Param("Id") String productId, Pageable pageable);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(mr.ranking,mr.day) FROM MovieDetail mr where mr.productId.productId =:Id order by mr.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.ranking,ms.day) FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByrank(@Param("Id") String productId);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(mr.ranking,mr.day) FROM MovieDetail mr where mr.productId.productId =:Id order by mr.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.ranking,ms.day) FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByrankTop10(@Param("Id") String productId, Pageable pageable);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(mr.revenue,mr.day) FROM MovieDetail mr where mr.productId.productId =:Id order by mr.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.revenue,ms.day) FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByrevenue(@Param("Id") String productId);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(mr.revenue,mr.day) FROM MovieDetail mr where mr.productId.productId =:Id order by mr.day")
+    @Query("select new com.moaguide.dto.NewDto.customDto.MovieSubDto(ms.revenue,ms.day) FROM MovieDetail ms, Movie m where ms.productId.productId = m.productId.productId and ms.productId.productId =:Id and ms.day>=m.releaseDate order by ms.day")
     List<MovieSubDto> findByrevenueTop10(@Param("Id") String productId, Pageable pageable);
 }
