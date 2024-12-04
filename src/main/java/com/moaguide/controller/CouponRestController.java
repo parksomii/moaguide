@@ -41,7 +41,7 @@ public class CouponRestController {
     public ResponseEntity register(@RequestParam String code, HttpServletRequest request) {
         try {
             String jwt = request.getHeader("Authorization");
-            if (jwt == null || jwt.isEmpty()) {
+            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
@@ -72,7 +72,7 @@ public class CouponRestController {
     public ResponseEntity list(HttpServletRequest request) {
         try {
             String jwt = request.getHeader("Authorization");
-            if (jwt == null || jwt.isEmpty()) {
+            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
