@@ -8,7 +8,7 @@ import com.moaguide.config.handler.CustomLogoutSuccessHandler;
 import com.moaguide.config.handler.OAuth2SuccessHandler;
 import com.moaguide.jwt.JWTFilter;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.security.LoginFilter;
+import com.moaguide.security.LocalLoginFilter;
 import com.moaguide.service.CookieService;
 import com.moaguide.service.CustomOAuth2UserService;
 import lombok.AllArgsConstructor;
@@ -76,7 +76,7 @@ public class LocalSecurityConfig {
                 );
         // 특정 경로에 대해서만 JWTFilter 적용
         http.
-                addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil,cookieService), UsernamePasswordAuthenticationFilter.class);
+                addFilterAt(new LocalLoginFilter(authenticationManager(authenticationConfiguration),jwtUtil,cookieService), UsernamePasswordAuthenticationFilter.class);
         http
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
