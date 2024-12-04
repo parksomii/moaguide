@@ -36,16 +36,15 @@ public class CouponRestController {
             return ResponseEntity.internalServerError().body("fail");
         }
     }
-
     //쿠폰 등록 API
     @PostMapping("/register")
     public ResponseEntity register(@RequestParam String code, HttpServletRequest request) {
         try {
             String jwt = request.getHeader("Authorization");
-            if (jwt == null || jwt.isEmpty()) {
+            if (jwt == null ||jwt.startsWith("Bearer ") || jwt.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
-            if (jwtUtil.isExpired(jwt)) {
+            if (jwtUtil.isExpired(jwt.substring(7))) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
             String nickname = jwtUtil.getNickname(jwt);
@@ -73,10 +72,10 @@ public class CouponRestController {
     public ResponseEntity list(HttpServletRequest request) {
         try {
             String jwt = request.getHeader("Authorization");
-            if (jwt == null || jwt.isEmpty()) {
+            if (jwt == null ||jwt.startsWith("Bearer ") || jwt.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
-            if (jwtUtil.isExpired(jwt)) {
+            if (jwtUtil.isExpired(jwt.substring(7))) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
             String nickname = jwtUtil.getNickname(jwt);
