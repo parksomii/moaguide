@@ -76,7 +76,7 @@ public class CouponRestController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthoriz");
             }
             String nickname = jwtUtil.getNickname(jwt);
             List<CouponUserDto> list = couponService.findByNickname(nickname);
@@ -90,7 +90,7 @@ public class CouponRestController {
                 return ResponseEntity.ok().body(map);
             }
         }catch (JwtException je){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorize");
         }
         catch (Exception e) {
             return ResponseEntity.internalServerError().body("fail");
