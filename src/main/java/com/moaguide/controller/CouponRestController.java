@@ -8,6 +8,7 @@ import com.moaguide.service.CouponService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/coupon")
+@Slf4j
 public class CouponRestController {
     private final CouponService couponService;
     private final JWTUtil jwtUtil;
@@ -90,6 +92,7 @@ public class CouponRestController {
                 return ResponseEntity.ok().body(map);
             }
         }catch (JwtException je){
+            log.error("JWT 처리 중 오류 발생: {}", je.getMessage(), je);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorize");
         }
         catch (Exception e) {
