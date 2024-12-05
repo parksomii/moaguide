@@ -66,7 +66,7 @@ public class CardRestController {
     }
 
     @PostMapping("/create/card")
-    public ResponseEntity<?> createCard(@RequestHeader(value = "Authorization") String jwt,String customerKey,String authKey) {
+    public ResponseEntity<?> createCard(@RequestHeader(value = "Authorization") String jwt,@RequestParam String customerKey,@RequestParam String authKey) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
