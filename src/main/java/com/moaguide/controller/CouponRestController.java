@@ -48,7 +48,7 @@ public class CouponRestController {
         if (jwtUtil.isExpired(jwt.substring(7))) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
         }
-        String nickname = jwtUtil.getNickname(jwt);
+        String nickname = jwtUtil.getNickname(jwt.substring(7));
         int res = couponService.valid(code,nickname);
         switch (res) {
             case -1:
@@ -72,7 +72,7 @@ public class CouponRestController {
         if (jwtUtil.isExpired(jwt.substring(7))) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthoriz");
         }
-        String nickname = jwtUtil.getNickname(jwt);
+        String nickname = jwtUtil.getNickname(jwt.substring(7));
         List<CouponUserDto> list = couponService.findByNickname(nickname);
         if(!list.isEmpty() || list.size()>0 ){
             Map<String,Object> map = new HashMap<>();
