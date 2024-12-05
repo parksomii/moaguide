@@ -89,7 +89,7 @@ public class CardRestController {
             billingService.save(nickname,customerKey,rootNode.get("billingKey").asText());
             Map<String,Object> map = new HashMap<>();
             map.put("cardName",rootNode.get("cardCompany").asText());
-            map.put("cardNumber",rootNode.get("card").asText());
+            map.put("cardNumber",Integer.valueOf(rootNode.get("card").get("number").asText().substring(0,2)));
             return ResponseEntity.ok().body(map);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -112,7 +112,7 @@ public class CardRestController {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             cardService.delete(nickname);
             billingService.delete(nickname);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body("카드를 성공적으로 삭제했습니다.");
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }catch (Exception e){
