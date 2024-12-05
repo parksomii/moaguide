@@ -18,7 +18,9 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nickname;
+    @Column(name = "card_name")
     private String cardname;
+    @Column(name = "card_number")
     private Integer cardNumber;
 
     @Column(name = "subscription_start_date")

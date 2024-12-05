@@ -6,8 +6,6 @@ import com.moaguide.domain.card.Card;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BillingService;
 import com.moaguide.service.CardService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
