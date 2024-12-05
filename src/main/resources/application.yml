@@ -65,6 +65,10 @@ spring:
       on-profile: local
   elasticsearch:
     enabled: false
+
+toss:
+  secretkey: test_sk_LkKEypNArW9a1RNL20lj3lmeaxYG
+
 logging:
   level:
     root: DEBUG
@@ -81,6 +85,7 @@ server:
     session:
       timeout: 3600
   port: 80
+
 
   timezone: Asia/Seoul
 
@@ -167,3 +172,6 @@ server:
     session:
       timeout: 3600
   timezone: Asia/Seoul
+
+toss:
+  secretkey: test_sk_LkKEypNArW9a1RNL20lj3lmeaxYG
