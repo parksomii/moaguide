@@ -59,7 +59,6 @@ public class LocalLoginFilter extends UsernamePasswordAuthenticationFilter {
         //유저 정보
         String username = authentication.getName();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        ProfileDto user = new ProfileDto(username,userDetails.getemail(),userDetails.getLoginType(),userDetails.getMarketing());
 
         // rememberMe 여부 확인
         boolean rememberMe = Boolean.parseBoolean(request.getParameter("rememberMe"));
@@ -68,8 +67,14 @@ public class LocalLoginFilter extends UsernamePasswordAuthenticationFilter {
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
+        ProfileDto user;
+        if (role.equals("VIP")) {
+             user = new ProfileDto(username,userDetails.getemail(),userDetails.getLoginType(),userDetails.getMarketing(),true);
+        }else {
+             user = new ProfileDto(username,userDetails.getemail(),userDetails.getLoginType(),userDetails.getMarketing(),false);
+        }
+
         // 토큰 생성 - rememberMe에 따라 리프레시 토큰의 만료 시간 설정
-        //String accessToken = jwtUtil.createJwt("access", username, role, 30 * 60 * 1000L); // 30분
         String accessToken = jwtUtil.createJwt("access", userDetails.getNickname(), role, 3*24*60*60 * 1000L);//1시간
         long refreshTokenValidity = rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
         String refreshToken = jwtUtil.createJwt("refresh", userDetails.getNickname(), role, refreshTokenValidity);

@@ -18,10 +18,11 @@ public class BillingService {
     private final CardRepository cardRepository;
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String nickname) {
+    public void delete(String nickname) throws Exception{
         cardRepository.deleteByNickname(nickname);
         billingInfoRepository.deleteByNickname(nickname);
     }
+
     public Card findByNickanme(String nickname) {
         return cardRepository.findBynickname(nickname).orElse(null);
     }
