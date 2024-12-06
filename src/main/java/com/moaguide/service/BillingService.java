@@ -18,7 +18,7 @@ public class BillingService {
     private final CardRepository cardRepository;
 
     @Transactional(rollbackFor = Exception.class)
-    public void delete(String nickname) throws Exception{
+    public void delete(String nickname){
         cardRepository.deleteByNickname(nickname);
         billingInfoRepository.deleteByNickname(nickname);
     }
@@ -40,7 +40,7 @@ public class BillingService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void save(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) {
+    public void save(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) throws DuplicateKeyException{
         billingInfoRepository.save(new BillingInfo(customerKey, billingKey,nickname,new Date(System.currentTimeMillis())));
         cardRepository.save(new Card(nickname,cardCompany,cardNumber));
     }
