@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +24,5 @@ public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
 
     @Modifying
     @Query("update CouponUser c set c.redeemed=:bol,c.redeemedAt =:date where c.nickname=:nickname")
-    void updateRedeemed(@Param("bol") boolean bol,@Param("date") Date date,@Param("nickname")String name);
+    void updateRedeemed(@Param("bol") boolean bol, @Param("date") LocalDate date, @Param("nickname")String name);
 }

@@ -10,8 +10,6 @@ import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,7 +90,7 @@ public class BillingService {
         LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         paymentLogRepository.save(new PaymentLog(rootNode.get("").asText("orderId"),nickname,rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
-        couponUserRepository.updateRedeemed(true,Date.valueOf(LocalDate.now()),nickname);
+        couponUserRepository.updateRedeemed(true,LocalDate.now(),nickname);
         userRepository.updateRole(nickname, Role.VIP);
         cardRepository.updateSubscript(nickname,Date.valueOf(requestedAt.toLocalDate()),Date.valueOf(LocalDate.now().plusMonths(1)));
     }
@@ -107,7 +105,7 @@ public class BillingService {
         }
         LocalDateTime now_date = LocalDateTime.now();
         paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",0,"쿠폰",now_date,now_date,4900,nickname));
-        couponUserRepository.updateRedeemed(true,Date.valueOf(LocalDate.now()),nickname);
+        couponUserRepository.updateRedeemed(true,LocalDate.now(),nickname);
         userRepository.updateRole(nickname, Role.VIP);
         cardRepository.updateSubscript(nickname,Date.valueOf(now_date.toLocalDate()),Date.valueOf(LocalDate.now().plusMonths(couponmonth)));
     }
