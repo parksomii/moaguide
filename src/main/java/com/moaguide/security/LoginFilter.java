@@ -57,7 +57,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         //유저 정보
         String username = authentication.getName();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        ProfileDto user = new ProfileDto(username,userDetails.getemail(),userDetails.getLoginType(),userDetails.getMarketing());
 
         // rememberMe 여부 확인
         boolean rememberMe = Boolean.parseBoolean(request.getParameter("rememberMe"));
@@ -72,7 +71,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         long refreshTokenValidity = rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
         String refreshToken = jwtUtil.createJwt("refresh", userDetails.getNickname(), role, refreshTokenValidity);
 
-
+        ProfileDto user;
+        if (role.equals("VIP")) {
+            user = new ProfileDto(username,userDetails.getemail(),userDetails.getLoginType(),userDetails.getMarketing(),true);
+        }else {
+            user = new ProfileDto(username,userDetails.getemail(),userDetails.getLoginType(),userDetails.getMarketing(),false);
+        }
         //응답 설정
         response.setHeader("Authorization", "Bearer " + accessToken);
         Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken, refreshTokenValidity);
