@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/card/")
+@RequestMapping("/card")
 public class CardRestController {
     private final JWTUtil jwtUtil;
     private final BillingService billingService;
@@ -46,13 +46,8 @@ public class CardRestController {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             Card card = billingService.findByNickanme(nickname);
             Map<String,Object> map = new HashMap<>();
-            if (card == null) {
-                map.put("cardName",null);
-                map.put("cardNumber",null);
-            }else {
-                map.put("cardName",card.getCardname());
-                map.put("cardNumber",card.getCardNumber());
-            }
+            map.put("cardName",card.getCardname());
+            map.put("cardNumber",card.getCardNumber());
             return ResponseEntity.ok(map);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

@@ -1,21 +1,41 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.billding.BillingInfo;
-import com.moaguide.domain.billding.BillingInfoRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.moaguide.domain.billding.*;
 import com.moaguide.domain.card.Card;
 import com.moaguide.domain.card.CardRepository;
+import com.moaguide.domain.coupon.CouponUserRepository;
+import com.moaguide.domain.user.Role;
+import com.moaguide.domain.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class BillingService {
     private final BillingInfoRepository billingInfoRepository;
     private final CardRepository cardRepository;
+    private final CouponUserRepository couponUserRepository;
+    private final PaymentRequestRepository paymentRequestRepository;
+    private final PaymentLogRepository paymentLogRepository;
+    private final UserRepository userRepository;
 
     @Transactional(rollbackFor = Exception.class)
     public void delete(String nickname) throws Exception{
@@ -42,6 +62,58 @@ public class BillingService {
     @Transactional(rollbackFor = Exception.class)
     public void save(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) throws DuplicateKeyException{
         billingInfoRepository.save(new BillingInfo(customerKey, billingKey,nickname,new Date(System.currentTimeMillis())));
-        cardRepository.save(new Card(nickname,cardCompany,cardNumber));
+        cardRepository.update(nickname,cardCompany,cardNumber);
+    }
+
+    @Transactional
+    public void start(String nickname, String secretkey) throws Exception{
+        for (int i = 0; i < 12; i++) {
+            Date endDate = Date.valueOf(LocalDate.now().plusMonths(1+i));
+            String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
+            paymentRequestRepository.save(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
+        }
+        BillingInfo billingInfo = billingInfoRepository.findByNickname(nickname);
+        String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.tosspayments.com/v1/billing/"+billingInfo.getBillingKey()))
+                .header("Authorization", "Basic "+secretkey)
+                .header("Content-Type", "application/json")
+                .method("POST", HttpRequest.BodyPublishers.ofString("{\"customerKey\":\""+billingInfo.getCustomerKey()+"\",\"amount\":4900,\"orderId\":\""+orderId+"\",\"orderName\":\"모아가이드 1개월구독\"}"))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() > 200) {
+            // 에러 발생 시 로그와 사용자 친화적 메시지 반환
+            String errorMessage = String.format("Request failed with status code %d and body: %s",
+                    response.statusCode(), response.body());
+            throw new Exception(errorMessage);
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(response.body());
+        LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        paymentLogRepository.save(new PaymentLog(rootNode.get("").asText("orderId"),nickname,rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
+        couponUserRepository.updateRedeemed(true,Date.valueOf(LocalDate.now()),nickname);
+        userRepository.updateRole(nickname, Role.VIP);
+        cardRepository.updateSubscript(nickname,Date.valueOf(requestedAt.toLocalDate()),Date.valueOf(LocalDate.now().plusMonths(1)));
+    }
+
+    @Transactional
+    public void startWithCoupon(String nickname, Long couponId) throws Exception{
+        int couponmonth= couponUserRepository.findByNicknameAndCouponId(nickname,couponId).orElseThrow(()->new NoSuchElementException("Coupon not found for nickname: " + nickname));
+        for (int i = 0; i < 12; i++) {
+            Date endDate = Date.valueOf(LocalDate.now().plusMonths(couponmonth+i));
+            String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
+            paymentRequestRepository.save(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
+        }
+        LocalDateTime now_date = LocalDateTime.now();
+        paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",0,"쿠폰",now_date,now_date,4900,nickname));
+        couponUserRepository.updateRedeemed(true,Date.valueOf(LocalDate.now()),nickname);
+        userRepository.updateRole(nickname, Role.VIP);
+        cardRepository.updateSubscript(nickname,Date.valueOf(now_date.toLocalDate()),Date.valueOf(LocalDate.now().plusMonths(couponmonth)));
+    }
+
+
+    public List<PaymentLog> findPayment(String nickname) {
+        return paymentLogRepository.findAll(nickname);
     }
 }

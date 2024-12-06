@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -68,4 +69,5 @@ public class CouponService {
     public Page<CouponAdminDto> findByAdmin(Pageable pages) {
         return couponAdminRepository.findByAll(pages);
     }
+
 }

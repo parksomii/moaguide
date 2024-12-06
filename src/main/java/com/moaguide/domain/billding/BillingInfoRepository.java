@@ -21,4 +21,7 @@ public interface BillingInfoRepository extends JpaRepository<BillingInfo, String
     @Modifying
     @Query("update BillingInfo b set b.customerKey =:customerKey,b.billingKey =:billingKey,b.authenticatedAt=:date where b.nickname =:nickname")
     int update(@Param("customerKey") String customerKey,@Param("billingKey") String billingKey,@Param("nickname") String nickname,@Param("date") Date date);
+
+    @Query("SELECT b FROM BillingInfo b where b.nickname =:nickname")
+    BillingInfo findByNickname(@Param("nickname") String nickname);
 }
