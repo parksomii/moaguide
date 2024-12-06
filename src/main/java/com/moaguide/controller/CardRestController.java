@@ -55,9 +55,9 @@ public class CardRestController {
             }
             return ResponseEntity.ok(map);
         }catch (JwtException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -79,6 +79,14 @@ public class CardRestController {
                     .method("POST", HttpRequest.BodyPublishers.ofString("{\"authKey\":\""+authKey+"\",\"customerKey\":\""+customerKey+"\"}"))
                     .build();
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+            if (statusCode > 200) {
+                // 에러 발생 시 로그와 사용자 친화적 메시지 반환
+                String errorMessage = String.format("Request failed with status code %d and body: %s",
+                        statusCode, response.body());
+                System.err.println(errorMessage); // 로그로 에러 확인
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create card: " + response.body());
+            }
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
             billingService.save(nickname,rootNode.get("cardCompany").asText(),Integer.valueOf(rootNode.get("card").get("number").asText().substring(0,2)),customerKey,rootNode.get("billingKey").asText());
@@ -87,11 +95,11 @@ public class CardRestController {
             map.put("cardNumber",Integer.valueOf(rootNode.get("card").get("number").asText().substring(0,2)));
             return ResponseEntity.ok().body(map);
         }catch (JwtException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (DuplicateKeyException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Duplicate key");
         } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -108,9 +116,9 @@ public class CardRestController {
             billingService.delete(nickname);
             return ResponseEntity.ok().body("카드를 성공적으로 삭제했습니다.");
         }catch (JwtException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -132,6 +140,14 @@ public class CardRestController {
                     .method("POST", HttpRequest.BodyPublishers.ofString("{\"authKey\":\""+authKey+"\",\"customerKey\":\""+customerKey+"\"}"))
                     .build();
             HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            int statusCode = response.statusCode();
+            if (statusCode > 200) {
+                // 에러 발생 시 로그와 사용자 친화적 메시지 반환
+                String errorMessage = String.format("Request failed with status code %d and body: %s",
+                        statusCode, response.body());
+                System.err.println(errorMessage); // 로그로 에러 확인
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create card: " + response.body());
+            }
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
             billingService.update(nickname,rootNode.get("cardCompany").asText(),Integer.valueOf(rootNode.get("card").get("number").asText().substring(0,2)),customerKey,rootNode.get("billingKey").asText());
@@ -140,11 +156,11 @@ public class CardRestController {
             map.put("cardNumber",Integer.valueOf(rootNode.get("card").get("number").asText().substring(0,2)));
             return ResponseEntity.ok().body(map);
         }catch (JwtException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (DuplicateKeyException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Duplicate key");
         } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }
