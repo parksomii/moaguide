@@ -175,7 +175,12 @@ public class BuildingRestController {
             List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
             response.put("object", stayday);
             return ResponseEntity.ok(response);
-        }else{
+        } else if (productId.equals("kasa.KR011A20000090")) {
+            keyword = "북촌 월하재";
+            List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else{
             response.put("object", new ArrayList<>());
             return ResponseEntity.ok(response);
         }
