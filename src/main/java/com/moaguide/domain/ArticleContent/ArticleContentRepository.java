@@ -31,4 +31,10 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
             "ORDER BY c.createdAt DESC")
     Page<ContentOverviewDto> findByCategory(@Param("categoryId") int categoryId,
                                             Pageable pageable);
+
+    @Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.categoryId =:categoryId AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+    Page<ArticleContent> findByTypeAndCategoryId(@Param("type") String type,@Param("categoryId") int categoryId, Pageable pageable);
+
+    @Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+    Page<ArticleContent> findAllByType(@Param("type") String type, Pageable pageable);
 }

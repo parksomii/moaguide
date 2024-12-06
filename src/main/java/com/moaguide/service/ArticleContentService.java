@@ -58,4 +58,61 @@ public class ArticleContentService {
         return articleContentRepository.findByCategory(categoryId, pageable)
                 .getContent();
     }
+
+    public Page<ContentDto> getContentsByAll(int categoryId, int page) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createdAt"));
+        if (categoryId == 0) {
+            return articleContentRepository.findAll(pageable).map(
+                    content -> new ContentDto(
+                            content.getContentId(),
+                            content.getTitle(),
+                            content.getType(),
+                            content.isPremium(),
+                            content.getViews(),
+                            content.getCreatedAt(),
+                            content.getLikes(),
+                            content.getDescription(),
+                            content.getImg_link()));
+        } else {
+            return articleContentRepository.findByCategoryId(categoryId, pageable).map(content -> new ContentDto(
+                    content.getContentId(),
+                    content.getTitle(),
+                    content.getType(),
+                    content.isPremium(),
+                    content.getViews(),
+                    content.getCreatedAt(),
+                    content.getLikes(),
+                    content.getDescription(),
+                    content.getImg_link()));
+        }
+    }
+
+    public Page<ContentDto> getContentsByType(String type, int categoryId, int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+        if (categoryId == 0) {
+            return articleContentRepository.findAllByType(type,pageable).map(
+                    content -> new ContentDto(
+                            content.getContentId(),
+                            content.getTitle(),
+                            content.getType(),
+                            content.isPremium(),
+                            content.getViews(),
+                            content.getCreatedAt(),
+                            content.getLikes(),
+                            content.getDescription(),
+                            content.getImg_link()));
+        } else {
+            return articleContentRepository.findByTypeAndCategoryId(type,categoryId, pageable).map(content -> new ContentDto(
+                    content.getContentId(),
+                    content.getTitle(),
+                    content.getType(),
+                    content.isPremium(),
+                    content.getViews(),
+                    content.getCreatedAt(),
+                    content.getLikes(),
+                    content.getDescription(),
+                    content.getImg_link()));
+        }
+    }
+
 }
