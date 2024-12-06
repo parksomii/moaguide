@@ -60,7 +60,7 @@ public class ArticleContentService {
     }
 
     public Page<ContentDto> getContentsByAll(int categoryId, int page) {
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Pageable pageable = PageRequest.of(page-1, 10, Sort.by(Sort.Direction.DESC, "createdAt"));
         if (categoryId == 0) {
             return articleContentRepository.findAll(pageable).map(
                     content -> new ContentDto(
@@ -88,7 +88,7 @@ public class ArticleContentService {
     }
 
     public Page<ContentDto> getContentsByType(String type, int categoryId, int page) {
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page-1, 10);
         if (categoryId == 0) {
             return articleContentRepository.findAllByType(type,pageable).map(
                     content -> new ContentDto(
