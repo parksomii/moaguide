@@ -31,5 +31,5 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     @Modifying
     @Query("update Card c set c.subscriptionStartDate = :nowDate ,c.subscriptionEndDate=:enddate  where c.nickname =:nickname")
-    void updateSubscript(@Param("nickname")String nickname, @Param("nowDate") Date nowDate, @Param("date") Date date);
+    void updateSubscript(@Param("nickname")String nickname, @Param("nowDate") Date nowDate, @Param("enddate") Date date);
 }
