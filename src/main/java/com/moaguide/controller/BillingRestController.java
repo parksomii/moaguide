@@ -67,6 +67,7 @@ public class BillingRestController {
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             List<PaymentLog> paymentLog = billingService.findPayment(nickname);
             Map<String,Object> map = new HashMap<>();
+            map.put("log",paymentLog);
             return ResponseEntity.ok(map);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
