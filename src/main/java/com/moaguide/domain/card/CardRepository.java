@@ -21,4 +21,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Query("delete FROM Card c where c.nickname =:nickname")
     void deleteByNickname(@Param("nickname") String nickname);
 
+    @Modifying
+    @Query("update Card c set c.cardNumber = :cardNumber,c.cardname = :cardName where c.nickname =:nickname")
+    int update(@Param("nickname") String nickname,@Param("cardName") String cardCompany,@Param("cardNumber") Integer cardNumber);
 }
