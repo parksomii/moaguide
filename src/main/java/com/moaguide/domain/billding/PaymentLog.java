@@ -2,6 +2,7 @@ package com.moaguide.domain.billding;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "Payment_Log")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class PaymentLog {
 
     @Id
