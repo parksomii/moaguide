@@ -121,13 +121,11 @@ public class BillingService {
         return cardRepository.findDate(nickname);
     }
 
-    @Modifying
     @Transactional
     public void stop(String nickname) {
         paymentRequestRepository.deletebyNickname(nickname);
     }
 
-    @Modifying
     @Transactional
     public void developstop(String nickname) {
         cardRepository.deleteByNicknameDate(nickname);
