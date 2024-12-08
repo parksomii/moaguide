@@ -1,5 +1,6 @@
 package com.moaguide.domain.card;
 
+import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +33,10 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Modifying
     @Query("update Card c set c.subscriptionStartDate = :nowDate ,c.subscriptionEndDate=:enddate  where c.nickname =:nickname")
     void updateSubscript(@Param("nickname")String nickname, @Param("nowDate") Date nowDate, @Param("enddate") Date date);
+
+    @Query("select new com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto(c.subscriptionStartDate,c.subscriptionEndDate,p.NextPaymentDate) FROM Card c,PaymentRequest p where c.nickname =:nickname and c.nickname = p.nickname and c.subscriptionEndDate = p.NextPaymentDate")
+    SubscriptDateDto findDate(@Param("nickname") String nickname);
+
+    @Query("update Card c set c.subscriptionStartDate = null,c.subscriptionEndDate=null  where c.nickname =:nickname")
+    void deleteByNicknameDate(@Param("nickname") String nickname);
 }

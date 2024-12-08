@@ -8,8 +8,10 @@ import com.moaguide.domain.card.CardRepository;
 import com.moaguide.domain.coupon.CouponUserRepository;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.UserRepository;
+import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -113,5 +115,25 @@ public class BillingService {
 
     public List<PaymentLog> findPayment(String nickname) {
         return paymentLogRepository.findAll(nickname);
+    }
+
+    public SubscriptDateDto findDate(String nickname) {
+        return cardRepository.findDate(nickname);
+    }
+
+    @Modifying
+    @Transactional
+    public void stop(String nickname) {
+        paymentRequestRepository.deletebyNickname(nickname);
+    }
+
+    @Modifying
+    @Transactional
+    public void developstop(String nickname) {
+        cardRepository.deleteByNicknameDate(nickname);
+        paymentRequestRepository.deletebyNickname(nickname);
+        paymentLogRepository.deleteByNickname(nickname);
+        userRepository.updateRole(nickname,Role.USER);
+        couponUserRepository.updateRedeemed(false,null,nickname);
     }
 }

@@ -12,4 +12,7 @@ public interface PaymentLogRepository extends JpaRepository<PaymentLog, Long> {
 
     @Query("select p FROM PaymentLog  p where p.nickname=:nickname")
     List<PaymentLog> findAll(@Param("nickname") String nickname);
+
+    @Query("delete FROM PaymentLog p where p.nickname=:nickname")
+    void deleteByNickname(@Param("nickname") String nickname);
 }

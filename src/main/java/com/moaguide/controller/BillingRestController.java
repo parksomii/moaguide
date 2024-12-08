@@ -4,6 +4,7 @@ package com.moaguide.controller;
 import com.moaguide.domain.billding.BillingInfo;
 import com.moaguide.domain.billding.PaymentLog;
 import com.moaguide.domain.card.Card;
+import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BillingService;
 import com.moaguide.service.CouponService;
@@ -69,6 +70,73 @@ public class BillingRestController {
             Map<String,Object> map = new HashMap<>();
             map.put("log",paymentLog);
             return ResponseEntity.ok(map);
+        }catch (JwtException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<?> BillingStatus(@RequestHeader(value = "Authorization") String jwt) {
+        try {
+            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            if (jwtUtil.isExpired(jwt.substring(7))) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            String nickname = jwtUtil.getNickname(jwt.substring(7));
+            SubscriptDateDto date = billingService.findDate(nickname);
+            if(date == null) {
+                Map<String,Object> map = new HashMap<>();
+                map.put("status",false);
+                map.put("date", null);
+                return ResponseEntity.ok(map);
+            }else {
+                Map<String,Object> map = new HashMap<>();
+                map.put("status",true);
+                map.put("date", date);
+                return ResponseEntity.ok(map);
+            }
+        }catch (JwtException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/stop")
+    public ResponseEntity<?> Billingstop(@RequestHeader(value = "Authorization") String jwt) {
+        try {
+            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            if (jwtUtil.isExpired(jwt.substring(7))) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            String nickname = jwtUtil.getNickname(jwt.substring(7));
+            billingService.stop(nickname);
+            return ResponseEntity.ok().body("Success");
+        }catch (JwtException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/develop/delete")
+    public ResponseEntity<?> BillingdevelopDelete(@RequestHeader(value = "Authorization") String jwt) {
+        try {
+            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            if (jwtUtil.isExpired(jwt.substring(7))) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            String nickname = jwtUtil.getNickname(jwt.substring(7));
+            billingService.developstop(nickname);
+            return ResponseEntity.ok().body("Success");
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (Exception e){
