@@ -133,6 +133,7 @@ public class BillingService {
     @Transactional
     public void developstop(String nickname) {
         cardRepository.deleteByNicknameDate(nickname);
+        billingInfoRepository.deleteByNickname(nickname);
         paymentRequestRepository.deletebyNickname(nickname);
         paymentLogRepository.deleteByNickname(nickname);
         userRepository.updateRole(nickname,Role.USER);
