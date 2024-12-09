@@ -30,9 +30,6 @@ public class PaymentRequest {
     @Column(name = "next_payment_date")
     private Date NextPaymentDate;
 
-    @Column(name = "payment_time")
-    private Time paymentTime;
-
     @Column(name = "fail_count")
     private Integer failCount;
 }
