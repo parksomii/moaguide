@@ -32,4 +32,11 @@ public interface PaymentRequestRepository extends JpaRepository<PaymentRequest,S
     @Modifying
     @Query("update PaymentRequest p set p.failCount=p.failCount+1,p.NextPaymentDate=:date where p.nickname =:nickname")
     void updatefailList(@Param("nickname")String nickname,@Param("date") Date date);
+
+    @Query("select p.nickname fROM PaymentRequest p where p.failCount>=5")
+    List<String> findByFailCount();
+
+    @Modifying
+    @Query("DELETE FROM PaymentRequest p WHERE p.nickname IN :nicknames")
+    void deleteByFailCount(@Param("nickname") List<String> nickname);
 }

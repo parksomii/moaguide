@@ -8,6 +8,7 @@ import com.moaguide.domain.card.CardRepository;
 import com.moaguide.domain.coupon.CouponUser;
 import com.moaguide.domain.coupon.CouponUserRepository;
 import com.moaguide.domain.user.Role;
+import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
 import com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto;
 import lombok.AllArgsConstructor;
@@ -31,16 +32,22 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 public class PaymentService {
     private CouponUserRepository couponUserRepository;
     private PaymentRequestRepository paymentRequestRepository;
     private PaymentLogRepository paymentLogRepository;
     private CardRepository cardRepository;
-
+    private UserRepository userRepository;
     @Value("${toss.secretkey}")
     private String secretkey;
+
+    public PaymentService(CouponUserRepository couponUserRepository, PaymentRequestRepository paymentRequestRepository, PaymentLogRepository paymentLogRepository, CardRepository cardRepository, UserRepository userRepository){
+        this.couponUserRepository = couponUserRepository;
+        this.paymentRequestRepository = paymentRequestRepository;
+        this.paymentLogRepository = paymentLogRepository;
+        this.cardRepository = cardRepository;
+        this.userRepository = userRepository;
+    }
 
     @Scheduled(cron = "0 0 17 * * *")
     @Transactional
@@ -109,6 +116,13 @@ public class PaymentService {
             paymentRequestRepository.saveAll(paymentRequests);
             paymentRequestRepository.deleteAllById(deleteOrderId);
         }
-
     }
+
+    @Scheduled(cron = "0 30 18 * * *")
+    @Transactional
+    public void faillist(){
+        List<String> deleteNicknameList = paymentRequestRepository.findByFailCount();
+        paymentRequestRepository.deleteByFailCount(deleteNicknameList);
+    }
+
 }
