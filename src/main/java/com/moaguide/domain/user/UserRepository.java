@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -48,4 +50,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("update User u Set u.role =:role where u.nickname =:nickname ")
     void updateRole(@Param("nickname") String nickname,@Param("role")Role role);
 
+    @Modifying
+    @Query("update User u Set u.role =:role where u.nickname in :nickname ")
+    void updateRoleByDate(@Param("role") Role role, @Param("nickname")List<String> updateNickname);
 }

@@ -1,14 +1,10 @@
 package com.moaguide.controller;
 
 
-import com.moaguide.domain.billding.BillingInfo;
 import com.moaguide.domain.billding.PaymentLog;
-import com.moaguide.domain.card.Card;
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BillingService;
-import com.moaguide.service.CouponService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +12,6 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.*;
 
 @RestController

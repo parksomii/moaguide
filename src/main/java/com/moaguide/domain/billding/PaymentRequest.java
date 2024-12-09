@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.sql.Time;
 
 @Table(name = "Payment_Request")
 @Entity
@@ -28,6 +29,9 @@ public class PaymentRequest {
 
     @Column(name = "next_payment_date")
     private Date NextPaymentDate;
+
+    @Column(name = "payment_time")
+    private Time paymentTime;
 
     @Column(name = "fail_count")
     private Integer failCount;

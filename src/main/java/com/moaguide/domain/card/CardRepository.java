@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -44,4 +45,10 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Modifying
     @Query("update Card c set c.subscriptionEndDate=:enddate  where c.nickname =:nickname")
     void updateSubscriptByCron(@Param("nickname") String nickname,@Param("enddate")Date enddate);
+
+    @Query("select c.nickname FROM Card c where c.subscriptionEndDate =:date")
+    List<String> findByDate(Date date);
+
+    @Query("update Card c set c.subscriptionEndDate=null  where c.nickname in :nickname")
+    void updateSubscriptBylist(@Param("nickname")List<String> updateNickname);
 }

@@ -19,8 +19,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +73,7 @@ public class BillingService {
         for (int i = 0; i < 12; i++) {
             Date endDate = Date.valueOf(LocalDate.now().plusMonths(1+i));
             String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
-            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
+            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,Time.valueOf(LocalTime.now()),0));
         }
         paymentRequestRepository.saveAll(paymentRequests);
 
@@ -106,7 +108,7 @@ public class BillingService {
         for (int i = 0; i < 12; i++) {
             Date endDate = Date.valueOf(LocalDate.now().plusMonths(couponmonth+i));
             String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
-            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
+            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,Time.valueOf(LocalTime.now()),0));
         }
         paymentRequestRepository.saveAll(paymentRequests);
         LocalDateTime now_date = LocalDateTime.now();
@@ -144,7 +146,7 @@ public class BillingService {
         for (int i = 0; i < 12; i++) {
             Date endDate = Date.valueOf(nextPaymentDay.toLocalDate().plusMonths(i));
             String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
-            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
+            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,Time.valueOf(LocalTime.now()),0));
         }
         paymentRequestRepository.saveAll(paymentRequests);
     }
