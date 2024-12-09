@@ -95,7 +95,7 @@ public class BillingService {
         JsonNode rootNode = objectMapper.readTree(response.body());
         LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-        paymentLogRepository.save(new PaymentLog(rootNode.get("").asText("orderId"),nickname,rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
+        paymentLogRepository.save(new PaymentLog(rootNode.get("orderId").asText(),nickname,rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
         userRepository.updateRole(nickname, Role.VIP);
         cardRepository.updateSubscript(nickname,Date.valueOf(requestedAt.toLocalDate()),paymentRequests.get(0).getNextPaymentDate());
     }
@@ -140,10 +140,10 @@ public class BillingService {
         couponUserRepository.updateRedeemed(false,null,nickname);
     }
 
-//    @Scheduled(cron = "0 5 * * * ?")
-//    public void CouponCron() {
-//
-//    }
+    @Scheduled(cron = "0 5 * * * ?")
+    public void CouponCron() {
+
+    }
 
     public void startWithDate(String nickname, Date nextPaymentDay) {
         List<PaymentRequest> paymentRequests = new ArrayList<>();
