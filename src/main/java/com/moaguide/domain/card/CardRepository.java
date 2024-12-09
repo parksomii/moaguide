@@ -34,7 +34,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Query("update Card c set c.subscriptionStartDate = :nowDate ,c.subscriptionEndDate=:enddate  where c.nickname =:nickname")
     void updateSubscript(@Param("nickname")String nickname, @Param("nowDate") Date nowDate, @Param("enddate") Date date);
 
-    @Query("select new com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto(c.subscriptionStartDate,c.subscriptionEndDate,p.NextPaymentDate) FROM Card c,PaymentRequest p where c.nickname =:nickname and c.nickname = p.nickname and c.subscriptionEndDate = p.NextPaymentDate")
+    @Query("select new com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto(c.subscriptionStartDate,c.subscriptionEndDate,p.NextPaymentDate) FROM Card c left join PaymentRequest p on c.nickname=p.nickname and c.subscriptionEndDate=p.NextPaymentDate where c.nickname =:nickname ")
     SubscriptDateDto findDate(@Param("nickname") String nickname);
 
     @Modifying
