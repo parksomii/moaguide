@@ -45,8 +45,8 @@ public class PaymentService {
         this.userRepository = userRepository;
     }
 
-//    @Scheduled(cron = "0 0 17 * * *")
-    @Scheduled(cron = "0 10,40 * * * *")
+//    @Scheduled(cron = "0 10,40 * * * *")
+    @Scheduled(cron = "0 0 17 * * *")
     @Transactional
     public void CouponCron() {
         Date now_date = Date.valueOf(LocalDate.now());
@@ -69,8 +69,8 @@ public class PaymentService {
         paymentRequestRepository.saveAll(paymentRequests);
     }
 
-//    @Scheduled(cron = "0 0 18 * * *")
-    @Scheduled(cron = "0 20,50 * * *")
+    //    @Scheduled(cron = "0 20,50 * * *")
+    @Scheduled(cron = "0 0 18 * * *")
     @Transactional
     public void PaymentCron() {
         Date now_date = Date.valueOf(LocalDate.now());
@@ -116,8 +116,8 @@ public class PaymentService {
         }
     }
 
-//    @Scheduled(cron = "0 30 18 * * *")
-    @Scheduled(cron = "0 0,30 * * * *")
+//    @Scheduled(cron = "0 0,30 * * * *")
+    @Scheduled(cron = "0 30 18 * * *")
     @Transactional
     public void faillist(){
         List<String> deleteNicknameList = paymentRequestRepository.findByFailCount();
