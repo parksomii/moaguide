@@ -1,5 +1,6 @@
 package com.moaguide.domain.billding;
 
+import com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -7,10 +8,28 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+
 @Repository
 public interface PaymentRequestRepository extends JpaRepository<PaymentRequest,String> {
 
     @Modifying
     @Query("delete FROM PaymentRequest p where p.nickname =:nickname")
     void deletebyNickname(@Param("nickname") String nickname);
+
+    @Query("select p.nickname FROM PaymentRequest p where p.NextPaymentDate =:nowDate")
+    List<String> findByDate(@Param("nowDate") Date nowDate);
+
+    @Modifying
+    @Query("delete FROM PaymentRequest p where p.nickname =:nickname and p.NextPaymentDate<=:enddate")
+    void deletebyNicknameAndDate(@Param("nickname")String nickname,@Param("enddate")LocalDate enddate);
+
+    @Query("select new  com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto(p.orderId,b.billingKey,b.customerKey,p.amount,p.nickname,p.failCount) FROM PaymentRequest p left join BillingInfo b on p.nickname = b.nickname where p.NextPaymentDate =:nowDate")
+    List<PaymentDto> findByNextPaymentDate(@Param("nowDate") Date nowDate);
+
+    @Modifying
+    @Query("update PaymentRequest p set p.failCount=p.failCount+1,p.NextPaymentDate=:date where p.nickname =:nickname")
+    void updatefailList(@Param("nickname")String nickname,@Param("date") Date date);
 }

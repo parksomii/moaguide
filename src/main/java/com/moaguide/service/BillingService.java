@@ -11,7 +11,6 @@ import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -138,11 +137,6 @@ public class BillingService {
         paymentLogRepository.deleteByNickname(nickname);
         userRepository.updateRole(nickname,Role.USER);
         couponUserRepository.updateRedeemed(false,null,nickname);
-    }
-
-    @Scheduled(cron = "0 5 * * * ?")
-    public void CouponCron() {
-
     }
 
     public void startWithDate(String nickname, Date nextPaymentDay) {

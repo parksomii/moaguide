@@ -40,4 +40,8 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Modifying
     @Query("update Card c set c.subscriptionStartDate = null,c.subscriptionEndDate=null  where c.nickname =:nickname")
     void deleteByNicknameDate(@Param("nickname") String nickname);
+
+    @Modifying
+    @Query("update Card c set c.subscriptionEndDate=:enddate  where c.nickname =:nickname")
+    void updateSubscriptByCron(@Param("nickname") String nickname,@Param("enddate")Date enddate);
 }

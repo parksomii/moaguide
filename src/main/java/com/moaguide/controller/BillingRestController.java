@@ -56,7 +56,6 @@ public class BillingRestController {
             }else {
                 billingService.startWithDate(nickname,nextPaymentDay);
             }
-
             return ResponseEntity.status(HttpStatus.OK).body("Success");
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
