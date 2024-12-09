@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
@@ -13,6 +14,7 @@ import java.sql.Date;
 @Table(name = "Payment_Request")
 @Entity
 @AllArgsConstructor
+@Getter
 @NoArgsConstructor
 public class PaymentRequest {
 

@@ -11,7 +11,7 @@ import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +23,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -67,11 +68,14 @@ public class BillingService {
 
     @Transactional
     public void start(String nickname, String secretkey) throws Exception{
+        List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             Date endDate = Date.valueOf(LocalDate.now().plusMonths(1+i));
             String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
-            paymentRequestRepository.save(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
+            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
         }
+        paymentRequestRepository.saveAll(paymentRequests);
+
         BillingInfo billingInfo = billingInfoRepository.findByNickname(nickname);
         String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
         HttpRequest request = HttpRequest.newBuilder()
@@ -92,24 +96,25 @@ public class BillingService {
         LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         paymentLogRepository.save(new PaymentLog(rootNode.get("").asText("orderId"),nickname,rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
-        couponUserRepository.updateRedeemed(true,LocalDate.now(),nickname);
         userRepository.updateRole(nickname, Role.VIP);
-        cardRepository.updateSubscript(nickname,Date.valueOf(requestedAt.toLocalDate()),Date.valueOf(LocalDate.now().plusMonths(1)));
+        cardRepository.updateSubscript(nickname,Date.valueOf(requestedAt.toLocalDate()),paymentRequests.get(0).getNextPaymentDate());
     }
 
     @Transactional
     public void startWithCoupon(String nickname, Long couponId) throws Exception{
         int couponmonth= couponUserRepository.findByNicknameAndCouponId(nickname,couponId).orElseThrow(()->new NoSuchElementException("Coupon not found for nickname: " + nickname));
+        List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             Date endDate = Date.valueOf(LocalDate.now().plusMonths(couponmonth+i));
             String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
-            paymentRequestRepository.save(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
+            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
         }
+        paymentRequestRepository.saveAll(paymentRequests);
         LocalDateTime now_date = LocalDateTime.now();
         paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",0,"쿠폰",now_date,now_date,4900,nickname));
-        couponUserRepository.updateRedeemed(true,LocalDate.now(),nickname);
+        couponUserRepository.updateRedeemedWithCouponId(true,LocalDate.now(),nickname,couponId);
         userRepository.updateRole(nickname, Role.VIP);
-        cardRepository.updateSubscript(nickname,Date.valueOf(now_date.toLocalDate()),Date.valueOf(LocalDate.now().plusMonths(couponmonth)));
+        cardRepository.updateSubscript(nickname,Date.valueOf(now_date.toLocalDate()),paymentRequests.get(0).getNextPaymentDate());
     }
 
 
@@ -133,5 +138,20 @@ public class BillingService {
         paymentLogRepository.deleteByNickname(nickname);
         userRepository.updateRole(nickname,Role.USER);
         couponUserRepository.updateRedeemed(false,null,nickname);
+    }
+
+//    @Scheduled(cron = "0 5 * * * ?")
+//    public void CouponCron() {
+//
+//    }
+
+    public void startWithDate(String nickname, Date nextPaymentDay) {
+        List<PaymentRequest> paymentRequests = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            Date endDate = Date.valueOf(nextPaymentDay.toLocalDate().plusMonths(i));
+            String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
+            paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
+        }
+        paymentRequestRepository.saveAll(paymentRequests);
     }
 }

@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -40,11 +42,21 @@ public class BillingRestController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
-            if(couponId != null) {
-                billingService.startWithCoupon(nickname,couponId);
-            }else {
-                billingService.start(nickname, Base64.getEncoder().encodeToString((secretkey + ":").getBytes()));
+            SubscriptDateDto date = billingService.findDate(nickname);
+            if(date.getPaymentDate() != null){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 구독중입니다.");
             }
+            Date nextPaymentDay = date.getEndDate() != null ? date.getEndDate() : null;
+            if(nextPaymentDay == null){
+                if(couponId != null) {
+                    billingService.startWithCoupon(nickname,couponId);
+                }else {
+                    billingService.start(nickname, Base64.getEncoder().encodeToString((secretkey + ":").getBytes()));
+                }
+            }else {
+                billingService.startWithDate(nickname,nextPaymentDay);
+            }
+
             return ResponseEntity.status(HttpStatus.OK).body("Success");
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
