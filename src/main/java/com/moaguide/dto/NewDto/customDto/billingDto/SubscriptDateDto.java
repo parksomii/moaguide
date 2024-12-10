@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubscriptDateDto {
-    private Date startDate;
-    private Date endDate;
-    private Date paymentDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalDate paymentDate;
 }

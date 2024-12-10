@@ -11,6 +11,7 @@ import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
 import com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,19 +50,19 @@ public class PaymentService {
     @Scheduled(cron = "0 0 17 * * *")
     @Transactional
     public void CouponCron() {
-        Date now_date = Date.valueOf(LocalDate.now());
+        LocalDate now_date = LocalDate.now();
         List<String> nicknameList = paymentRequestRepository.findByDate(now_date);
         List<BillingCouponUSer> couponUserList =couponUserRepository.findAllByNickname(nicknameList);
         List<PaymentRequest> paymentRequests = new ArrayList<>();
         for(BillingCouponUSer couponuser : couponUserList ){
             LocalDateTime nowDate = LocalDateTime.now();
-            LocalDate enddate = now_date.toLocalDate().plusMonths(couponuser.getMonth());
+            LocalDate enddate = now_date.plusMonths(couponuser.getMonth());
             paymentLogRepository.save(new PaymentLog(couponuser.getCouponName(),0,"쿠폰",nowDate,nowDate,4900,couponuser.getNickname()));
-            couponUserRepository.updateRedeemedWithCouponId(true,now_date.toLocalDate(),couponuser.getNickname(),couponuser.getCouponId());
-            cardRepository.updateSubscriptByCron(couponuser.getNickname(),Date.valueOf(enddate));
+            couponUserRepository.updateRedeemedWithCouponId(true,now_date,couponuser.getNickname(),couponuser.getCouponId());
+            cardRepository.updateSubscriptByCron(couponuser.getNickname(),enddate);
             paymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),enddate);
             for(int i=0; i <couponuser.getMonth();i++){
-                Date lastPaymentDay = Date.valueOf(LocalDate.now().plusMonths(12+i));
+                LocalDate lastPaymentDay = LocalDate.now().plusMonths(12+i);
                 String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
                 paymentRequests.add(new PaymentRequest(orderId,couponuser.getNickname(),4900,lastPaymentDay,0));
             }
@@ -73,7 +74,7 @@ public class PaymentService {
     @Scheduled(cron = "0 0 18 * * *")
     @Transactional
     public void PaymentCron() {
-        Date now_date = Date.valueOf(LocalDate.now());
+        LocalDate now_date = LocalDate.now();
         List<PaymentDto> nicknameList = paymentRequestRepository.findByNextPaymentDate(now_date);
         List<String> deleteOrderId = new ArrayList<>();
         List<PaymentRequest> paymentRequests = new ArrayList<>();
@@ -92,7 +93,7 @@ public class PaymentService {
                             response.statusCode(), response.body());
                     throw new Exception(errorMessage);
                 }
-                Date endDate = Date.valueOf(LocalDate.now().plusMonths(1));
+                LocalDate endDate = LocalDate.now().plusMonths(1);
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode = objectMapper.readTree(response.body());
                 LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
@@ -100,13 +101,13 @@ public class PaymentService {
                 paymentLogRepository.save(new PaymentLog(rootNode.get("orderId").asText(),paymentDto.getNickname(),rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
                 cardRepository.updateSubscriptByCron(paymentDto.getNickname(),endDate);
                 deleteOrderId.add(rootNode.get("orderId").asText());
-                Date lastPaymentDay = Date.valueOf(LocalDate.now().plusMonths(12));
+                LocalDate lastPaymentDay = LocalDate.now().plusMonths(12);
                 String orderId = UUID.randomUUID().toString();
                 paymentRequests.add(new PaymentRequest(orderId,paymentDto.getNickname(),4900,lastPaymentDay,0));
             }catch (Exception e){
                 e.printStackTrace();
                 if(paymentDto.getFailCount() != 5){
-                    Date failDate = Date.valueOf(LocalDate.now().plusDays(1));
+                    LocalDate failDate = LocalDate.now().plusDays(1);
                     paymentRequestRepository.updatefailList(paymentDto.getNickname(),failDate);
                     cardRepository.updateSubscriptByCron(paymentDto.getNickname(),failDate);
                 }
@@ -127,7 +128,7 @@ public class PaymentService {
     @Scheduled(cron= "0 0 0 * * *")
     @Transactional
     public void userRoleupdate(){
-        Date date = Date.valueOf(LocalDate.now());
+        LocalDate date =LocalDate.now();
         List<String> updateNickname=cardRepository.findByDate(date);
         userRepository.updateRoleByDate(Role.USER,updateNickname);
         cardRepository.updateSubscriptBylist(updateNickname);

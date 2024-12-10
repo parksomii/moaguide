@@ -6,12 +6,14 @@ import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BillingService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -41,7 +43,7 @@ public class BillingRestController {
             if(date.getPaymentDate() != null){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 구독중입니다.");
             }
-            Date nextPaymentDay = date.getEndDate() != null ? date.getEndDate() : null;
+            LocalDate nextPaymentDay = date.getEndDate() != null ? date.getEndDate() : null;
             if(nextPaymentDay == null){
                 if(couponId != null) {
                     billingService.startWithCoupon(nickname,couponId);

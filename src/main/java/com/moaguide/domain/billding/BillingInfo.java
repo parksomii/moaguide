@@ -7,14 +7,17 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Profile;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Billing_Info")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Profile({"blue","green"})
 public class BillingInfo {
 
     @Id
@@ -27,6 +30,6 @@ public class BillingInfo {
     private String nickname;
 
     @Column(name = "authenticated_at")
-    private Date authenticatedAt;
+    private LocalDate authenticatedAt;
 
 }

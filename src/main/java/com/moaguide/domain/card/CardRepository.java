@@ -33,7 +33,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     @Modifying
     @Query("update Card c set c.subscriptionStartDate = :nowDate ,c.subscriptionEndDate=:enddate  where c.nickname =:nickname")
-    void updateSubscript(@Param("nickname")String nickname, @Param("nowDate") Date nowDate, @Param("enddate") Date date);
+    void updateSubscript(@Param("nickname")String nickname, @Param("nowDate") LocalDate nowDate, @Param("enddate") LocalDate date);
 
     @Query("select new com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto(c.subscriptionStartDate,c.subscriptionEndDate,p.NextPaymentDate) FROM Card c left join PaymentRequest p on c.nickname=p.nickname and c.subscriptionEndDate=p.NextPaymentDate where c.nickname =:nickname ")
     SubscriptDateDto findDate(@Param("nickname") String nickname);
@@ -44,10 +44,10 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     @Modifying
     @Query("update Card c set c.subscriptionEndDate=:enddate  where c.nickname =:nickname")
-    void updateSubscriptByCron(@Param("nickname") String nickname,@Param("enddate")Date enddate);
+    void updateSubscriptByCron(@Param("nickname") String nickname,@Param("enddate")LocalDate enddate);
 
     @Query("select c.nickname FROM Card c where c.subscriptionEndDate =:date")
-    List<String> findByDate(Date date);
+    List<String> findByDate(LocalDate date);
 
     @Query("update Card c set c.subscriptionEndDate=null  where c.nickname in :nickname")
     void updateSubscriptBylist(@Param("nickname")List<String> updateNickname);

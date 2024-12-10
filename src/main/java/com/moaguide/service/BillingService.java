@@ -63,7 +63,7 @@ public class BillingService {
 
     @Transactional(rollbackFor = Exception.class)
     public void save(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) throws DuplicateKeyException{
-        billingInfoRepository.save(new BillingInfo(customerKey, billingKey,nickname,new Date(System.currentTimeMillis())));
+        billingInfoRepository.save(new BillingInfo(customerKey, billingKey,nickname,LocalDate.now()));
         cardRepository.update(nickname,cardCompany,cardNumber);
     }
 
@@ -71,7 +71,7 @@ public class BillingService {
     public void start(String nickname, String secretkey) throws Exception{
         List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            Date endDate = Date.valueOf(LocalDate.now().plusMonths(1+i));
+            LocalDate endDate = LocalDate.now().plusMonths(1+i);
             String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
             paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
         }
@@ -98,7 +98,7 @@ public class BillingService {
         LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         paymentLogRepository.save(new PaymentLog(rootNode.get("orderId").asText(),nickname,rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
         userRepository.updateRole(nickname, Role.VIP);
-        cardRepository.updateSubscript(nickname,Date.valueOf(requestedAt.toLocalDate()),paymentRequests.get(0).getNextPaymentDate());
+        cardRepository.updateSubscript(nickname,requestedAt.toLocalDate(),paymentRequests.get(0).getNextPaymentDate());
     }
 
     @Transactional
@@ -106,7 +106,7 @@ public class BillingService {
         int couponmonth= couponUserRepository.findByNicknameAndCouponId(nickname,couponId).orElseThrow(()->new NoSuchElementException("Coupon not found for nickname: " + nickname));
         List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            Date endDate = Date.valueOf(LocalDate.now().plusMonths(couponmonth+i));
+            LocalDate endDate = LocalDate.now().plusMonths(couponmonth+i);
             String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
             paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
         }
@@ -115,7 +115,7 @@ public class BillingService {
         paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",0,"쿠폰",now_date,now_date,4900,nickname));
         couponUserRepository.updateRedeemedWithCouponId(true,LocalDate.now(),nickname,couponId);
         userRepository.updateRole(nickname, Role.VIP);
-        cardRepository.updateSubscript(nickname,Date.valueOf(now_date.toLocalDate()),paymentRequests.get(0).getNextPaymentDate());
+        cardRepository.updateSubscript(nickname,now_date.toLocalDate(),paymentRequests.get(0).getNextPaymentDate());
     }
 
 
@@ -141,10 +141,10 @@ public class BillingService {
         couponUserRepository.updateRedeemed(false,null,nickname);
     }
 
-    public void startWithDate(String nickname, Date nextPaymentDay) {
+    public void startWithDate(String nickname, LocalDate nextPaymentDay) {
         List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            Date endDate = Date.valueOf(nextPaymentDay.toLocalDate().plusMonths(i));
+            LocalDate endDate = nextPaymentDay.plusMonths(i);
             String uniqueKey = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
             paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
         }

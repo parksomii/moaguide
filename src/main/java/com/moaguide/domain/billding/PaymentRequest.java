@@ -8,9 +8,11 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Profile;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 
 @Table(name = "Payment_Request")
 @Entity
@@ -28,7 +30,7 @@ public class PaymentRequest {
     private Integer amount;
 
     @Column(name = "next_payment_date")
-    private Date NextPaymentDate;
+    private LocalDate NextPaymentDate;
 
     @Column(name = "fail_count")
     private Integer failCount;

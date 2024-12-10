@@ -1,5 +1,6 @@
 package com.moaguide.domain.billding;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@Profile({"blue","green"})
 public interface PaymentLogRepository extends JpaRepository<PaymentLog, Long> {
 
     @Query("select p FROM PaymentLog  p where p.nickname=:nickname")

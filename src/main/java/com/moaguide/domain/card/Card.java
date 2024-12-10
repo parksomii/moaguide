@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "card")
@@ -24,10 +25,10 @@ public class Card {
     private Integer cardNumber;
 
     @Column(name = "subscription_start_date")
-    private Date subscriptionStartDate;
+    private LocalDate subscriptionStartDate;
 
     @Column(name="subscription_end_date")
-    private Date subscriptionEndDate;
+    private LocalDate subscriptionEndDate;
 
     public Card(String nickname, String cardname, Integer cardNumber) {
         this.nickname = nickname;
