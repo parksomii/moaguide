@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-@Profile({"blue","green"})
 public interface PaymentLogRepository extends JpaRepository<PaymentLog, Long> {
 
     @Query("select p FROM PaymentLog  p where p.nickname=:nickname")
