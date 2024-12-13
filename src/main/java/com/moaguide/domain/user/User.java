@@ -49,6 +49,17 @@ public class User {
     @Column(name = "loginType")
     private String loginType;
 
+    @Column(name = "card_name")
+    private String cardname;
+    @Column(name = "card_number")
+    private Integer cardNumber;
+
+    @Column(name = "subscription_start_date")
+    private Date subscriptionStartDate;
+
+    @Column(name="subscription_end_date")
+    private Date subscriptionEndDate;
+
     public User(String email, String name, String password, Role role, String nickname, Date birthDate, String investmentExperience, Integer marketingConsent, String loginType) {
         this.email = email;
         this.name = name;
