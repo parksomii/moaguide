@@ -75,7 +75,8 @@ public class BillingService {
         }
         paymentRequestRepository.saveAll(paymentRequests);
 
-s        String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
+        BillingInfo billingInfo = billingInfoRepository.findByNickname(nickname).orElseThrow(()->new NoSuchElementException());
+        String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.tosspayments.com/v1/billing/"+billingInfo.getBillingKey()))
                 .header("Authorization", "Basic "+secretkey)
