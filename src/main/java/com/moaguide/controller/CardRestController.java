@@ -91,7 +91,7 @@ public class CardRestController {
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (DuplicateKeyException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Duplicate key");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("카드가 이미 발급되어있습니다.");
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
