@@ -2,7 +2,7 @@ package com.moaguide.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moaguide.domain.card.Card;
+import com.moaguide.domain.user.User;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BillingService;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,10 +44,10 @@ public class CardRestController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
-            Card card = billingService.findByNickanme(nickname);
+            User user = billingService.findByNickanme(nickname);
             Map<String,Object> map = new HashMap<>();
-            map.put("cardName",card.getCardname());
-            map.put("cardNumber",card.getCardNumber());
+            map.put("cardName", user.getCardname());
+            map.put("cardNumber", user.getCardNumber());
             return ResponseEntity.ok(map);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
@@ -84,10 +84,9 @@ public class CardRestController {
             }
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
-            billingService.save(nickname,rootNode.get("cardCompany").asText(),Integer.valueOf(rootNode.get("card").get("number").asText().substring(0,2)),customerKey,rootNode.get("billingKey").asText());
-            Map<String,Object> map = new HashMap<>();
+            billingService.save(nickname,rootNode.get("cardCompany").asText(),Integer.valueOf(rootNode.get("cardNumber").asText().substring(0,2)),customerKey,rootNode.get("billingKey").asText());            Map<String,Object> map = new HashMap<>();
             map.put("cardName",rootNode.get("cardCompany").asText());
-            map.put("cardNumber",Integer.valueOf(rootNode.get("card").get("number").asText().substring(0,2)));
+            map.put("cardNumber",Integer.valueOf(rootNode.get("cardNumber").asText().substring(0,2)));
             return ResponseEntity.ok().body(map);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

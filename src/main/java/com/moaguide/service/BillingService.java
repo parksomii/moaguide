@@ -7,6 +7,7 @@ import com.moaguide.domain.card.Card;
 import com.moaguide.domain.card.CardRepository;
 import com.moaguide.domain.coupon.CouponUserRepository;
 import com.moaguide.domain.user.Role;
+import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class BillingService {
     private final BillingInfoRepository billingInfoRepository;
-    private final CardRepository cardRepository;
     private final CouponUserRepository couponUserRepository;
     private final PaymentRequestRepository paymentRequestRepository;
     private final PaymentLogRepository paymentLogRepository;
@@ -41,17 +41,17 @@ public class BillingService {
 
     @Transactional(rollbackFor = Exception.class)
     public void delete(String nickname) throws Exception{
-        cardRepository.deleteByNickname(nickname);
+        userRepository.deleteByNickname(nickname);
         billingInfoRepository.deleteByNickname(nickname);
     }
 
-    public Card findByNickanme(String nickname) {
-        return cardRepository.findBynickname(nickname).orElse(null);
+    public User findByNickanme(String nickname) {
+        return userRepository.findByNickname(nickname).orElse(null);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void update(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) throws Exception{
-        int cardline = cardRepository.update(nickname,cardCompany,cardNumber);
+        int cardline = userRepository.updateByCard(nickname,cardCompany,cardNumber);
         int billingline = billingInfoRepository.update(customerKey,billingKey,nickname,new Date(System.currentTimeMillis()));
         if(billingline == 0){
             throw new Exception();
@@ -64,7 +64,7 @@ public class BillingService {
     @Transactional(rollbackFor = Exception.class)
     public void save(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) throws DuplicateKeyException{
         billingInfoRepository.save(new BillingInfo(customerKey, billingKey,nickname,LocalDate.now()));
-        cardRepository.update(nickname,cardCompany,cardNumber);
+        userRepository.updateByCard(nickname,cardCompany,cardNumber);
     }
 
     @Transactional
@@ -98,7 +98,7 @@ public class BillingService {
         LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
         paymentLogRepository.save(new PaymentLog(rootNode.get("orderId").asText(),nickname,rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
         userRepository.updateRole(nickname, Role.VIP);
-        cardRepository.updateSubscript(nickname,requestedAt.toLocalDate(),paymentRequests.get(0).getNextPaymentDate());
+        userRepository.updateSubscript(nickname,requestedAt.toLocalDate(),paymentRequests.get(0).getNextPaymentDate());
     }
 
     @Transactional
@@ -115,7 +115,7 @@ public class BillingService {
         paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",0,"쿠폰",now_date,now_date,4900,nickname));
         couponUserRepository.updateRedeemedWithCouponId(true,LocalDate.now(),nickname,couponId);
         userRepository.updateRole(nickname, Role.VIP);
-        cardRepository.updateSubscript(nickname,now_date.toLocalDate(),paymentRequests.get(0).getNextPaymentDate());
+        userRepository.updateSubscript(nickname,now_date.toLocalDate(),paymentRequests.get(0).getNextPaymentDate());
     }
 
 
@@ -124,7 +124,7 @@ public class BillingService {
     }
 
     public SubscriptDateDto findDate(String nickname) {
-        return cardRepository.findDate(nickname);
+        return userRepository.findDate(nickname);
     }
 
     @Transactional
@@ -134,7 +134,7 @@ public class BillingService {
 
     @Transactional
     public void developstop(String nickname) {
-        cardRepository.deleteByNicknameDate(nickname);
+        userRepository.deleteByNicknameDate(nickname);
         paymentRequestRepository.deletebyNickname(nickname);
         paymentLogRepository.deleteByNickname(nickname);
         userRepository.updateRole(nickname,Role.USER);
