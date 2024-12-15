@@ -50,7 +50,7 @@ public class BillingService {
     @Transactional(rollbackFor = Exception.class)
     public void update(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) throws Exception{
         int cardline = userRepository.updateByCard(nickname,cardCompany,cardNumber);
-        int billingline = billingInfoRepository.update(customerKey,billingKey,nickname,new Date(System.currentTimeMillis()));
+        int billingline = billingInfoRepository.update(customerKey,billingKey,nickname,LocalDate.now());
         if(billingline == 0){
             throw new Exception();
         }
