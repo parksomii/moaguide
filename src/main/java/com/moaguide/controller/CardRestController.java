@@ -35,13 +35,13 @@ public class CardRestController {
     }
 
     @GetMapping("/mycard")
-    public ResponseEntity<?> myCard(@RequestHeader(value = "Authorization") String jwt) {
+    public ResponseEntity<?> myCard(@RequestHeader(value = "Authorization",required = false) String jwt) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             User user = billingService.findByNickanme(nickname);
@@ -57,13 +57,13 @@ public class CardRestController {
     }
 
     @PostMapping("/create/card")
-    public ResponseEntity<?> createCard(@RequestHeader(value = "Authorization") String jwt,@RequestParam String customerKey,@RequestParam String authKey) {
+    public ResponseEntity<?> createCard(@RequestHeader(value = "Authorization",required = false) String jwt,@RequestParam String customerKey,@RequestParam String authKey) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             String base64SecretKey = Base64.getEncoder().encodeToString((secretkey + ":").getBytes());
@@ -98,13 +98,13 @@ public class CardRestController {
     }
 
     @DeleteMapping("/delete/card")
-    public ResponseEntity<?> deleteCard(@RequestHeader(value = "Authorization") String jwt) {
+    public ResponseEntity<?> deleteCard(@RequestHeader(value = "Authorization",required = false) String jwt) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             billingService.delete(nickname);
@@ -117,13 +117,13 @@ public class CardRestController {
     }
 
     @PatchMapping("/update/card")
-    public ResponseEntity<?> updateCard(@RequestHeader(value = "Authorization") String jwt,@RequestParam String customerKey,@RequestParam String authKey) {
+    public ResponseEntity<?> updateCard(@RequestHeader(value = "Authorization",required = false) String jwt,@RequestParam String customerKey,@RequestParam String authKey) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             String base64SecretKey = Base64.getEncoder().encodeToString((secretkey + ":").getBytes());

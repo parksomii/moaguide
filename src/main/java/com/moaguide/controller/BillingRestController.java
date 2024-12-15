@@ -28,13 +28,13 @@ public class BillingRestController {
     }
 
     @PostMapping("/start")
-    public ResponseEntity<?> Billingstart(@RequestHeader(value = "Authorization") String jwt, @RequestParam(value = "couponId", required = false) Long couponId) {
+    public ResponseEntity<?> Billingstart(@RequestHeader(value = "Authorization",required = false) String jwt, @RequestParam(value = "couponId", required = false) Long couponId) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             SubscriptDateDto date = billingService.findDate(nickname);
@@ -63,13 +63,13 @@ public class BillingRestController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> Billinglist(@RequestHeader(value = "Authorization") String jwt) {
+    public ResponseEntity<?> Billinglist(@RequestHeader(value = "Authorization",required = false) String jwt) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             List<PaymentLog> paymentLog = billingService.findPayment(nickname);
@@ -84,13 +84,13 @@ public class BillingRestController {
     }
 
     @GetMapping("/status")
-    public ResponseEntity<?> BillingStatus(@RequestHeader(value = "Authorization") String jwt) {
+    public ResponseEntity<?> BillingStatus(@RequestHeader(value = "Authorization",required = false) String jwt) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             SubscriptDateDto date = billingService.findDate(nickname);
@@ -113,13 +113,13 @@ public class BillingRestController {
     }
 
     @DeleteMapping("/stop")
-    public ResponseEntity<?> Billingstop(@RequestHeader(value = "Authorization") String jwt) {
+    public ResponseEntity<?> Billingstop(@RequestHeader(value = "Authorization",required = false) String jwt) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             billingService.stop(nickname);
@@ -132,13 +132,13 @@ public class BillingRestController {
     }
 
     @DeleteMapping("/develop/delete")
-    public ResponseEntity<?> BillingdevelopDelete(@RequestHeader(value = "Authorization") String jwt) {
+    public ResponseEntity<?> BillingdevelopDelete(@RequestHeader(value = "Authorization",required = false) String jwt) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
             }
             if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             billingService.developstop(nickname);

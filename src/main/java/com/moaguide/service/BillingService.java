@@ -3,8 +3,6 @@ package com.moaguide.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.domain.billding.*;
-import com.moaguide.domain.card.Card;
-import com.moaguide.domain.card.CardRepository;
 import com.moaguide.domain.coupon.CouponUserRepository;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;

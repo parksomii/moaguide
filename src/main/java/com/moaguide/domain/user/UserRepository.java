@@ -57,7 +57,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     void updateRoleByDate(@Param("role") Role role, @Param("nickname")List<String> updateNickname);
 
     @Modifying
-    @Query("update User u set u.subscriptionStartDate = null,u.subscriptionEndDate=null  where u.nickname =:nickname")
+    @Query("update User u set u.customNumber = null,u.cardname=null  where u.nickname =:nickname")
     void deleteByNickname(@Param("nickname")String nickname);
 
     @Modifying
