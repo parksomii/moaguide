@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.Optional;
 
 @Repository
 public interface BillingInfoRepository extends JpaRepository<BillingInfo, String> {
@@ -24,5 +25,5 @@ public interface BillingInfoRepository extends JpaRepository<BillingInfo, String
     int update(@Param("customerKey") String customerKey,@Param("billingKey") String billingKey,@Param("nickname") String nickname,@Param("date") Date date);
 
     @Query("SELECT b FROM BillingInfo b where b.nickname =:nickname")
-    BillingInfo findByNickname(@Param("nickname") String nickname);
+    Optional<BillingInfo> findByNickname(@Param("nickname") String nickname);
 }
