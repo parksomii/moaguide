@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.domain.user.User;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BillingService;
+import com.moaguide.service.LocalBillingService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DuplicateKeyException;
@@ -23,15 +24,15 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/card")
-@Profile({"blue","green"})
-public class CardRestController {
+@Profile("local")
+public class LocalCardRestController {
     private final JWTUtil jwtUtil;
-    private final BillingService billingService;
+    private final LocalBillingService billingService;
 
     @Value("${toss.secretkey}")
     private String secretkey;
 
-    public CardRestController(JWTUtil jwtUtil, BillingService billingService) {
+    public LocalCardRestController(JWTUtil jwtUtil, LocalBillingService billingService) {
         this.jwtUtil = jwtUtil;
         this.billingService = billingService;
     }
