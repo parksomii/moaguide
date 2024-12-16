@@ -59,7 +59,7 @@ public class ContentController {
         } else if (type.equals("article")) {
             contents = articleContentService.getContentsByType("아티클", categoryEnum, page);
         } else if (type.equals("video")) {
-            contents = articleContentService.getContentsByType("비디오", categoryEnum, page);
+            contents = articleContentService.getContentsByType("영상", categoryEnum, page);
         } else {
             return ResponseEntity.badRequest().body(Map.of("error", "Invalid type: " + type));
         }
