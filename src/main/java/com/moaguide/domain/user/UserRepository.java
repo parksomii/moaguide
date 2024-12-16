@@ -85,4 +85,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("update User u set u.subscriptionEndDate=null  where u.nickname in :nickname")
     void updateSubscriptBylist(@Param("nickname")List<String> updateNickname);
+
+    @Query("select u.email From User u where u.nickname =:nickname ")
+    String findEmail(@Param("nickname") String nickname);
+
+    @Query("select u.nickname FROM User u")
+    List<String> findUser();
 }

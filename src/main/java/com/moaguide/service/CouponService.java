@@ -5,6 +5,8 @@ import com.moaguide.domain.coupon.CouponAdmin;
 import com.moaguide.domain.coupon.CouponAdminRepository;
 import com.moaguide.domain.coupon.CouponUser;
 import com.moaguide.domain.coupon.CouponUserRepository;
+import com.moaguide.domain.user.User;
+import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import jakarta.validation.ConstraintViolationException;
@@ -24,25 +26,28 @@ import java.util.List;
 public class CouponService {
     private final CouponAdminRepository couponAdminRepository;
     private final CouponUserRepository couponUserRepository;
+    private final EmailService emailService;
+    private final UserRepository userRepository;
 
-    public boolean create(int month, String nickname) {
+    public String create(int month, String nickname) {
         try {
             LocalDate today = LocalDate.now();
             String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             int couponLength = 6;
             SecureRandom secureRandom = new SecureRandom();
-            StringBuilder result = new StringBuilder();
+            StringBuilder couponNumber = new StringBuilder();
             String couponname = month+"개월 무료이용권";
             // 쿠폰 생성 반복
             for (int i = 0; i < couponLength; i++) {
                 int randomIndex = secureRandom.nextInt(characters.length()); // 문자 집합에서 랜덤 인덱스 생성
-                result.append(characters.charAt(randomIndex)); // 랜덤 문자 추가
+                couponNumber.append(characters.charAt(randomIndex)); // 랜덤 문자 추가
             }
-
-            couponAdminRepository.save(new CouponAdmin(null,couponname,result.toString(),today,month,nickname));
-            return true;
+            couponAdminRepository.save(new CouponAdmin(null,couponname,couponNumber.toString(),today,month,nickname));
+            String email= userRepository.findEmail(nickname);
+            String result = emailService.sendCoupon(email,couponNumber.toString());
+            return result;
         }catch (Exception e){
-            return false;
+            return "쿠폰생성시 오류 발생";
         }
     }
 
@@ -70,4 +75,7 @@ public class CouponService {
         return couponAdminRepository.findByAll(pages);
     }
 
+    public List<String> findUser() {
+        return userRepository.findUser();
+    }
 }
