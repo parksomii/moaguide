@@ -1,6 +1,7 @@
-package com.moaguide.domain.billding;
+package com.moaguide.domain.billing;
 
 import com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
+@Profile({"blue","green"})
 public interface PaymentRequestRepository extends JpaRepository<PaymentRequest,String> {
 
     @Modifying

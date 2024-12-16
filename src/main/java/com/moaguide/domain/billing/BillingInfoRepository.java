@@ -1,4 +1,4 @@
-package com.moaguide.domain.billding;
+package com.moaguide.domain.billing;
 
 
 import org.springframework.context.annotation.Profile;
@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
 

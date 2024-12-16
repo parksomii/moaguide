@@ -1,4 +1,4 @@
-package com.moaguide.domain.billding;
+package com.moaguide.domain.billing;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
