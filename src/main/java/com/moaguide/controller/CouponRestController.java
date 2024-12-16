@@ -40,7 +40,7 @@ public class CouponRestController {
             if (jwtUtil.isExpired(jwt.substring(7))) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
-            if(jwtUtil.getRole(jwt) != Role.ADMIN.toString()){
+            if(!jwtUtil.getRole(jwt.substring(7)).equals(Role.ADMIN.toString())){
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("접근이 불가능합니다.");
             }
             String res = couponService.create(month, nickname);
@@ -126,7 +126,7 @@ public class CouponRestController {
             if (jwtUtil.isExpired(jwt.substring(7))) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
-            if(jwtUtil.getRole(jwt) != Role.ADMIN.toString()){
+            if(!jwtUtil.getRole(jwt.substring(7)).equals(Role.ADMIN.toString())){
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("접근이 불가능합니다.");
             }
             Pageable pages = Pageable.ofSize(size).withPage(page - 1);
