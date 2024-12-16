@@ -1,4 +1,4 @@
-package com.moaguide.domain.billding;
+package com.moaguide.domain.billing;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Profile;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
@@ -17,7 +16,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Profile({"blue","green"})
 public class BillingInfo {
 
     @Id

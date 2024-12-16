@@ -1,4 +1,4 @@
-package com.moaguide.domain.billding;
+package com.moaguide.domain.billing.localbilling;
 
 
 import jakarta.persistence.Column;
@@ -10,17 +10,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Profile;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Table(name = "Payment_Request")
+@Table(name = "Local_Payment_Request")
 @Entity
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor
-public class PaymentRequest {
-
+@Profile("local")
+public class LocalPaymentRequest {
     @Id
     @Column(name = "order_id")
     private String orderId;
@@ -30,7 +28,7 @@ public class PaymentRequest {
     private Integer amount;
 
     @Column(name = "next_payment_date")
-    private LocalDate NextPaymentDate;
+    private LocalDateTime NextPaymentDate;
 
     @Column(name = "fail_count")
     private Integer failCount;
