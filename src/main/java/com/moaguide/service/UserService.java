@@ -102,4 +102,11 @@ public class UserService {
         return userRepository.findByNickname(nickname).orElse(null);
     }
 
+    public Boolean checkPasswordByAdmin(String nickname, String password) {
+        User user = userRepository.findUserByNickNameAndAdmin(nickname);
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return true;
+        }
+        return false;
+    }
 }

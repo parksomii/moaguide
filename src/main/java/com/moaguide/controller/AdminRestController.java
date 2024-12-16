@@ -19,7 +19,7 @@ public class AdminRestController {
 
     @PostMapping("/login")
     public ResponseEntity adminlogin(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
-        Boolean result = userService.checkPassword(user.getNickname(), user.getPassword());
+        Boolean result = userService.checkPasswordByAdmin(user.getNickname(), user.getPassword());
         if(result){
             User userdata = userService.findByNickname(user.getNickname());
             if(userdata == null){
