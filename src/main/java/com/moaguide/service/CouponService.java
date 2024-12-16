@@ -15,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.sql.Date;
@@ -29,6 +30,7 @@ public class CouponService {
     private final EmailService emailService;
     private final UserRepository userRepository;
 
+    @Transactional
     public String create(int month, String nickname) {
         try {
             LocalDate today = LocalDate.now();
@@ -42,9 +44,9 @@ public class CouponService {
                 int randomIndex = secureRandom.nextInt(characters.length()); // 문자 집합에서 랜덤 인덱스 생성
                 couponNumber.append(characters.charAt(randomIndex)); // 랜덤 문자 추가
             }
-            couponAdminRepository.save(new CouponAdmin(null,couponname,couponNumber.toString(),today,month,nickname));
             String email= userRepository.findEmail(nickname);
             String result = emailService.sendCoupon(email,couponNumber.toString());
+            couponAdminRepository.save(new CouponAdmin(null,couponname,couponNumber.toString(),today,month,nickname));
             return result;
         }catch (Exception e){
             return "쿠폰생성시 오류 발생";
