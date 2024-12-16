@@ -92,6 +92,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("select u.nickname FROM User u")
     List<String> findUser();
 
-    @Query("update User u set u.cardNumber = null,u.cardname=null  where u.nickname =:nickname and u.loginType='admin'")
-    User findUserByNickNameAndAdmin(String nickname);
+    @Query("update User u set u.cardNumber = null,u.cardname=null  where u.email =:email and u.loginType='admin'")
+    User findUserByEmailAndAdmin(@Param("email") String email);
 }

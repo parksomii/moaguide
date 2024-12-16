@@ -98,8 +98,8 @@ public class UserService {
         }
     }
 
-    public Boolean checkPasswordByAdmin(String nickname, String password) {
-        User user = userRepository.findUserByNickNameAndAdmin(nickname);
+    public Boolean checkPasswordByAdmin(String email, String password) {
+        User user = userRepository.findUserByEmailAndAdmin(email);
         if (passwordEncoder.matches(password, user.getPassword())) {
             return true;
         }
