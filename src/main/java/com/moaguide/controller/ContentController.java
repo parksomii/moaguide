@@ -1,9 +1,8 @@
 package com.moaguide.controller;
 
+import com.moaguide.domain.CategoryContent.Category;
 import com.moaguide.dto.ContentDto;
 import com.moaguide.service.ArticleContentService;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -26,6 +28,7 @@ public class ContentController {
             @RequestParam int categoryId,
             @RequestParam int page) {
         Page<ContentDto> contents = articleContentService.getContentsByCategory(categoryId, page);
+
         Map<String, Object> response = new HashMap<>();
         response.put("content", contents.getContent()); // 현재 페이지 데이터
         response.put("page", page);                     // 현재 페이지 번호
@@ -41,47 +44,27 @@ public class ContentController {
             @RequestParam String category,
             @RequestParam int page) {
         Page<ContentDto> contents;
-        int categoryId;
-        switch (category) {
-            case "all":
-                categoryId =0;
-                break;
-            case "news":
-                categoryId = 1;
-                break;
-            case "guide":
-                categoryId = 2;
-                break;
-            case "building":
-                categoryId = 3;
-                break;
-            case "art":
-                categoryId = 4;
-                break;
-            case "music":
-                categoryId = 5;
-                break;
-            case "content":
-                categoryId = 6;
-                break;
-            case "cow":
-                categoryId = 7;
-                break;
-            case "money":
-                categoryId = 8;
-                break;
-            default:
-                return ResponseEntity.badRequest().build();
+
+        // Category Enum으로 변환
+        Category categoryEnum;
+        try {
+            categoryEnum = Category.fromName(category);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid category: " + category));
         }
-        if(type.equals("all")){
-            contents = articleContentService.getContentsByAll(categoryId, page);
-        }else if (type.equals("article")){
-            contents = articleContentService.getContentsByType("아티클",categoryId, page);
+
+        // type에 따라 서비스 호출
+        if (type.equals("all")) {
+            contents = articleContentService.getContentsByAll(categoryEnum, page);
+        } else if (type.equals("article")) {
+            contents = articleContentService.getContentsByType("아티클", categoryEnum, page);
         } else if (type.equals("video")) {
-            contents = articleContentService.getContentsByType("비디오",categoryId, page);
-        } else{
-            return ResponseEntity.badRequest().build();
+            contents = articleContentService.getContentsByType("비디오", categoryEnum, page);
+        } else {
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid type: " + type));
         }
+
+        // 응답 데이터 생성
         Map<String, Object> response = new HashMap<>();
         response.put("content", contents.getContent()); // 현재 페이지 데이터
         response.put("page", page);                     // 현재 페이지 번호
