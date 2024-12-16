@@ -98,15 +98,15 @@ public class UserService {
         }
     }
 
-    public User findByNickname(String nickname) {
-        return userRepository.findByNickname(nickname).orElse(null);
-    }
-
     public Boolean checkPasswordByAdmin(String nickname, String password) {
         User user = userRepository.findUserByNickNameAndAdmin(nickname);
         if (passwordEncoder.matches(password, user.getPassword())) {
             return true;
         }
         return false;
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmailAndLoginType(email,"admin").orElse(null);
     }
 }

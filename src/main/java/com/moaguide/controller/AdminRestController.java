@@ -19,9 +19,9 @@ public class AdminRestController {
 
     @PostMapping("/login")
     public ResponseEntity adminlogin(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
-        Boolean result = userService.checkPasswordByAdmin(user.getNickname(), user.getPassword());
+        Boolean result = userService.checkPasswordByAdmin(user.getEmail(), user.getPassword());
         if(result){
-            User userdata = userService.findByNickname(user.getNickname());
+            User userdata = userService.findByEmail(user.getEmail());
             if(userdata == null){
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("로그인 실패");
             }
