@@ -28,7 +28,6 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-@Profile({"blue","green"})
 public class BillingService {
     private final BillingInfoRepository billingInfoRepository;
     private final CouponUserRepository couponUserRepository;
