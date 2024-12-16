@@ -1,6 +1,7 @@
 package com.moaguide.controller;
 
 import com.moaguide.domain.user.User;
+import com.moaguide.dto.UserDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ public class AdminRestController {
     private final JWTUtil jwtUtil;
 
     @PostMapping("/login")
-    public ResponseEntity adminlogin(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
+    public ResponseEntity adminlogin(@RequestBody UserDto user, HttpServletResponse response, HttpServletRequest request) {
         Boolean result = userService.checkPasswordByAdmin(user.getEmail(), user.getPassword());
         if(result){
             User userdata = userService.findByEmail(user.getEmail());
