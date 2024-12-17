@@ -49,7 +49,7 @@ public class LocalPaymentService {
     }
 
     //    @Scheduled(cron = "0 10,40 * * * *")
-    @Scheduled(cron = "0 20 */1 * * *")
+    @Scheduled(cron = "0 20 0/1 * * *")
     @Transactional
     public void CouponCron() {
         LocalDateTime now_date = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0).withNano(0);
@@ -73,7 +73,7 @@ public class LocalPaymentService {
     }
 
     //    @Scheduled(cron = "0 20,50 * * *")
-    @Scheduled(cron = "0 30 */1 * * *")
+    @Scheduled(cron = "0 30 0/1 * * *")
     @Transactional
     public void PaymentCron() {
         LocalDateTime now_date = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0).withNano(0);
@@ -121,7 +121,7 @@ public class LocalPaymentService {
     }
 
     //    @Scheduled(cron = "0 0,30 * * * *")
-    @Scheduled(cron = "0 30 */1 * * *")
+    @Scheduled(cron = "0 30 0/1 * * *")
     @Transactional
     public void faillist(){
         LocalDateTime date = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0).withNano(0);
@@ -129,7 +129,7 @@ public class LocalPaymentService {
         localPaymentRequestRepository.deleteByFailCount(deleteNicknameList);
     }
 
-    @Scheduled(cron= "0 0 */1 * * *")
+    @Scheduled(cron= "0 0 0/1 * * *")
     @Transactional
     public void userRoleupdate(){
         LocalDateTime date = LocalDateTime.now().plusHours(0).withMinute(0).withSecond(0).withNano(0);
