@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,7 +85,7 @@ public class LocalPaymentService {
             try {
                 HttpRequest request = HttpRequest.newBuilder()
                         .uri(URI.create("https://api.tosspayments.com/v1/billing/" + paymentDto.getBillingKey()))
-                        .header("Authorization", "Basic " + secretkey)
+                        .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((secretkey + ":").getBytes()))
                         .header("Content-Type", "application/json")
                         .method("POST", HttpRequest.BodyPublishers.ofString("{\"customerKey\":\"" + paymentDto.getCustomerKey() + "\",\"amount\":4900,\"orderId\":\"" + paymentDto.getOrderId() + "\",\"orderName\":\"모아가이드 1개월구독\"}"))
                         .build();
