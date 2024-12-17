@@ -34,6 +34,6 @@ public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
     @Query("select new com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer( c.id, c.couponId, ca.name,c.nickname,ca.months) " +
             "FROM CouponUser c " +
             "join CouponAdmin ca on c.couponId = ca.id " +
-            "where c.id in (select ci.id FROM CouponUser ci where ci.nickname in :nicknameList group by ci.nickname)")
+            "where c.id in (select ci.id FROM CouponUser ci where ci.nickname in :nickname group by ci.nickname)")
     List<BillingCouponUSer> findAllByNickname(@Param("nickname") List<String> nicknameList);
 }
