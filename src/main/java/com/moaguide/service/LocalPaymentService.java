@@ -59,7 +59,7 @@ public class LocalPaymentService {
         List<LocalPaymentRequest> paymentRequests = new ArrayList<>();
         for(BillingCouponUSer couponuser : couponUserList ){
             LocalDateTime nowDate = LocalDateTime.now();
-            LocalDateTime enddate = LocalDateTime.now().plusHours(1).withMinute(30).withSecond(0).withNano(0);
+            LocalDateTime enddate = LocalDateTime.now().plusDays(couponuser.getMonth()).withMinute(30).withSecond(0).withNano(0);
             paymentLogRepository.save(new PaymentLog(couponuser.getCouponName(),0,"쿠폰",nowDate,nowDate,4900,couponuser.getNickname()));
             couponUserRepository.updateRedeemedWithCouponId(true,now_date.toLocalDate(),couponuser.getNickname(),couponuser.getCouponId());
             cardRepository.updateSubscriptByCron(couponuser.getNickname(),enddate);
@@ -96,7 +96,7 @@ public class LocalPaymentService {
                             response.statusCode(), response.body());
                     throw new Exception(errorMessage);
                 }
-                LocalDate endDate = LocalDate.now().plusMonths(1);
+                LocalDate endDate = LocalDate.now().plusDays(1);
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode = objectMapper.readTree(response.body());
                 LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);

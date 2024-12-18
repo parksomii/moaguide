@@ -80,7 +80,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("update User u set u.subscriptionEndDate=:enddate  where u.nickname =:nickname")
     void updateSubscriptByCron(@Param("nickname") String nickname,@Param("enddate")LocalDate enddate);
 
-    @Query("select u.nickname FROM User u where u.subscriptionEndDate =:date")
+    @Query("select u.nickname FROM User u where u.subscriptionEndDate <:date")
     List<String> findByDate(LocalDate date);
 
     @Query("update User u set u.subscriptionEndDate=null  where u.nickname in :nickname")
