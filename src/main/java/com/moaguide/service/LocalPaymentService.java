@@ -58,12 +58,12 @@ public class LocalPaymentService {
         List<BillingCouponUSer> couponUserList =couponUserRepository.findAllByNickname(nicknameList);
         List<LocalPaymentRequest> paymentRequests = new ArrayList<>();
         for(BillingCouponUSer couponuser : couponUserList ){
-            LocalDateTime nowDate = LocalDateTime.now();
+            LocalDateTime nowDate = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0).withNano(0);
             LocalDateTime enddate = LocalDateTime.now().plusDays(couponuser.getMonth()).withMinute(30).withSecond(0).withNano(0);
             paymentLogRepository.save(new PaymentLog(couponuser.getCouponName(),0,"쿠폰",nowDate,nowDate,4900,couponuser.getNickname()));
             couponUserRepository.updateRedeemedWithCouponId(true,now_date.toLocalDate(),couponuser.getNickname(),couponuser.getCouponId());
             cardRepository.updateSubscriptByCron(couponuser.getNickname(),enddate);
-            localPaymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),enddate);
+            localPaymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),nowDate);
             for(int i=0; i <couponuser.getMonth();i++){
                 LocalDateTime lastPaymentDay = LocalDateTime.now().plusDays(12+i).plusHours(0).withMinute(30).withSecond(0).withNano(0);
                 String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
@@ -96,13 +96,13 @@ public class LocalPaymentService {
                             response.statusCode(), response.body());
                     throw new Exception(errorMessage);
                 }
-                LocalDate endDate = LocalDate.now().plusDays(1);
+                LocalDateTime endDate = LocalDateTime.now().plusDays(1).withMinute(30).withSecond(0).withNano(0);;
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode = objectMapper.readTree(response.body());
                 LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
                 LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
                 paymentLogRepository.save(new PaymentLog(rootNode.get("orderId").asText(),paymentDto.getNickname(),rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
-                userRepository.updateSubscriptByCron(paymentDto.getNickname(),endDate);
+                cardRepository.updateSubscriptByCron(paymentDto.getNickname(),endDate);
                 deleteOrderId.add(rootNode.get("orderId").asText());
                 LocalDateTime lastPaymentDay = LocalDateTime.now().plusDays(12).plusHours(0).withMinute(30).withSecond(0).withNano(0);
                 String orderId = UUID.randomUUID().toString();
