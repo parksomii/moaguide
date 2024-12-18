@@ -29,7 +29,7 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Query("update Card c set c.subscriptionEndDate=:enddate  where c.nickname =:nickname")
     void updateSubscriptByCron(@Param("nickname") String nickname,@Param("enddate")LocalDateTime enddate);
 
-    @Query("select c.nickname FROM Card c where c.subscriptionEndDate =:date")
+    @Query("select c.nickname FROM Card c where c.subscriptionEndDate <=:date")
     List<String> findByDate(LocalDateTime date);
 
     @Query("update Card c set c.subscriptionEndDate=null  where c.nickname in :nickname")

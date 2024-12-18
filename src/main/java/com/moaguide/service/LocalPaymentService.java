@@ -122,7 +122,7 @@ public class LocalPaymentService {
     }
 
     //    @Scheduled(cron = "0 0,30 * * * *")
-    @Scheduled(cron = "0 30 0/1 * * *")
+    @Scheduled(cron = "0 40 0/1 * * *")
     @Transactional
     public void faillist(){
         LocalDateTime date = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0).withNano(0);
