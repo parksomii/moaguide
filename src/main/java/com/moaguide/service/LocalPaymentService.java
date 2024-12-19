@@ -53,15 +53,14 @@ public class LocalPaymentService {
     @Scheduled(cron = "0 20 0/1 * * *")
     @Transactional
     public void CouponCron() {
-        LocalDateTime now_date = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0).withNano(0);
-        List<String> nicknameList = localPaymentRequestRepository.findByDate(now_date);
+        LocalDateTime nowDate = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0).withNano(0);
+        List<String> nicknameList = localPaymentRequestRepository.findByDate(nowDate);
         List<BillingCouponUSer> couponUserList =couponUserRepository.findAllByNickname(nicknameList);
         List<LocalPaymentRequest> paymentRequests = new ArrayList<>();
         for(BillingCouponUSer couponuser : couponUserList ){
-            LocalDateTime nowDate = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0).withNano(0);
             LocalDateTime enddate = LocalDateTime.now().plusDays(couponuser.getMonth()).withMinute(30).withSecond(0).withNano(0);
             paymentLogRepository.save(new PaymentLog(couponuser.getCouponName(),0,"쿠폰",nowDate,nowDate,4900,couponuser.getNickname()));
-            couponUserRepository.updateRedeemedWithCouponId(true,now_date.toLocalDate(),couponuser.getNickname(),couponuser.getCouponId());
+            couponUserRepository.updateRedeemedWithCouponId(true,nowDate.toLocalDate(),couponuser.getNickname(),couponuser.getCouponId());
             cardRepository.updateSubscriptByCron(couponuser.getNickname(),enddate);
             localPaymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),nowDate);
             for(int i=0; i <couponuser.getMonth();i++){
