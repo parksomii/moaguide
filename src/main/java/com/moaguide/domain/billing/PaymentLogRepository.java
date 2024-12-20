@@ -1,6 +1,7 @@
 package com.moaguide.domain.billing;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -21,5 +22,5 @@ public interface PaymentLogRepository extends JpaRepository<PaymentLog, Long> {
     void deleteByNickname(@Param("nickname") String nickname);
 
     @Query("select p.orderId FROM PaymentLog p where p.nickname=:nickname order by  p.id desc")
-    String findLog(@Param("nickname") String nickname, Pageable page);
+    Page<String> findLog(@Param("nickname") String nickname, Pageable page);
 }

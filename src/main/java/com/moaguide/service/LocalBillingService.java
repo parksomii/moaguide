@@ -155,6 +155,6 @@ public class LocalBillingService {
 
     public String findLog(String nickname) {
         Pageable page = Pageable.ofSize(1).withPage(0);
-        return paymentLogRepository.findLog(nickname,page);
+        return paymentLogRepository.findLog(nickname,page).getContent().get(0);
     }
 }
