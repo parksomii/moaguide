@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +96,10 @@ public class LocalCardRestController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (DuplicateKeyException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("카드가 이미 발급되어있습니다.");
-        } catch (Exception e){
+        }catch (SQLIntegrityConstraintViolationException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("카드가 이미 발급되어있습니다.");
+        }
+        catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }

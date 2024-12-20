@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -65,7 +66,7 @@ public class LocalBillingService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void save(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) throws DuplicateKeyException{
+    public void save(String nickname, String cardCompany, Integer cardNumber, String customerKey, String billingKey) throws DuplicateKeyException, SQLIntegrityConstraintViolationException {
         billingInfoRepository.save(new BillingInfo(customerKey, billingKey,nickname,LocalDate.now()));
         userRepository.updateByCard(nickname,cardCompany,cardNumber);
     }
