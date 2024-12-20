@@ -45,16 +45,21 @@ public class LocalBillingRestController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 구독중입니다.");
             }
             LocalDateTime endDay = date.getEndDate() != null ? date.getEndDate() : null;
+            String orderId = UUID.randomUUID().toString();
+            Map<String, String> map = new HashMap<>();
             if(endDay == null){
                 if(couponId != null) {
-                    LocalbillingService.startWithCoupon(nickname,couponId);
+                    LocalbillingService.startWithCoupon(nickname,couponId,orderId);
                 }else {
-                    LocalbillingService.start(nickname, Base64.getEncoder().encodeToString((secretkey + ":").getBytes()));
+                    LocalbillingService.start(nickname, Base64.getEncoder().encodeToString((secretkey + ":").getBytes()),orderId);
                 }
+                map.put("orderId", orderId);
             }else {
                 LocalbillingService.startWithDate(nickname, endDay);
+                String order = LocalbillingService.findLog(nickname);
+                map.put("orderId", order);
             }
-            return ResponseEntity.status(HttpStatus.OK).body("Success");
+            return ResponseEntity.status(HttpStatus.OK).body(map);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (NoSuchElementException e){

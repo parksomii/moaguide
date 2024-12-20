@@ -14,6 +14,8 @@ import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,7 +71,7 @@ public class LocalBillingService {
     }
 
     @Transactional
-    public void start(String nickname, String secretkey) throws Exception{
+    public void start(String nickname, String secretkey,String orderId) throws Exception{
         List<LocalPaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             LocalDateTime endDate = LocalDateTime.now().plusDays(1+i).plusHours(0).withMinute(30).withSecond(0).withNano(0);
@@ -78,7 +80,6 @@ public class LocalBillingService {
         }
         localpaymentRequestRepository.saveAll(paymentRequests);
         BillingInfo billingInfo = billingInfoRepository.findByNickname(nickname).orElseThrow(()->new NoSuchElementException());
-        String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.tosspayments.com/v1/billing/"+billingInfo.getBillingKey()))
                 .header("Authorization", "Basic "+secretkey)
@@ -102,7 +103,7 @@ public class LocalBillingService {
     }
 
     @Transactional
-    public void startWithCoupon(String nickname, Long couponId) throws Exception{
+    public void startWithCoupon(String nickname, Long couponId,String orderId) throws Exception{
         int couponmonth= couponUserRepository.findByNicknameAndCouponId(nickname,couponId).orElseThrow(()->new NoSuchElementException("Coupon not found for nickname: " + nickname));
         List<LocalPaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
@@ -112,7 +113,7 @@ public class LocalBillingService {
         }
         localpaymentRequestRepository.saveAll(paymentRequests);
         LocalDateTime now_date = LocalDateTime.now();
-        paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",0,"쿠폰",now_date,now_date,4900,nickname));
+        paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",orderId,0,"쿠폰",now_date,now_date,4900,nickname));
         couponUserRepository.updateRedeemedWithCouponId(true,LocalDate.now(),nickname,couponId);
         userRepository.updateRole(nickname, Role.VIP);
         cardRepository.updateSubscript(nickname,now_date,paymentRequests.get(0).getNextPaymentDate());
@@ -149,5 +150,10 @@ public class LocalBillingService {
             paymentRequests.add(new LocalPaymentRequest(uniqueKey,nickname,4900,endDate,0));
         }
         localpaymentRequestRepository.saveAll(paymentRequests);
+    }
+
+    public String findLog(String nickname) {
+        Pageable page = Pageable.ofSize(1).withPage(0);
+        return paymentLogRepository.findLog(nickname,page);
     }
 }

@@ -56,6 +56,17 @@ public class PaymentLog {
         this.discount = discount;
     }
 
+    public PaymentLog(String orderName,String orderId, int totalAmount, String method, LocalDateTime requestedAt, LocalDateTime approvedAt, int discount,String nickname) {
+        this.nickname = nickname;
+        this.orderId = orderId;
+        this.orderName = orderName;
+        this.totalAmount = totalAmount;
+        this.method = method;
+        this.requestedAt = requestedAt;
+        this.approvedAt = approvedAt;
+        this.discount = discount;
+    }
+
     public PaymentLog(String orderId,String nickname, String paymentKey, String orderName,Integer totalAmount, String card, LocalDateTime requestedAt, LocalDateTime approvedAt, int discount) {
         this.nickname = nickname;
         this.orderId = orderId;
