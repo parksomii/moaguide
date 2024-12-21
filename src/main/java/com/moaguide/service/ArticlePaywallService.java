@@ -36,3 +36,21 @@ public class ArticlePaywallService {
         articlePaywallRepository.save(paywall);
     }
 
+    /**
+     * 아티클 삭제
+     *
+     * @param articleId 삭제할 아티클 ID
+     * @return 삭제 성공 여부
+     */
+    public boolean deleteArticleById(Long articleId) {
+        // 1. articleId로 ArticlePaywall 확인
+        if (!articlePaywallRepository.existsById(articleId)) {
+            return false; // 삭제할 아티클이 존재하지 않음
+        }
+
+        // 2. 삭제
+        articlePaywallRepository.deleteById(articleId);
+        return true;
+    }
+
+}
