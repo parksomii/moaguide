@@ -58,7 +58,7 @@ public class PaymentService {
             paymentLogRepository.save(new PaymentLog(couponuser.getCouponName(),0,"쿠폰",nowDate,nowDate,4900,couponuser.getNickname()));
             couponUserRepository.updateRedeemedWithCouponId(true,now_date,couponuser.getNickname(),couponuser.getCouponId());
             userRepository.updateSubscriptByCron(couponuser.getNickname(),enddate);
-            paymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),nowDate.toLocalDate());
+            paymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),enddate);
             for(int i=0; i <couponuser.getMonth();i++){
                 LocalDate lastPaymentDay = LocalDate.now().plusMonths(12+i);
                 String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
