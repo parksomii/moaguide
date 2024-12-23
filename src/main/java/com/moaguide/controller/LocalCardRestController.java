@@ -87,7 +87,8 @@ public class LocalCardRestController {
             }
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
-            billingService.save(nickname,rootNode.get("cardCompany").asText(),Integer.valueOf(rootNode.get("cardNumber").asText().substring(0,2)),customerKey,rootNode.get("billingKey").asText());            Map<String,Object> map = new HashMap<>();
+            billingService.save(nickname,rootNode.get("cardCompany").asText(),Integer.valueOf(rootNode.get("cardNumber").asText().substring(0,2)),customerKey,rootNode.get("billingKey").asText());
+            Map<String,Object> map = new HashMap<>();
             map.put("cardName",rootNode.get("cardCompany").asText());
             map.put("cardNumber",Integer.valueOf(rootNode.get("cardNumber").asText().substring(0,2)));
             return ResponseEntity.ok().body(map);
