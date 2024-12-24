@@ -1,8 +1,9 @@
-package com.moaguide.controller;
+package com.moaguide.controller.ArticleContent;
 
-import com.moaguide.dto.ArticlePaywallRequestDto;
+import com.moaguide.domain.user.Role;
+import com.moaguide.dto.ArticleContentWriteRequestDto;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.service.ArticlePaywallService;
+import com.moaguide.service.ArticleContent.ArticleContentWriteService;
 import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/articles")
+@RequestMapping("/articles")
 @RequiredArgsConstructor
-public class ArticlePaywallController {
-
-    private final ArticlePaywallService articlePaywallService;
+public class ArticleContentWriteController {
+    private final ArticleContentWriteService articleContentWriteService;
     private final JWTUtil jwtUtil;
 
     /**
@@ -31,7 +31,7 @@ public class ArticlePaywallController {
     @PostMapping
     public ResponseEntity<Map<String, Object>> saveArticle(
             @RequestHeader(value = "Authorization", required = false) String jwt,
-            @RequestBody @Valid ArticlePaywallRequestDto requestDto) {
+            @RequestBody @Valid ArticleContentWriteRequestDto requestDto) {
 
         Map<String, Object> response = new HashMap<>();
         try {
@@ -49,16 +49,16 @@ public class ArticlePaywallController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
 
-//            // 2. 작성자 권한 확인
-//            String role = jwtUtil.getRole(token);
-//            if (!Role.ADMIN.toString().equals(role)) {
-//                response.put("status", "error");
-//                response.put("message", "접근 권한이 없습니다.");
-//                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-//            }
+            // 2. 작성자 권한 확인
+            String role = jwtUtil.getRole(token);
+            if (!Role.ADMIN.toString().equals(role)) {
+                response.put("status", "error");
+                response.put("message", "접근 권한이 없습니다.");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+            }
 
             // 3. 아티클 저장
-            articlePaywallService.saveArticle(requestDto);
+            articleContentWriteService.saveArticle(requestDto);
 
             response.put("status", "success");
             response.put("message", "아티클이 성공적으로 저장되었습니다.");
@@ -105,16 +105,16 @@ public class ArticlePaywallController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
 
-//            // 2. 작성자 권한 확인
-//            String role = jwtUtil.getRole(token);
-//            if (!"ADMIN".equals(role)) {
-//                response.put("status", "error");
-//                response.put("message", "접근 권한이 없습니다.");
-//                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-//            }
+            // 2. 작성자 권한 확인
+            String role = jwtUtil.getRole(token);
+            if (!"ADMIN".equals(role)) {
+                response.put("status", "error");
+                response.put("message", "접근 권한이 없습니다.");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+            }
 
             // 3. 아티클 삭제
-            boolean deleted = articlePaywallService.deleteArticleById(id);
+            boolean deleted = articleContentWriteService.deleteArticleById(id);
             if (!deleted) {
                 response.put("status", "error");
                 response.put("message", "삭제할 아티클이 존재하지 않습니다.");
