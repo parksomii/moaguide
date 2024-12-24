@@ -1,8 +1,8 @@
-package com.moaguide.controller;
+package com.moaguide.controller.ArticleContent;
 
 import com.moaguide.domain.CategoryContent.Category;
-import com.moaguide.dto.ContentDto;
-import com.moaguide.service.ArticleContentService;
+import com.moaguide.dto.ArticleQueryDto;
+import com.moaguide.service.ArticleContent.ArticleQueryService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,15 +19,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/contents")
 @Slf4j
-public class ContentController {
+public class ArticleQueryController {
 
-    private final ArticleContentService articleContentService;
+    private final ArticleQueryService articleQueryService;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> getContentsByCategory(
             @RequestParam int categoryId,
             @RequestParam int page) {
-        Page<ContentDto> contents = articleContentService.getContentsByCategory(categoryId, page);
+        Page<ArticleQueryDto> contents = articleQueryService.getContentsByCategory(categoryId, page);
 
         Map<String, Object> response = new HashMap<>();
         response.put("content", contents.getContent()); // 현재 페이지 데이터
@@ -43,7 +43,7 @@ public class ContentController {
             @RequestParam String type,
             @RequestParam String category,
             @RequestParam int page) {
-        Page<ContentDto> contents;
+        Page<ArticleQueryDto> contents;
 
         // Category Enum으로 변환
         Category categoryEnum;
@@ -55,11 +55,11 @@ public class ContentController {
 
         // type에 따라 서비스 호출
         if (type.equals("all")) {
-            contents = articleContentService.getContentsByAll(categoryEnum, page);
+            contents = articleQueryService.getContentsByAll(categoryEnum, page);
         } else if (type.equals("article")) {
-            contents = articleContentService.getContentsByType("아티클", categoryEnum, page);
+            contents = articleQueryService.getContentsByType("아티클", categoryEnum, page);
         } else if (type.equals("video")) {
-            contents = articleContentService.getContentsByType("영상", categoryEnum, page);
+            contents = articleQueryService.getContentsByType("영상", categoryEnum, page);
         } else {
             return ResponseEntity.badRequest().body(Map.of("error", "Invalid type: " + type));
         }
