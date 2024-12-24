@@ -5,13 +5,13 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ContentOverviewDto {
+public class ArticleOverviewDto {
 
-    private int contentId;
+    private Long articleId;
     private String title;
     private String type;
     private boolean isPremium;
-    private String description;
-    private String img_link;
+    private String paywallUp;
+    private String imgLink;
     private String categoryName;
 }

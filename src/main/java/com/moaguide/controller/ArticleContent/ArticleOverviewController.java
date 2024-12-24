@@ -1,8 +1,8 @@
-package com.moaguide.controller;
+package com.moaguide.controller.ArticleContent;
 
 import com.moaguide.domain.CategoryContent.Category;
-import com.moaguide.dto.ContentOverviewDto;
-import com.moaguide.service.ArticleContentService;
+import com.moaguide.dto.ArticleOverviewDto;
+import com.moaguide.service.ArticleContent.ArticleOverviewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +19,9 @@ import java.util.Map;
 @AllArgsConstructor
 @RestController
 @Slf4j
-public class ContentOverviewController {
+public class ArticleOverviewController {
 
-    private final ArticleContentService articleContentService;
+    private final ArticleOverviewService articleOverviewService;
 
     @GetMapping("/overview")
     public ResponseEntity<Map<String, Object>> getContentsOverview(
@@ -30,13 +30,13 @@ public class ContentOverviewController {
             @RequestParam(defaultValue = "5") int newsLimit) {
 
         // 인기 콘텐츠 가져오기
-        List<ContentOverviewDto> popularContents = articleContentService.getPopularContents(popularLimit);
+        List<ArticleOverviewDto> popularContents = articleOverviewService.getPopularContents(popularLimit);
 
         // 최신 콘텐츠 가져오기
-        List<ContentOverviewDto> recentContents = articleContentService.getRecentContents(recentLimit);
+        List<ArticleOverviewDto> recentContents = articleOverviewService.getRecentContents(recentLimit);
 
         // 최신 뉴스 클리핑 가져오기 (카테고리 = NEWS)
-        List<ContentOverviewDto> latestNews = articleContentService.getLatestEconomicIssues(Category.NEWS, newsLimit);
+        List<ArticleOverviewDto> latestNews = articleOverviewService.getLatestEconomicIssues(Category.NEWS, newsLimit);
 
         // 응답 데이터 구성
         Map<String, Object> response = new HashMap<>();
