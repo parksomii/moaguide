@@ -1,7 +1,10 @@
 package com.moaguide.domain.coupon;
 
+import com.moaguide.controller.ContentRestController;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +39,7 @@ public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
             "join CouponAdmin ca on c.couponId = ca.id " +
             "where c.id in (select min(ci.id) FROM CouponUser ci where ci.nickname in :nickname and ci.redeemedAt is null group by ci.nickname)")
     List<BillingCouponUSer> findAllByNickname(@Param("nickname") List<String> nicknameList);
+
+    @Query("SELECT c.id FROM CouponUser c where c.nickname=:nickname and c.redeemedAt is null order by c.id")
+    Page<Long> findByNicknameAndPage(@Param("nickname") String nickname, Pageable page);
 }

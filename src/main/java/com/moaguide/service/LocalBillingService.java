@@ -11,6 +11,7 @@ import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;
+import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DuplicateKeyException;
@@ -156,5 +157,15 @@ public class LocalBillingService {
     public String findLog(String nickname) {
         Pageable page = Pageable.ofSize(1).withPage(0);
         return paymentLogRepository.findLog(nickname,page).getContent().get(0);
+    }
+
+    public Long findCoupon(String nickname) {
+        Pageable page = Pageable.ofSize(1).withPage(0);
+        return couponUserRepository.findByNicknameAndPage(nickname,page).getContent().get(0);
+    }
+
+    public lastLogDto findLastLog(String nickname) {
+        Pageable page = Pageable.ofSize(1).withPage(0);
+        return paymentLogRepository.findlastLog(nickname,page).getContent().get(0);
     }
 }

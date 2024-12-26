@@ -8,9 +8,11 @@ import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
+import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -146,5 +148,15 @@ public class BillingService {
             paymentRequests.add(new PaymentRequest(uniqueKey,nickname,4900,endDate,0));
         }
         paymentRequestRepository.saveAll(paymentRequests);
+    }
+
+    public Long findCoupon(String nickname) {
+        Pageable page = Pageable.ofSize(1).withPage(0);
+        return couponUserRepository.findByNicknameAndPage(nickname,page).getContent().get(0);
+    }
+
+    public lastLogDto findLastLog(String nickname) {
+        Pageable page = Pageable.ofSize(1).withPage(0);
+        return paymentLogRepository.findlastLog(nickname,page).getContent().get(0);
     }
 }

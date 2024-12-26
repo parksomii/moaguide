@@ -3,6 +3,7 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.billing.PaymentLog;
 import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;
+import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.LocalBillingService;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,7 @@ public class LocalBillingRestController {
     }
 
     @PostMapping("/start")
-    public ResponseEntity<?> Billingstart(@RequestHeader(value = "Authorization",required = false) String jwt, @RequestParam(value = "couponId", required = false) Long couponId) {
+    public ResponseEntity<?> Billingstart(@RequestHeader(value = "Authorization",required = false) String jwt) {
         try {
             if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
@@ -44,6 +45,7 @@ public class LocalBillingRestController {
             if(date.getPaymentDate() != null){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 구독중입니다.");
             }
+            Long couponId = LocalbillingService.findCoupon(nickname);
             LocalDateTime endDay = date.getEndDate() != null ? date.getEndDate() : null;
             String orderId = UUID.randomUUID().toString();
             Map<String, String> map = new HashMap<>();
@@ -102,16 +104,26 @@ public class LocalBillingRestController {
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
             LocalSubscriptDateDto date = LocalbillingService.findDate(nickname);
+            lastLogDto lastLogDto = LocalbillingService.findLastLog(nickname);
+            Map<String,Object> map = new HashMap<>();
             if(date == null) {
-                Map<String,Object> map = new HashMap<>();
-                map.put("status",false);
+                map.put("status","nonsubscribed");
                 map.put("date", null);
+                map.put("lastLogName",null);
+                map.put("lastAmount",null);
                 return ResponseEntity.ok(map);
             }else {
-                Map<String,Object> map = new HashMap<>();
-                map.put("status",true);
-                map.put("date", date);
-                return ResponseEntity.ok(map);
+                map.put("lastLogName",lastLogDto.getLogname());
+                map.put("lastAmount",lastLogDto.getAmount());
+                if(date.getPaymentDate() != null){
+                    map.put("status","unsubscribing");
+                    map.put("date", date);
+                    return ResponseEntity.ok(map);
+                }else {
+                    map.put("status", "subscribed");
+                    map.put("date", date);
+                    return ResponseEntity.ok(map);
+                }
             }
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

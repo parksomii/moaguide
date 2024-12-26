@@ -59,7 +59,7 @@ public class LocalPaymentService {
         List<LocalPaymentRequest> paymentRequests = new ArrayList<>();
         for(BillingCouponUSer couponuser : couponUserList ){
             LocalDateTime enddate = LocalDateTime.now().plusDays(couponuser.getMonth()).withMinute(30).plusHours(0).withSecond(0).withNano(0);
-            paymentLogRepository.save(new PaymentLog(couponuser.getCouponName(),0,"쿠폰",nowDate,nowDate,4900,couponuser.getNickname()));
+            paymentLogRepository.save(new PaymentLog(couponuser.getCouponName(),0,"쿠폰",nowDate,nowDate,4900*couponuser.getMonth(),couponuser.getNickname()));
             couponUserRepository.updateRedeemedWithCouponId(true,nowDate.toLocalDate(),couponuser.getNickname(),couponuser.getCouponId());
             cardRepository.updateSubscriptByCron(couponuser.getNickname(),enddate);
             localPaymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),enddate);
