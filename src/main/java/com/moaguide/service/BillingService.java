@@ -154,7 +154,7 @@ public class BillingService {
     public Long findCoupon(String nickname) {
         Pageable page = Pageable.ofSize(1).withPage(0);
         Page<Long> couponId = couponUserRepository.findByNicknameAndPage(nickname,page);
-        if (couponId.isEmpty()) {
+        if (couponId.isEmpty() || couponId.getContent().isEmpty()) {
             return null;
         }else {
             return couponId.getContent().get(0);
