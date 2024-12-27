@@ -164,7 +164,7 @@ public class BillingService {
     public lastLogDto findLastLog(String nickname) {
         Pageable page = Pageable.ofSize(1).withPage(0);
         Page<lastLogDto> lastLogDto = paymentLogRepository.findlastLog(nickname,page);
-        if (lastLogDto.isEmpty()) {
+        if (lastLogDto.isEmpty() || lastLogDto.getContent().isEmpty()) {
             return null;
         }else {
             return lastLogDto.getContent().get(0);
