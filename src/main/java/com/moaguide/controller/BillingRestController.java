@@ -110,11 +110,11 @@ public class BillingRestController {
                 map.put("lastLogName",lastLogDto.getLogname());
                 map.put("lastAmount",lastLogDto.getAmount());
                 if(date.getPaymentDate() != null){
-                    map.put("status","unsubscribing");
+                    map.put("status","subscribed");
                     map.put("date", date);
                     return ResponseEntity.ok(map);
                 }else {
-                    map.put("status", "subscribed");
+                    map.put("status", "unsubscribing");
                     map.put("date", date);
                     return ResponseEntity.ok(map);
                 }
