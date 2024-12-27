@@ -127,7 +127,7 @@ public class LocalBillingService {
     }
 
     public LocalSubscriptDateDto findDate(String nickname) {
-        return cardRepository.findDate(nickname);
+        return cardRepository.findDate(nickname).orElse(null);
     }
 
     @Transactional

@@ -12,13 +12,14 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Profile("local")
 public interface CardRepository extends JpaRepository<Card, Long> {
 
     @Query("select new com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto(c.subscriptionStartDate,c.subscriptionEndDate,p.NextPaymentDate) FROM Card c left join LocalPaymentRequest p on c.nickname=p.nickname and c.subscriptionEndDate=p.NextPaymentDate where c.nickname =:nickname ")
-    LocalSubscriptDateDto findDate(@Param("nickname") String nickname);
+    Optional<LocalSubscriptDateDto> findDate(@Param("nickname") String nickname);
 
 
     @Modifying
