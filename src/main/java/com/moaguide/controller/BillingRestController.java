@@ -100,7 +100,7 @@ public class BillingRestController {
             SubscriptDateDto date = billingService.findDate(nickname);
             lastLogDto lastLogDto = billingService.findLastLog(nickname);
             Map<String,Object> map = new HashMap<>();
-            if(date == null) {
+            if(date == null || date.getStartDate() == null || date.getEndDate() == null) {
                 map.put("status","nonsubscribed");
                 map.put("date", null);
                 map.put("lastLogName",null);

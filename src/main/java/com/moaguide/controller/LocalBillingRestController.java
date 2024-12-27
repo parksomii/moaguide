@@ -106,7 +106,7 @@ public class LocalBillingRestController {
             LocalSubscriptDateDto date = LocalbillingService.findDate(nickname);
             lastLogDto lastLogDto = LocalbillingService.findLastLog(nickname);
             Map<String,Object> map = new HashMap<>();
-            if(date == null) {
+            if(date == null || date.getStartDate() == null || date.getEndDate() == null) {
                 map.put("status","nonsubscribed");
                 map.put("date", null);
                 map.put("lastLogName",null);
