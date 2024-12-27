@@ -1,14 +1,11 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.coupon.CouponUser;
 import com.moaguide.domain.user.Role;
-import com.moaguide.domain.user.User;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CouponService;
 import io.jsonwebtoken.JwtException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

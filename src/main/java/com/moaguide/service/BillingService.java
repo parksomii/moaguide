@@ -12,6 +12,7 @@ import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -152,11 +153,21 @@ public class BillingService {
 
     public Long findCoupon(String nickname) {
         Pageable page = Pageable.ofSize(1).withPage(0);
-        return couponUserRepository.findByNicknameAndPage(nickname,page).getContent().get(0);
+        Page<Long> couponId = couponUserRepository.findByNicknameAndPage(nickname,page);
+        if (couponId.isEmpty()) {
+            return null;
+        }else {
+            return couponId.getContent().get(0);
+        }
     }
 
     public lastLogDto findLastLog(String nickname) {
         Pageable page = Pageable.ofSize(1).withPage(0);
-        return paymentLogRepository.findlastLog(nickname,page).getContent().get(0);
+        Page<lastLogDto> lastLogDto = paymentLogRepository.findlastLog(nickname,page);
+        if (lastLogDto.isEmpty()) {
+            return null;
+        }else {
+            return lastLogDto.getContent().get(0);
+        }
     }
 }
