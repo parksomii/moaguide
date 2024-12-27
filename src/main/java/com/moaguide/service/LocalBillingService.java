@@ -137,7 +137,7 @@ public class LocalBillingService {
 
     @Transactional
     public void developstop(String nickname) {
-        userRepository.deleteByNicknameDate(nickname);
+        cardRepository.deleteByNicknameDate(nickname);
         localpaymentRequestRepository.deletebyNickname(nickname);
         paymentLogRepository.deleteByNickname(nickname);
         userRepository.updateRole(nickname,Role.USER);
