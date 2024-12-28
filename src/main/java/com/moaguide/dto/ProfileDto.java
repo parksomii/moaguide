@@ -12,4 +12,5 @@ public class ProfileDto {
     public String email;
     public String loginType;
     public Integer marketing;
+    public Boolean subscript;
 }

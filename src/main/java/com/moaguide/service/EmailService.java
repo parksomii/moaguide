@@ -116,4 +116,48 @@ public class EmailService {
             return "예상치 못한 오류가 발생했습니다.";
         }
     }
+
+    public String sendCoupon(String email, String couponNumber) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            String decodedEmail = URLDecoder.decode(email, StandardCharsets.UTF_8);
+
+            helper.setTo(decodedEmail);
+            helper.setFrom(new InternetAddress(senderEmail, "모아가이드", StandardCharsets.UTF_8.name()));
+            helper.setSubject("모아가이드 쿠폰 등록 안내");
+            ClassPathResource resource = new ClassPathResource("/templates/email/couponmail.html");
+            String htmlContent = StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+
+            // 플레이스홀더를 실제 인증 번호로 대체
+            htmlContent = htmlContent.replace("{{code}}", couponNumber);
+
+            // 이메일 본문에 HTML 설정
+            helper.setText(htmlContent, true);
+
+            // 이메일 전송
+            mailSender.send(message);
+            return "이메일 전송 완료";
+        } catch (MessagingException e) {
+            // 이메일 생성 과정에서 발생하는 예외 처리
+            System.err.println("Error creating or setting up the email message: " + e.getMessage());
+            e.printStackTrace();
+            return "이메일 메시지를 생성하는 중 오류가 발생했습니다.";
+        } catch (IOException e) {
+            // HTML 파일을 읽는 중 발생할 수 있는 IO 예외 처리
+            System.err.println("Error reading the HTML template file: " + e.getMessage());
+            e.printStackTrace();
+            return "HTML 템플릿 파일을 읽는 중 오류가 발생했습니다.";
+        } catch (MailException e) {
+            // 이메일 전송 과정에서 발생하는 예외 처리
+            System.err.println("Error sending the email: " + e.getMessage());
+            e.printStackTrace();
+            return "이메일을 전송하는 중 오류가 발생했습니다.";
+        } catch (Exception e) {
+            // 그 외 예상하지 못한 예외 처리
+            System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+            return "예상치 못한 오류가 발생했습니다.";
+        }
+    }
 }

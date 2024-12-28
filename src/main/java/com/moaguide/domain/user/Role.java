@@ -1,5 +1,5 @@
 package com.moaguide.domain.user;
 
 public enum Role {
-    USER,VIP;
+    USER,VIP,ADMIN;
 }

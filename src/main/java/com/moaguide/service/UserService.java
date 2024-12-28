@@ -60,12 +60,7 @@ public class UserService {
     }
 
     public boolean checkPassword(String nickname, String password) {
-        log.info("Service *************** nickname : {}", nickname);
         User user = userRepository.findUserByNickName(nickname);
-        log.info("Service *************** user : {}", user.getNickname());
-        log.info("Service *************** password : {}", password);
-        log.info("Service *************** password {} : userPassword {}", password, user.getPassword());
-        // 만약 비밀번호가 맞다면
         if (passwordEncoder.matches(password, user.getPassword())) {
             return true;
         }
@@ -101,5 +96,17 @@ public class UserService {
         }catch (Exception e) {
             return "fail";
         }
+    }
+
+    public Boolean checkPasswordByAdmin(String email, String password) {
+        User user = userRepository.findUserByEmailAndAdmin(email);
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return true;
+        }
+        return false;
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmailAndLoginType(email,"admin").orElse(null);
     }
 }
