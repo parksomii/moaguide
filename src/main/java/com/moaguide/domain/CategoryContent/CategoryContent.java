@@ -19,3 +19,4 @@ public class CategoryContent {
     private String name;
     private String description;
 }
+

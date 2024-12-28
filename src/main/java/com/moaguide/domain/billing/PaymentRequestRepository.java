@@ -23,7 +23,7 @@ public interface PaymentRequestRepository extends JpaRepository<PaymentRequest,S
     List<String> findByDate(@Param("nowDate") LocalDate nowDate);
 
     @Modifying
-    @Query("delete FROM PaymentRequest p where p.nickname =:nickname and p.NextPaymentDate<=:enddate")
+    @Query("delete FROM PaymentRequest p where p.nickname =:nickname and p.NextPaymentDate<:enddate")
     void deletebyNicknameAndDate(@Param("nickname")String nickname,@Param("enddate")LocalDate enddate);
 
     @Query("select new  com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto(p.orderId,b.billingKey,b.customerKey,p.amount,p.nickname,p.failCount) FROM PaymentRequest p left join BillingInfo b on p.nickname = b.nickname where p.NextPaymentDate =:nowDate")
@@ -38,5 +38,5 @@ public interface PaymentRequestRepository extends JpaRepository<PaymentRequest,S
 
     @Modifying
     @Query("DELETE FROM PaymentRequest p WHERE p.nickname IN :nicknames")
-    void deleteByFailCount(@Param("nickname") List<String> nickname);
+    void deleteByFailCount(@Param("nicknames") List<String> nickname);
 }

@@ -38,7 +38,7 @@ public class CouponService {
             int couponLength = 6;
             SecureRandom secureRandom = new SecureRandom();
             StringBuilder couponNumber = new StringBuilder();
-            String couponname = month+"개월 무료이용권";
+            String couponname ="모아가이드 "+month+"개월 무료이용권";
             // 쿠폰 생성 반복
             for (int i = 0; i < couponLength; i++) {
                 int randomIndex = secureRandom.nextInt(characters.length()); // 문자 집합에서 랜덤 인덱스 생성

@@ -23,7 +23,7 @@ public interface LocalPaymentRequestRepository extends JpaRepository<LocalPaymen
     List<String> findByDate(@Param("nowDate") LocalDateTime nowDate);
 
     @Modifying
-    @Query("delete FROM LocalPaymentRequest p where p.nickname =:nickname and p.NextPaymentDate<=:enddate")
+    @Query("delete FROM LocalPaymentRequest p where p.nickname =:nickname and p.NextPaymentDate< :enddate")
     void deletebyNicknameAndDate(@Param("nickname")String nickname,@Param("enddate")LocalDateTime enddate);
 
     @Query("select new  com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto(p.orderId,b.billingKey,b.customerKey,p.amount,p.nickname,p.failCount) FROM LocalPaymentRequest p left join BillingInfo b on p.nickname = b.nickname where p.NextPaymentDate =:nowDate")

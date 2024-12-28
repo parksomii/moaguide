@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.domain.user.User;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.service.BillingService;
 import com.moaguide.service.LocalBillingService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -88,7 +87,8 @@ public class LocalCardRestController {
             }
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(response.body());
-            billingService.save(nickname,rootNode.get("cardCompany").asText(),Integer.valueOf(rootNode.get("cardNumber").asText().substring(0,2)),customerKey,rootNode.get("billingKey").asText());            Map<String,Object> map = new HashMap<>();
+            billingService.save(nickname,rootNode.get("cardCompany").asText(),Integer.valueOf(rootNode.get("cardNumber").asText().substring(0,2)),customerKey,rootNode.get("billingKey").asText());
+            Map<String,Object> map = new HashMap<>();
             map.put("cardName",rootNode.get("cardCompany").asText());
             map.put("cardNumber",Integer.valueOf(rootNode.get("cardNumber").asText().substring(0,2)));
             return ResponseEntity.ok().body(map);
