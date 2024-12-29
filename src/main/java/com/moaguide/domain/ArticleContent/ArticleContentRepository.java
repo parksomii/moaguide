@@ -1,6 +1,8 @@
 package com.moaguide.domain.ArticleContent;
 
 import com.moaguide.dto.ArticleOverviewDto;
+import com.moaguide.dto.RelatedContentDto;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -47,4 +49,14 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
   // 타입별 데이터 가져오기
   @Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
   Page<ArticleContent> findAllByType(@Param("type") String type, Pageable pageable);
+
+  @Query(
+      "SELECT new com.moaguide.dto.RelatedContentDto(c.articleId, c.title, c.imgLink, c.createdAt, c.views, c.likes) "
+          +
+          "FROM ArticleContent c " +
+          "WHERE c.categoryId.categoryId = :categoryId AND c.articleId != :articleId " +
+          "ORDER BY FUNCTION('RAND')")
+  List<RelatedContentDto> findRelatedArticles(@Param("categoryId") Long categoryId,
+      @Param("articleId") Long articleId);
+
 }
