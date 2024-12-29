@@ -2,6 +2,7 @@ package com.moaguide.service.ArticleContent;
 
 import com.moaguide.domain.ArticleContent.ArticleContent;
 import com.moaguide.domain.ArticleContent.ArticleContentRepository;
+import com.moaguide.domain.ArticleContent.ArticleLikeRepository;
 import com.moaguide.domain.user.Role;
 import com.moaguide.dto.ArticleNonSubscriberDto;
 import com.moaguide.dto.ArticleSubscriberDto;
@@ -18,11 +19,15 @@ import org.springframework.stereotype.Service;
 public class ArticleDetailService {
 
   private final ArticleContentRepository articleContentRepository;
+  private final ArticleLikeRepository articleLikeRepository;
 
   public Object getArticleDetail(Long articleId, String role) {
     // 아티클 조회
     ArticleContent article = articleContentRepository.findById(articleId)
         .orElseThrow(() -> new EntityNotFoundException("해당 아티클을 찾을 수 없습니다."));
+
+    // 좋아요 수 조회
+    int likes = articleLikeRepository.countLikesByArticleId(articleId);
 
     // 카테고리 이름 가져오기
     String categoryName = article.getCategoryId().getName();
@@ -40,7 +45,7 @@ public class ArticleDetailService {
             combinedText,
             article.getImgLink(),
             article.getViews(),
-            article.getLikes(),
+            likes,
             article.getCreatedAt().toString()
         );
       } else if (Role.USER.toString().equals(role)) {
@@ -53,7 +58,7 @@ public class ArticleDetailService {
             article.getPaywallUp(),
             article.getImgLink(),
             article.getViews(),
-            article.getLikes(),
+            likes,
             article.getCreatedAt().toString()
         );
       } else {
@@ -70,7 +75,7 @@ public class ArticleDetailService {
           combinedText,
           article.getImgLink(),
           article.getViews(),
-          article.getLikes(),
+          likes,
           article.getCreatedAt().toString()
       );
     }

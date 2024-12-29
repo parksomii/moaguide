@@ -13,5 +13,5 @@ public class RelatedContentDto {
   private String imgLink;     // 대표 이미지 URL
   private Timestamp createdAt; // 작성일
   private Integer views;      // 조회수
-  private Integer likes;      // 좋아요 수
+  private Long likes;      // 좋아요 수
 }

@@ -51,12 +51,13 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
   Page<ArticleContent> findAllByType(@Param("type") String type, Pageable pageable);
 
   @Query(
-      "SELECT new com.moaguide.dto.RelatedContentDto(c.articleId, c.title, c.imgLink, c.createdAt, c.views, c.likes) "
+      "SELECT new com.moaguide.dto.RelatedContentDto(c.articleId, c.title, c.imgLink, c.createdAt, c.views, "
+          +
+          "(SELECT CAST(COUNT(al) AS long) FROM ArticleLike al WHERE al.article.articleId = c.articleId)) "
           +
           "FROM ArticleContent c " +
           "WHERE c.categoryId.categoryId = :categoryId AND c.articleId != :articleId " +
           "ORDER BY FUNCTION('RAND')")
   List<RelatedContentDto> findRelatedArticles(@Param("categoryId") Long categoryId,
       @Param("articleId") Long articleId);
-
 }
