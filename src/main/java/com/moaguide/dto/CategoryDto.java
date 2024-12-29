@@ -6,8 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CategoryDto {
-    private int categoryId;
-    private String name;
-    private String description;
+
+  private Long categoryId;
+  private String name;
+  private String description;
 
 }
