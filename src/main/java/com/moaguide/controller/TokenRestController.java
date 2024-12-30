@@ -27,8 +27,10 @@ public class TokenRestController {
         String refresh = null;
         String remember = null;
         Cookie[] cookies = request.getCookies();
+        if(cookies==null){
+            return new ResponseEntity<>("cookies null", HttpStatus.BAD_REQUEST);
+        }
         for (Cookie cookie : cookies) {
-
             if (cookie.getName().equals("refresh")) {
                 refresh = cookie.getValue();
             }
@@ -38,7 +40,6 @@ public class TokenRestController {
         }
 
         if (refresh == null) {
-
             //response status code
             return new ResponseEntity<>("refresh token null", HttpStatus.BAD_REQUEST);
         }
@@ -55,7 +56,6 @@ public class TokenRestController {
         String category = jwtUtil.getCategory(refresh);
 
         if (!category.equals("refresh")) {
-
             //response status code
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
