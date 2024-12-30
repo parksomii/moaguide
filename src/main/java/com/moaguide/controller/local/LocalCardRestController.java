@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.controller.local;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
