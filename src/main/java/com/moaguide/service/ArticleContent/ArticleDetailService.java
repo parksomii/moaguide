@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,12 @@ public class ArticleDetailService {
 
   private final ArticleContentRepository articleContentRepository;
   private final ArticleLikeRepository articleLikeRepository;
+
+  // 조회수 증가를 위한 메서드
+  @Transactional
+  public void incrementViews(Long articleId) {
+    articleContentRepository.incrementViewCount(articleId);
+  }
 
   public Object getArticleDetail(Long articleId, String role) {
     // 아티클 조회
@@ -94,5 +101,4 @@ public class ArticleDetailService {
     // 상위 3개만 반환
     return allRelatedArticles.stream().limit(3).collect(Collectors.toList());
   }
-
 }
