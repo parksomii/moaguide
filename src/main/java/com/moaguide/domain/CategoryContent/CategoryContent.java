@@ -12,11 +12,12 @@ import lombok.Getter;
 @Getter
 @Table(name = "Category_Content")
 public class CategoryContent {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private int categoryId;
-    private String name;
-    private String description;
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "category_id")
+  private Long categoryId;
+  private String name;
+  private String description;
 }
 
