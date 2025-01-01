@@ -2,6 +2,8 @@ package com.moaguide.controller.ArticleContent;
 
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.ArticleContent.ArticleLikeService;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class ArticleLikeController {
   private final JWTUtil jwtUtil;
 
   @PostMapping("/{articleId}/like")
-  public ResponseEntity<String> toggleLike(
+  public ResponseEntity<Object> toggleLike(
       @RequestHeader(value = "Authorization") String jwt,
       @PathVariable Long articleId) {
 
@@ -39,6 +41,16 @@ public class ArticleLikeController {
 
     // 좋아요 토글
     boolean liked = articleLikeService.toggleLike(articleId, nickname);
-    return ResponseEntity.ok(liked ? "좋아요를 눌렀습니다." : "좋아요를 취소했습니다.");
+
+    // 현재 좋아요 수 반환
+    int likeCount = articleLikeService.getLikeCount(articleId);
+
+    // 응답 생성
+    Map<String, Object> response = new HashMap<>();
+    response.put("liked", liked);
+    response.put("likeCount", likeCount);
+    response.put("message", liked ? "좋아요를 눌렀습니다." : "좋아요를 취소했습니다.");
+
+    return ResponseEntity.ok(response);
   }
 }

@@ -9,6 +9,7 @@ import com.moaguide.domain.user.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class ArticleLikeService {
   private final UserRepository userRepository;
   private final ArticleContentRepository articleContentRepository;
 
+  @Transactional
   public boolean toggleLike(Long articleId, String nickname) {
     // 사용자 확인
     User user = userRepository.findByNickname(nickname)
@@ -41,5 +43,11 @@ public class ArticleLikeService {
       return true; // 좋아요 추가
     }
   }
+
+  // 좋아요 수를 반환하는 메서드 추가
+  public int getLikeCount(Long articleId) {
+    return articleLikeRepository.countLikesByArticleId(articleId);
+  }
+
 }
 
