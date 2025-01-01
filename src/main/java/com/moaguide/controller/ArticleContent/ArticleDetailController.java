@@ -39,6 +39,9 @@ public class ArticleDetailController {
     // Role 확인
     String role = jwtUtil.getRole(token);
 
+    // 조회수 증가
+    articleDetailService.incrementViews(articleId);
+
     // 서비스 호출
     Object articleDetail = articleDetailService.getArticleDetail(articleId, role);
     return ResponseEntity.ok(articleDetail);
@@ -66,7 +69,6 @@ public class ArticleDetailController {
     if (relatedArticles.isEmpty()) {
       return ResponseEntity.ok("이전 글이 없습니다.");
     }
-
     return ResponseEntity.ok(relatedArticles);
   }
 }

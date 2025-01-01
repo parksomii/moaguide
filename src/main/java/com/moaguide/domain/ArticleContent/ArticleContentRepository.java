@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,18 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
   )
   Page<ArticleOverviewDto> findContentsWithCategory(Pageable pageable);
 
+  // 인기 기준 데이터 가져오기
+  @Query(
+      "SELECT new com.moaguide.dto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, " +
+          "CASE WHEN LENGTH(c.paywallUp) > 150 THEN CONCAT(SUBSTRING(c.paywallUp, 1, 150), '...') ELSE c.paywallUp END, "
+          +
+          "c.imgLink, cat.name) " +
+          "FROM ArticleContent c JOIN c.categoryId cat " +
+          "WHERE c.createdAt <= CURRENT_TIMESTAMP " +
+          "ORDER BY c.views DESC"
+  )
+  Page<ArticleOverviewDto> findContentsByViews(Pageable pageable);
+
   // 카테고리 필터 추가된 최신 데이터 가져오기
   @Query(
       "SELECT new com.moaguide.dto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, " +
@@ -50,6 +63,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
   @Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
   Page<ArticleContent> findAllByType(@Param("type") String type, Pageable pageable);
 
+  // 랜덤으로 3개의 관련 아티클 가져오기
   @Query(
       "SELECT new com.moaguide.dto.RelatedContentDto(c.articleId, c.title, c.imgLink, c.createdAt, c.views, "
           +
@@ -60,4 +74,9 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
           "ORDER BY FUNCTION('RAND')")
   List<RelatedContentDto> findRelatedArticles(@Param("categoryId") Long categoryId,
       @Param("articleId") Long articleId);
+
+  // 조회수 증가
+  @Modifying
+  @Query("UPDATE ArticleContent a SET a.views = a.views + 1 WHERE a.articleId = :articleId")
+  void incrementViewCount(@Param("articleId") Long articleId);
 }
