@@ -38,6 +38,6 @@ public interface LocalPaymentRequestRepository extends JpaRepository<LocalPaymen
 
     @Modifying
     @Query("DELETE FROM LocalPaymentRequest p WHERE p.nickname IN :nicknames")
-    void deleteByFailCount(@Param("nickname") List<String> nickname);
+    void deleteByFailCount(@Param("nicknames") List<String> nickname);
 
 }

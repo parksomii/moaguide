@@ -82,9 +82,7 @@ public class LocalTokenRestController {
         response.setHeader("Authorization", "Bearer " + newAccess);
 
         Cookie refreshCookie = cookieService.createLocalCookie("refresh", refreshToken, refreshTokenValidity);
-        refreshCookie.setPath("/");
-        refreshCookie.setSecure(false);
-        refreshCookie.setDomain("api.moaguide.com");
+        response.addCookie(refreshCookie);
         response.addCookie(cookieService.createLocalRememberMeCookie(rememberMe,refreshTokenValidity));
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
