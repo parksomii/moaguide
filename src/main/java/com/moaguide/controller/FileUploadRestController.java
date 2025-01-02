@@ -30,7 +30,7 @@ public class FileUploadRestController {
             String fileName = sb.toString() + ".pdf";
 
             // 2. 파일 저장 경로 설정 (static/pdf)
-            String uploadDir = "src/main/resources/static/pdf/";
+            String uploadDir = "/app/resources/static/pdf/";
             File directory = new File(uploadDir);
             if (!directory.exists()) {
                 directory.mkdirs(); // 디렉토리 없으면 생성
@@ -45,7 +45,7 @@ public class FileUploadRestController {
             return ResponseEntity.ok().body(fileName);
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            return ResponseEntity.status(HttpStatus  .INTERNAL_SERVER_ERROR)
                     .body("File upload failed.");
         }
     }
