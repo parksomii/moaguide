@@ -84,10 +84,10 @@ server:
   servlet:
     session:
       timeout: 3600
-  port: 80
-
-
   timezone: Asia/Seoul
+  tomcat:
+    uri-encoding: UTF-8
+  port: 80
 
 serverName: local_server
 
@@ -172,6 +172,8 @@ server:
     session:
       timeout: 3600
   timezone: Asia/Seoul
+  tomcat:
+    uri-encoding: UTF-8
 
 toss:
   secretkey: test_sk_LkKEypNArW9a1RNL20lj3lmeaxYG
