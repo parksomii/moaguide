@@ -78,7 +78,7 @@ public class FileUploadRestController {
             Resource resource = resourceLoader.getResource("/app/resources/static/pdf/"+fileName);
             File file = resource.getFile();
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION,fileName)	//다운 받아지는 파일 명 설정
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                     .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))	//파일 사이즈 설정
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString())	//바이너리 데이터로 받아오기 설정
                     .body(resource);	//파일 넘기기
