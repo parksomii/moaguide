@@ -42,7 +42,7 @@ public class FileUploadRestController {
             String Id = sb.toString();
 
             // 2.id 저장
-            fileService.save(Id,file.getName());
+            fileService.save(Id,file.getOriginalFilename());
 
             // 3. 파일 저장 경로 설정 (static/pdf)
             String uploadDir = "/app/resources/static/pdf/";
@@ -51,7 +51,7 @@ public class FileUploadRestController {
                 directory.mkdirs(); // 디렉토리 없으면 생성
             }
 
-            Path filePath = Paths.get(uploadDir + file.getName());
+            Path filePath = Paths.get(uploadDir + file.getOriginalFilename());
 
             // 4. 파일 저장
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
@@ -78,7 +78,7 @@ public class FileUploadRestController {
             Resource resource = resourceLoader.getResource("/app/resources/static/pdf/"+fileName);
             File file = resource.getFile();
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION,file.getName())	//다운 받아지는 파일 명 설정
+                    .header(HttpHeaders.CONTENT_DISPOSITION,fileName)	//다운 받아지는 파일 명 설정
                     .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))	//파일 사이즈 설정
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString())	//바이너리 데이터로 받아오기 설정
                     .body(resource);	//파일 넘기기
