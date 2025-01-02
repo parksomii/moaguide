@@ -85,7 +85,7 @@ public class FileUploadRestController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"moaguide.pdf\"; filename*=UTF-8''" + encodedFileName)
                     .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))	//파일 사이즈 설정
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString())	//바이너리 데이터로 받아오기 설정
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE) // PDF 타입으로 명시
                     .body(new InputStreamResource(new FileInputStream(file))); // InputStreamResource로 변경
         } catch (FileNotFoundException e) {
             e.printStackTrace();
