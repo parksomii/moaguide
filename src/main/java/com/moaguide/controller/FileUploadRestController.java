@@ -76,10 +76,8 @@ public class FileUploadRestController {
     public ResponseEntity<byte[]> download(@PathVariable("id") String id) {
         try {
             String fileName = fileService.getFileName(id);
-            Resource resource = resourceLoader.getResource("/app/resources/static/pdf/"+fileName);
-            File file = resource.getFile();
             String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
-            byte[] fileContent = Files.readAllBytes(file.toPath());
+            byte[] fileContent = Files.readAllBytes(Path.of("/app/resources/static/pdf/", fileName));
             // HTTP 응답 구성
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "attachment; filename="+encodedFileName);
