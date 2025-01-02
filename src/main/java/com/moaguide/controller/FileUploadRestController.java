@@ -71,8 +71,8 @@ public class FileUploadRestController {
         }
     }
 
-    @GetMapping("/download/id")
-    public ResponseEntity<Resource> download(@RequestParam("id") String id) {
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> download(@PathVariable("id") String id) {
         try {
             String fileName = fileService.getFileName(id);
             Resource resource = resourceLoader.getResource("/app/resources/static/pdf/"+fileName);
