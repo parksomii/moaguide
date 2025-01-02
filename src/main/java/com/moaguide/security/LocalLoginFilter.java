@@ -83,21 +83,9 @@ public class LocalLoginFilter extends UsernamePasswordAuthenticationFilter {
         //응답 설정
         response.setHeader("Authorization", "Bearer " + accessToken);
         Cookie refreshCookie = cookieService.createLocalCookie("refresh", refreshToken, refreshTokenValidity);
-        String refreshCookieString = String.format(
-                "%s=%s; Max-Age=%d; Path=/; HttpOnly; SameSite=None",
-                refreshCookie.getName(),
-                refreshCookie.getValue(),
-                refreshCookie.getMaxAge()
-        );
         Cookie rememberMeCookie = cookieService.createLocalRememberMeCookie(rememberMe, refreshTokenValidity);
-        String rememberMeCookieString = String.format(
-                "%s=%s; Max-Age=%d; Path=/; HttpOnly; SameSite=None",
-                rememberMeCookie.getName(),
-                rememberMeCookie.getValue(),
-                rememberMeCookie.getMaxAge()
-        );
-        response.addHeader("Set-Cookie", refreshCookieString);
-        response.addHeader("Set-Cookie", rememberMeCookieString);
+        response.addCookie(refreshCookie);
+        response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
