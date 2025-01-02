@@ -76,13 +76,17 @@ public class FileUploadRestController {
     public ResponseEntity<byte[]> download(@PathVariable("id") String id) {
         try {
             String fileName = fileService.getFileName(id);
-            String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
-            byte[] fileContent = Files.readAllBytes(Path.of("/app/resources/static/pdf/", fileName));
-            // HTTP 응답 구성
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "attachment; filename="+encodedFileName);
+            Path filePath = Path.of("/app/resources/static/pdf/", fileName);
 
-            return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
+            // 파일 내용 읽기
+            byte[] fileContent = Files.readAllBytes(filePath);
+
+            // HTTP 응답 반환
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + "\"")
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
+                    .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileContent.length))
+                    .body(fileContent);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
