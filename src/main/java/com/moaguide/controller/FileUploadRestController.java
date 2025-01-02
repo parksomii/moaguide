@@ -14,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -76,25 +73,25 @@ public class FileUploadRestController {
     }
 
     @GetMapping("/download/{id}")
-    public ResponseEntity<Resource> download(@PathVariable("id") String id) {
+    public ResponseEntity<byte[]> download(@PathVariable("id") String id) {
         try {
             String fileName = fileService.getFileName(id);
             Resource resource = resourceLoader.getResource("/app/resources/static/pdf/"+fileName);
-            if (!resource.exists()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
             File file = resource.getFile();
             String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"moaguide.pdf\"; filename*=UTF-8''" + encodedFileName)
-                    .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))	//파일 사이즈 설정
-                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE) // PDF 타입으로 명시
-                    .body(new InputStreamResource(new FileInputStream(file))); // InputStreamResource로 변경
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            // HTTP 응답 구성
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "attachment; filename="+encodedFileName);
+
+            return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
         } catch (IOException e) {
             e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
