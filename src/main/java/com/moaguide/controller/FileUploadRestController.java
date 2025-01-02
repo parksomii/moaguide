@@ -3,6 +3,7 @@ package com.moaguide.controller;
 
 import com.moaguide.service.FileService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DuplicateKeyException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -84,7 +86,7 @@ public class FileUploadRestController {
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"moaguide.pdf\"; filename*=UTF-8''" + encodedFileName)
                     .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.length()))	//파일 사이즈 설정
                     .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString())	//바이너리 데이터로 받아오기 설정
-                    .body(resource);	//파일 넘기기
+                    .body(new InputStreamResource(new FileInputStream(file))); // InputStreamResource로 변경
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(null);
