@@ -80,6 +80,9 @@ public class FileUploadRestController {
         try {
             String fileName = fileService.getFileName(id);
             Resource resource = resourceLoader.getResource("/app/resources/static/pdf/"+fileName);
+            if (!resource.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
             File file = resource.getFile();
             String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
             return ResponseEntity.ok()
