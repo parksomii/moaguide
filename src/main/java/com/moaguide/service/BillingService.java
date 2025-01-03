@@ -71,7 +71,6 @@ public class BillingService {
 
     @Transactional
     public void start(String nickname, String secretkey) throws Exception{
-        log.info("스타트가 실행됨");
         List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             LocalDate endDate = LocalDate.now().plusMonths(1+i);
@@ -106,7 +105,6 @@ public class BillingService {
 
     @Transactional
     public void startWithCoupon(String nickname, Long couponId) throws Exception{
-        log.info("쿠폰 스타트가 실행됨");
         int couponmonth= couponUserRepository.findByNicknameAndCouponId(nickname,couponId).orElseThrow(()->new NoSuchElementException("Coupon not found for nickname: " + nickname));
         List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
@@ -116,7 +114,7 @@ public class BillingService {
         }
         paymentRequestRepository.saveAll(paymentRequests);
         LocalDateTime now_date = LocalDateTime.now();
-        paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",0,"쿠폰",now_date,now_date,4900,nickname));
+        paymentLogRepository.save(new PaymentLog("모아가이드" +couponmonth+"개월 무료 구독",0,"쿠폰",now_date,now_date,4900,nickname));
         couponUserRepository.updateRedeemedWithCouponId(true,LocalDate.now(),nickname,couponId);
         userRepository.updateRole(nickname, Role.VIP);
         userRepository.updateSubscript(nickname,now_date.toLocalDate(),paymentRequests.get(0).getNextPaymentDate());

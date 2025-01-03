@@ -47,12 +47,6 @@ public class BillingRestController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 구독중입니다.");
             }
             Long couponId = billingService.findCoupon(nickname);
-            if( couponId == null){
-                log.info("쿠폰 id 없음");
-            }else{
-                log.info("쿠폰 id 있음");
-                log.info("쿠폰아이디 {}",couponId);
-            }
             LocalDate endDay = date.getEndDate() != null ? date.getEndDate() : null;
             if(endDay == null){
                 if(couponId != null) {
