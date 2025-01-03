@@ -67,7 +67,7 @@ public class BillingRestController {
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (NoSuchElementException e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("카드키가 없습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("카드키나 쿠폰id가 잘못되었습니다.");
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
