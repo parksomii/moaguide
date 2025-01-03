@@ -1,40 +1,25 @@
-# Node.js 관련 (frontend)
-frontend/node_modules/
-frontend/.next/
-frontend/out/
-
-# 환경설정 파일
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
-
-# Log files (frontend)
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
 
 # OS 관련
 .DS_Store
 Thumbs.db
 
 # 백엔드 관련
-backend/.gradle/
-backend/build/
-backend/bin/
-backend/out/
-backend/.settings/
-backend/.factorypath
-backend/.classpath
-backend/.project
+moaguide/.gradle/
+moaguide/build/
+moaguide/bin/
+moaguide/out/
+moaguide/.settings/
+moaguide/.factorypath
+moaguide/.classpath
+moaguide/.project
 
 # 특정 파일 및 디렉토리 제외
-backend/HELP.md
+moaguide/HELP.md
 
 # STS (Spring Tool Suite) specific
-backend/.apt_generated
-backend/.springBeans
-backend/.sts4-cache
+moaguide/.apt_generated
+moaguide/.springBeans
+moaguide/.sts4-cache
 
 # IntelliJ IDEA specific
 .idea/
@@ -55,5 +40,5 @@ backend/.sts4-cache
 # Exclude specific files
 frontend/.env
 frontend/.env.*
-backend/application-secret.yml
-backend/application.yml
+moaguide/application-secret.yml
+moaguide/application.yml
