@@ -53,6 +53,7 @@ public class CouponRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버에러");
         }
     }
+
     //쿠폰 등록 API
     @PostMapping("/register")
     public ResponseEntity register(@RequestParam String code,@RequestHeader(value = "Authorization",required = false) String jwt) {

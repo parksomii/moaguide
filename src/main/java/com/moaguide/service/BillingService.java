@@ -10,6 +10,7 @@ import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 @Profile({"blue","green"})
 public class BillingService {
     private final BillingInfoRepository billingInfoRepository;
@@ -69,6 +71,7 @@ public class BillingService {
 
     @Transactional
     public void start(String nickname, String secretkey) throws Exception{
+        log.info("스타트가 실행됨");
         List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             LocalDate endDate = LocalDate.now().plusMonths(1+i);
@@ -103,6 +106,7 @@ public class BillingService {
 
     @Transactional
     public void startWithCoupon(String nickname, Long couponId) throws Exception{
+        log.info("쿠폰 스타트가 실행됨");
         int couponmonth= couponUserRepository.findByNicknameAndCouponId(nickname,couponId).orElseThrow(()->new NoSuchElementException("Coupon not found for nickname: " + nickname));
         List<PaymentRequest> paymentRequests = new ArrayList<>();
         for (int i = 0; i < 12; i++) {

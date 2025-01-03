@@ -6,6 +6,7 @@ import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BillingService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/billing")
+@Slf4j
 @Profile({"blue","green"})
 public class BillingRestController {
     private final JWTUtil jwtUtil;
@@ -45,6 +47,11 @@ public class BillingRestController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 구독중입니다.");
             }
             Long couponId = billingService.findCoupon(nickname);
+            if( couponId == null){
+                log.info("쿠폰 id 없음");
+            }else{
+                log.info("쿠폰 id 있음");
+            }
             LocalDate endDay = date.getEndDate() != null ? date.getEndDate() : null;
             if(endDay == null){
                 if(couponId != null) {
