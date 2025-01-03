@@ -40,5 +40,6 @@ moaguide/.sts4-cache
 # Exclude specific files
 frontend/.env
 frontend/.env.*
-moaguide/application-secret.yml
-moaguide/application.yml
+
+src/main/resources/application.yml
+src/main/resources/application-secret.yml
