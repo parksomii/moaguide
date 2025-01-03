@@ -31,7 +31,7 @@ public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
     void updateRedeemed(@Param("bol") boolean bol, @Param("date") LocalDate date, @Param("nickname")String name);
 
     @Modifying
-    @Query("update CouponUser c set c.redeemed=:bol,c.redeemedAt =:date where c.nickname=:nickname and c.couponId = :couponId")
+    @Query("update CouponUser c set c.redeemed=:bol,c.redeemedAt =:date where c.nickname=:nickname and c.id = :couponId")
     void updateRedeemedWithCouponId(@Param("bol") boolean b,@Param("date") LocalDate now, @Param("nickname") String nickname, @Param("couponId") Long couponId);
 
     @Query("select new com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer( c.id, c.couponId, ca.name,c.nickname,ca.months) " +
