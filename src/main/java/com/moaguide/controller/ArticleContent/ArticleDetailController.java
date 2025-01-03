@@ -3,6 +3,7 @@ package com.moaguide.controller.ArticleContent;
 import com.moaguide.dto.RelatedContentDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.ArticleContent.ArticleDetailService;
+import com.moaguide.service.ArticleContent.ArticleViewService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleDetailController {
 
   private final ArticleDetailService articleDetailService;
+  private final ArticleViewService articleViewService; // 조회 기록 서비스
   private final JWTUtil jwtUtil;
 
   @GetMapping("/{articleId}")
@@ -39,7 +41,10 @@ public class ArticleDetailController {
     // Role 확인
     String role = jwtUtil.getRole(token);
 
-    // 조회수 증가
+    // 조회수 증가 기록 저장
+    articleViewService.insert(articleId, jwtUtil.getNickname(token));
+
+    // 아티클 조회수 증가
     articleDetailService.incrementViews(articleId);
 
     // 서비스 호출
