@@ -19,61 +19,62 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ArticleDetailController {
 
-  private final ArticleDetailService articleDetailService;
-  private final ArticleViewService articleViewService; // 조회 기록 서비스
-  private final JWTUtil jwtUtil;
+	private final ArticleDetailService articleDetailService;
+	private final ArticleViewService articleViewService; // 조회 기록 서비스
+	private final JWTUtil jwtUtil;
 
-  @GetMapping("/{articleId}")
-  public ResponseEntity<Object> getArticleDetail(
-      @RequestHeader(value = "Authorization", required = false) String jwt,
-      @PathVariable Long articleId) {
+	@GetMapping("/{articleId}")
+	public ResponseEntity<Object> getArticleDetail(
+		@RequestHeader(value = "Authorization", required = false) String jwt,
+		@PathVariable Long articleId) {
 
-    // JWT 유효성 검사
-    if (jwt == null || !jwt.startsWith("Bearer ")) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("액세스 토큰이 없습니다.");
-    }
+		// JWT 유효성 검사
+		if (jwt == null || !jwt.startsWith("Bearer ")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("액세스 토큰이 없습니다.");
+		}
 
-    String token = jwt.substring(7); // "Bearer " 제거
-    if (jwtUtil.isExpired(token)) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("액세스 토큰이 만료되었습니다.");
-    }
+		String token = jwt.substring(7); // "Bearer " 제거
+		if (jwtUtil.isExpired(token)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("액세스 토큰이 만료되었습니다.");
+		}
 
-    // Role 확인
-    String role = jwtUtil.getRole(token);
+		// Role 확인
+		String role = jwtUtil.getRole(token);
 
-    // 조회수 증가 기록 저장
-    articleViewService.insert(articleId, jwtUtil.getNickname(token));
+		// 조회수 증가 기록 저장
+		articleViewService.insert(articleId, jwtUtil.getNickname(token));
 
-    // 아티클 조회수 증가
-    articleDetailService.incrementViews(articleId);
+		// 아티클 조회수 증가
+		articleDetailService.incrementViews(articleId);
 
-    // 서비스 호출
-    Object articleDetail = articleDetailService.getArticleDetail(articleId, role);
-    return ResponseEntity.ok(articleDetail);
-  }
+		// 서비스 호출
+		Object articleDetail = articleDetailService.getArticleDetail(articleId, role);
+		return ResponseEntity.ok(articleDetail);
+	}
 
-  @GetMapping("/{articleId}/related")
-  public ResponseEntity<Object> getRelatedArticles(
-      @RequestHeader(value = "Authorization", required = false) String jwt,
-      @PathVariable Long articleId) {
+	@GetMapping("/{articleId}/related")
+	public ResponseEntity<Object> getRelatedArticles(
+		@RequestHeader(value = "Authorization", required = false) String jwt,
+		@PathVariable Long articleId) {
 
-    // JWT 유효성 검사
-    if (jwt == null || !jwt.startsWith("Bearer ")) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("액세스 토큰이 없습니다.");
-    }
+		// JWT 유효성 검사
+		if (jwt == null || !jwt.startsWith("Bearer ")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("액세스 토큰이 없습니다.");
+		}
 
-    String token = jwt.substring(7); // "Bearer " 제거
-    if (jwtUtil.isExpired(token)) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("액세스 토큰이 만료되었습니다.");
-    }
+		String token = jwt.substring(7); // "Bearer " 제거
+		if (jwtUtil.isExpired(token)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("액세스 토큰이 만료되었습니다.");
+		}
 
-    // 관련 콘텐츠 서비스 호출
-    List<RelatedContentDto> relatedArticles = articleDetailService.getRelatedArticles(articleId);
+		// 관련 콘텐츠 서비스 호출
+		List<RelatedContentDto> relatedArticles = articleDetailService.getRelatedArticles(
+			articleId);
 
-    // 관련 콘텐츠가 없는 경우
-    if (relatedArticles.isEmpty()) {
-      return ResponseEntity.ok("이전 글이 없습니다.");
-    }
-    return ResponseEntity.ok(relatedArticles);
-  }
+		// 관련 콘텐츠가 없는 경우
+		if (relatedArticles.isEmpty()) {
+			return ResponseEntity.ok("이전 글이 없습니다.");
+		}
+		return ResponseEntity.ok(relatedArticles);
+	}
 }

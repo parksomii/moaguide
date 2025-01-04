@@ -18,39 +18,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ArticleLikeController {
 
-  private final ArticleLikeService articleLikeService;
-  private final JWTUtil jwtUtil;
+	private final ArticleLikeService articleLikeService;
+	private final JWTUtil jwtUtil;
 
-  @PostMapping("/{articleId}/like")
-  public ResponseEntity<Object> toggleLike(
-      @RequestHeader(value = "Authorization") String jwt,
-      @PathVariable Long articleId) {
+	@PostMapping("/{articleId}/like")
+	public ResponseEntity<Object> toggleLike(
+		@RequestHeader(value = "Authorization") String jwt,
+		@PathVariable Long articleId) {
 
-    // JWT 유효성 검사
-    if (jwt == null || !jwt.startsWith("Bearer ")) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("액세스 토큰이 없습니다.");
-    }
+		// JWT 유효성 검사
+		if (jwt == null || !jwt.startsWith("Bearer ")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("액세스 토큰이 없습니다.");
+		}
 
-    String token = jwt.substring(7); // "Bearer " 제거
-    if (jwtUtil.isExpired(token)) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("액세스 토큰이 만료되었습니다.");
-    }
+		String token = jwt.substring(7); // "Bearer " 제거
+		if (jwtUtil.isExpired(token)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("액세스 토큰이 만료되었습니다.");
+		}
 
-    // 사용자 Nickname 가져오기
-    String nickname = jwtUtil.getNickname(token);
+		// 사용자 Nickname 가져오기
+		String nickname = jwtUtil.getNickname(token);
 
-    // 좋아요 토글
-    boolean liked = articleLikeService.toggleLike(articleId, nickname);
+		// 좋아요 토글
+		boolean liked = articleLikeService.toggleLike(articleId, nickname);
 
-    // 현재 좋아요 수 반환
-    int likeCount = articleLikeService.getLikeCount(articleId);
+		// 현재 좋아요 수 반환
+		int likeCount = articleLikeService.getLikeCount(articleId);
 
-    // 응답 생성
-    Map<String, Object> response = new HashMap<>();
-    response.put("liked", liked);
-    response.put("likeCount", likeCount);
-    response.put("message", liked ? "좋아요를 눌렀습니다." : "좋아요를 취소했습니다.");
+		// 응답 생성
+		Map<String, Object> response = new HashMap<>();
+		response.put("liked", liked);
+		response.put("likeCount", likeCount);
+		response.put("message", liked ? "좋아요를 눌렀습니다." : "좋아요를 취소했습니다.");
 
-    return ResponseEntity.ok(response);
-  }
+		return ResponseEntity.ok(response);
+	}
 }
