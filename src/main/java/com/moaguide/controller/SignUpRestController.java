@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.UnexpectedRollbackException;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ public class SignUpRestController {
             return ResponseEntity.ok().body("사용가능한 닉네임입니다.");
         }
     }
+
     @PostMapping("/verify/email")
     public ResponseEntity<String> verifyEmail(@RequestBody UserDto userDto){
         boolean duplication = userService.findDuplication(userDto.getEmail());
@@ -46,6 +48,7 @@ public class SignUpRestController {
             return ResponseEntity.ok("중복된 이메일이 없습니다.");
         }
     }
+
     @PostMapping()
     public ResponseEntity<String> signup(HttpServletRequest request, @RequestBody UserDto userDto){
         try {
@@ -72,4 +75,11 @@ public class SignUpRestController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 실패");
         }
     }
+
+    @PostMapping("/history/{email}")
+    public ResponseEntity<String> checkHistory(@PathVariable String email){
+        userService.emailHistory(email);
+        return ResponseEntity.ok().body("성공했습니다.");
+    }
+
 }

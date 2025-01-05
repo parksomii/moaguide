@@ -31,4 +31,9 @@ public class CouponUser {
     @Column(name = "redeemed_At")
     private LocalDate redeemedAt; // 쿠폰 사용 날짜 (NULL 가능)
 
+    public CouponUser(String nickname, Long couponId, Boolean redeemed) {
+        this.nickname = nickname;
+        this.couponId = couponId;
+        this.redeemed = redeemed;
+    }
 }
