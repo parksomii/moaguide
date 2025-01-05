@@ -176,8 +176,13 @@ public class BuildingRestController {
             response.put("object", stayday);
             return ResponseEntity.ok(response);
         } else if (productId.equals("kasa.KR011A20000090")) {
-            keyword = "북촌 월하재";
-            List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
+            keyword ="북촌 월하재";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else if (productId.equals("funble.FB2412111")) {
+            keyword ="더 코노셔 여의도";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
             response.put("object", stayday);
             return ResponseEntity.ok(response);
         } else{
@@ -200,7 +205,17 @@ public class BuildingRestController {
             List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
             response.put("object", stayday);
             return ResponseEntity.ok(response);
-        }else{
+        } else if (productId.equals("kasa.KR011A20000090")) {
+            keyword ="북촌 월하재";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else if (productId.equals("funble.FB2412111")) {
+            keyword ="더 코노셔 여의도";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else{
             response.put("object", new ArrayList<>());
             return ResponseEntity.ok(response);        }
     }
