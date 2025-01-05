@@ -11,6 +11,7 @@ import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,11 +25,28 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CouponService {
     private final CouponAdminRepository couponAdminRepository;
     private final CouponUserRepository couponUserRepository;
     private final EmailService emailService;
     private final UserRepository userRepository;
+
+
+    @Transactional
+    public void firstCreate(String email) {
+        try {
+            LocalDate today = LocalDate.now();
+            String couponNumber = "FIRST1";
+            String couponname ="모아가이드 첫 구독 1개월 무료이용권";
+            String nickname = userRepository.findUserByEmail(email);
+            couponAdminRepository.save(new CouponAdmin(null,couponname,couponNumber,today,1,nickname));
+            CouponAdmin Coupon = couponAdminRepository.findByCodeAndNickname(couponNumber,nickname).orElseThrow();
+            couponUserRepository.save(new CouponUser(nickname,Coupon.getId(),false));
+        }catch (Exception e){
+            log.info("쿠폰생성시 오류 발생 :{}",e);
+        }
+    }
 
     @Transactional
     public String create(int month, String nickname) {

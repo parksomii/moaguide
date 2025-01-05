@@ -1,5 +1,7 @@
 package com.moaguide.service;
 
+import com.moaguide.domain.emailhistory.EmailHistory;
+import com.moaguide.domain.emailhistory.EmailHistoryRepository;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.UserDto;
@@ -18,6 +20,8 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailHistoryRepository emailHistoryRepository;
+    private final CouponService couponService;
 
     public Optional<User> check(String nickName) {
         Optional<User> user = userRepository.findByNickname(nickName);
@@ -108,5 +112,14 @@ public class UserService {
 
     public User findByEmail(String email) {
         return userRepository.findByEmailAndLoginType(email,"admin").orElse(null);
+    }
+
+	public void emailHistory(String email) {
+	    EmailHistory history = emailHistoryRepository.findById(email).orElse(null);
+        if(history == null){
+            emailHistoryRepository.save(new EmailHistory(email));
+            couponService.firstCreate(email);
+        }else{
+        }
     }
 }

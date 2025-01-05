@@ -42,4 +42,7 @@ public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
 
     @Query("SELECT c.id FROM CouponUser c where c.nickname=:nickname and c.redeemedAt is null order by c.id")
     Page<Long> findByNicknameAndPage(@Param("nickname") String nickname, Pageable page);
+
+    @Query("SELECT c FROM CouponUser c, CouponAdmin ca where c.couponId = ca.id and c.nickname=:nickname and ca.couponCode=:couponCode and c.redeemed is false")
+    Optional<CouponUser> findByNicknameAndCouponCode(@Param("nickname") String nickname, @Param("couponCode") String couponCode);
 }
