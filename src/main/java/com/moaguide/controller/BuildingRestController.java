@@ -160,6 +160,7 @@ public class BuildingRestController {
         return ResponseEntity.ok(response);
     }
 
+
     @GetMapping("/stay/day/{productId}")
     public ResponseEntity<Object> stayday(@PathVariable String productId,@RequestParam int syear,@RequestParam int eyear) {
         String keyword;
@@ -175,7 +176,17 @@ public class BuildingRestController {
             List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
             response.put("object", stayday);
             return ResponseEntity.ok(response);
-        }else{
+        } else if (productId.equals("kasa.KR011A20000090")) {
+            keyword ="북촌 월하재";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else if (productId.equals("funble.FB2412111")) {
+            keyword ="더 코노셔 여의도";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else{
             response.put("object", new ArrayList<>());
             return ResponseEntity.ok(response);
         }
@@ -195,7 +206,17 @@ public class BuildingRestController {
             List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
             response.put("object", stayday);
             return ResponseEntity.ok(response);
-        }else{
+        } else if (productId.equals("kasa.KR011A20000090")) {
+            keyword ="북촌 월하재";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else if (productId.equals("funble.FB2412111")) {
+            keyword ="더 코노셔 여의도";
+            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
+            response.put("object", stayday);
+            return ResponseEntity.ok(response);
+        } else{
             response.put("object", new ArrayList<>());
             return ResponseEntity.ok(response);        }
     }
