@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
@@ -42,6 +44,8 @@ public class NotificationService {
         }
     }
 
+    @Transactional
+    @Async
     public void save(Notification notification) {
         int result =userRepository.findByNickname(notification.getNickName()).orElse(null).getMarketingConsent();
         if (result == 2 || result == 3) {
