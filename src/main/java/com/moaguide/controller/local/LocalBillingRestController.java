@@ -22,12 +22,15 @@ import java.util.*;
 public class LocalBillingRestController {
     private final JWTUtil jwtUtil;
     private final LocalBillingService LocalbillingService;
+    private final LocalBillingService localBillingService;
     @Value("${toss.secretkey}")
     private String secretkey;
 
-    public LocalBillingRestController(JWTUtil jwtUtil, LocalBillingService LocalbillingService) {
+    public LocalBillingRestController(JWTUtil jwtUtil, LocalBillingService LocalbillingService,
+        LocalBillingService localBillingService) {
         this.jwtUtil = jwtUtil;
         this.LocalbillingService = LocalbillingService;
+        this.localBillingService = localBillingService;
     }
 
     @PostMapping("/start")
@@ -85,6 +88,27 @@ public class LocalBillingRestController {
             Map<String,Object> map = new HashMap<>();
             map.put("log",paymentLog);
             return ResponseEntity.ok(map);
+        }catch (JwtException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("check/first")
+    public ResponseEntity<?> firstBillingcheck(@RequestHeader(value = "Authorization",required = false) String jwt) {
+        try {
+            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
+            }
+            if (jwtUtil.isExpired(jwt.substring(7))) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
+            }
+            String nickname = jwtUtil.getNickname(jwt.substring(7));
+            Boolean result = localBillingService.findfirstCoupon(nickname);
+            Map<String,Object> status = new HashMap<>();
+            status.put("status",result);
+            return ResponseEntity.ok(status);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (Exception e){

@@ -6,6 +6,7 @@ import com.moaguide.domain.billing.*;
 import com.moaguide.domain.billing.localbilling.LocalPaymentRequest;
 import com.moaguide.domain.billing.localbilling.LocalPaymentRequestRepository;
 import com.moaguide.domain.card.CardRepository;
+import com.moaguide.domain.coupon.CouponUser;
 import com.moaguide.domain.coupon.CouponUserRepository;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
@@ -177,4 +178,13 @@ public class LocalBillingService {
             return lastLogDto.getContent().get(0);
         }
     }
+
+	public Boolean findfirstCoupon(String nickname) {
+        CouponUser result=couponUserRepository.findByNicknameAndCouponCode(nickname,"FIRST1").orElse(null);
+        if(result==null){
+            return false;
+        }else {
+            return true;
+        }
+	}
 }
