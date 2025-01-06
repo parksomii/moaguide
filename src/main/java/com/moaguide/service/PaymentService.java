@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.domain.billing.*;
 import com.moaguide.domain.coupon.CouponUserRepository;
+import com.moaguide.domain.notification.Notification;
+import com.moaguide.domain.notification.NotificationRepository;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
@@ -34,6 +36,7 @@ public class PaymentService {
     private PaymentRequestRepository paymentRequestRepository;
     private PaymentLogRepository paymentLogRepository;
     private UserRepository userRepository;
+    private NotificationRepository notificationRepository;
     @Value("${toss.secretkey}")
     private String secretkey;
 
@@ -56,6 +59,7 @@ public class PaymentService {
             LocalDateTime nowDate = LocalDateTime.now();
             LocalDate enddate = now_date.plusMonths(couponuser.getMonth());
             paymentLogRepository.save(new PaymentLog(couponuser.getCouponName(),0,"쿠폰",nowDate,nowDate,4900*couponuser.getMonth(),couponuser.getNickname()));
+            notificationRepository.save(new Notification(couponuser.getNickname(),"https://moaguide.com/payment","구독 정기 결제가 완료 되었습니다. 지금 확인해보세요",nowDate.toLocalDate()));
             couponUserRepository.updateRedeemedWithCouponId(true,now_date,couponuser.getNickname(),couponuser.getCouponId());
             userRepository.updateSubscriptByCron(couponuser.getNickname(),enddate);
             paymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),enddate);
@@ -97,6 +101,7 @@ public class PaymentService {
                 LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
                 LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
                 paymentLogRepository.save(new PaymentLog(rootNode.get("orderId").asText(),paymentDto.getNickname(),rootNode.get("paymentKey").asText(),rootNode.get("orderName").asText(),4900,"카드",requestedAt,approvedAt,0));
+                notificationRepository.save(new Notification(paymentDto.getNickname(),"https://moaguide.com/payment","구독 정기 결제가 완료 되었습니다. 지금 확인해보세요",requestedAt.toLocalDate()));
                 userRepository.updateSubscriptByCron(paymentDto.getNickname(),endDate);
                 deleteOrderId.add(rootNode.get("orderId").asText());
                 LocalDate lastPaymentDay = LocalDate.now().plusMonths(12);

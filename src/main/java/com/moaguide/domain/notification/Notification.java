@@ -3,6 +3,7 @@ package com.moaguide.domain.notification;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,12 @@ public class Notification {
     private String nickName;
     private String link;
     private String message;
-    private Date Date;
+    private LocalDate Date;
+
+    public Notification(String nickName, String link, String message, LocalDate Date) {
+        this.nickName = nickName;
+        this.link = link;
+        this.message = message;
+        this.Date = Date;
+    }
 }
