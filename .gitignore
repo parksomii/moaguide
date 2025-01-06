@@ -13,6 +13,21 @@ moaguide/.factorypath
 moaguide/.classpath
 moaguide/.project
 
+### Gradle ###
+.gradle/
+**/build/
+
+# Ignore application.yml file
+src/main/resources/application.yml
+moaguide/.gradle/
+moaguide/build/
+moaguide/bin/
+moaguide/out/
+moaguide/.settings/
+moaguide/.factorypath
+moaguide/.classpath
+moaguide/.project
+
 # 특정 파일 및 디렉토리 제외
 moaguide/HELP.md
 
@@ -40,6 +55,9 @@ moaguide/.sts4-cache
 # Exclude specific files
 frontend/.env
 frontend/.env.*
+moaguide/application-secret.yml
+moaguide/application.yml
+
 
 src/main/resources/application.yml
 src/main/resources/application-secret.yml

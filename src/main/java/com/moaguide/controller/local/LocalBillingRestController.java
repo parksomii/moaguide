@@ -1,12 +1,11 @@
-package com.moaguide.controller;
+package com.moaguide.controller.local;
 
 
 import com.moaguide.domain.billing.PaymentLog;
-import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
+import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import com.moaguide.jwt.JWTUtil;
-import com.moaguide.service.BillingService;
-import lombok.extern.slf4j.Slf4j;
+import com.moaguide.service.LocalBillingService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
@@ -14,22 +13,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
 @RequestMapping("/billing")
-@Slf4j
-@Profile({"blue","green"})
-public class BillingRestController {
+@Profile("local")
+public class LocalBillingRestController {
     private final JWTUtil jwtUtil;
-    private final BillingService billingService;
+    private final LocalBillingService LocalbillingService;
     @Value("${toss.secretkey}")
     private String secretkey;
 
-    public BillingRestController(JWTUtil jwtUtil, BillingService billingService) {
+    public LocalBillingRestController(JWTUtil jwtUtil, LocalBillingService LocalbillingService) {
         this.jwtUtil = jwtUtil;
-        this.billingService = billingService;
+        this.LocalbillingService = LocalbillingService;
     }
 
     @PostMapping("/start")
@@ -42,26 +40,31 @@ public class BillingRestController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
-            SubscriptDateDto date = billingService.findDate(nickname);
+            LocalSubscriptDateDto date = LocalbillingService.findDate(nickname);
             if(date.getPaymentDate() != null){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 구독중입니다.");
             }
-            Long couponId = billingService.findCoupon(nickname);
-            LocalDate endDay = date.getEndDate() != null ? date.getEndDate() : null;
+            Long couponId = LocalbillingService.findCoupon(nickname);
+            LocalDateTime endDay = date.getEndDate() != null ? date.getEndDate() : null;
+            String orderId = UUID.randomUUID().toString();
+            Map<String, String> map = new HashMap<>();
             if(endDay == null){
                 if(couponId != null) {
-                    billingService.startWithCoupon(nickname,couponId);
+                    LocalbillingService.startWithCoupon(nickname,couponId,orderId);
                 }else {
-                    billingService.start(nickname, Base64.getEncoder().encodeToString((secretkey + ":").getBytes()));
+                    LocalbillingService.start(nickname, Base64.getEncoder().encodeToString((secretkey + ":").getBytes()),orderId);
                 }
+                map.put("orderId", orderId);
             }else {
-                billingService.startWithDate(nickname, endDay);
+                LocalbillingService.startWithDate(nickname, endDay);
+                String order = LocalbillingService.findLog(nickname);
+                map.put("orderId", order);
             }
-            return ResponseEntity.status(HttpStatus.OK).body("Success");
+            return ResponseEntity.status(HttpStatus.OK).body(map);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (NoSuchElementException e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("카드키나 쿠폰id가 잘못되었습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("카드키가 없습니다.");
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -78,31 +81,10 @@ public class BillingRestController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
-            List<PaymentLog> paymentLog = billingService.findPayment(nickname);
+            List<PaymentLog> paymentLog = LocalbillingService.findPayment(nickname);
             Map<String,Object> map = new HashMap<>();
             map.put("log",paymentLog);
             return ResponseEntity.ok(map);
-        }catch (JwtException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-
-    @GetMapping("check/first")
-    public ResponseEntity<?> firstBillingcheck(@RequestHeader(value = "Authorization",required = false) String jwt) {
-        try {
-            if (jwt == null ||!jwt.startsWith("Bearer ") || jwt.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 없습니다.");
-            }
-            if (jwtUtil.isExpired(jwt.substring(7))) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
-            }
-            String nickname = jwtUtil.getNickname(jwt.substring(7));
-            Boolean result = billingService.findfirstCoupon(nickname);
-            Map<String,Object> status = new HashMap<>();
-            status.put("status",result);
-            return ResponseEntity.ok(status);
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (Exception e){
@@ -120,8 +102,8 @@ public class BillingRestController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
-            SubscriptDateDto date = billingService.findDate(nickname);
-            lastLogDto lastLogDto = billingService.findLastLog(nickname);
+            LocalSubscriptDateDto date = LocalbillingService.findDate(nickname);
+            lastLogDto lastLogDto = LocalbillingService.findLastLog(nickname);
             Map<String,Object> map = new HashMap<>();
             if(date == null || date.getStartDate() == null || date.getEndDate() == null) {
                 map.put("status","nonsubscribed");
@@ -159,7 +141,7 @@ public class BillingRestController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
-            billingService.stop(nickname);
+            LocalbillingService.stop(nickname);
             return ResponseEntity.ok().body("Success");
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
@@ -178,7 +160,7 @@ public class BillingRestController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("액세스 토큰이 만료되었습니다.");
             }
             String nickname = jwtUtil.getNickname(jwt.substring(7));
-            billingService.developstop(nickname);
+            LocalbillingService.developstop(nickname);
             return ResponseEntity.ok().body("Success");
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());

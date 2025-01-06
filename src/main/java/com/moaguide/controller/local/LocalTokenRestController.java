@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.controller.local;
 
 
 import com.moaguide.jwt.JWTUtil;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 @AllArgsConstructor
-@Profile({"blue","green"})
-public class TokenRestController {
+@Profile("local")
+public class LocalTokenRestController {
     private final JWTUtil jwtUtil;
     private final CookieService cookieService;
 
@@ -73,7 +73,7 @@ public class TokenRestController {
         response.addCookie(expiredRefreshCookie);
 
         //make new JWT
-        String newAccess = jwtUtil.createJwt("access", username, role, 24*60*60 * 1000L); // 1시간
+        String newAccess = jwtUtil.createJwt("access", username, role, 60*60 * 1000L); // 1시간
         boolean rememberMe = Boolean.parseBoolean(remember);
         long refreshTokenValidity = rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
         String refreshToken = jwtUtil.createJwt("refresh", username, role, refreshTokenValidity);
@@ -81,7 +81,8 @@ public class TokenRestController {
         //response
         response.setHeader("Authorization", "Bearer " + newAccess);
 
-        Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken, refreshTokenValidity);
+        Cookie refreshCookie = cookieService.createLocalCookie("refresh", refreshToken, refreshTokenValidity);
+        Cookie rememberMeCookie = cookieService.createLocalRememberMeCookie(rememberMe, refreshTokenValidity);
         response.addCookie(refreshCookie);
         response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
         return new ResponseEntity<>("success", HttpStatus.OK);

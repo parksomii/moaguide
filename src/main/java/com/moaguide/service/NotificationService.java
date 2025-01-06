@@ -2,21 +2,25 @@ package com.moaguide.service;
 
 import com.moaguide.domain.notification.Notification;
 import com.moaguide.domain.notification.NotificationRepository;
+import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.NotificationDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor
 @Service
 @Slf4j
 public class NotificationService {
     private final NotificationRepository notificationRepository;
+    private final UserRepository userRepository;
 
     // 알림 상태 확인
     public boolean getNotification(String nickname) {
@@ -38,5 +42,14 @@ public class NotificationService {
         } else {
             return false;  // 해당 ID의 알림이 없어서 삭제 실패
         }
+    }
+
+    @Transactional
+    @Async
+    public void save(Notification notification) {
+        int result =userRepository.findByNickname(notification.getNickName()).orElse(null).getMarketingConsent();
+        if (result == 2 || result == 3) {
+            notificationRepository.save(notification);
+        }else{}
     }
 }
