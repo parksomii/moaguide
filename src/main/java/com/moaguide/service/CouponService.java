@@ -49,21 +49,6 @@ public class CouponService {
     }
 
     @Transactional
-    public void firstCreate(String email) {
-        try {
-            LocalDate today = LocalDate.now();
-            String couponNumber = "FIRST1";
-            String couponname ="모아가이드 첫 구독 1개월 무료이용권";
-            String nickname = userRepository.findUserByEmail(email);
-            couponAdminRepository.save(new CouponAdmin(null,couponname,couponNumber,today,1,nickname));
-            CouponAdmin Coupon = couponAdminRepository.findByCodeAndNickname(couponNumber,nickname).orElseThrow();
-            couponUserRepository.save(new CouponUser(nickname,Coupon.getId(),false));
-        }catch (Exception e){
-            log.info("쿠폰생성시 오류 발생 :{}",e);
-        }
-    }
-
-    @Transactional
     public String create(int month, String nickname) {
         try {
             LocalDate today = LocalDate.now();
