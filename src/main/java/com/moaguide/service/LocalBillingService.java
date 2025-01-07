@@ -116,7 +116,7 @@ public class LocalBillingService {
         }
         localpaymentRequestRepository.saveAll(paymentRequests);
         LocalDateTime now_date = LocalDateTime.now();
-        paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",orderId,0,"쿠폰",now_date,now_date,4900,nickname));
+        paymentLogRepository.save(new PaymentLog("모아가이드 "+couponmonth+"개월 무료구독",orderId,0,"쿠폰",now_date,now_date,4900,nickname));
         couponUserRepository.updateRedeemedWithCouponId(true,LocalDate.now(),nickname,couponId);
         userRepository.updateRole(nickname, Role.VIP);
         cardRepository.updateSubscript(nickname,now_date,paymentRequests.get(0).getNextPaymentDate());
