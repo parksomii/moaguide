@@ -18,6 +18,19 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 	@Query("SELECT c FROM ArticleContent c WHERE c.categoryId.categoryId = :categoryId AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
 	Page<ArticleContent> findByCategoryId(@Param("categoryId") int categoryId, Pageable pageable);
 
+	// 전체 데이터 가져오기
+	@Query("SELECT c FROM ArticleContent c WHERE c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+	Page<ArticleContent> findAllContent(Pageable pageable);
+
+	// 타입과 카테고리별 데이터 가져오기
+	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.categoryId.categoryId = :categoryId AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+	Page<ArticleContent> findByTypeAndCategoryId(@Param("type") String type,
+		@Param("categoryId") int categoryId, Pageable pageable);
+
+	// 타입별 데이터 가져오기
+	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+	Page<ArticleContent> findByTypeContent(@Param("type") String type, Pageable pageable);
+
 	// 최신 기준 데이터 가져오기
 	@Query(
 		"SELECT new com.moaguide.dto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, "
@@ -56,15 +69,6 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			"ORDER BY c.createdAt DESC"
 	)
 	Page<ArticleOverviewDto> findByCategory(@Param("categoryId") int categoryId, Pageable pageable);
-
-	// 타입과 카테고리별 데이터 가져오기
-	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.categoryId.categoryId = :categoryId AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
-	Page<ArticleContent> findByTypeAndCategoryId(@Param("type") String type,
-		@Param("categoryId") int categoryId, Pageable pageable);
-
-	// 타입별 데이터 가져오기
-	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
-	Page<ArticleContent> findAllByType(@Param("type") String type, Pageable pageable);
 
 	// 랜덤으로 3개의 관련 아티클 가져오기
 	@Query(

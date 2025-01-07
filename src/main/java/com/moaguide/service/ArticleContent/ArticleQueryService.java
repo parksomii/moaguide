@@ -18,54 +18,55 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ArticleQueryService {
 
-  private final ArticleContentRepository articleContentRepository;
-  private final ArticleLikeRepository articleLikeRepository;
+	private final ArticleContentRepository articleContentRepository;
+	private final ArticleLikeRepository articleLikeRepository;
 
 
-  // 카테고리별 조회
-  public Page<ArticleQueryDto> getContentsByCategory(int categoryId, int page) {
-    Pageable pageable = PageRequest.of(page - 1, 5);
-    return articleContentRepository.findByCategoryId(categoryId, pageable)
-        .map(this::mapToContentDto);
-  }
+	// 카테고리별 조회
+	public Page<ArticleQueryDto> getContentsByCategory(int categoryId, int page) {
+		Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
+		return articleContentRepository.findByCategoryId(categoryId, pageable)
+			.map(this::mapToContentDto);
+	}
 
-  // 전체 콘텐츠 조회
-  public Page<ArticleQueryDto> getContentsByAll(Category category, int page) {
-    Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
-    if (category == Category.ALL) {
-      return articleContentRepository.findAll(pageable).map(this::mapToContentDto);
-    } else {
-      return articleContentRepository.findByCategoryId(category.getId(), pageable)
-          .map(this::mapToContentDto);
-    }
-  }
+	// 전체 콘텐츠 조회
+	public Page<ArticleQueryDto> getContentsByAll(Category category, int page) {
+		Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
+		if (category == Category.ALL) {
+			return articleContentRepository.findAllContent(pageable).map(this::mapToContentDto);
+		} else {
+			return articleContentRepository.findByCategoryId(category.getId(), pageable)
+				.map(this::mapToContentDto);
+		}
+	}
 
-  // 타입별 조회
-  public Page<ArticleQueryDto> getContentsByType(String type, Category category, int page) {
-    Pageable pageable = PageRequest.of(page - 1, 5);
-    if (category == Category.ALL) {
-      return articleContentRepository.findAllByType(type, pageable)
-          .map(this::mapToContentDto);
-    } else {
-      return articleContentRepository.findByTypeAndCategoryId(type, category.getId(), pageable)
-          .map(this::mapToContentDto);
-    }
-  }
+	// 타입별 조회
+	public Page<ArticleQueryDto> getContentsByType(String type, Category category, int page) {
+		Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
+		if (category == Category.ALL) {
+			return articleContentRepository.findByTypeContent(type, pageable)
+				.map(this::mapToContentDto);
+		} else {
+			return articleContentRepository.findByTypeAndCategoryId(type, category.getId(),
+					pageable)
+				.map(this::mapToContentDto);
+		}
+	}
 
-  // 공통 DTO 매핑 메서드
-  private ArticleQueryDto mapToContentDto(ArticleContent articleContent) {
-    // 좋아요 수 계산
-    int likes = articleLikeRepository.countLikesByArticleId(articleContent.getArticleId());
-    return new ArticleQueryDto(
-        articleContent.getArticleId(),
-        articleContent.getTitle(),
-        articleContent.getType(),
-        articleContent.getIsPremium(),
-        articleContent.getViews(),
-        articleContent.getCreatedAt(),
-        likes,
-        articleContent.getPaywallUp(),
-        articleContent.getImgLink()
-    );
-  }
+	// 공통 DTO 매핑 메서드
+	private ArticleQueryDto mapToContentDto(ArticleContent articleContent) {
+		// 좋아요 수 계산
+		int likes = articleLikeRepository.countLikesByArticleId(articleContent.getArticleId());
+		return new ArticleQueryDto(
+			articleContent.getArticleId(),
+			articleContent.getTitle(),
+			articleContent.getType(),
+			articleContent.getIsPremium(),
+			articleContent.getViews(),
+			articleContent.getCreatedAt(),
+			likes,
+			articleContent.getPaywallUp(),
+			articleContent.getImgLink()
+		);
+	}
 }
