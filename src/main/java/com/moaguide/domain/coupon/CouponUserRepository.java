@@ -23,7 +23,7 @@ public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
     @Query("select new com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto(c.couponId,ca.name,ca.createdAt) FROM CouponUser c,CouponAdmin ca where c.couponId=ca.id and c.nickname =:nickname and c.redeemed =:redeemed order by c.id")
     List<CouponUserDto> findByNickname(@Param("nickname") String nickname, @Param("redeemed") boolean redeemed);
 
-    @Query("SELECT ca.months FROM CouponUser c, CouponAdmin ca where c.couponId = ca.id and c.nickname=:nickname and c.couponId=:couponId and c.redeemed is false")
+    @Query("SELECT ca.months FROM CouponUser c, CouponAdmin ca where c.couponId = ca.id and c.nickname=:nickname and c.id=:couponId and c.redeemed is false")
     Optional<Integer> findByNicknameAndCouponId(@Param("nickname") String nickname, @Param("couponId") Long couponId);
 
     @Modifying
@@ -31,7 +31,7 @@ public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
     void updateRedeemed(@Param("bol") boolean bol, @Param("date") LocalDate date, @Param("nickname")String name);
 
     @Modifying
-    @Query("update CouponUser c set c.redeemed=:bol,c.redeemedAt =:date where c.nickname=:nickname and c.couponId = :couponId")
+    @Query("update CouponUser c set c.redeemed=:bol,c.redeemedAt =:date where c.nickname=:nickname and c.id = :couponId")
     void updateRedeemedWithCouponId(@Param("bol") boolean b,@Param("date") LocalDate now, @Param("nickname") String nickname, @Param("couponId") Long couponId);
 
     @Query("select new com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer( c.id, c.couponId, ca.name,c.nickname,ca.months) " +

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.UnexpectedRollbackException;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,6 +79,12 @@ public class SignUpRestController {
 
     @PostMapping("/history")
     public ResponseEntity<String> checkHistory(@RequestParam(name = "email") String email){
+        userService.emailHistory(email);
+        return ResponseEntity.ok().body("성공했습니다.");
+    }
+
+    @DeleteMapping("/delete/history")
+    public ResponseEntity<String> deleteHistory(@RequestParam(name = "email") String email){
         userService.emailHistory(email);
         return ResponseEntity.ok().body("성공했습니다.");
     }
