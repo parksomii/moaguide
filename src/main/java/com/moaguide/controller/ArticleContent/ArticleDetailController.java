@@ -1,6 +1,6 @@
 package com.moaguide.controller.ArticleContent;
 
-import com.moaguide.dto.RelatedContentDto;
+import com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.ArticleContent.ArticleDetailService;
 import com.moaguide.service.ArticleContent.ArticleLikeService;

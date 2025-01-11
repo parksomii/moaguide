@@ -4,7 +4,7 @@ import com.moaguide.domain.ArticleContent.ArticleContent;
 import com.moaguide.domain.ArticleContent.ArticleContentRepository;
 import com.moaguide.domain.ArticleContent.ArticleLikeRepository;
 import com.moaguide.domain.CategoryContent.Category;
-import com.moaguide.dto.ArticleQueryDto;
+import com.moaguide.dto.NewDto.ArticleContentDto.ArticleQueryDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

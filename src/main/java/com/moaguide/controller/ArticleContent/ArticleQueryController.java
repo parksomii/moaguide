@@ -1,7 +1,7 @@
 package com.moaguide.controller.ArticleContent;
 
 import com.moaguide.domain.CategoryContent.Category;
-import com.moaguide.dto.ArticleQueryDto;
+import com.moaguide.dto.NewDto.ArticleContentDto.ArticleQueryDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.ArticleContent.ArticleLikeService;
 import com.moaguide.service.ArticleContent.ArticleQueryService;
