@@ -27,16 +27,19 @@ public class SearchRestController {
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String keyword, HttpServletRequest request) throws IOException {
         try {
-            log.info("IP주소 {}",request.getRemoteAddr());
-            if (request.getCookies() != null) {
-                for (Cookie cookie : request.getCookies()) {
-                    if ("refresh".equals(cookie.getName())) {
-                        log.info("쿠키 값 {}",cookie.getValue());
+            List<searchProductDto> dto = searchService.searchProducts(keyword);  // 검색 수행
+            if(dto.isEmpty() || dto.size() == 0){
+                log.info("IP주소 {}",request.getRemoteAddr());
+                if (request.getCookies() != null) {
+                    for (Cookie cookie : request.getCookies()) {
+                        if ("refresh".equals(cookie.getName())) {
+                            log.info("쿠키 값 {}",cookie.getValue());
+                        }
                     }
                 }
+            }else{
+                searchService.saveKeyword(keyword);  // 키워드 저장
             }
-            searchService.saveKeyword(keyword);  // 키워드 저장
-            List<searchProductDto> dto = searchService.searchProducts(keyword);  // 검색 수행
             return ResponseEntity.ok(dto);  // 성공 응답
         } catch (IOException e) {
             // IOException이 발생하면 적절한 에러 메시지와 함께 500 에러를 반환
