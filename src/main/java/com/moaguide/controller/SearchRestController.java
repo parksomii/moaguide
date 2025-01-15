@@ -27,16 +27,13 @@ public class SearchRestController {
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String keyword, HttpServletRequest request) throws IOException {
         try {
-            if(keyword.equals("섹스")){
-                log.info("범인 IP주소 {}",request.getRemoteAddr());
-                if (request.getCookies() != null) {
-                    for (Cookie cookie : request.getCookies()) {
-                        if ("refresh".equals(cookie.getName())) {
-                            log.info("쿠키 값 {}",cookie.getValue());
-                        }
+            log.info("IP주소 {}",request.getRemoteAddr());
+            if (request.getCookies() != null) {
+                for (Cookie cookie : request.getCookies()) {
+                    if ("refresh".equals(cookie.getName())) {
+                        log.info("쿠키 값 {}",cookie.getValue());
                     }
                 }
-                return ResponseEntity.status(501).body("");
             }
             searchService.saveKeyword(keyword);  // 키워드 저장
             List<searchProductDto> dto = searchService.searchProducts(keyword);  // 검색 수행
