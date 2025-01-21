@@ -54,7 +54,20 @@ public class ArticleDetailController {
 
 		// 서비스 호출
 		Object articleDetail = articleDetailService.getArticleDetail(articleId, role);
-		return ResponseEntity.ok(articleDetail);
+
+		// 좋아요 여부 추가
+		String nickname = jwtUtil.getNickname(token);
+		Map<String, Object> response = new HashMap<>();
+		if (articleDetail instanceof Map) {
+			response.putAll((Map<String, Object>) articleDetail);
+		} else {
+			response.put("articleDetail", articleDetail);
+		}
+		boolean likedByMe =
+			(nickname != null) && articleLikeService.isLikedByUser(articleId, nickname);
+		response.put("likedByMe", likedByMe);
+
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/{articleId}/related")
