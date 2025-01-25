@@ -11,6 +11,7 @@ import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 @Profile({"blue","green"})
 public class BillingService {
     private final BillingInfoRepository billingInfoRepository;
@@ -113,7 +115,7 @@ public class BillingService {
         }
         paymentRequestRepository.saveAll(paymentRequests);
         LocalDateTime now_date = LocalDateTime.now();
-        paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",0,"쿠폰",now_date,now_date,4900,nickname));
+        paymentLogRepository.save(new PaymentLog("모아가이드 " +couponmonth+"개월 무료 구독",0,"쿠폰",now_date,now_date,4900,nickname));
         couponUserRepository.updateRedeemedWithCouponId(true,LocalDate.now(),nickname,couponId);
         userRepository.updateRole(nickname, Role.VIP);
         userRepository.updateSubscript(nickname,now_date.toLocalDate(),paymentRequests.get(0).getNextPaymentDate());
@@ -172,8 +174,8 @@ public class BillingService {
         }
     }
 
-    public Boolean findfirstCoupon(String nickname) {
-        CouponUser result=couponUserRepository.findByNicknameAndCouponCode(nickname,"FIRST1").orElse(null);
+	public Boolean findfirstCoupon(String nickname) {
+	    CouponUser result=couponUserRepository.findByNicknameAndCouponCode(nickname,"FIRST1").orElse(null);
         if(result==null){
             return false;
         }else {

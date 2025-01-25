@@ -32,6 +32,7 @@ public class CouponService {
     private final EmailService emailService;
     private final UserRepository userRepository;
 
+
     @Transactional
     public void firstCreate(String email) {
         try {

@@ -73,7 +73,7 @@ public class TokenRestController {
         response.addCookie(expiredRefreshCookie);
 
         //make new JWT
-        String newAccess = jwtUtil.createJwt("access", username, role, 60*60 * 1000L); // 1시간
+        String newAccess = jwtUtil.createJwt("access", username, role, 24*60*60 * 1000L); // 1시간
         boolean rememberMe = Boolean.parseBoolean(remember);
         long refreshTokenValidity = rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
         String refreshToken = jwtUtil.createJwt("refresh", username, role, refreshTokenValidity);

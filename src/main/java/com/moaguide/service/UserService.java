@@ -114,8 +114,8 @@ public class UserService {
         return userRepository.findByEmailAndLoginType(email,"admin").orElse(null);
     }
 
-    public void emailHistory(String email) {
-        EmailHistory history = emailHistoryRepository.findById(email).orElse(null);
+	public void emailHistory(String email) {
+	    EmailHistory history = emailHistoryRepository.findById(email).orElse(null);
         if(history == null){
             emailHistoryRepository.save(new EmailHistory(email));
             couponService.firstCreate(email);

@@ -6,6 +6,7 @@ import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.BillingService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/billing")
+@Slf4j
 @Profile({"blue","green"})
 public class BillingRestController {
     private final JWTUtil jwtUtil;
@@ -59,7 +61,7 @@ public class BillingRestController {
         }catch (JwtException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }catch (NoSuchElementException e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("카드키가 없습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("카드키나 쿠폰id가 잘못되었습니다.");
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

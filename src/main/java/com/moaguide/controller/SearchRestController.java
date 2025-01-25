@@ -3,8 +3,12 @@ package com.moaguide.controller;
 import com.moaguide.dto.SearchRankDto;
 import com.moaguide.dto.searchProductDto;
 import com.moaguide.service.SearchService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,15 +19,27 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
 @Profile({"blue", "green"})
 public class SearchRestController {
     private final SearchService searchService;
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam String keyword) {
+    public ResponseEntity<?> search(@RequestParam String keyword, HttpServletRequest request) throws IOException {
         try {
-            searchService.saveKeyword(keyword);  // 키워드 저장
             List<searchProductDto> dto = searchService.searchProducts(keyword);  // 검색 수행
+            if(dto.isEmpty() || dto.size() == 0){
+                log.info("IP주소 {}",request.getRemoteAddr());
+                if (request.getCookies() != null) {
+                    for (Cookie cookie : request.getCookies()) {
+                        if ("refresh".equals(cookie.getName())) {
+                            log.info("쿠키 값 {}",cookie.getValue());
+                        }
+                    }
+                }
+            }else{
+                searchService.saveKeyword(keyword);  // 키워드 저장
+            }
             return ResponseEntity.ok(dto);  // 성공 응답
         } catch (IOException e) {
             // IOException이 발생하면 적절한 에러 메시지와 함께 500 에러를 반환
