@@ -122,4 +122,9 @@ public class UserService {
         }else{
         }
     }
+
+    public void deleteEmailHistory(String email){
+        EmailHistory history = emailHistoryRepository.findById(email).orElse(null);
+        emailHistoryRepository.delete(history);
+    }
 }

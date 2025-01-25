@@ -6,6 +6,7 @@ import com.moaguide.domain.billing.*;
 import com.moaguide.domain.billing.localbilling.LocalPaymentRequest;
 import com.moaguide.domain.billing.localbilling.LocalPaymentRequestRepository;
 import com.moaguide.domain.card.CardRepository;
+import com.moaguide.domain.coupon.CouponUser;
 import com.moaguide.domain.coupon.CouponUserRepository;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.User;
@@ -115,7 +116,7 @@ public class LocalBillingService {
         }
         localpaymentRequestRepository.saveAll(paymentRequests);
         LocalDateTime now_date = LocalDateTime.now();
-        paymentLogRepository.save(new PaymentLog("모아가이드 1개월구독",orderId,0,"쿠폰",now_date,now_date,4900,nickname));
+        paymentLogRepository.save(new PaymentLog("모아가이드 "+couponmonth+"개월 무료구독",orderId,0,"쿠폰",now_date,now_date,4900,nickname));
         couponUserRepository.updateRedeemedWithCouponId(true,LocalDate.now(),nickname,couponId);
         userRepository.updateRole(nickname, Role.VIP);
         cardRepository.updateSubscript(nickname,now_date,paymentRequests.get(0).getNextPaymentDate());
@@ -177,4 +178,13 @@ public class LocalBillingService {
             return lastLogDto.getContent().get(0);
         }
     }
+
+	public Boolean findfirstCoupon(String nickname) {
+        CouponUser result=couponUserRepository.findByNicknameAndCouponCode(nickname,"FIRST1").orElse(null);
+        if(result==null){
+            return false;
+        }else {
+            return true;
+        }
+	}
 }
