@@ -25,7 +25,7 @@ jobs:
 
       - name: Set up application-Oauth.yml
         run: |
-          echo "${{ secrets.OAUTHKEY}}" > src/main/resources/application-Oauth.yml
+          echo "${{ secrets.OAUTHKEY}}" >> src/main/resources/application.yml
 
       - name: Set up application-secret.yml
         run: |
