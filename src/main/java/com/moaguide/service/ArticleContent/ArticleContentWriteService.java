@@ -4,7 +4,7 @@ import com.moaguide.domain.ArticleContent.ArticleContent;
 import com.moaguide.domain.ArticleContent.ArticleContentRepository;
 import com.moaguide.domain.CategoryContent.CategoryContent;
 import com.moaguide.domain.CategoryContent.CategoryContentRepository;
-import com.moaguide.dto.ArticleContentWriteRequestDto;
+import com.moaguide.dto.NewDto.ArticleContentDto.ArticleContentWriteRequestDto;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
