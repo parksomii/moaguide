@@ -29,7 +29,6 @@ import java.util.Random;
 public class FileUploadRestController {
 
     private final FileService fileService;
-    private final ResourceLoader resourceLoader;
 
     @PostMapping("/upload")
     public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {

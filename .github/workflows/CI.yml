@@ -31,6 +31,9 @@ jobs:
         run: |
           echo "${{ secrets.OAUTHKEY}}" >> src/main/resources/application-secret.yml
 
+      - name: Set up application-S3.yml
+        run: |
+          echo "${{ secrets.AWSS3}}" >> src/main/resources/application-secret.yml
 
       - name: Set up application.yml
         run: |
