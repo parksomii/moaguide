@@ -20,7 +20,7 @@ public class ArticleImageService {
 
 	private final AmazonS3 amazonS3;
 
-	@Value("${cloud.aws.bucketName}")
+	@Value("${cloud.aws.s3.bucketName}")
 	private String bucketName;
 
 	public ArticleImageService(AmazonS3 amazonS3) {
