@@ -21,7 +21,7 @@ public class ArticleImageRestController {
 
 	private final ArticleImageService articleImageService;
 
-	@GetMapping()
+	@PostMapping()
 	public ResponseEntity<?> getroadmap(@RequestParam String src) {
 		String s3Url = null;
 		try {
