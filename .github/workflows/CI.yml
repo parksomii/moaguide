@@ -33,7 +33,7 @@ jobs:
 
       - name: Set up application-S3.yml
         run: |
-          echo "${{ secrets.AWSS3}}" >> src/main/resources/application.yml
+          echo "${{ secrets.AWSS3}}" >> src/main/resources/application-secret.yml
 
 
 
