@@ -29,7 +29,7 @@ public class ArticleImageService {
 
 	public String uploadImageToS3(byte[] imageBytes) throws IOException {
 
-		String s3FileName = "img/" + UUID .randomUUID().toString().substring(0, 10)+".jpg";
+		String s3FileName = "img/article/" + UUID .randomUUID().toString().substring(0, 10)+".jpg";
 
 		ObjectMetadata metadata = new ObjectMetadata(); //metadata 생성
 		metadata.setContentType("image/jpeg");
