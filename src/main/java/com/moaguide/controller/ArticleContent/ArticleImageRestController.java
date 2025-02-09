@@ -24,7 +24,7 @@ public class ArticleImageRestController {
 		} catch (Exception e) {
 			throw new RuntimeException("S3 업로드 실패: " + e.getMessage(), e);
 		}
-		return ResponseEntity.ok().body(s3Url.substring(4));
+		return ResponseEntity.ok().body("https://d2qf2amuam62ps.cloudfront.net/"+s3Url);
 	}
 
 }
