@@ -38,9 +38,7 @@ public class ArticleImageService {
 		//S3에 요청할 때 사용할 byteInputStream 생성
 		try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageBytes)) {
 			PutObjectRequest putObjectRequest =
-				new PutObjectRequest(bucketName, s3FileName, byteArrayInputStream, metadata)
-					.withCannedAcl(CannedAccessControlList.PublicRead);
-
+				new PutObjectRequest(bucketName, s3FileName, byteArrayInputStream, metadata);
 			amazonS3.putObject(putObjectRequest);
 		} catch (Exception e) {
 			throw new RuntimeException("S3 업로드 실패: " + e.getMessage(), e);
