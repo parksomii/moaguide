@@ -74,7 +74,7 @@ public class ArticleQueryController {
 		if (type.equals("all")) {
 			contents = articleQueryService.getContentsByAll(categoryEnum, page);
 		} else if (type.equals("article")) {
-			contents = articleQueryService.getContentsByType("아티클", categoryEnum, page);
+			contents = articleQueryService.getContentsByType("article", categoryEnum, page);
 		} else if (type.equals("video")) {
 			contents = articleQueryService.getContentsByType("영상", categoryEnum, page);
 		} else {
