@@ -15,20 +15,20 @@ import org.springframework.stereotype.Repository;
 public interface ArticleContentRepository extends JpaRepository<ArticleContent, Long> {
 
 	// 카테고리별 데이터 가져오기
-	@Query("SELECT c FROM ArticleContent c WHERE c.categoryId.categoryId = :categoryId AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+	@Query("SELECT c FROM ArticleContent c WHERE c.categoryId.categoryId = :categoryId AND c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') ORDER BY c.createdAt DESC")
 	Page<ArticleContent> findByCategoryId(@Param("categoryId") int categoryId, Pageable pageable);
 
 	// 전체 데이터 가져오기
-	@Query("SELECT c FROM ArticleContent c WHERE c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+	@Query("SELECT c FROM ArticleContent c WHERE c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') ORDER BY c.createdAt DESC")
 	Page<ArticleContent> findAllContent(Pageable pageable);
 
 	// 타입과 카테고리별 데이터 가져오기
-	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.categoryId.categoryId = :categoryId AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.categoryId.categoryId = :categoryId AND c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') ORDER BY c.createdAt DESC")
 	Page<ArticleContent> findByTypeAndCategoryId(@Param("type") String type,
 		@Param("categoryId") int categoryId, Pageable pageable);
 
 	// 타입별 데이터 가져오기
-	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CURRENT_TIMESTAMP ORDER BY c.createdAt DESC")
+	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') ORDER BY c.createdAt DESC")
 	Page<ArticleContent> findByTypeContent(@Param("type") String type, Pageable pageable);
 
 	// 최신 기준 데이터 가져오기
@@ -39,7 +39,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			+
 			"c.imgLink, cat.name) " +
 			"FROM ArticleContent c JOIN c.categoryId cat " +
-			"WHERE c.createdAt <= CURRENT_TIMESTAMP " +
+			"WHERE c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') " +
 			"ORDER BY c.createdAt DESC"
 	)
 	Page<ArticleOverviewDto> findContentsWithCategory(Pageable pageable);
@@ -52,7 +52,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			+
 			"c.imgLink, cat.name) " +
 			"FROM ArticleContent c JOIN c.categoryId cat " +
-			"WHERE c.createdAt <= CURRENT_TIMESTAMP " +
+			"WHERE c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') " +
 			"ORDER BY c.views DESC"
 	)
 	Page<ArticleOverviewDto> findContentsByViews(Pageable pageable);
@@ -65,7 +65,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			+
 			"c.imgLink, cat.name) " +
 			"FROM ArticleContent c JOIN c.categoryId cat " +
-			"WHERE c.categoryId.categoryId = :categoryId AND c.createdAt <= CURRENT_TIMESTAMP " +
+			"WHERE c.categoryId.categoryId = :categoryId AND c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') " +
 			"ORDER BY c.createdAt DESC"
 	)
 	Page<ArticleOverviewDto> findByCategory(@Param("categoryId") int categoryId, Pageable pageable);
