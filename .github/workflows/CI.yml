@@ -26,6 +26,10 @@ jobs:
       - name: Set up application-secret.yml
         run: |
           echo "${{ secrets.APPLICATION_SECRET}}" > src/main/resources/application-secret.yml
+          
+      - name: Set up application-File-MaxSize.yml
+        run: |
+          echo "${{ secrets.FILE_SIZE}}" >> src/main/resources/application-secret.yml
 
       - name: Set up application-Oauth.yml
         run: |
@@ -34,6 +38,7 @@ jobs:
       - name: Set up application-S3.yml
         run: |
           echo "${{ secrets.AWSS3}}" >> src/main/resources/application-secret.yml
+          
 
 
 
