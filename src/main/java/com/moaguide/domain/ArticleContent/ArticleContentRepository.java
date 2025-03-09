@@ -56,16 +56,16 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			"CASE WHEN LENGTH(c.paywallUp) > 150 THEN CONCAT(SUBSTRING(c.paywallUp, 1, 150), '...') ELSE c.paywallUp END, " +
 			"c.imgLink, cat.name) " +
 			"FROM ArticleContent c JOIN c.categoryId cat " +
-			"WHERE c.categoryId.categoryId = :categoryId AND c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') " +
+			"WHERE c.categoryId = :categoryId AND c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') " +
 			"ORDER BY c.createdAt DESC", nativeQuery = true)
 	Page<ArticleOverviewDto> findByCategory(@Param("categoryId") int categoryId, Pageable pageable);
 
 	// 랜덤으로 3개의 관련 아티클 가져오기
 	@Query(value =
 		"SELECT new com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto(c.articleId, c.title, c.imgLink, c.createdAt, c.views, " +
-			"(SELECT CAST(COUNT(al) AS long) FROM ArticleLike al WHERE al.article.articleId = c.articleId)) " +
+			"(SELECT CAST(COUNT(al) AS long) FROM ArticleLike al WHERE al.article = c.articleId)) " +
 			"FROM ArticleContent c " +
-			"WHERE c.categoryId.categoryId = :categoryId AND c.articleId != :articleId " +
+			"WHERE c.categoryId = :categoryId AND c.articleId != :articleId " +
 			"ORDER BY FUNCTION('RAND')", nativeQuery = true)
 	List<RelatedContentDto> findRelatedArticles(@Param("categoryId") Long categoryId, @Param("articleId") Long articleId);
 
