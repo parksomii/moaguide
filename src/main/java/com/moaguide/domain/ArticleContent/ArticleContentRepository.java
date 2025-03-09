@@ -27,7 +27,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 	Page<ArticleContent> findByTypeAndCategoryId(@Param("type") String type, @Param("categoryId") int categoryId, Pageable pageable);
 
 	// 타입별 데이터 가져오기
-	@Query(value = "SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') ORDER BY c.createdAt DESC", nativeQuery = true)
+	@Query(value = "SELECT c.* FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= CONVERT_TZ(NOW(), '+00:00', '+09:00') ORDER BY c.createdAt DESC", nativeQuery = true)
 	Page<ArticleContent> findByTypeContent(@Param("type") String type, Pageable pageable);
 
 	// 최신 기준 데이터 가져오기
