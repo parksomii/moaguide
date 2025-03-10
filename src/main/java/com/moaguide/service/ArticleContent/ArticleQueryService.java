@@ -5,6 +5,7 @@ import com.moaguide.domain.ArticleContent.ArticleContentRepository;
 import com.moaguide.domain.ArticleContent.ArticleLikeRepository;
 import com.moaguide.domain.CategoryContent.Category;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleQueryDto;
+import com.moaguide.service.TimeServie;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,7 @@ public class ArticleQueryService {
 	// 카테고리별 조회
 	public Page<ArticleQueryDto> getContentsByCategory(int categoryId, int page) {
 		Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
-		return articleContentRepository.findByCategoryId(categoryId, pageable)
+		return articleContentRepository.findByCategoryId(categoryId, pageable,TimeServie.getNowTimestamp())
 			.map(this::mapToContentDto);
 	}
 
@@ -33,9 +34,9 @@ public class ArticleQueryService {
 	public Page<ArticleQueryDto> getContentsByAll(Category category, int page) {
 		Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
 		if (category == Category.ALL) {
-			return articleContentRepository.findAllContent(pageable).map(this::mapToContentDto);
+			return articleContentRepository.findAllContent(pageable,TimeServie.getNowTimestamp()).map(this::mapToContentDto);
 		} else {
-			return articleContentRepository.findByCategoryId(category.getId(), pageable)
+			return articleContentRepository.findByCategoryId(category.getId(), pageable,TimeServie.getNowTimestamp())
 				.map(this::mapToContentDto);
 		}
 	}
@@ -44,11 +45,11 @@ public class ArticleQueryService {
 	public Page<ArticleQueryDto> getContentsByType(String type, Category category, int page) {
 		Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
 		if (category == Category.ALL) {
-			return articleContentRepository.findByTypeContent(type, pageable)
+			return articleContentRepository.findByTypeContent(type, pageable, TimeServie.getNowTimestamp())
 				.map(this::mapToContentDto);
 		} else {
 			return articleContentRepository.findByTypeAndCategoryId(type, category.getId(),
-					pageable)
+					pageable,TimeServie.getNowTimestamp())
 				.map(this::mapToContentDto);
 		}
 	}
