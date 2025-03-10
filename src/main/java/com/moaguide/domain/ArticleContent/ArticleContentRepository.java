@@ -80,10 +80,10 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			"WHERE c.categoryId.categoryId = :categoryId AND c.articleId != :articleId " +
 			"ORDER BY FUNCTION('RAND')")
 	List<RelatedContentDto> findRelatedArticles(@Param("categoryId") Long categoryId,
-		@Param("articleId") Long articleId,@Param("createAt") Timestamp createdAt);
+		@Param("articleId") Long articleId);
 
 	// 조회수 증가
 	@Modifying
 	@Query("UPDATE ArticleContent a SET a.views = a.views + 1 WHERE a.articleId = :articleId")
-	void incrementViewCount(@Param("articleId") Long articleId,@Param("createAt") Timestamp createdAt);
+	void incrementViewCount(@Param("articleId") Long articleId);
 }

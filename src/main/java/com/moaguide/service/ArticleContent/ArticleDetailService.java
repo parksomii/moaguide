@@ -27,7 +27,7 @@ public class ArticleDetailService {
 	// 조회수 증가를 위한 메서드
 	@Transactional
 	public void incrementViews(Long articleId) {
-		articleContentRepository.incrementViewCount(articleId,TimeServie.getNowTimestamp());
+		articleContentRepository.incrementViewCount(articleId);
 	}
 
 	public Object getArticleDetail(Long articleId, String role) {
@@ -97,8 +97,7 @@ public class ArticleDetailService {
 		Long categoryId = article.getCategoryId().getCategoryId();
 
 		// 쿼리 결과 가져오기
-		List<RelatedContentDto> allRelatedArticles = articleContentRepository.findRelatedArticles(categoryId, articleId,
-			TimeServie.getNowTimestamp());
+		List<RelatedContentDto> allRelatedArticles = articleContentRepository.findRelatedArticles(categoryId, articleId);
 
 		// 상위 3개만 반환
 		return allRelatedArticles.stream().limit(3).collect(Collectors.toList());
