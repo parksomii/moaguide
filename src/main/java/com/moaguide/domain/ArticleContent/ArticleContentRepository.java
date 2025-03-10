@@ -17,19 +17,19 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 
 	// 카테고리별 데이터 가져오기
 	@Query("SELECT c FROM ArticleContent c WHERE c.categoryId.categoryId = :categoryId AND c.createdAt <= :createdAt ORDER BY c.createdAt DESC")
-	Page<ArticleContent> findByCategoryId(@Param("categoryId") int categoryId, Pageable pageable,@Param("createAt") Timestamp createdAt);
+	Page<ArticleContent> findByCategoryId(@Param("categoryId") int categoryId, Pageable pageable,@Param("createdAt") Timestamp createdAt);
 
 	// 전체 데이터 가져오기
 	@Query("SELECT c FROM ArticleContent c WHERE c.createdAt <= :createdAt ORDER BY c.createdAt DESC")
-	Page<ArticleContent> findAllContent(Pageable pageable,@Param("createAt") Timestamp createdAt);
+	Page<ArticleContent> findAllContent(Pageable pageable,@Param("createdAt") Timestamp createdAt);
 
 	// 타입과 카테고리별 데이터 가져오기
 	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.categoryId.categoryId = :categoryId AND c.createdAt <= :createdAt ORDER BY c.createdAt DESC")
-	Page<ArticleContent> findByTypeAndCategoryId(@Param("type") String type, @Param("categoryId") int categoryId, Pageable pageable,@Param("createAt") Timestamp createdAt);
+	Page<ArticleContent> findByTypeAndCategoryId(@Param("type") String type, @Param("categoryId") int categoryId, Pageable pageable,@Param("createdAt") Timestamp createdAt);
 
 	// 타입별 데이터 가져오기
 	@Query("SELECT c FROM ArticleContent c WHERE c.type = :type AND c.createdAt <= :createdAt ORDER BY c.createdAt DESC")
-	Page<ArticleContent> findByTypeContent(@Param("type") String type, Pageable pageable,@Param("createAt") Timestamp createdAt);
+	Page<ArticleContent> findByTypeContent(@Param("type") String type, Pageable pageable,@Param("createdAt") Timestamp createdAt);
 
 	// 최신 기준 데이터 가져오기
 	@Query(
@@ -42,7 +42,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			"WHERE c.createdAt <= :createdAt " +
 			"ORDER BY c.createdAt DESC"
 	)
-	Page<ArticleOverviewDto> findContentsWithCategory(Pageable pageable,@Param("createAt") Timestamp createdAt);
+	Page<ArticleOverviewDto> findContentsWithCategory(Pageable pageable,@Param("createdAt") Timestamp createdAt);
 
 	// 인기 기준 데이터 가져오기
 	@Query(
@@ -55,7 +55,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			"WHERE c.createdAt <= :createdAt " +
 			"ORDER BY c.views DESC"
 	)
-	Page<ArticleOverviewDto> findContentsByViews(Pageable pageable,@Param("createAt") Timestamp createdAt);
+	Page<ArticleOverviewDto> findContentsByViews(Pageable pageable,@Param("createdAt") Timestamp createdAt);
 
 	// 카테고리 필터 추가된 최신 데이터 가져오기
 	@Query(
@@ -68,7 +68,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 			"WHERE c.categoryId.categoryId = :categoryId AND c.createdAt <= :createdAt " +
 			"ORDER BY c.createdAt DESC"
 	)
-	Page<ArticleOverviewDto> findByCategory(@Param("categoryId") int categoryId, Pageable pageable,@Param("createAt") Timestamp createdAt);
+	Page<ArticleOverviewDto> findByCategory(@Param("categoryId") int categoryId, Pageable pageable,@Param("createdAt") Timestamp createdAt);
 
 	// 랜덤으로 3개의 관련 아티클 가져오기
 	@Query(
