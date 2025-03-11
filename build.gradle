@@ -33,12 +33,8 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     //이메일 인증용
     implementation 'org.springframework.boot:spring-boot-starter-mail'
-    // coolSMS 라이브러리
-    implementation 'net.nurigo:javaSDK:2.2'
     // json 라이브러리
     implementation 'org.json:json:20210307'
-    // 데브툴은 개발환경에서만 사용, 실제 운영환경 빌드에서는 제외함.
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java:8.0.27'
     //엘라스틱
     implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
