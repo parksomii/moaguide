@@ -7,7 +7,9 @@ import com.moaguide.domain.user.Role;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleNonSubscriberDto;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleSubscriberDto;
 import com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto;
+import com.moaguide.service.TimeServie;
 import jakarta.persistence.EntityNotFoundException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -95,10 +97,10 @@ public class ArticleDetailService {
 		Long categoryId = article.getCategoryId().getCategoryId();
 
 		// 쿼리 결과 가져오기
-		List<RelatedContentDto> allRelatedArticles = articleContentRepository.findRelatedArticles(
-			categoryId, articleId);
+		List<RelatedContentDto> allRelatedArticles = articleContentRepository.findRelatedArticles(categoryId, articleId);
 
 		// 상위 3개만 반환
 		return allRelatedArticles.stream().limit(3).collect(Collectors.toList());
 	}
+
 }
