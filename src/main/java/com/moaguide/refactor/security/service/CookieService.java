@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.security.service;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
