@@ -1,4 +1,4 @@
-package com.moaguide.domain.notification;
+package com.moaguide.refactor.notice.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

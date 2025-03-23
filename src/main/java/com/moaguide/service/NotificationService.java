@@ -1,7 +1,7 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.notification.Notification;
-import com.moaguide.domain.notification.NotificationRepository;
+import com.moaguide.refactor.notice.entity.Notification;
+import com.moaguide.refactor.notice.repository.NotificationRepository;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.NotificationDto;
 import lombok.AllArgsConstructor;
