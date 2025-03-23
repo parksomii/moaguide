@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.product.service;
 
 import com.moaguide.refactor.product.repository.CurrentDivideRepository;
 import lombok.AllArgsConstructor;

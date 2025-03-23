@@ -4,7 +4,7 @@ import com.moaguide.dto.NewDto.customDto.mailDto;
 import com.moaguide.dto.UserDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.refactor.user.entity.User;
-import com.moaguide.service.BookmarkService;
+import com.moaguide.refactor.product.service.BookmarkService;
 import com.moaguide.service.CookieService;
 import com.moaguide.service.EmailService;
 import com.moaguide.service.UserService;

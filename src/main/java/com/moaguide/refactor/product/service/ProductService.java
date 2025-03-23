@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.product.service;
 
 import com.moaguide.refactor.product.repository.GenericRepository;
 import com.moaguide.refactor.product.repository.IssuePriceRepository;

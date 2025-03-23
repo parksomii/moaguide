@@ -1,7 +1,7 @@
 package com.moaguide.refactor.product.controller;
 
 import com.moaguide.dto.CategoryDto;
-import com.moaguide.service.CategoryService;
+import com.moaguide.refactor.product.service.CategoryService;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
