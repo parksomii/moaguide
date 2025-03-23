@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.user.service;
 
 import com.moaguide.refactor.coupon.service.CouponService;
 import com.moaguide.refactor.user.entity.User;
