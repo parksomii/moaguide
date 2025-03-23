@@ -1,6 +1,7 @@
-package com.moaguide.domain.card;
+package com.moaguide.refactor.payments.repository;
 
 import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;
+import com.moaguide.refactor.payments.entity.Card;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

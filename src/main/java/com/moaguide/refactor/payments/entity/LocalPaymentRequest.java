@@ -1,4 +1,4 @@
-package com.moaguide.domain.billing.localbilling;
+package com.moaguide.refactor.payments.entity;
 
 
 import jakarta.persistence.Column;

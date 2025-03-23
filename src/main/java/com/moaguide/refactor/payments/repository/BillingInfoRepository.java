@@ -1,6 +1,7 @@
-package com.moaguide.domain.billing;
+package com.moaguide.refactor.payments.repository;
 
 
+import com.moaguide.refactor.payments.entity.BillingInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

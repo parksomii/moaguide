@@ -1,6 +1,7 @@
-package com.moaguide.domain.billing;
+package com.moaguide.refactor.payments.repository;
 
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
+import com.moaguide.refactor.payments.entity.PaymentLog;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

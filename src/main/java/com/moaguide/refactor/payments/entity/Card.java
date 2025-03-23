@@ -1,4 +1,4 @@
-package com.moaguide.domain.card;
+package com.moaguide.refactor.payments.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.moaguide.controller.local;
 
 
-import com.moaguide.domain.billing.PaymentLog;
+import com.moaguide.refactor.payments.entity.PaymentLog;
 import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;

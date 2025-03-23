@@ -1,6 +1,7 @@
-package com.moaguide.domain.billing.localbilling;
+package com.moaguide.refactor.payments.repository;
 
 import com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto;
+import com.moaguide.refactor.payments.entity.LocalPaymentRequest;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
