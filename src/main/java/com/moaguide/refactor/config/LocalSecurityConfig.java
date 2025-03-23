@@ -1,16 +1,17 @@
-package com.moaguide.config;
+package com.moaguide.refactor.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.moaguide.config.handler.CustomAccessDeniedHandler;
-import com.moaguide.config.handler.CustomLogoutSuccessHandler;
-import com.moaguide.config.handler.OAuth2SuccessHandler;
 import com.moaguide.jwt.JWTFilter;
 import com.moaguide.jwt.JWTUtil;
+import com.moaguide.refactor.config.handler.CustomAccessDeniedHandler;
+import com.moaguide.refactor.config.handler.CustomLogoutSuccessHandler;
+import com.moaguide.refactor.config.handler.OAuth2SuccessHandler;
 import com.moaguide.security.LocalLoginFilter;
 import com.moaguide.service.CookieService;
 import com.moaguide.service.CustomOAuth2UserService;
+import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,8 +31,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity

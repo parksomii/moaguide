@@ -1,4 +1,4 @@
-package com.moaguide.config.handler;
+package com.moaguide.refactor.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.domain.user.User;
@@ -7,6 +7,11 @@ import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -14,12 +19,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 @AllArgsConstructor
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {

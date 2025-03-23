@@ -1,12 +1,11 @@
-package com.moaguide.config.handler;
+package com.moaguide.refactor.config.handler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-
 import java.io.IOException;
 import java.io.PrintWriter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
