@@ -1,10 +1,10 @@
 package com.moaguide.refactor.article.controller;
 
-import com.moaguide.refactor.product.entity.CategoryContent.Category;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleQueryDto;
+import com.moaguide.refactor.article.service.ArticleLikeService;
+import com.moaguide.refactor.article.service.ArticleQueryService;
+import com.moaguide.refactor.product.entity.CategoryContent.Category;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.ArticleContent.ArticleLikeService;
-import com.moaguide.service.ArticleContent.ArticleQueryService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

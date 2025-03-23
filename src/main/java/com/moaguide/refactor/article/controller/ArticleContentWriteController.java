@@ -1,9 +1,9 @@
 package com.moaguide.refactor.article.controller;
 
-import com.moaguide.refactor.enums.Role;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleContentWriteRequestDto;
+import com.moaguide.refactor.article.service.ArticleContentWriteService;
+import com.moaguide.refactor.enums.Role;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.ArticleContent.ArticleContentWriteService;
 import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import java.util.HashMap;

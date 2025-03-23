@@ -1,8 +1,8 @@
-package com.moaguide.service.ArticleContent;
+package com.moaguide.refactor.article.service;
 
+import com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto;
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.refactor.product.entity.CategoryContent.Category;
-import com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto;
 import com.moaguide.refactor.util.TimeServie;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class ArticleOverviewService {
 	// 인기 콘텐츠 (조회수 기준 정렬)
 	public List<ArticleOverviewDto> getPopularContents(int popularLimit) {
 		Pageable pageable = PageRequest.of(0, popularLimit, Sort.by(Sort.Direction.DESC, "views"));
-		return articleContentRepository.findContentsByViews(pageable,TimeServie.getNowTimestamp())
+		return articleContentRepository.findContentsByViews(pageable, TimeServie.getNowTimestamp())
 			.getContent();
 	}
 
@@ -30,7 +30,8 @@ public class ArticleOverviewService {
 	public List<ArticleOverviewDto> getRecentContents(int recentLimit) {
 		Pageable pageable = PageRequest.of(0, recentLimit,
 			Sort.by(Sort.Direction.DESC, "createdAt"));
-		return articleContentRepository.findContentsWithCategory(pageable,TimeServie.getNowTimestamp())
+		return articleContentRepository.findContentsWithCategory(pageable,
+				TimeServie.getNowTimestamp())
 			.getContent();
 	}
 
@@ -38,7 +39,8 @@ public class ArticleOverviewService {
 	public List<ArticleOverviewDto> getNewsContents(Category category, int newsLimit) {
 		Pageable pageable = PageRequest.of(0, newsLimit, Sort.by(Sort.Direction.DESC, "createdAt"));
 
-		return articleContentRepository.findByCategory(category.getId(), pageable, TimeServie.getNowTimestamp())
+		return articleContentRepository.findByCategory(category.getId(), pageable,
+				TimeServie.getNowTimestamp())
 			.getContent();
 	}
 }
