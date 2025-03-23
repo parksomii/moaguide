@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.product.controller;
 
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.ArticleSummaryDto;

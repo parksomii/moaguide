@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.product.controller;
 
 import com.moaguide.dto.CategoryDto;
 import com.moaguide.service.CategoryService;
