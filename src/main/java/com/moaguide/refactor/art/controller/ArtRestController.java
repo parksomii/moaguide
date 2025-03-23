@@ -2,8 +2,8 @@ package com.moaguide.refactor.art.controller;
 
 import com.moaguide.dto.NewDto.ArtBaseResponseDto;
 import com.moaguide.dto.NewDto.ArtDetailDto;
+import com.moaguide.refactor.art.service.ArtService;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.art.ArtService;
 import java.util.HashMap;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
