@@ -1,4 +1,4 @@
-package com.moaguide.service.building;
+package com.moaguide.refactor.building.service;
 
 import com.moaguide.refactor.building.repository.subway.SubwayDayRepository;
 import com.moaguide.refactor.building.repository.subway.SubwayMonthRepository;

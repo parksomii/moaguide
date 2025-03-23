@@ -1,4 +1,4 @@
-package com.moaguide.service.building;
+package com.moaguide.refactor.building.service;
 
 import com.moaguide.refactor.building.repository.PopulationRepository;
 import com.moaguide.dto.NewDto.BuildingDto.PopulationDto;
