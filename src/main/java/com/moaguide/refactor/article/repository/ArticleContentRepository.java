@@ -1,7 +1,8 @@
-package com.moaguide.domain.ArticleContent;
+package com.moaguide.refactor.article.repository;
 
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto;
 import com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto;
+import com.moaguide.refactor.article.entity.ArticleContent;
 import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.data.domain.Page;

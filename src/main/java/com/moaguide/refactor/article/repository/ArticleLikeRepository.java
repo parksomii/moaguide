@@ -1,6 +1,8 @@
-package com.moaguide.domain.ArticleContent;
+package com.moaguide.refactor.article.repository;
 
 import com.moaguide.domain.user.User;
+import com.moaguide.refactor.article.entity.ArticleContent;
+import com.moaguide.refactor.article.entity.ArticleLike;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

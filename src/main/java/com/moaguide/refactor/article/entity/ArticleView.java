@@ -1,4 +1,4 @@
-package com.moaguide.domain.ArticleContent;
+package com.moaguide.refactor.article.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

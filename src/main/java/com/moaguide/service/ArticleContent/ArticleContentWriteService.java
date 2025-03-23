@@ -1,7 +1,7 @@
 package com.moaguide.service.ArticleContent;
 
-import com.moaguide.domain.ArticleContent.ArticleContent;
-import com.moaguide.domain.ArticleContent.ArticleContentRepository;
+import com.moaguide.refactor.article.entity.ArticleContent;
+import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.domain.CategoryContent.CategoryContent;
 import com.moaguide.domain.CategoryContent.CategoryContentRepository;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleContentWriteRequestDto;

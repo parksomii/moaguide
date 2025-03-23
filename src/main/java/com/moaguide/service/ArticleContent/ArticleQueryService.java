@@ -1,8 +1,8 @@
 package com.moaguide.service.ArticleContent;
 
-import com.moaguide.domain.ArticleContent.ArticleContent;
-import com.moaguide.domain.ArticleContent.ArticleContentRepository;
-import com.moaguide.domain.ArticleContent.ArticleLikeRepository;
+import com.moaguide.refactor.article.entity.ArticleContent;
+import com.moaguide.refactor.article.repository.ArticleContentRepository;
+import com.moaguide.refactor.article.repository.ArticleLikeRepository;
 import com.moaguide.domain.CategoryContent.Category;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleQueryDto;
 import com.moaguide.service.TimeServie;
