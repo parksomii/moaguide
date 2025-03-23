@@ -5,7 +5,7 @@ import com.moaguide.refactor.payments.entity.PaymentLog;
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.BillingService;
+import com.moaguide.refactor.payments.service.BillingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;

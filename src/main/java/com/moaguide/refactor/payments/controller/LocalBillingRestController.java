@@ -5,7 +5,7 @@ import com.moaguide.refactor.payments.entity.PaymentLog;
 import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.LocalBillingService;
+import com.moaguide.refactor.payments.service.LocalBillingService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;

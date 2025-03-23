@@ -1,18 +1,19 @@
-package com.moaguide.service;
+package com.moaguide.refactor.payments.service;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moaguide.refactor.payments.entity.LocalPaymentRequest;
-import com.moaguide.refactor.payments.repository.LocalPaymentRequestRepository;
-import com.moaguide.refactor.payments.repository.CardRepository;
 import com.moaguide.refactor.coupon.repository.CouponUserRepository;
+import com.moaguide.refactor.notice.entity.Notification;
 import com.moaguide.refactor.enums.Role;
 import com.moaguide.refactor.user.repository.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
 import com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto;
 import com.moaguide.refactor.payments.entity.PaymentLog;
 import com.moaguide.refactor.payments.repository.PaymentLogRepository;
+import com.moaguide.refactor.payments.entity.PaymentRequest;
+import com.moaguide.refactor.payments.repository.PaymentRequestRepository;
+import com.moaguide.service.NotificationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,6 +24,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,71 +33,68 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@Profile("local")
-public class LocalPaymentService {
+@Profile({"blue", "green"})
+public class PaymentService {
 
-	private final CardRepository cardRepository;
 	private final CouponUserRepository couponUserRepository;
-	private final LocalPaymentRequestRepository localPaymentRequestRepository;
+	private final PaymentRequestRepository paymentRequestRepository;
 	private final PaymentLogRepository paymentLogRepository;
 	private final UserRepository userRepository;
+	private final NotificationService notificationService;
 	@Value("${toss.secretkey}")
 	private String secretkey;
 
-	public LocalPaymentService(CouponUserRepository couponUserRepository,
-		LocalPaymentRequestRepository localPaymentRequestRepository,
+	public PaymentService(CouponUserRepository couponUserRepository,
+		PaymentRequestRepository paymentRequestRepository,
 		PaymentLogRepository paymentLogRepository, UserRepository userRepository,
-		CardRepository cardRepository) {
+		NotificationService notificationService) {
 		this.couponUserRepository = couponUserRepository;
-		this.localPaymentRequestRepository = localPaymentRequestRepository;
+		this.paymentRequestRepository = paymentRequestRepository;
 		this.paymentLogRepository = paymentLogRepository;
 		this.userRepository = userRepository;
-		this.cardRepository = cardRepository;
+		this.notificationService = notificationService;
 	}
 
 	//    @Scheduled(cron = "0 10,40 * * * *")
-	@Scheduled(cron = "0 20 0/1 * * *")
+	@Scheduled(cron = "0 0 17 * * *")
 	@Transactional
 	public void CouponCron() {
-		LocalDateTime nowDate = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0)
-			.withNano(0);
-		List<String> nicknameList = localPaymentRequestRepository.findByDate(nowDate);
+		LocalDate now_date = LocalDate.now();
+		List<String> nicknameList = paymentRequestRepository.findByDate(now_date);
 		List<BillingCouponUSer> couponUserList = couponUserRepository.findAllByNickname(
 			nicknameList);
-		List<LocalPaymentRequest> paymentRequests = new ArrayList<>();
+		List<PaymentRequest> paymentRequests = new ArrayList<>();
 		for (BillingCouponUSer couponuser : couponUserList) {
-			LocalDateTime enddate = LocalDateTime.now().plusDays(couponuser.getMonth())
-				.withMinute(30).plusHours(0).withSecond(0).withNano(0);
+			LocalDateTime nowDate = LocalDateTime.now();
+			LocalDate enddate = now_date.plusMonths(couponuser.getMonth());
 			paymentLogRepository.save(
 				new PaymentLog(couponuser.getCouponName(), 0, "쿠폰", nowDate, nowDate,
 					4900 * couponuser.getMonth(), couponuser.getNickname()));
-			couponUserRepository.updateRedeemedWithCouponId(true, nowDate.toLocalDate(),
+			notificationService.save(
+				new Notification(couponuser.getNickname(), "https://moaguide.com/payment",
+					"구독 정기 결제가 완료 되었습니다. 지금 확인해보세요", nowDate.toLocalDate()));
+			couponUserRepository.updateRedeemedWithCouponId(true, now_date,
 				couponuser.getNickname(), couponuser.getCouponId());
-			cardRepository.updateSubscriptByCron(couponuser.getNickname(), enddate);
-			localPaymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(),
-				enddate);
+			userRepository.updateSubscriptByCron(couponuser.getNickname(), enddate);
+			paymentRequestRepository.deletebyNicknameAndDate(couponuser.getNickname(), enddate);
 			for (int i = 0; i < couponuser.getMonth(); i++) {
-				LocalDateTime lastPaymentDay = LocalDateTime.now().plusDays(12 + i).plusHours(0)
-					.withMinute(30).withSecond(0).withNano(0);
+				LocalDate lastPaymentDay = LocalDate.now().plusMonths(12 + i);
 				String orderId = UUID.randomUUID().toString(); // 첫 번째 UUID는 이미 추가
 				paymentRequests.add(
-					new LocalPaymentRequest(orderId, couponuser.getNickname(), 4900, lastPaymentDay,
-						0));
+					new PaymentRequest(orderId, couponuser.getNickname(), 4900, lastPaymentDay, 0));
 			}
 		}
-		localPaymentRequestRepository.saveAll(paymentRequests);
+		paymentRequestRepository.saveAll(paymentRequests);
 	}
 
 	//    @Scheduled(cron = "0 20,50 * * *")
-	@Scheduled(cron = "0 30 0/1 * * *")
+	@Scheduled(cron = "0 0 18 * * *")
 	@Transactional
 	public void PaymentCron() {
-		LocalDateTime now_date = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0)
-			.withNano(0);
-		List<PaymentDto> nicknameList = localPaymentRequestRepository.findByNextPaymentDate(
-			now_date);
+		LocalDate now_date = LocalDate.now();
+		List<PaymentDto> nicknameList = paymentRequestRepository.findByNextPaymentDate(now_date);
 		List<String> deleteOrderId = new ArrayList<>();
-		List<LocalPaymentRequest> paymentRequests = new ArrayList<>();
+		List<PaymentRequest> paymentRequests = new ArrayList<>();
 		for (PaymentDto paymentDto : nicknameList) {
 			try {
 				HttpRequest request = HttpRequest.newBuilder()
@@ -118,8 +117,7 @@ public class LocalPaymentService {
 						response.statusCode(), response.body());
 					throw new Exception(errorMessage);
 				}
-				LocalDateTime endDate = LocalDateTime.now().plusDays(1).withMinute(30).withSecond(0)
-					.withNano(0);
+				LocalDate endDate = LocalDate.now().plusMonths(1);
 				ObjectMapper objectMapper = new ObjectMapper();
 				JsonNode rootNode = objectMapper.readTree(response.body());
 				LocalDateTime requestedAt = LocalDateTime.parse(
@@ -130,48 +128,45 @@ public class LocalPaymentService {
 					new PaymentLog(rootNode.get("orderId").asText(), paymentDto.getNickname(),
 						rootNode.get("paymentKey").asText(), rootNode.get("orderName").asText(),
 						4900, "카드", requestedAt, approvedAt, 0));
-				cardRepository.updateSubscriptByCron(paymentDto.getNickname(), endDate);
+				notificationService.save(
+					new Notification(paymentDto.getNickname(), "https://moaguide.com/payment",
+						"구독 정기 결제가 완료 되었습니다. 지금 확인해보세요", requestedAt.toLocalDate()));
+				userRepository.updateSubscriptByCron(paymentDto.getNickname(), endDate);
 				deleteOrderId.add(rootNode.get("orderId").asText());
-				LocalDateTime lastPaymentDay = LocalDateTime.now().plusDays(12).plusHours(0)
-					.withMinute(30).withSecond(0).withNano(0);
+				LocalDate lastPaymentDay = LocalDate.now().plusMonths(12);
 				String orderId = UUID.randomUUID().toString();
 				paymentRequests.add(
-					new LocalPaymentRequest(orderId, paymentDto.getNickname(), 4900, lastPaymentDay,
-						0));
+					new PaymentRequest(orderId, paymentDto.getNickname(), 4900, lastPaymentDay, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 				if (paymentDto.getFailCount() != 5) {
-					LocalDateTime date = LocalDateTime.now().plusHours(0).withMinute(30)
-						.withSecond(0).withNano(0);
-					LocalDateTime failDate = LocalDateTime.now().plusHours(1).withMinute(30)
-						.withSecond(0).withNano(0);
-					localPaymentRequestRepository.updatefailList(paymentDto.getNickname(), failDate,
+					LocalDate date = LocalDate.now();
+					LocalDate failDate = LocalDate.now().plusDays(1);
+					paymentRequestRepository.updatefailList(paymentDto.getNickname(), failDate,
 						date);
-					cardRepository.updateSubscriptByCron(paymentDto.getNickname(), failDate);
+					userRepository.updateSubscriptByCron(paymentDto.getNickname(), failDate);
 				}
 			}
-			localPaymentRequestRepository.saveAll(paymentRequests);
-			localPaymentRequestRepository.deleteAllById(deleteOrderId);
+			paymentRequestRepository.saveAll(paymentRequests);
+			paymentRequestRepository.deleteAllById(deleteOrderId);
 		}
 	}
 
 	//    @Scheduled(cron = "0 0,30 * * * *")
-	@Scheduled(cron = "0 40 0/1 * * *")
+	@Scheduled(cron = "0 30 18 * * *")
 	@Transactional
 	public void faillist() {
-		LocalDateTime date = LocalDateTime.now().plusHours(0).withMinute(30).withSecond(0)
-			.withNano(0);
-		List<String> deleteNicknameList = localPaymentRequestRepository.findByFailCount(date);
-		localPaymentRequestRepository.deleteByFailCount(deleteNicknameList);
+		LocalDate date = LocalDate.now();
+		List<String> deleteNicknameList = paymentRequestRepository.findByFailCount(date);
+		paymentRequestRepository.deleteByFailCount(deleteNicknameList);
 	}
 
-	@Scheduled(cron = "0 0 0/1 * * *")
+	@Scheduled(cron = "0 0 0 * * *")
 	@Transactional
 	public void userRoleupdate() {
-		LocalDateTime date = LocalDateTime.now().plusHours(0).withMinute(0).withSecond(0)
-			.withNano(0);
-		List<String> updateNickname = cardRepository.findByDate(date);
+		LocalDate date = LocalDate.now();
+		List<String> updateNickname = userRepository.findByDate(date);
 		userRepository.updateRoleByDate(Role.USER, updateNickname);
-		cardRepository.updateSubscriptBylist(updateNickname);
+		userRepository.updateSubscriptBylist(updateNickname);
 	}
 }
