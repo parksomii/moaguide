@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.music.service;
 
 import com.moaguide.refactor.music.repository.MusicDetailRepository;
 import com.moaguide.dto.NewDto.MusicSubResponseDto;

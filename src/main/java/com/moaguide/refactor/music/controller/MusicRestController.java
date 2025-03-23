@@ -7,7 +7,7 @@ import com.moaguide.dto.NewDto.musicDto.ConsertDto;
 import com.moaguide.dto.NewDto.musicDto.SearchDto;
 import com.moaguide.dto.NewDto.musicDto.ViewDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.MusicDetailService;
+import com.moaguide.refactor.music.service.MusicDetailService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
