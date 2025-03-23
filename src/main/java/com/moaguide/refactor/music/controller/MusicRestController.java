@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.music.controller;
 
 import com.moaguide.dto.NewDto.MusicBaseResponseDto;
 import com.moaguide.dto.NewDto.MusicSubResponseDto;
