@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.search.controller;
 
 import com.moaguide.dto.SearchRankDto;
 import com.moaguide.dto.searchProductDto;
