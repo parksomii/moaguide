@@ -2,7 +2,7 @@ package com.moaguide.refactor.security.controller;
 
 
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.CookieService;
+import com.moaguide.refactor.security.service.CookieService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

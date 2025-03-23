@@ -1,8 +1,8 @@
-package com.moaguide.service.ArticleContent;
+package com.moaguide.refactor.article.service;
 
 import com.moaguide.refactor.article.entity.ArticleContent;
-import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.refactor.article.entity.ArticleLike;
+import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.refactor.article.repository.ArticleLikeRepository;
 import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.repository.UserRepository;

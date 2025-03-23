@@ -1,7 +1,7 @@
 package com.moaguide.refactor.article.controller;
 
+import com.moaguide.refactor.article.service.ArticleLikeService;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.ArticleContent.ArticleLikeService;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

@@ -1,12 +1,12 @@
-package com.moaguide.service.ArticleContent;
+package com.moaguide.refactor.article.service;
 
+import com.moaguide.dto.NewDto.ArticleContentDto.ArticleNonSubscriberDto;
+import com.moaguide.dto.NewDto.ArticleContentDto.ArticleSubscriberDto;
+import com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto;
 import com.moaguide.refactor.article.entity.ArticleContent;
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.refactor.article.repository.ArticleLikeRepository;
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.dto.NewDto.ArticleContentDto.ArticleNonSubscriberDto;
-import com.moaguide.dto.NewDto.ArticleContentDto.ArticleSubscriberDto;
-import com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -95,7 +95,8 @@ public class ArticleDetailService {
 		Long categoryId = article.getCategoryId().getCategoryId();
 
 		// 쿼리 결과 가져오기
-		List<RelatedContentDto> allRelatedArticles = articleContentRepository.findRelatedArticles(categoryId, articleId);
+		List<RelatedContentDto> allRelatedArticles = articleContentRepository.findRelatedArticles(
+			categoryId, articleId);
 
 		// 상위 3개만 반환
 		return allRelatedArticles.stream().limit(3).collect(Collectors.toList());

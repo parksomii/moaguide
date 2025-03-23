@@ -1,9 +1,12 @@
 package com.moaguide.refactor.article.controller;
 
-import com.moaguide.service.ArticleContent.ArticleImageService;
+import com.moaguide.refactor.article.service.ArticleImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -24,7 +27,7 @@ public class ArticleImageRestController {
 		} catch (Exception e) {
 			throw new RuntimeException("S3 업로드 실패: " + e.getMessage(), e);
 		}
-		return ResponseEntity.ok().body("https://d2qf2amuam62ps.cloudfront.net/"+s3Url);
+		return ResponseEntity.ok().body("https://d2qf2amuam62ps.cloudfront.net/" + s3Url);
 	}
 
 }

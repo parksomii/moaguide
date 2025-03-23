@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.security.service;
 
 import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.repository.UserRepository;
