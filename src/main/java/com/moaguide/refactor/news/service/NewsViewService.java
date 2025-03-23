@@ -1,4 +1,4 @@
-package com.moaguide.service.view;
+package com.moaguide.refactor.news.service;
 
 import com.moaguide.refactor.news.entity.NewsView;
 import com.moaguide.refactor.news.repository.NewsViewRepository;

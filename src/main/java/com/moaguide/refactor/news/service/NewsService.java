@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.news.service;
 
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
 import com.moaguide.dto.PageRequestDTO;
