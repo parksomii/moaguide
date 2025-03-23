@@ -1,4 +1,4 @@
-package com.moaguide.config;
+package com.moaguide.refactor.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;

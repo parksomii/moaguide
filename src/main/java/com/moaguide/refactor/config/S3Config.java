@@ -1,4 +1,4 @@
-package com.moaguide.config;
+package com.moaguide.refactor.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;

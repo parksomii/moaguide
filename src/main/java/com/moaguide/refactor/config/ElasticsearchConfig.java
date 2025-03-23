@@ -1,5 +1,7 @@
-package com.moaguide.config;
+package com.moaguide.refactor.config;
 
+import java.security.KeyStore;
+import javax.net.ssl.SSLContext;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -12,9 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
-import javax.net.ssl.SSLContext;
-import java.security.KeyStore;
 
 @Configuration
 @Profile({"blue", "green"})
