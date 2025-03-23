@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.coupon.controller;
 
 import com.moaguide.refactor.enums.Role;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
