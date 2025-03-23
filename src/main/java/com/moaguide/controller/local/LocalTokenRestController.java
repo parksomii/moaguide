@@ -1,7 +1,7 @@
 package com.moaguide.controller.local;
 
 
-import com.moaguide.jwt.JWTUtil;
+import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.CookieService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
@@ -20,94 +20,98 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @Profile("local")
 public class LocalTokenRestController {
-    private final JWTUtil jwtUtil;
-    private final CookieService cookieService;
 
-    @PostMapping("/token/refresh")
-    public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
-        //get refresh token
-        String refresh = null;
-        String remember = null;
-        Cookie[] cookies = request.getCookies();
-        if(cookies==null){
-            return new ResponseEntity<>("cookies null", HttpStatus.BAD_REQUEST);
-        }
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("refresh")) {
-                refresh = cookie.getValue();
-            }
-            if (cookie.getName().equals("rememberMe")) {
-                remember = cookie.getValue();
-            }
-        }
+	private final JWTUtil jwtUtil;
+	private final CookieService cookieService;
 
-        if (refresh == null) {
-            //response status code
-            return new ResponseEntity<>("refresh token null", HttpStatus.BAD_REQUEST);
-        }
+	@PostMapping("/token/refresh")
+	public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
+		//get refresh token
+		String refresh = null;
+		String remember = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies == null) {
+			return new ResponseEntity<>("cookies null", HttpStatus.BAD_REQUEST);
+		}
+		for (Cookie cookie : cookies) {
+			if (cookie.getName().equals("refresh")) {
+				refresh = cookie.getValue();
+			}
+			if (cookie.getName().equals("rememberMe")) {
+				remember = cookie.getValue();
+			}
+		}
 
-        //expired check
-        try {
-            jwtUtil.isExpired(refresh);
-        } catch (ExpiredJwtException e) {
-            //response status code
-            return new ResponseEntity<>("refresh token expired", HttpStatus.BAD_REQUEST);
-        }
+		if (refresh == null) {
+			//response status code
+			return new ResponseEntity<>("refresh token null", HttpStatus.BAD_REQUEST);
+		}
 
-        // 토큰이 refresh인지 확인 (발급시 페이로드에 명시)
-        String category = jwtUtil.getCategory(refresh);
+		//expired check
+		try {
+			jwtUtil.isExpired(refresh);
+		} catch (ExpiredJwtException e) {
+			//response status code
+			return new ResponseEntity<>("refresh token expired", HttpStatus.BAD_REQUEST);
+		}
 
-        if (!category.equals("refresh")) {
-            //response status code
-            return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
-        }
+		// 토큰이 refresh인지 확인 (발급시 페이로드에 명시)
+		String category = jwtUtil.getCategory(refresh);
 
-        String username = jwtUtil.getNickname(refresh);
-        String role = jwtUtil.getRole(refresh);
+		if (!category.equals("refresh")) {
+			//response status code
+			return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
+		}
 
-        Cookie expiredRefreshCookie = new Cookie("refresh", null);
-        expiredRefreshCookie.setMaxAge(0); // 즉시 만료
-        expiredRefreshCookie.setPath("/"); // 기존의 경로와 동일하게 설정
-        expiredRefreshCookie.setHttpOnly(true);
-        expiredRefreshCookie.setSecure(true); // 기존과 동일한 보안 설정
-        response.addCookie(expiredRefreshCookie);
+		String username = jwtUtil.getNickname(refresh);
+		String role = jwtUtil.getRole(refresh);
 
-        //make new JWT
-        String newAccess = jwtUtil.createJwt("access", username, role, 60*60 * 1000L); // 1시간
-        boolean rememberMe = Boolean.parseBoolean(remember);
-        long refreshTokenValidity = rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
-        String refreshToken = jwtUtil.createJwt("refresh", username, role, refreshTokenValidity);
+		Cookie expiredRefreshCookie = new Cookie("refresh", null);
+		expiredRefreshCookie.setMaxAge(0); // 즉시 만료
+		expiredRefreshCookie.setPath("/"); // 기존의 경로와 동일하게 설정
+		expiredRefreshCookie.setHttpOnly(true);
+		expiredRefreshCookie.setSecure(true); // 기존과 동일한 보안 설정
+		response.addCookie(expiredRefreshCookie);
 
-        //response
-        response.setHeader("Authorization", "Bearer " + newAccess);
+		//make new JWT
+		String newAccess = jwtUtil.createJwt("access", username, role, 60 * 60 * 1000L); // 1시간
+		boolean rememberMe = Boolean.parseBoolean(remember);
+		long refreshTokenValidity =
+			rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
+		String refreshToken = jwtUtil.createJwt("refresh", username, role, refreshTokenValidity);
 
-        Cookie refreshCookie = cookieService.createLocalCookie("refresh", refreshToken, refreshTokenValidity);
-        Cookie rememberMeCookie = cookieService.createLocalRememberMeCookie(rememberMe, refreshTokenValidity);
-        response.addCookie(refreshCookie);
-        response.addCookie(cookieService.createRememberMeCookie(rememberMe,refreshTokenValidity));
-        return new ResponseEntity<>("success", HttpStatus.OK);
-    }
+		//response
+		response.setHeader("Authorization", "Bearer " + newAccess);
+
+		Cookie refreshCookie = cookieService.createLocalCookie("refresh", refreshToken,
+			refreshTokenValidity);
+		Cookie rememberMeCookie = cookieService.createLocalRememberMeCookie(rememberMe,
+			refreshTokenValidity);
+		response.addCookie(refreshCookie);
+		response.addCookie(cookieService.createRememberMeCookie(rememberMe, refreshTokenValidity));
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
 
 
-    @PostMapping("logout")
-    public ResponseEntity<String> logout(HttpServletResponse response) {
-        // 리프레시 토큰 쿠키 만료
-        Cookie refreshTokenCookie = new Cookie("refresh", null);
-        refreshTokenCookie.setHttpOnly(true);
-        refreshTokenCookie.setSecure(true); // HTTPS 사용 시
-        refreshTokenCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
-        refreshTokenCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
-        response.addCookie(refreshTokenCookie);
+	@PostMapping("logout")
+	public ResponseEntity<String> logout(HttpServletResponse response) {
+		// 리프레시 토큰 쿠키 만료
+		Cookie refreshTokenCookie = new Cookie("refresh", null);
+		refreshTokenCookie.setHttpOnly(true);
+		refreshTokenCookie.setSecure(true); // HTTPS 사용 시
+		refreshTokenCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
+		refreshTokenCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
+		response.addCookie(refreshTokenCookie);
 
-        // rememberMe 쿠키 만료
-        Cookie rememberMeCookie = new Cookie("rememberMe", null);
-        rememberMeCookie.setHttpOnly(true);
-        rememberMeCookie.setSecure(true); // HTTPS 사용 시
-        rememberMeCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
-        rememberMeCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
-        response.addCookie(rememberMeCookie);
+		// rememberMe 쿠키 만료
+		Cookie rememberMeCookie = new Cookie("rememberMe", null);
+		rememberMeCookie.setHttpOnly(true);
+		rememberMeCookie.setSecure(true); // HTTPS 사용 시
+		rememberMeCookie.setPath("/"); // 모든 경로에서 쿠키를 삭제
+		rememberMeCookie.setMaxAge(0); // 쿠키를 즉시 만료시킴
+		response.addCookie(rememberMeCookie);
 
-        return ResponseEntity.ok("Logged out successfully");
-    }
+		return ResponseEntity.ok("Logged out successfully");
+	}
 
 }

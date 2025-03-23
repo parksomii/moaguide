@@ -2,7 +2,7 @@ package com.moaguide.controller.ArticleContent;
 
 import com.moaguide.domain.user.Role;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleContentWriteRequestDto;
-import com.moaguide.jwt.JWTUtil;
+import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.ArticleContent.ArticleContentWriteService;
 import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;

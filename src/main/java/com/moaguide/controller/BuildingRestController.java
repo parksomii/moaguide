@@ -6,7 +6,7 @@ import com.moaguide.dto.NewDto.*;
 import com.moaguide.dto.NewDto.BuildingDto.*;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
-import com.moaguide.jwt.JWTUtil;
+import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.building.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,200 +24,211 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/detail/building")
 public class BuildingRestController {
-    private final RentService rentService;
-    private final BuildingService buildingService;
-    private final LeaseService leaseService;
-    private final LocationService locationService;
-    private final BusinessAreaService businessAreaService;
-    private final NearSubwayService nearSubwayService;
-    private final LandPriceService landPriceService;
-    private final StayService stayService;
-    private final SubwayService subwayService;
-    private final PopulationService populationService;
-    private final VacancyRateService vacancyRateService;
-    private final LandRegistryService landRegistryService;
-    private final JWTUtil jwtUtil;
-    private final NearBusService nearBusService;
+
+	private final RentService rentService;
+	private final BuildingService buildingService;
+	private final LeaseService leaseService;
+	private final LocationService locationService;
+	private final BusinessAreaService businessAreaService;
+	private final NearSubwayService nearSubwayService;
+	private final LandPriceService landPriceService;
+	private final StayService stayService;
+	private final SubwayService subwayService;
+	private final PopulationService populationService;
+	private final VacancyRateService vacancyRateService;
+	private final LandRegistryService landRegistryService;
+	private final JWTUtil jwtUtil;
+	private final NearBusService nearBusService;
 
 
-    @GetMapping("/{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id, @RequestHeader(value="Authorization",required = false) String jwt) {
-        String Nickname;
-        if ( jwt!= null && jwt.startsWith("Bearer ")) {
-            if(jwtUtil.isExpired(jwt.substring(7))){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-            Nickname = jwtUtil.getNickname(jwt.substring(7));
-        }else{
-            Nickname = "null";
-        }
-        BuildingReponseDto building = buildingService.findBydetail(product_Id,Nickname);
-        List<TypeDto> type  = rentService.findType(product_Id);
-        if(type.size() == 1){
-            building.setRentType(Boolean.TRUE);
-            building.setStayType(Boolean.FALSE);
-        }else if(type.size()==2){
-            building.setRentType(Boolean.FALSE);
-            building.setStayType(Boolean.FALSE);
-        }else{
-            building.setStayType(Boolean.TRUE);
-            building.setRentType(Boolean.FALSE);
-        }
-        return ResponseEntity.ok(building);
-    }
+	@GetMapping("/{product_Id}")
+	public ResponseEntity<?> product(@PathVariable String product_Id,
+		@RequestHeader(value = "Authorization", required = false) String jwt) {
+		String Nickname;
+		if (jwt != null && jwt.startsWith("Bearer ")) {
+			if (jwtUtil.isExpired(jwt.substring(7))) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			}
+			Nickname = jwtUtil.getNickname(jwt.substring(7));
+		} else {
+			Nickname = "null";
+		}
+		BuildingReponseDto building = buildingService.findBydetail(product_Id, Nickname);
+		List<TypeDto> type = rentService.findType(product_Id);
+		if (type.size() == 1) {
+			building.setRentType(Boolean.TRUE);
+			building.setStayType(Boolean.FALSE);
+		} else if (type.size() == 2) {
+			building.setRentType(Boolean.FALSE);
+			building.setStayType(Boolean.FALSE);
+		} else {
+			building.setStayType(Boolean.TRUE);
+			building.setRentType(Boolean.FALSE);
+		}
+		return ResponseEntity.ok(building);
+	}
 
-    @GetMapping("/base/{product_Id}")
-    public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-        BuildingBaseDto building = landRegistryService.findbase(product_Id);
-        List<LeaseDto> leaseDtos = leaseService.detail(product_Id);
-        // null 처리
-        if(building == null) {
-            return ResponseEntity.ok(new HashMap<>());
-        }
-        // 빈 리스트 처리
-        if(leaseDtos.isEmpty()) {
-            return ResponseEntity.ok(new HashMap<>());
-        }
-        return ResponseEntity.ok(new BuildingBaseResponseDto(building,leaseDtos));
-    }
+	@GetMapping("/base/{product_Id}")
+	public ResponseEntity<Object> Base(@PathVariable String product_Id) {
+		BuildingBaseDto building = landRegistryService.findbase(product_Id);
+		List<LeaseDto> leaseDtos = leaseService.detail(product_Id);
+		// null 처리
+		if (building == null) {
+			return ResponseEntity.ok(new HashMap<>());
+		}
+		// 빈 리스트 처리
+		if (leaseDtos.isEmpty()) {
+			return ResponseEntity.ok(new HashMap<>());
+		}
+		return ResponseEntity.ok(new BuildingBaseResponseDto(building, leaseDtos));
+	}
 
-    @GetMapping("/sub/{product_Id}")
-    public ResponseEntity<Object> add(@PathVariable String product_Id) {
-        BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
-        List<NearBusDto> bus  = nearBusService.findNearBus(product_Id);
-        List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
-        BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,nearSubway,bus);
-        return ResponseEntity.ok(buildingSubResponseDto);
-    }
+	@GetMapping("/sub/{product_Id}")
+	public ResponseEntity<Object> add(@PathVariable String product_Id) {
+		BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
+		List<NearBusDto> bus = nearBusService.findNearBus(product_Id);
+		List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
+		BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,
+			nearSubway, bus);
+		return ResponseEntity.ok(buildingSubResponseDto);
+	}
 
-    @GetMapping("/land/{product_Id}")
-    public ResponseEntity<Object> land(@PathVariable String product_Id) {
-        List<LandDto> landPrice = landPriceService.priceList(product_Id);
-        Map<String, Object> response = new HashMap<>();
-        // null 처리
-        if (landPrice == null) {
-            response.put("lands", new ArrayList<>());
-            return ResponseEntity.ok(response);
-        }
-        response.put("lands", landPrice);
-        return ResponseEntity.ok(response   );
-    }
+	@GetMapping("/land/{product_Id}")
+	public ResponseEntity<Object> land(@PathVariable String product_Id) {
+		List<LandDto> landPrice = landPriceService.priceList(product_Id);
+		Map<String, Object> response = new HashMap<>();
+		// null 처리
+		if (landPrice == null) {
+			response.put("lands", new ArrayList<>());
+			return ResponseEntity.ok(response);
+		}
+		response.put("lands", landPrice);
+		return ResponseEntity.ok(response);
+	}
 
-    @GetMapping("/area/{product_Id}")
-    public ResponseEntity<Object> area(@PathVariable String product_Id) {
-        LocationDto location = locationService.locate(product_Id);
-        return ResponseEntity.ok(location);
-    }
+	@GetMapping("/area/{product_Id}")
+	public ResponseEntity<Object> area(@PathVariable String product_Id) {
+		LocationDto location = locationService.locate(product_Id);
+		return ResponseEntity.ok(location);
+	}
 
-    @GetMapping("/subway/{productId}")
-    public ResponseEntity<Object> subway(@PathVariable String productId) {
-        BuildingSubwayResponseDto subwayResponseDto= subwayService.findByProductId(productId);
-        // null 처리
-        if(subwayResponseDto == null || subwayResponseDto.getSubwayDay().isEmpty() || subwayResponseDto.getSubwayMonth().isEmpty()) {
-            return ResponseEntity.ok(new BuildingSubwayResponseDto());
-        }
-        return ResponseEntity.ok(subwayResponseDto);
-    }
+	@GetMapping("/subway/{productId}")
+	public ResponseEntity<Object> subway(@PathVariable String productId) {
+		BuildingSubwayResponseDto subwayResponseDto = subwayService.findByProductId(productId);
+		// null 처리
+		if (subwayResponseDto == null || subwayResponseDto.getSubwayDay().isEmpty()
+			|| subwayResponseDto.getSubwayMonth().isEmpty()) {
+			return ResponseEntity.ok(new BuildingSubwayResponseDto());
+		}
+		return ResponseEntity.ok(subwayResponseDto);
+	}
 
-    @GetMapping("/population/{product_Id}")
-    public ResponseEntity<Object> population(@PathVariable String product_Id) {
-        List<PopulationDto> populationDto = populationService.findbydate(product_Id);
-        Map<String, Object> response = new HashMap<>();
-        // null 처리
-        if (populationDto == null) {
-            response.put("populations", new ArrayList<>());
-            return ResponseEntity.ok(response);
-        }
-        response.put("populations", populationDto);
-        return ResponseEntity.ok(response);
-    }
+	@GetMapping("/population/{product_Id}")
+	public ResponseEntity<Object> population(@PathVariable String product_Id) {
+		List<PopulationDto> populationDto = populationService.findbydate(product_Id);
+		Map<String, Object> response = new HashMap<>();
+		// null 처리
+		if (populationDto == null) {
+			response.put("populations", new ArrayList<>());
+			return ResponseEntity.ok(response);
+		}
+		response.put("populations", populationDto);
+		return ResponseEntity.ok(response);
+	}
 
-    @GetMapping("/rentrate/{product_Id}")
-    public ResponseEntity<Object> rentrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
-        Map<String, List<RentDto>> rentDtos = rentService.getRentByRegion(product_Id,type,syear,eyear);
-        Map<String, Object> response = new HashMap<>();
+	@GetMapping("/rentrate/{product_Id}")
+	public ResponseEntity<Object> rentrate(@PathVariable String product_Id,
+		@RequestParam String type, @RequestParam int syear, @RequestParam int eyear) {
+		Map<String, List<RentDto>> rentDtos = rentService.getRentByRegion(product_Id, type, syear,
+			eyear);
+		Map<String, Object> response = new HashMap<>();
 
-        // null 처리
-        if (rentDtos == null) {
-            response.put("populations", new ArrayList<>());
-            return ResponseEntity.ok(response);
-        }
-        response.put("rent", rentDtos);
-        return ResponseEntity.ok(response);
-    }
+		// null 처리
+		if (rentDtos == null) {
+			response.put("populations", new ArrayList<>());
+			return ResponseEntity.ok(response);
+		}
+		response.put("rent", rentDtos);
+		return ResponseEntity.ok(response);
+	}
 
-    @GetMapping("/vacancyrate/{product_Id}")
-    public ResponseEntity<Object> vacancyrate(@PathVariable String product_Id, @RequestParam String type,@RequestParam int syear,@RequestParam int eyear) {
-        Map<String,List<VacancyrateDto>> vacancyrateDtos = vacancyRateService.findBase(product_Id,type,syear,eyear);
-        // null 처리
-        Map<String, Object> response = new HashMap<>();
+	@GetMapping("/vacancyrate/{product_Id}")
+	public ResponseEntity<Object> vacancyrate(@PathVariable String product_Id,
+		@RequestParam String type, @RequestParam int syear, @RequestParam int eyear) {
+		Map<String, List<VacancyrateDto>> vacancyrateDtos = vacancyRateService.findBase(product_Id,
+			type, syear, eyear);
+		// null 처리
+		Map<String, Object> response = new HashMap<>();
 
-        if (vacancyrateDtos == null) {
-            response.put("populations", new ArrayList<>());
-            return ResponseEntity.ok(response);
-        }
-        response.put("vacancyrate", vacancyrateDtos);
-        return ResponseEntity.ok(response);
-    }
+		if (vacancyrateDtos == null) {
+			response.put("populations", new ArrayList<>());
+			return ResponseEntity.ok(response);
+		}
+		response.put("vacancyrate", vacancyrateDtos);
+		return ResponseEntity.ok(response);
+	}
 
-    @GetMapping("/stay/day/{productId}")
-    public ResponseEntity<Object> stayday(@PathVariable String productId,@RequestParam int syear,@RequestParam int eyear) {
-        String keyword;
-        Map<String, Object> response = new HashMap<>();
+	@GetMapping("/stay/day/{productId}")
+	public ResponseEntity<Object> stayday(@PathVariable String productId, @RequestParam int syear,
+		@RequestParam int eyear) {
+		String keyword;
+		Map<String, Object> response = new HashMap<>();
 
-        if(productId.equals("sou.6")){
-            keyword = "전주 시화연풍";
-            List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
-            response.put("object", stayday);
-            return ResponseEntity.ok(response);
-        } else if (productId.equals("kasa.KR011A20000052")) {
-            keyword = "부티크호텔 더 페이즈";
-            List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
-            response.put("object", stayday);
-            return ResponseEntity.ok(response);
-        } else if (productId.equals("kasa.KR011A20000090")) {
-            keyword ="북촌 월하재";
-            List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
-            response.put("object", stayday);
-            return ResponseEntity.ok(response);
-        } else if (productId.equals("funble.FB2412111")) {
-            keyword ="더 코노셔 여의도";
-            List<StayDayDto> stayday = stayService.findbykeyword(keyword,syear,eyear);
-            response.put("object", stayday);
-            return ResponseEntity.ok(response);
-        } else{
-            response.put("object", new ArrayList<>());
-            return ResponseEntity.ok(response);
-        }
-    }
+		if (productId.equals("sou.6")) {
+			keyword = "전주 시화연풍";
+			List<StayDayDto> stayday = stayService.findbykeyword(keyword, syear, eyear);
+			response.put("object", stayday);
+			return ResponseEntity.ok(response);
+		} else if (productId.equals("kasa.KR011A20000052")) {
+			keyword = "부티크호텔 더 페이즈";
+			List<StayDayDto> stayday = stayService.findbykeyword(keyword, syear, eyear);
+			response.put("object", stayday);
+			return ResponseEntity.ok(response);
+		} else if (productId.equals("kasa.KR011A20000090")) {
+			keyword = "북촌 월하재";
+			List<StayDayDto> stayday = stayService.findbykeyword(keyword, syear, eyear);
+			response.put("object", stayday);
+			return ResponseEntity.ok(response);
+		} else if (productId.equals("funble.FB2412111")) {
+			keyword = "더 코노셔 여의도";
+			List<StayDayDto> stayday = stayService.findbykeyword(keyword, syear, eyear);
+			response.put("object", stayday);
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("object", new ArrayList<>());
+			return ResponseEntity.ok(response);
+		}
+	}
 
-    @GetMapping("/stay/rate/{productId}")
-    public ResponseEntity<Object> stayrate(@PathVariable String productId,@RequestParam int syear,@RequestParam int eyear) {
-        String keyword;
-        Map<String, Object> response = new HashMap<>();
-        if(productId.equals("sou.6")){
-            keyword = "전주 시화연풍";
-            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
-            response.put("object", stayday);
-            return ResponseEntity.ok(response);
-        } else if (productId.equals("kasa.KR011A20000052")) {
-            keyword = "부티크호텔 더 페이즈";
-            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
-            response.put("object", stayday);
-            return ResponseEntity.ok(response);
-        } else if (productId.equals("kasa.KR011A20000090")) {
-            keyword ="북촌 월하재";
-            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
-            response.put("object", stayday);
-            return ResponseEntity.ok(response);
-        } else if (productId.equals("funble.FB2412111")) {
-            keyword ="더 코노셔 여의도";
-            List<StayRateDto> stayday = stayService.findRateBykeyword(keyword,syear,eyear);
-            response.put("object", stayday);
-            return ResponseEntity.ok(response);
-        } else{
-            response.put("object", new ArrayList<>());
-            return ResponseEntity.ok(response);        }
-    }
+	@GetMapping("/stay/rate/{productId}")
+	public ResponseEntity<Object> stayrate(@PathVariable String productId, @RequestParam int syear,
+		@RequestParam int eyear) {
+		String keyword;
+		Map<String, Object> response = new HashMap<>();
+		if (productId.equals("sou.6")) {
+			keyword = "전주 시화연풍";
+			List<StayRateDto> stayday = stayService.findRateBykeyword(keyword, syear, eyear);
+			response.put("object", stayday);
+			return ResponseEntity.ok(response);
+		} else if (productId.equals("kasa.KR011A20000052")) {
+			keyword = "부티크호텔 더 페이즈";
+			List<StayRateDto> stayday = stayService.findRateBykeyword(keyword, syear, eyear);
+			response.put("object", stayday);
+			return ResponseEntity.ok(response);
+		} else if (productId.equals("kasa.KR011A20000090")) {
+			keyword = "북촌 월하재";
+			List<StayRateDto> stayday = stayService.findRateBykeyword(keyword, syear, eyear);
+			response.put("object", stayday);
+			return ResponseEntity.ok(response);
+		} else if (productId.equals("funble.FB2412111")) {
+			keyword = "더 코노셔 여의도";
+			List<StayRateDto> stayday = stayService.findRateBykeyword(keyword, syear, eyear);
+			response.put("object", stayday);
+			return ResponseEntity.ok(response);
+		} else {
+			response.put("object", new ArrayList<>());
+			return ResponseEntity.ok(response);
+		}
+	}
 
 }
