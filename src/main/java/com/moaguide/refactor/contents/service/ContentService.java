@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.contents.service;
 
 import com.moaguide.refactor.contents.repository.ContentRepository;
 import com.moaguide.dto.NewDto.ContentDetailDto;
