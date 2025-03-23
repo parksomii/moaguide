@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.notice.service;
 
 import com.moaguide.refactor.notice.entity.Notification;
 import com.moaguide.refactor.notice.repository.NotificationRepository;

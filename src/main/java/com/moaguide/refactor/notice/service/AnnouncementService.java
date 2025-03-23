@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.notice.service;
 
 import com.moaguide.refactor.notice.repository.AnnouncementRepository;
 import com.moaguide.dto.NewDto.customDto.AnnouncementDto;

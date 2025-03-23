@@ -13,7 +13,7 @@ import com.moaguide.refactor.payments.entity.PaymentLog;
 import com.moaguide.refactor.payments.repository.PaymentLogRepository;
 import com.moaguide.refactor.payments.entity.PaymentRequest;
 import com.moaguide.refactor.payments.repository.PaymentRequestRepository;
-import com.moaguide.service.NotificationService;
+import com.moaguide.refactor.notice.service.NotificationService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
