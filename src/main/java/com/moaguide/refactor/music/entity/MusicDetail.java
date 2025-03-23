@@ -1,6 +1,6 @@
 package com.moaguide.refactor.music.entity;
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

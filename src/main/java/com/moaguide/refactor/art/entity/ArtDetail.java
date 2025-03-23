@@ -1,6 +1,6 @@
 package com.moaguide.refactor.art.entity;
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

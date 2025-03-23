@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.bookmark.BookmarkRepository;
+import com.moaguide.refactor.product.repository.BookmarkRepository;
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.moaguide.dto;
 
 
-import com.moaguide.domain.platform.Platform;
+import com.moaguide.refactor.product.entity.Platform;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

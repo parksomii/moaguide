@@ -1,6 +1,7 @@
-package com.moaguide.domain.divide;
+package com.moaguide.refactor.product.repository;
 
 import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
+import com.moaguide.refactor.product.entity.Divide;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;

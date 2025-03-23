@@ -1,7 +1,7 @@
 package com.moaguide.service.view;
 
-import com.moaguide.domain.view.ProductView;
-import com.moaguide.domain.view.ProductViewRepository;
+import com.moaguide.refactor.product.entity.ProductView;
+import com.moaguide.refactor.product.repository.ProductViewRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

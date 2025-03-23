@@ -1,7 +1,7 @@
 package com.moaguide.service.ArticleContent;
 
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
-import com.moaguide.domain.CategoryContent.Category;
+import com.moaguide.refactor.product.entity.CategoryContent.Category;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto;
 import com.moaguide.service.TimeServie;
 import java.util.List;

@@ -1,6 +1,7 @@
-package com.moaguide.domain.issueprice;
+package com.moaguide.refactor.product.repository;
 
 
+import com.moaguide.refactor.product.entity.issueprice.IssuePrice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;

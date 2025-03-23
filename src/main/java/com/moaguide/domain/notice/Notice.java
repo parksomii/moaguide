@@ -1,6 +1,6 @@
 package com.moaguide.domain.notice;
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 

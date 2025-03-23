@@ -1,6 +1,5 @@
-package com.moaguide.domain.bookmark;
+package com.moaguide.refactor.product.entity;
 
-import com.moaguide.domain.product.Product;
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
 import jakarta.persistence.*;

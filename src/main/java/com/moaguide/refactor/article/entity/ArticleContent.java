@@ -1,6 +1,6 @@
 package com.moaguide.refactor.article.entity;
 
-import com.moaguide.domain.CategoryContent.CategoryContent;
+import com.moaguide.refactor.product.entity.CategoryContent.CategoryContent;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

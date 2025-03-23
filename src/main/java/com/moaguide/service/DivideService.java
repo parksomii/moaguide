@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.divide.DivideRepository;
+import com.moaguide.refactor.product.repository.DivideRepository;
 import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
 import com.moaguide.dto.NewDto.customDto.DivideGraphDto;
 import jakarta.persistence.EntityManager;

@@ -2,8 +2,8 @@ package com.moaguide.service.ArticleContent;
 
 import com.moaguide.refactor.article.entity.ArticleContent;
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
-import com.moaguide.domain.CategoryContent.CategoryContent;
-import com.moaguide.domain.CategoryContent.CategoryContentRepository;
+import com.moaguide.refactor.product.entity.CategoryContent.CategoryContent;
+import com.moaguide.refactor.product.repository.CategoryContentRepository;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleContentWriteRequestDto;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

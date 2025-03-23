@@ -1,6 +1,6 @@
 package com.moaguide.domain.history;
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

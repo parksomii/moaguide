@@ -1,4 +1,4 @@
-package com.moaguide.domain.platform;
+package com.moaguide.refactor.product.entity;
 
 import com.moaguide.dto.PlatformDto;
 import jakarta.persistence.Column;

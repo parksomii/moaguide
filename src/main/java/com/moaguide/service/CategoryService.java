@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.CategoryContent.CategoryContentRepository;
+import com.moaguide.refactor.product.repository.CategoryContentRepository;
 import com.moaguide.dto.CategoryDto;
 import java.util.List;
 import java.util.stream.Collectors;

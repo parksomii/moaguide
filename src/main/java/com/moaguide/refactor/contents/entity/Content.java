@@ -1,6 +1,6 @@
 package com.moaguide.refactor.contents.entity;
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.customDto.ContentPublishDto;
 import jakarta.persistence.*;

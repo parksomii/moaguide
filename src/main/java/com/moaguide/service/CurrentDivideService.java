@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.divide.CurrentDivideRepository;
+import com.moaguide.refactor.product.repository.CurrentDivideRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.moaguide.refactor.contents.entity.movie;
 
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

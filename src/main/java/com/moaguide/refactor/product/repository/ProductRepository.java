@@ -1,6 +1,7 @@
-package com.moaguide.domain.product;
+package com.moaguide.refactor.product.repository;
 
 import com.moaguide.dto.NewDto.customDto.SummaryIssupriceCustomDto;
+import com.moaguide.refactor.product.entity.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

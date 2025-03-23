@@ -1,4 +1,4 @@
-package com.moaguide.domain.CategoryContent;
+package com.moaguide.refactor.product.entity.CategoryContent;
 
 import com.moaguide.util.EnumUtils;
 import lombok.Getter;

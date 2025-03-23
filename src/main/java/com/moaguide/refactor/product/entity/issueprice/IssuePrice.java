@@ -1,4 +1,4 @@
-package com.moaguide.domain.issueprice;
+package com.moaguide.refactor.product.entity.issueprice;
 
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import jakarta.persistence.*;

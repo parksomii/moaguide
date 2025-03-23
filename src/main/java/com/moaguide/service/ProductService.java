@@ -1,8 +1,8 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.GenericRepository;
-import com.moaguide.domain.issueprice.IssuePriceRepository;
-import com.moaguide.domain.product.ProductRepository;
+import com.moaguide.refactor.product.repository.GenericRepository;
+import com.moaguide.refactor.product.repository.IssuePriceRepository;
+import com.moaguide.refactor.product.repository.ProductRepository;
 import com.moaguide.dto.NewDto.SummaryResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import lombok.AllArgsConstructor;

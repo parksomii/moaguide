@@ -1,7 +1,7 @@
 package com.moaguide.refactor.building.repository;
 
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import com.moaguide.refactor.building.entity.LandRegistry;
 import org.springframework.data.jpa.repository.JpaRepository;

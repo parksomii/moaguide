@@ -1,6 +1,5 @@
-package com.moaguide.domain.product;
+package com.moaguide.refactor.product.entity;
 
-import com.moaguide.domain.platform.Platform;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

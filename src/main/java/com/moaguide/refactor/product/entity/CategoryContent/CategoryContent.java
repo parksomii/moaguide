@@ -1,4 +1,4 @@
-package com.moaguide.domain.CategoryContent;
+package com.moaguide.refactor.product.entity.CategoryContent;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

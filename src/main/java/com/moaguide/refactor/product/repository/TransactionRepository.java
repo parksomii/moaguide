@@ -1,6 +1,7 @@
-package com.moaguide.domain.transaction;
+package com.moaguide.refactor.product.repository;
 
 import com.moaguide.dto.NewDto.customDto.TransactionDto;
+import com.moaguide.refactor.product.entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

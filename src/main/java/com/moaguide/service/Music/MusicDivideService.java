@@ -1,8 +1,8 @@
 package com.moaguide.service.Music;
 
 
-import com.moaguide.domain.divide.MusicDivide;
-import com.moaguide.domain.divide.MusicDivideRepository;
+import com.moaguide.refactor.product.entity.MusicDivide;
+import com.moaguide.refactor.product.repository.MusicDivideRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.moaguide.refactor.building.entity;
 
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 

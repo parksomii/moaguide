@@ -1,4 +1,4 @@
-package com.moaguide.domain.view;
+package com.moaguide.refactor.product.entity;
 
 
 import jakarta.persistence.*;

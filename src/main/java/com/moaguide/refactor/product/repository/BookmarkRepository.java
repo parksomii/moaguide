@@ -1,6 +1,7 @@
-package com.moaguide.domain.bookmark;
+package com.moaguide.refactor.product.repository;
 
 import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
+import com.moaguide.refactor.product.entity.Bookmark;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

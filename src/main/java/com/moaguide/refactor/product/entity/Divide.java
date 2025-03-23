@@ -1,6 +1,5 @@
-package com.moaguide.domain.divide;
+package com.moaguide.refactor.product.entity;
 
-import com.moaguide.domain.product.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

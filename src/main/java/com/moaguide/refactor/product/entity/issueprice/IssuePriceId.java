@@ -1,6 +1,6 @@
-package com.moaguide.domain.issueprice;
+package com.moaguide.refactor.product.entity.issueprice;
 
-import com.moaguide.domain.product.Product;
+import com.moaguide.refactor.product.entity.Product;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
