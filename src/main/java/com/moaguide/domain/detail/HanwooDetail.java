@@ -1,4 +1,4 @@
-package com.moaguide.refactor.cow.entity;
+package com.moaguide.domain.detail;
 
 import com.moaguide.domain.product.Product;
 import jakarta.persistence.*;
