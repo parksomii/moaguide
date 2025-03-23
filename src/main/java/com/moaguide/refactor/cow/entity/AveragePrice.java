@@ -1,4 +1,4 @@
-package com.moaguide.domain.hanwoo;
+package com.moaguide.refactor.cow.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
