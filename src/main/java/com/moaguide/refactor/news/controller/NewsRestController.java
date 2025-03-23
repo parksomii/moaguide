@@ -1,17 +1,19 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.news.controller;
 
 
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.NewsService;
+import java.util.HashMap;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
