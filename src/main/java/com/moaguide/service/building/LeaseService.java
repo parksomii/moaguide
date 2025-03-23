@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.lease.LeaseRepository;
+import com.moaguide.refactor.building.repository.LeaseRepository;
 import com.moaguide.dto.NewDto.BuildingDto.LeaseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

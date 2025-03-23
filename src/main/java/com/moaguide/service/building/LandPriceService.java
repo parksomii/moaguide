@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.lnadprice.LandPriceRepository;
+import com.moaguide.refactor.building.repository.LandPriceRepository;
 import com.moaguide.dto.NewDto.BuildingDto.LandDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

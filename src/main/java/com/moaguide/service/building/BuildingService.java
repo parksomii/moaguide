@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.detail.BuildingDetailRepository;
+import com.moaguide.refactor.building.repository.BuildingDetailRepository;
 import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

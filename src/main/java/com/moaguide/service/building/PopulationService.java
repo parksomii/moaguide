@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.population.PopulationRepository;
+import com.moaguide.refactor.building.repository.PopulationRepository;
 import com.moaguide.dto.NewDto.BuildingDto.PopulationDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;

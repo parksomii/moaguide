@@ -1,7 +1,7 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.stayday.StayDayRepository;
-import com.moaguide.domain.building.stayday.StayRateRepository;
+import com.moaguide.refactor.building.repository.stay.StayDayRepository;
+import com.moaguide.refactor.building.repository.stay.StayRateRepository;
 import com.moaguide.dto.NewDto.BuildingDto.StayDayDto;
 import com.moaguide.dto.NewDto.BuildingDto.StayRateDto;
 import lombok.AllArgsConstructor;

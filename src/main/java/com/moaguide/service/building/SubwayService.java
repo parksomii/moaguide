@@ -1,7 +1,7 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.subway.SubwayDayRepository;
-import com.moaguide.domain.building.subway.SubwayMonthRepository;
+import com.moaguide.refactor.building.repository.subway.SubwayDayRepository;
+import com.moaguide.refactor.building.repository.subway.SubwayMonthRepository;
 import com.moaguide.dto.NewDto.BuildingDto.SubwayDto;
 import com.moaguide.dto.NewDto.BuildingSubwayResponseDto;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.vacancyrate.VacancyRateRepository;
+import com.moaguide.refactor.building.repository.VacancyRateRepository;
 import com.moaguide.dto.NewDto.BuildingDto.VacancyrateDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

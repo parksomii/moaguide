@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.rent.RentRepository;
+import com.moaguide.refactor.building.repository.RentRepository;
 import com.moaguide.dto.NewDto.BuildingDto.RentDto;
 import com.moaguide.dto.NewDto.BuildingDto.TypeDto;
 import lombok.AllArgsConstructor;

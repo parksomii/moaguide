@@ -1,6 +1,6 @@
 package com.moaguide.dto.NewDto.BuildingDto;
 
-import com.moaguide.domain.detail.BuildingDetail;
+import com.moaguide.refactor.building.entity.BuildingDetail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

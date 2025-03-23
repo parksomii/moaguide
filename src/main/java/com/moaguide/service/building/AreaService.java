@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.area.AreaRepository;
+import com.moaguide.refactor.building.repository.AreaRepository;
 import com.moaguide.dto.NewDto.BuildingDto.AreaDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

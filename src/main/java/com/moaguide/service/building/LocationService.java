@@ -1,7 +1,7 @@
 package com.moaguide.service.building;
 
 
-import com.moaguide.domain.building.location.LocationRepository;
+import com.moaguide.refactor.building.repository.LocationRepository;
 import com.moaguide.dto.LocationDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

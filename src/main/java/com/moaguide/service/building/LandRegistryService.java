@@ -1,6 +1,6 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.landregistry.LandRegistryRepository;
+import com.moaguide.refactor.building.repository.LandRegistryRepository;
 import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
