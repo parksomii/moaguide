@@ -1,5 +1,6 @@
 package com.moaguide.service;
 
+import com.moaguide.refactor.coupon.service.CouponService;
 import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.repository.UserRepository;
 import com.moaguide.dto.UserDto;

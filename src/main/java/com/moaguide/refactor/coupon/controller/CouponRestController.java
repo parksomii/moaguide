@@ -4,7 +4,7 @@ import com.moaguide.refactor.enums.Role;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.CouponService;
+import com.moaguide.refactor.coupon.service.CouponService;
 import io.jsonwebtoken.JwtException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

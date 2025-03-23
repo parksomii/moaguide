@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.util;
 
 import java.sql.Timestamp;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.coupon.service;
 
 
 import com.moaguide.refactor.coupon.entity.CouponAdmin;
@@ -8,6 +8,7 @@ import com.moaguide.refactor.coupon.repository.CouponUserRepository;
 import com.moaguide.refactor.user.repository.UserRepository;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
+import com.moaguide.service.EmailService;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
