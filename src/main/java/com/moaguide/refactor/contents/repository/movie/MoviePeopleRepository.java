@@ -1,6 +1,6 @@
-package com.moaguide.refactor.contents.repository;
+package com.moaguide.refactor.contents.repository.movie;
 
-import com.moaguide.refactor.contents.entity.MoviePeople;
+import com.moaguide.refactor.contents.entity.movie.MoviePeople;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

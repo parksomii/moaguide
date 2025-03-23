@@ -1,6 +1,6 @@
-package com.moaguide.refactor.contents.repository;
+package com.moaguide.refactor.contents.repository.movie;
 
-import com.moaguide.refactor.contents.entity.MovieSchedule;
+import com.moaguide.refactor.contents.entity.movie.MovieSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;

@@ -1,4 +1,4 @@
-package com.moaguide.refactor.contents.entity;
+package com.moaguide.refactor.contents.entity.movie;
 
 import com.moaguide.domain.product.Product;
 import jakarta.persistence.*;

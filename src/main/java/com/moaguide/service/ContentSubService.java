@@ -3,7 +3,7 @@ package com.moaguide.service;
 
 import com.moaguide.refactor.contents.repository.BroadcastingRepository;
 import com.moaguide.refactor.contents.repository.ExhibitionRepository;
-import com.moaguide.refactor.contents.repository.MovieDetailRepository;
+import com.moaguide.refactor.contents.repository.movie.MovieDetailRepository;
 import com.moaguide.refactor.contents.repository.PerformanceRepository;
 import com.moaguide.dto.NewDto.customDto.*;
 import lombok.AllArgsConstructor;
