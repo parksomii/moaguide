@@ -1,4 +1,4 @@
-package com.moaguide.controller.local;
+package com.moaguide.refactor.security.controller;
 
 
 import com.moaguide.refactor.security.jwt.JWTUtil;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 @AllArgsConstructor
-@Profile("local")
-public class LocalTokenRestController {
+@Profile({"blue", "green"})
+public class TokenRestController {
 
 	private final JWTUtil jwtUtil;
 	private final CookieService cookieService;
@@ -74,7 +74,7 @@ public class LocalTokenRestController {
 		response.addCookie(expiredRefreshCookie);
 
 		//make new JWT
-		String newAccess = jwtUtil.createJwt("access", username, role, 60 * 60 * 1000L); // 1시간
+		String newAccess = jwtUtil.createJwt("access", username, role, 24 * 60 * 60 * 1000L); // 1시간
 		boolean rememberMe = Boolean.parseBoolean(remember);
 		long refreshTokenValidity =
 			rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
@@ -83,9 +83,7 @@ public class LocalTokenRestController {
 		//response
 		response.setHeader("Authorization", "Bearer " + newAccess);
 
-		Cookie refreshCookie = cookieService.createLocalCookie("refresh", refreshToken,
-			refreshTokenValidity);
-		Cookie rememberMeCookie = cookieService.createLocalRememberMeCookie(rememberMe,
+		Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken,
 			refreshTokenValidity);
 		response.addCookie(refreshCookie);
 		response.addCookie(cookieService.createRememberMeCookie(rememberMe, refreshTokenValidity));
