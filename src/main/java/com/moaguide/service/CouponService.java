@@ -1,10 +1,10 @@
 package com.moaguide.service;
 
 
-import com.moaguide.domain.coupon.CouponAdmin;
-import com.moaguide.domain.coupon.CouponAdminRepository;
-import com.moaguide.domain.coupon.CouponUser;
-import com.moaguide.domain.coupon.CouponUserRepository;
+import com.moaguide.refactor.coupon.entity.CouponAdmin;
+import com.moaguide.refactor.coupon.repository.CouponAdminRepository;
+import com.moaguide.refactor.coupon.entity.CouponUser;
+import com.moaguide.refactor.coupon.repository.CouponUserRepository;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
