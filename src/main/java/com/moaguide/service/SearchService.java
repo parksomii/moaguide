@@ -1,7 +1,7 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.elasticsearch.searchlog.SearchLog;
-import com.moaguide.domain.elasticsearch.searchlog.SearchLogRepository;
+import com.moaguide.refactor.search.entity.SearchLog;
+import com.moaguide.refactor.search.repository.SearchLogRepository;
 import com.moaguide.dto.SearchRankDto;
 import com.moaguide.dto.searchProductDto;
 import lombok.AllArgsConstructor;

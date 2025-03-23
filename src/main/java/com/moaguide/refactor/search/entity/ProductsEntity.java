@@ -1,4 +1,4 @@
-package com.moaguide.domain.elasticsearch.products;
+package com.moaguide.refactor.search.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
