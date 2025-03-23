@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.search.service;
 
 import com.moaguide.refactor.search.entity.SearchLog;
 import com.moaguide.refactor.search.repository.SearchLogRepository;

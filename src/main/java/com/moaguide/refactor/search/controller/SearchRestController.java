@@ -2,7 +2,7 @@ package com.moaguide.refactor.search.controller;
 
 import com.moaguide.dto.SearchRankDto;
 import com.moaguide.dto.searchProductDto;
-import com.moaguide.service.SearchService;
+import com.moaguide.refactor.search.service.SearchService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
