@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.refactor.notice.repository.NoticeRepository;
+import com.moaguide.domain.notice.NoticeRepository;
 import com.moaguide.dto.NewDto.customDto.NoticeDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

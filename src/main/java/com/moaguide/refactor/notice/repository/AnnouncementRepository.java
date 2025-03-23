@@ -1,6 +1,7 @@
-package com.moaguide.domain.Announcement;
+package com.moaguide.refactor.notice.repository;
 
 import com.moaguide.dto.NewDto.customDto.AnnouncementDto;
+import com.moaguide.refactor.notice.entity.Announcement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
