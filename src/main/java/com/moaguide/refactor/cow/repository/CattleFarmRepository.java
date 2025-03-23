@@ -1,6 +1,7 @@
-package com.moaguide.refactor.cow.entity;
+package com.moaguide.refactor.cow.repository;
 
 import com.moaguide.dto.NewDto.customDto.CattleFarmDto;
+import com.moaguide.refactor.cow.entity.CattleFarm;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
