@@ -1,4 +1,4 @@
-package com.moaguide.service.view;
+package com.moaguide.refactor.product.service;
 
 import com.moaguide.refactor.product.entity.ProductView;
 import com.moaguide.refactor.product.repository.ProductViewRepository;

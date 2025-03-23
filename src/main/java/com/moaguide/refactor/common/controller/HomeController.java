@@ -13,7 +13,7 @@ import com.moaguide.refactor.notice.service.AnnouncementService;
 import com.moaguide.refactor.notice.service.NotificationService;
 import com.moaguide.refactor.product.service.ProductService;
 import com.moaguide.refactor.product.service.StudyService;
-import com.moaguide.service.view.ProductViewService;
+import com.moaguide.refactor.product.service.ProductViewService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
