@@ -3,7 +3,7 @@
 # 모아가이드 - STO 큐레이션 플랫폼 모아가이드
 
 <p>
-  <img width="671" alt="Image" src="https://github.com/user-attachments/assets/7bfdd0ef-7aa2-4f29-af6e-0f93b1088fca" />
+  <img width="671" alt="Image" src="https://d2qf2amuam62ps.cloudfront.net/img/moaguide_github_main.png" />
 </p>
 
 </div>
@@ -36,7 +36,7 @@
 ## 🛠 백엔드 기술 스택
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e3ed42ca-427f-4955-b3da-524aaf7a9359" alt="Image" />
+  <img src="https://d2qf2amuam62ps.cloudfront.net/img/moaguide_architecture.png" alt="Image" />
 </p>
 
 - **개발**: `Spring boot`, `Spring JPA`
@@ -137,7 +137,7 @@
 
 > ### **2. 상품 리스트 로딩 최적화**
 >
-> 상품 리스트 페이지는 **약 1,000만 건의 주가 데이터**를 처리하며 로딩 시간이 길어졌습니다(10초 이상)
+> 상품 리스트 페이지는 **약 1,000만 건의 주가 데이터**를 처리하며 로딩 시간이 길어졌습니다(5초 이상)
 >
 >이를 해결하기 위해 **테이블 분리**와 **데이터 구조 최적화**를 적용하여 **1500개의 상품 데이터만 처리**하도록 설계했습니다.
 >
