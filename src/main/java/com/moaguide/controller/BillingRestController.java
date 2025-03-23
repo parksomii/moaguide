@@ -1,4 +1,4 @@
-package com.moaguide.refactor.building.controller;
+package com.moaguide.controller;
 
 
 import com.moaguide.refactor.payments.entity.PaymentLog;
