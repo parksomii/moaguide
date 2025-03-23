@@ -1,4 +1,4 @@
-package com.moaguide.service.hanwoo;
+package com.moaguide.refactor.cow.service;
 
 
 import com.moaguide.refactor.cow.repository.*;
