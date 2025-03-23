@@ -1,6 +1,6 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.user.Role;
+import com.moaguide.refactor.enums.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.dto.UserDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;

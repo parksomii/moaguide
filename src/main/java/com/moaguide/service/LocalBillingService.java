@@ -9,7 +9,7 @@ import com.moaguide.refactor.payments.repository.LocalPaymentRequestRepository;
 import com.moaguide.refactor.payments.repository.CardRepository;
 import com.moaguide.refactor.coupon.entity.CouponUser;
 import com.moaguide.refactor.coupon.repository.CouponUserRepository;
-import com.moaguide.domain.user.Role;
+import com.moaguide.refactor.enums.Role;
 import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;

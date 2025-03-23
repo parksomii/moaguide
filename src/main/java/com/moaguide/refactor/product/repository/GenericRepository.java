@@ -1,4 +1,4 @@
-package com.moaguide.domain;
+package com.moaguide.refactor.product.repository;
 
 import com.moaguide.dto.NewDto.customDto.IssueCustomDto;
 import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;

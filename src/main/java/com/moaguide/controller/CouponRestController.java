@@ -1,6 +1,6 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.user.Role;
+import com.moaguide.refactor.enums.Role;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;

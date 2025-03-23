@@ -1,4 +1,4 @@
-package com.moaguide.domain.user;
+package com.moaguide.refactor.enums;
 
 public enum Role {
     USER,VIP,ADMIN

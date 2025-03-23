@@ -1,5 +1,6 @@
 package com.moaguide.domain.user;
 
+import com.moaguide.refactor.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

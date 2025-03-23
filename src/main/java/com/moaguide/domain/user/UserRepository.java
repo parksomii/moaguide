@@ -1,6 +1,7 @@
 package com.moaguide.domain.user;
 
 import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
+import com.moaguide.refactor.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -49,7 +50,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Transactional
     @Modifying
     @Query("update User u Set u.role =:role where u.nickname =:nickname ")
-    void updateRole(@Param("nickname") String nickname,@Param("role")Role role);
+    void updateRole(@Param("nickname") String nickname,@Param("role") Role role);
 
     @Modifying
     @Query("update User u Set u.role =:role where u.nickname in :nickname ")

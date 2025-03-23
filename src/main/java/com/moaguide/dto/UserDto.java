@@ -1,6 +1,6 @@
 package com.moaguide.dto;
 
-import com.moaguide.domain.user.Role;
+import com.moaguide.refactor.enums.Role;
 import com.moaguide.domain.user.User;
 import lombok.*;
 

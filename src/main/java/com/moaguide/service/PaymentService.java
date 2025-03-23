@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.refactor.coupon.repository.CouponUserRepository;
 import com.moaguide.refactor.notice.entity.Notification;
-import com.moaguide.domain.user.Role;
+import com.moaguide.refactor.enums.Role;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
 import com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto;

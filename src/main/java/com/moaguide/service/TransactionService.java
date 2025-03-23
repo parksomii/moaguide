@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.history.HistoryRepository;
+import com.moaguide.refactor.product.repository.HistoryRepository;
 import com.moaguide.refactor.product.repository.TransactionRepository;
 import com.moaguide.dto.NewDto.DetailTransactionResponseDto;
 import com.moaguide.dto.NewDto.customDto.TransactionDto;

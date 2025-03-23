@@ -3,7 +3,7 @@ package com.moaguide.service.ArticleContent;
 import com.moaguide.refactor.article.entity.ArticleContent;
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.refactor.article.repository.ArticleLikeRepository;
-import com.moaguide.domain.user.Role;
+import com.moaguide.refactor.enums.Role;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleNonSubscriberDto;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleSubscriberDto;
 import com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto;
