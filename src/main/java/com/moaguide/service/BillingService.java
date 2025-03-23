@@ -176,10 +176,6 @@ public class BillingService {
 
 	public Boolean findfirstCoupon(String nickname) {
 	    CouponUser result=couponUserRepository.findByNicknameAndCouponCode(nickname,"FIRST1").orElse(null);
-        if(result==null){
-            return false;
-        }else {
-            return true;
-        }
+		return result != null;
     }
 }

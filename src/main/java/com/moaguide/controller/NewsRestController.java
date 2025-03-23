@@ -1,11 +1,9 @@
 package com.moaguide.controller;
 
 
-import com.moaguide.domain.news.News;
 import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.NewsService;
-import com.moaguide.service.view.NewsViewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

@@ -36,8 +36,7 @@ public class SearchService {
     // 검색어 저장 메서드
     public void saveKeyword(String keyword) {
         if(keyword.isEmpty()){
-            return;
-        }else{
+		}else{
             searchLogRepository.save(new SearchLog(keyword, new Date()));
         }
     }

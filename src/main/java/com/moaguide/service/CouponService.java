@@ -5,7 +5,6 @@ import com.moaguide.domain.coupon.CouponAdmin;
 import com.moaguide.domain.coupon.CouponAdminRepository;
 import com.moaguide.domain.coupon.CouponUser;
 import com.moaguide.domain.coupon.CouponUserRepository;
-import com.moaguide.domain.user.User;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 

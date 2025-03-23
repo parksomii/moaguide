@@ -1,12 +1,8 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.divide.CurrentDivideRepository;
-import com.moaguide.dto.NewDto.customDto.SummaryIssupriceCustomDto;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.domain.billing.*;
 import com.moaguide.domain.coupon.CouponUserRepository;
 import com.moaguide.domain.notification.Notification;
-import com.moaguide.domain.notification.NotificationRepository;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
@@ -32,11 +31,11 @@ import java.util.UUID;
 @Service
 @Profile({"blue","green"})
 public class PaymentService {
-    private CouponUserRepository couponUserRepository;
-    private PaymentRequestRepository paymentRequestRepository;
-    private PaymentLogRepository paymentLogRepository;
-    private UserRepository userRepository;
-    private NotificationService notificationService;
+    private final CouponUserRepository couponUserRepository;
+    private final PaymentRequestRepository paymentRequestRepository;
+    private final PaymentLogRepository paymentLogRepository;
+    private final UserRepository userRepository;
+    private final NotificationService notificationService;
     @Value("${toss.secretkey}")
     private String secretkey;
 

@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class ContentResponseDto {
-    private ContentBaseDto base;
-    private Object object;
+    private final ContentBaseDto base;
+    private final Object object;
 
     // 하나의 생성자로 통합
     public ContentResponseDto(ContentBaseDto base, Object object) {

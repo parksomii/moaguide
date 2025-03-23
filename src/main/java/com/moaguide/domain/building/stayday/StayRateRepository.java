@@ -1,6 +1,5 @@
 package com.moaguide.domain.building.stayday;
 
-import com.moaguide.dto.NewDto.BuildingDto.StayDayDto;
 import com.moaguide.dto.NewDto.BuildingDto.StayRateDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

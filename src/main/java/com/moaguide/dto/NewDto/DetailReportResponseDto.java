@@ -8,10 +8,10 @@ import java.util.List;
 
 @Getter
 public class DetailReportResponseDto {
-    private List<ReportCustomDto> report;
-    private int total;
-    private int page;
-    private int size;
+    private final List<ReportCustomDto> report;
+    private final int total;
+    private final int page;
+    private final int size;
 
 
     public DetailReportResponseDto(Page<ReportCustomDto> report) {

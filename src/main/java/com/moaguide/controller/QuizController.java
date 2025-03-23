@@ -56,7 +56,7 @@ public class QuizController {
         String token = auth.substring(7);
         String nickname = jwtUtil.getNickname(token);
         Boolean overlap = quizService.findoverlap(nickname,id);
-        if(overlap == true){
+        if(overlap){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 참여했습니다.");
         }else{
             return ResponseEntity.ok("참여한적이 없습니다.");
@@ -75,7 +75,7 @@ public class QuizController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("로그인 안됨");
         }
         Boolean overlap = quizService.findoverlap(nickname);
-        if(overlap == true){
+        if(overlap){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이미 참여했습니다.");
         }else{
             return ResponseEntity.ok("참여한적이 없습니다.");

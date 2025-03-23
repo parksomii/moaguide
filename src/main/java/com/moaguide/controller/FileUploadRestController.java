@@ -3,9 +3,6 @@ package com.moaguide.controller;
 
 import com.moaguide.service.FileService;
 import lombok.AllArgsConstructor;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

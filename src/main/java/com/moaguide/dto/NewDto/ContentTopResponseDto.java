@@ -27,18 +27,15 @@ public class ContentTopResponseDto {
     public ContentTopResponseDto(ContentDetailDto contentDetailDto) {
         this.productId = contentDetailDto.getProductId();
         this.name = contentDetailDto.getName();
-        this.genre = contentDetailDto.getGenre();;
-        this.category = contentDetailDto.getCategory();
+        this.genre = contentDetailDto.getGenre();
+		this.category = contentDetailDto.getCategory();
         this.platform = contentDetailDto.getPlatform();
         this.totalPrice = contentDetailDto.getTotalPrice();
         this.rate = contentDetailDto.getRate();
         this.date = contentDetailDto.getDate();
         this.lowPrice = contentDetailDto.getLowPrice();
-        if(genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE")){
-            this.Invest = true;
-        }else{
-            this.Invest = false;
-        }
+		this.Invest =
+			genre.equals("MOVIE") || genre.equals("EXHIBITION") || genre.equals("CULTURE");
         this.link = contentDetailDto.getLink();
         this.bookmark = contentDetailDto.getBookmark();
     }

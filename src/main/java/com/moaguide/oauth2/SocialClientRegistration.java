@@ -1,6 +1,5 @@
 package com.moaguide.oauth2;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;

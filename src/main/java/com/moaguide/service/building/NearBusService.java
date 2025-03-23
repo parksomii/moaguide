@@ -1,6 +1,5 @@
 package com.moaguide.service.building;
 
-import com.moaguide.domain.building.near.NearBus;
 import com.moaguide.domain.building.near.NearBusRepository;
 import com.moaguide.dto.NewDto.BuildingDto.NearBusDto;
 import lombok.AllArgsConstructor;

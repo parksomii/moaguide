@@ -22,7 +22,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -33,11 +32,11 @@ import java.util.UUID;
 @Service
 @Profile("local")
 public class LocalPaymentService {
-    private CardRepository cardRepository;
-    private CouponUserRepository couponUserRepository;
-    private LocalPaymentRequestRepository localPaymentRequestRepository;
-    private PaymentLogRepository paymentLogRepository;
-    private UserRepository userRepository;
+    private final CardRepository cardRepository;
+    private final CouponUserRepository couponUserRepository;
+    private final LocalPaymentRequestRepository localPaymentRequestRepository;
+    private final PaymentLogRepository paymentLogRepository;
+    private final UserRepository userRepository;
     @Value("${toss.secretkey}")
     private String secretkey;
 
@@ -95,8 +94,8 @@ public class LocalPaymentService {
                             response.statusCode(), response.body());
                     throw new Exception(errorMessage);
                 }
-                LocalDateTime endDate = LocalDateTime.now().plusDays(1).withMinute(30).withSecond(0).withNano(0);;
-                ObjectMapper objectMapper = new ObjectMapper();
+                LocalDateTime endDate = LocalDateTime.now().plusDays(1).withMinute(30).withSecond(0).withNano(0);
+				ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode rootNode = objectMapper.readTree(response.body());
                 LocalDateTime requestedAt = LocalDateTime.parse(rootNode.get("requestedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
                 LocalDateTime approvedAt = LocalDateTime.parse(rootNode.get("approvedAt").asText(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);

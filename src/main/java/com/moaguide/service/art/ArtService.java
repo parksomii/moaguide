@@ -1,7 +1,5 @@
 package com.moaguide.service.art;
 
-import com.moaguide.domain.art.ArtAuthorRepository;
-import com.moaguide.domain.detail.ArtDetailRepository;
 import com.moaguide.dto.NewDto.ArtBaseResponseDto;
 import com.moaguide.dto.NewDto.ArtDetailDto;
 import com.moaguide.dto.NewDto.customDto.ArtAuthorDto;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor

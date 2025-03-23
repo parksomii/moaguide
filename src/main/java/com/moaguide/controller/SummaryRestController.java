@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
 

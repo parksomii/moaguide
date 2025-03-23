@@ -8,10 +8,10 @@ import java.util.List;
 
 @Getter
 public class DetailNoticeResponseDto {
-    private List<NoticeDto> notice;
-    private int total;
-    private int page;
-    private int size;
+    private final List<NoticeDto> notice;
+    private final int total;
+    private final int page;
+    private final int size;
 
     public DetailNoticeResponseDto(Page<NoticeDto> noticeDtos) {
         this.notice = noticeDtos.getContent();

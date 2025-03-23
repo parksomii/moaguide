@@ -1,9 +1,6 @@
 package com.moaguide.service;
 
 import com.moaguide.domain.detail.MusicDetailRepository;
-import com.moaguide.domain.divide.CurrentDivideRepository;
-import com.moaguide.domain.divide.DivideRepository;
-import com.moaguide.domain.divide.MusicDivideRepository;
 import com.moaguide.dto.NewDto.MusicSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.dto.NewDto.musicDto.*;
@@ -16,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;

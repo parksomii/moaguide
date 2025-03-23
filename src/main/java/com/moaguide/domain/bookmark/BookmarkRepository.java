@@ -1,7 +1,6 @@
 package com.moaguide.domain.bookmark;
 
 import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
-import jakarta.persistence.NamedNativeQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

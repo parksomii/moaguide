@@ -1,12 +1,8 @@
 package com.moaguide.dto.NewDto;
 
 import com.moaguide.dto.LocationDto;
-import com.moaguide.dto.NewDto.BuildingDto.AreaDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @Getter

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 public class DetailDivideResponseDto {
-    private List<DivideCustomDto> divide;
+    private final List<DivideCustomDto> divide;
 
     public DetailDivideResponseDto(List<DivideCustomDto> divideDtos) {
         this.divide = divideDtos;

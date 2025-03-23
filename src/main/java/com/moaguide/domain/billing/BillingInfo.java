@@ -7,7 +7,6 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Profile;
 
 import java.time.LocalDate;
 

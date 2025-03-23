@@ -8,7 +8,6 @@ import com.moaguide.dto.NewDto.ContentResponseDto;
 import com.moaguide.dto.NewDto.ContentTopResponseDto;
 import com.moaguide.dto.NewDto.ContentsSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
-import com.moaguide.dto.NewDto.musicDto.ViewDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.ContentService;
 import com.moaguide.service.ContentSubService;

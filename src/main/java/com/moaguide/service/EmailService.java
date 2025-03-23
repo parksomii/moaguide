@@ -4,7 +4,6 @@ package com.moaguide.service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -67,11 +66,8 @@ public class EmailService {
         long currentTimestamp = Instant.now().getEpochSecond();
 
         // 유효 시간 초과 또는 인증 코드 불일치 시 인증 실패
-        if (currentTimestamp - timestamp > CODE_VALIDATION_TIME || !storedCode.equals(code)) {
-            return false;
-        }
-        return true; // 인증 성공
-    }
+		return currentTimestamp - timestamp <= CODE_VALIDATION_TIME && storedCode.equals(code);// 인증 성공
+	}
 
     public String sendmail(String email, String code) {
         try {

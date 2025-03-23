@@ -1,6 +1,5 @@
 package com.moaguide.domain.coupon;
 
-import com.moaguide.controller.ContentRestController;
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
 import org.springframework.data.domain.Page;
@@ -10,9 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

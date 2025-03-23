@@ -7,13 +7,13 @@ import java.util.List;
 @Getter
 
 public class NearSubwayListDto {
-    private String station;
+    private final String station;
 
-    private List<String> route;
+    private final List<String> route;
 
-    private Integer distance;
+    private final Integer distance;
 
-    private Integer time;
+    private final Integer time;
     public NearSubwayListDto(NearSubwayDto nearSubway) {
         this.station = nearSubway.getStation();
         this.distance = nearSubway.getDistance();

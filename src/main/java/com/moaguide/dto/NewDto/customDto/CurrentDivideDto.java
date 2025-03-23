@@ -3,7 +3,6 @@ package com.moaguide.dto.NewDto.customDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.security.core.parameters.P;
 
 import java.sql.Date;
 

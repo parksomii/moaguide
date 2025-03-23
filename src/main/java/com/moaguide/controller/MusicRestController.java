@@ -5,7 +5,6 @@ import com.moaguide.dto.NewDto.MusicSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.dto.NewDto.musicDto.ConsertDto;
 import com.moaguide.dto.NewDto.musicDto.SearchDto;
-import com.moaguide.dto.NewDto.musicDto.SteamingDto;
 import com.moaguide.dto.NewDto.musicDto.ViewDto;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.MusicDetailService;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @RestController

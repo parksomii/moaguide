@@ -1,8 +1,6 @@
 package com.moaguide.domain.view;
 
 
-import com.moaguide.domain.product.Product;
-import com.moaguide.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
