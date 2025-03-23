@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.quiz.controller;
 
 import com.moaguide.refactor.quiz.entity.Quiz;
 import com.moaguide.refactor.quiz.entity.QuizHistory;
