@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.detail.MusicDetailRepository;
+import com.moaguide.refactor.music.repository.MusicDetailRepository;
 import com.moaguide.dto.NewDto.MusicSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.dto.NewDto.musicDto.*;
