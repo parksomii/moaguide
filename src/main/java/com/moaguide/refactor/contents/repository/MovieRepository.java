@@ -1,7 +1,8 @@
-package com.moaguide.domain.content;
+package com.moaguide.refactor.contents.repository;
 
 
 import com.moaguide.dto.NewDto.customDto.MovieInfoDto;
+import com.moaguide.refactor.contents.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

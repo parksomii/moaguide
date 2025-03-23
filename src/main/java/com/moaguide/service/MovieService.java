@@ -1,10 +1,14 @@
 package com.moaguide.service;
 
 
-import com.moaguide.domain.content.MovieRepository;
-import com.moaguide.domain.content.movie.*;
+import com.moaguide.refactor.contents.entity.MoviePeople;
+import com.moaguide.refactor.contents.entity.MovieSchedule;
+import com.moaguide.refactor.contents.repository.MoviePeopleRepository;
+import com.moaguide.refactor.contents.repository.MovieRepository;
 import com.moaguide.dto.NewDto.customDto.MovieInfoDto;
 import com.moaguide.dto.NewDto.customDto.MovieStatsDto;
+import com.moaguide.refactor.contents.repository.MovieScheduleRepository;
+import com.moaguide.refactor.contents.repository.MovieStatsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

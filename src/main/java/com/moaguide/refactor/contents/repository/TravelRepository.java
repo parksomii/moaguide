@@ -1,6 +1,7 @@
-package com.moaguide.domain.content;
+package com.moaguide.refactor.contents.repository;
 
 
+import com.moaguide.refactor.contents.entity.Travel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

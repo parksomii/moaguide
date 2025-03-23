@@ -1,4 +1,4 @@
-package com.moaguide.domain.detail;
+package com.moaguide.refactor.contents.entity;
 
 import com.moaguide.domain.product.Product;
 import com.moaguide.dto.NewDto.ContentDetailDto;

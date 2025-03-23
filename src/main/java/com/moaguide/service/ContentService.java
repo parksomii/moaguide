@@ -1,6 +1,6 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.detail.ContentRepository;
+import com.moaguide.refactor.contents.repository.ContentRepository;
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.customDto.ContentBaseDto;
 import com.moaguide.dto.NewDto.customDto.ContentInvestmentDto;

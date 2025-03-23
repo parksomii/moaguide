@@ -1,4 +1,4 @@
-package com.moaguide.domain.content.movie;
+package com.moaguide.refactor.contents.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

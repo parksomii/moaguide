@@ -1,8 +1,9 @@
-package com.moaguide.domain.detail;
+package com.moaguide.refactor.contents.repository;
 
 import com.moaguide.dto.NewDto.ContentDetailDto;
 import com.moaguide.dto.NewDto.customDto.ContentInvestmentDto;
 import com.moaguide.dto.NewDto.customDto.ContentPublishDto;
+import com.moaguide.refactor.contents.entity.Content;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;

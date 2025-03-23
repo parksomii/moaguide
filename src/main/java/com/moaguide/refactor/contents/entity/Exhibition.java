@@ -1,4 +1,5 @@
-package com.moaguide.domain.content;
+package com.moaguide.refactor.contents.entity;
+
 
 import com.moaguide.domain.product.Product;
 import jakarta.persistence.*;
@@ -6,12 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Travel {
-
+public class Exhibition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
@@ -22,8 +23,5 @@ public class Travel {
     private Product productId;
 
     private String place;
-    @Column(name = "open_date")
-    private String openDate;
-    private String Structure;
-    private String Production;
+    private String period;
 }

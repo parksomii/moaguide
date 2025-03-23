@@ -1,4 +1,4 @@
-package com.moaguide.domain.content.movie;
+package com.moaguide.refactor.contents.entity;
 
 
 import com.moaguide.domain.product.Product;
@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
+@Entity
+@Table(name = "Movie_Stats")
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Entity
-@Table(name = "Movie_Detail")
-public class MovieDetail {
+public class MovieStats {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,18 +25,16 @@ public class MovieDetail {
     @JoinColumn(name = "Product_Id", referencedColumnName = "Product_Id", nullable = false)
     private Product productId;
 
-    @Column(name = "screen_count")
-    private Long screenCount;
-
     private Date day;
-
-    @Column(name = "showtimes_count")
-    private Long showtimesCount;
-
-    private Long revenue;
-
-    @Column(name = "audience_count")
-    private Long audienceCount;
-
-    private Long ranking;
+    private String region;
+    @Column(name = "screen_count")
+    private int screenCount;
+    @Column(name = "total_revenue")
+    private Long totalRevenue;
+    @Column(name = "revenue_share")
+    private Double revenueShare;
+    @Column(name = "total_audience")
+    private Long totalAudience;
+    @Column(name = "audience_share")
+    private Double audienceShare;
 }

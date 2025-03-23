@@ -1,10 +1,10 @@
 package com.moaguide.service;
 
 
-import com.moaguide.domain.content.BroadcastingRepository;
-import com.moaguide.domain.content.ExhibitionRepository;
-import com.moaguide.domain.content.PerformanceRepository;
-import com.moaguide.domain.content.movie.*;
+import com.moaguide.refactor.contents.repository.BroadcastingRepository;
+import com.moaguide.refactor.contents.repository.ExhibitionRepository;
+import com.moaguide.refactor.contents.repository.MovieDetailRepository;
+import com.moaguide.refactor.contents.repository.PerformanceRepository;
 import com.moaguide.dto.NewDto.customDto.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
