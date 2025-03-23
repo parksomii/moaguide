@@ -1,7 +1,7 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.quiz.Quiz;
-import com.moaguide.domain.quiz.QuizHistory;
+import com.moaguide.refactor.quiz.entity.Quiz;
+import com.moaguide.refactor.quiz.entity.QuizHistory;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.jwt.JWTUtil;
 import com.moaguide.service.QuizService;

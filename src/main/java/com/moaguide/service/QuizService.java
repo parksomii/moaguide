@@ -1,7 +1,13 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.quiz.*;
 import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.refactor.quiz.repository.QuestionRepository;
+import com.moaguide.refactor.quiz.entity.Quiz;
+import com.moaguide.refactor.quiz.entity.QuizHistory;
+import com.moaguide.refactor.quiz.repository.QuizRepository;
+import com.moaguide.refactor.quiz.entity.QuizResponse;
+import com.moaguide.refactor.quiz.repository.QuizResponseRepository;
+import com.moaguide.refactor.quiz.repository.QuzeHistoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

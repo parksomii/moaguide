@@ -1,4 +1,4 @@
-package com.moaguide.domain.quiz;
+package com.moaguide.refactor.quiz.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

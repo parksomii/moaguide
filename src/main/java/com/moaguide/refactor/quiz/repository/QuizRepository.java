@@ -1,5 +1,6 @@
-package com.moaguide.domain.quiz;
+package com.moaguide.refactor.quiz.repository;
 
+import com.moaguide.refactor.quiz.entity.Quiz;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

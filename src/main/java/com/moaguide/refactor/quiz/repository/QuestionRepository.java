@@ -1,8 +1,9 @@
-package com.moaguide.domain.quiz;
+package com.moaguide.refactor.quiz.repository;
 
 import com.moaguide.dto.NewDto.customDto.QuestionCheckResponseDto;
 import com.moaguide.dto.NewDto.customDto.QuestionDto;
 import com.moaguide.dto.NewDto.customDto.QuestionLinkDto;
+import com.moaguide.refactor.quiz.entity.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
