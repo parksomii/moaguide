@@ -1,6 +1,7 @@
 package com.moaguide.service.hanwoo;
 
-import com.moaguide.domain.hanwoo.*;
+
+import com.moaguide.refactor.cow.repository.*;
 import com.moaguide.dto.NewDto.customDto.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
