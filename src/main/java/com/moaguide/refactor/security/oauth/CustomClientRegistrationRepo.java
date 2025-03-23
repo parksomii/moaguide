@@ -1,5 +1,6 @@
-package com.moaguide.oauth2;
+package com.moaguide.refactor.security.oauth;
 
+import com.moaguide.refactor.security.oauth.SocialClientRegistration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

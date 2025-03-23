@@ -1,6 +1,6 @@
 package com.moaguide.controller.ArticleContent;
 
-import com.moaguide.jwt.JWTUtil;
+import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.ArticleContent.ArticleLikeService;
 import java.util.HashMap;
 import java.util.Map;

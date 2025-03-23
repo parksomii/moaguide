@@ -6,7 +6,7 @@ import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.dto.NewDto.musicDto.ConsertDto;
 import com.moaguide.dto.NewDto.musicDto.SearchDto;
 import com.moaguide.dto.NewDto.musicDto.ViewDto;
-import com.moaguide.jwt.JWTUtil;
+import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.MusicDetailService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,86 +22,88 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/detail/music/")
 public class MusicRestController {
-    private final MusicDetailService musicService;
-    private final JWTUtil jwtUtil;
 
-    // 최상단 기본정보
-    @GetMapping("{product_Id}")
-    public ResponseEntity<?> product(@PathVariable String product_Id,  @RequestHeader(value="Authorization",required = false) String jwt) {
-        String Nickname;
-        if ( jwt!= null && jwt.startsWith("Bearer ")) {
-            if(jwtUtil.isExpired(jwt.substring(7))){
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-            Nickname = jwtUtil.getNickname(jwt.substring(7));
-        }else{
-            Nickname = "null";
-        }
-        MusicReponseDto music = musicService.findBydetail(product_Id,Nickname);
-        return ResponseEntity.ok(music);
-    }
+	private final MusicDetailService musicService;
+	private final JWTUtil jwtUtil;
 
-    // 기본정보
-    @GetMapping("base/{product_Id}")
-    public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-        MusicPublishDto music = musicService.findBase(product_Id);
-        MusicSongDto musicSong = musicService.findSong(product_Id);
-        MusicDivideResponseDto musicDivide = musicService.findDivide(product_Id);
-        return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong, musicDivide));
-    }
+	// 최상단 기본정보
+	@GetMapping("{product_Id}")
+	public ResponseEntity<?> product(@PathVariable String product_Id,
+		@RequestHeader(value = "Authorization", required = false) String jwt) {
+		String Nickname;
+		if (jwt != null && jwt.startsWith("Bearer ")) {
+			if (jwtUtil.isExpired(jwt.substring(7))) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			}
+			Nickname = jwtUtil.getNickname(jwt.substring(7));
+		} else {
+			Nickname = "null";
+		}
+		MusicReponseDto music = musicService.findBydetail(product_Id, Nickname);
+		return ResponseEntity.ok(music);
+	}
 
-    // 상세정보
-    @GetMapping("sub/{product_Id}")
-    public ResponseEntity<Object> Sub(@PathVariable String product_Id) {
-        MusicSubResponseDto youtube = musicService.findYoutube(product_Id);
-        return ResponseEntity.ok(youtube);
-    }
+	// 기본정보
+	@GetMapping("base/{product_Id}")
+	public ResponseEntity<Object> Base(@PathVariable String product_Id) {
+		MusicPublishDto music = musicService.findBase(product_Id);
+		MusicSongDto musicSong = musicService.findSong(product_Id);
+		MusicDivideResponseDto musicDivide = musicService.findDivide(product_Id);
+		return ResponseEntity.ok(new MusicBaseResponseDto(music, musicSong, musicDivide));
+	}
 
-    // 유튜브 조회수
-    @GetMapping("view/{product_Id}")
-    public ResponseEntity<?> view(@PathVariable String product_Id, @RequestParam int month) {
-        // 조회수 (3개월, 6개월, 1년, 3년, 전체)
-        List<ViewDto> youtubeView = musicService.findView(product_Id, month);
-        // null & 빈 리스트 체크
-        if (youtubeView == null || youtubeView.isEmpty()) {
-            return ResponseEntity.ok(new ArrayList<>());
-        }
-        return ResponseEntity.ok(youtubeView);
-    }
+	// 상세정보
+	@GetMapping("sub/{product_Id}")
+	public ResponseEntity<Object> Sub(@PathVariable String product_Id) {
+		MusicSubResponseDto youtube = musicService.findYoutube(product_Id);
+		return ResponseEntity.ok(youtube);
+	}
 
-    // 검색량
-    @GetMapping("search/{product_Id}")
-    public ResponseEntity<?> search(@PathVariable String product_Id, @RequestParam int month) {
-        // 검색량 (3개월, 6개월, 1년, 전체)
-        List<SearchDto> search = musicService.findSearch(product_Id, month);
-        // null & 빈 리스트 체크
-        if (search == null || search.isEmpty()) {
-            return ResponseEntity.ok(new ArrayList<>());
-        }
-        return ResponseEntity.ok(search);
-    }
+	// 유튜브 조회수
+	@GetMapping("view/{product_Id}")
+	public ResponseEntity<?> view(@PathVariable String product_Id, @RequestParam int month) {
+		// 조회수 (3개월, 6개월, 1년, 3년, 전체)
+		List<ViewDto> youtubeView = musicService.findView(product_Id, month);
+		// null & 빈 리스트 체크
+		if (youtubeView == null || youtubeView.isEmpty()) {
+			return ResponseEntity.ok(new ArrayList<>());
+		}
+		return ResponseEntity.ok(youtubeView);
+	}
 
-    // 스트리밍 수
-    @GetMapping("streaming/{product_Id}")
-    public ResponseEntity<?> streaming(@PathVariable String product_Id, @RequestParam int month) {
-        // 스트리밍 수 (3개월, 6개월, 1년, 전체)
-        MaxAndMinDto streaming = musicService.findStreaming(product_Id, month);
-        // null & 빈 리스트 체크
-        if (streaming.getSteamingDto() == null || streaming.getSteamingDto().isEmpty()) {
-            return ResponseEntity.ok(new ArrayList<>());
-        }
-        return ResponseEntity.ok(streaming);
-    }
+	// 검색량
+	@GetMapping("search/{product_Id}")
+	public ResponseEntity<?> search(@PathVariable String product_Id, @RequestParam int month) {
+		// 검색량 (3개월, 6개월, 1년, 전체)
+		List<SearchDto> search = musicService.findSearch(product_Id, month);
+		// null & 빈 리스트 체크
+		if (search == null || search.isEmpty()) {
+			return ResponseEntity.ok(new ArrayList<>());
+		}
+		return ResponseEntity.ok(search);
+	}
 
-    // 공연일정
-    @GetMapping("consert/{product_Id}")
-    public ResponseEntity<?> consert(@PathVariable String product_Id) {
-        // 공연일정 최신순 8개
-        List<ConsertDto> consert = musicService.findConsert(product_Id);
-        // null & 빈 리스트 체크
-        if (consert == null || consert.isEmpty()) {
-            return ResponseEntity.ok(new ArrayList<>());
-        }
-        return ResponseEntity.ok(consert);
-    }
+	// 스트리밍 수
+	@GetMapping("streaming/{product_Id}")
+	public ResponseEntity<?> streaming(@PathVariable String product_Id, @RequestParam int month) {
+		// 스트리밍 수 (3개월, 6개월, 1년, 전체)
+		MaxAndMinDto streaming = musicService.findStreaming(product_Id, month);
+		// null & 빈 리스트 체크
+		if (streaming.getSteamingDto() == null || streaming.getSteamingDto().isEmpty()) {
+			return ResponseEntity.ok(new ArrayList<>());
+		}
+		return ResponseEntity.ok(streaming);
+	}
+
+	// 공연일정
+	@GetMapping("consert/{product_Id}")
+	public ResponseEntity<?> consert(@PathVariable String product_Id) {
+		// 공연일정 최신순 8개
+		List<ConsertDto> consert = musicService.findConsert(product_Id);
+		// null & 빈 리스트 체크
+		if (consert == null || consert.isEmpty()) {
+			return ResponseEntity.ok(new ArrayList<>());
+		}
+		return ResponseEntity.ok(consert);
+	}
 }
