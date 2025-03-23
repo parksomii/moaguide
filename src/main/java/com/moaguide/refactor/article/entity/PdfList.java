@@ -1,4 +1,4 @@
-package com.moaguide.domain.pdf;
+package com.moaguide.refactor.article.entity;
 
 
 import jakarta.persistence.*;

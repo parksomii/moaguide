@@ -1,7 +1,7 @@
 package com.moaguide.service;
 
-import com.moaguide.domain.pdf.PdfList;
-import com.moaguide.domain.pdf.PdfListRepository;
+import com.moaguide.refactor.article.entity.PdfList;
+import com.moaguide.refactor.article.repository.PdfListRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
