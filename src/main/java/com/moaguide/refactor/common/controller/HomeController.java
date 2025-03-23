@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.common.controller;
 
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.refactor.security.jwt.JWTUtil;

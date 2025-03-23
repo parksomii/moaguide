@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.common.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
