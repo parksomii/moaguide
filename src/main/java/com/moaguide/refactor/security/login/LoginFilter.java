@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.dto.CustomUserDetails;
 import com.moaguide.dto.ProfileDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.CookieService;
+import com.moaguide.refactor.security.service.CookieService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
