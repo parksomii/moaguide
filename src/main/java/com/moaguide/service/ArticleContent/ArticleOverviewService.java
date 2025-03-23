@@ -1,6 +1,6 @@
 package com.moaguide.service.ArticleContent;
 
-import com.moaguide.domain.ArticleContent.ArticleContentRepository;
+import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.domain.CategoryContent.Category;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto;
 import com.moaguide.service.TimeServie;

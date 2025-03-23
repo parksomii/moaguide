@@ -1,6 +1,7 @@
-package com.moaguide.domain.coupon;
+package com.moaguide.refactor.coupon.repository;
 
 import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
+import com.moaguide.refactor.coupon.entity.CouponAdmin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

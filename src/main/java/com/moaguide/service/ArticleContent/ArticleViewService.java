@@ -1,7 +1,7 @@
 package com.moaguide.service.ArticleContent;
 
-import com.moaguide.domain.ArticleContent.ArticleView;
-import com.moaguide.domain.ArticleContent.ArticleViewRepository;
+import com.moaguide.refactor.article.entity.ArticleView;
+import com.moaguide.refactor.article.repository.ArticleViewRepository;
 import jakarta.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;

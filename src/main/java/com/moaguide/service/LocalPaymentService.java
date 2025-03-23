@@ -7,7 +7,7 @@ import com.moaguide.domain.billing.*;
 import com.moaguide.domain.billing.localbilling.LocalPaymentRequest;
 import com.moaguide.domain.billing.localbilling.LocalPaymentRequestRepository;
 import com.moaguide.domain.card.CardRepository;
-import com.moaguide.domain.coupon.CouponUserRepository;
+import com.moaguide.refactor.coupon.repository.CouponUserRepository;
 import com.moaguide.domain.user.Role;
 import com.moaguide.domain.user.UserRepository;
 import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
