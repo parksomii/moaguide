@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.user.service;
 
 
 import jakarta.mail.MessagingException;

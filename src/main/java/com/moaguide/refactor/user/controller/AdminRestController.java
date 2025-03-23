@@ -3,7 +3,7 @@ package com.moaguide.refactor.user.controller;
 import com.moaguide.dto.UserDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.refactor.user.entity.User;
-import com.moaguide.service.UserService;
+import com.moaguide.refactor.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
