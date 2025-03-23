@@ -1,4 +1,4 @@
-package com.moaguide.controller.ArticleContent;
+package com.moaguide.refactor.article.controller;
 
 import com.moaguide.refactor.product.entity.CategoryContent.Category;
 import com.moaguide.dto.NewDto.ArticleContentDto.ArticleQueryDto;

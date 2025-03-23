@@ -1,4 +1,4 @@
-package com.moaguide.controller.ArticleContent;
+package com.moaguide.refactor.article.controller;
 
 import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.ArticleContent.ArticleLikeService;

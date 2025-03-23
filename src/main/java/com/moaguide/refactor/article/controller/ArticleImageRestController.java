@@ -1,4 +1,4 @@
-package com.moaguide.controller.ArticleContent;
+package com.moaguide.refactor.article.controller;
 
 import com.moaguide.service.ArticleContent.ArticleImageService;
 import lombok.AllArgsConstructor;

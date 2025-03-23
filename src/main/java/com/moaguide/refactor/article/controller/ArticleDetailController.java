@@ -1,4 +1,4 @@
-package com.moaguide.controller.ArticleContent;
+package com.moaguide.refactor.article.controller;
 
 import com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;
