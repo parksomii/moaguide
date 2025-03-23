@@ -1,4 +1,4 @@
-package com.moaguide.service;
+package com.moaguide.refactor.quiz;
 
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.refactor.quiz.repository.QuestionRepository;

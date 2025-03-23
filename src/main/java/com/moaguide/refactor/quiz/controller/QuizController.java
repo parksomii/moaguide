@@ -4,7 +4,7 @@ import com.moaguide.refactor.quiz.entity.Quiz;
 import com.moaguide.refactor.quiz.entity.QuizHistory;
 import com.moaguide.dto.NewDto.customDto.*;
 import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.service.QuizService;
+import com.moaguide.refactor.quiz.QuizService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
