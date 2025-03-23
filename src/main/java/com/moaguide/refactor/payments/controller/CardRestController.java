@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.payments.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
