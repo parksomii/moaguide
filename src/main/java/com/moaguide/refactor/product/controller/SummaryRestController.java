@@ -9,7 +9,7 @@ import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.refactor.product.service.BookmarkService;
 import com.moaguide.refactor.product.service.CurrentDivideService;
 import com.moaguide.refactor.product.service.ProductService;
-import com.moaguide.refactor.product.service.StudyService;
+import com.moaguide.service.StudyService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;

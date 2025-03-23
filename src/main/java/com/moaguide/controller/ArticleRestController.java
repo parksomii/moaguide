@@ -3,7 +3,7 @@ package com.moaguide.controller;
 
 import com.moaguide.domain.study.Roadmap;
 import com.moaguide.dto.NewDto.ArticlelistResponseDto;
-import com.moaguide.refactor.product.service.StudyService;
+import com.moaguide.service.StudyService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

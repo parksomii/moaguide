@@ -1,4 +1,4 @@
-package com.moaguide.service.view;
+package com.moaguide.service;
 
 import com.moaguide.domain.report.Report;
 import com.moaguide.domain.view.ReportView;

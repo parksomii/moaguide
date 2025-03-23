@@ -1,4 +1,4 @@
-package com.moaguide.refactor.product.service;
+package com.moaguide.service;
 
 
 import com.moaguide.domain.study.ArticleRepository;

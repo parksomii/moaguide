@@ -12,7 +12,7 @@ import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.refactor.notice.service.AnnouncementService;
 import com.moaguide.refactor.notice.service.NotificationService;
 import com.moaguide.refactor.product.service.ProductService;
-import com.moaguide.refactor.product.service.StudyService;
+import com.moaguide.service.StudyService;
 import com.moaguide.refactor.product.service.ProductViewService;
 import java.util.HashMap;
 import java.util.List;
