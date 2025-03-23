@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.cow.controller;
 
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
 import com.moaguide.dto.NewDto.HanwooDetailDto;
