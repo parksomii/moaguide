@@ -1,6 +1,6 @@
 package com.moaguide.service.hanwoo;
 
-import com.moaguide.domain.detail.HanwooDetailRepository;
+import com.moaguide.refactor.cow.repository.HanwooDetailRepository;
 import com.moaguide.dto.NewDto.HanwooBaseResponseDto;
 import com.moaguide.dto.NewDto.HanwooDetailDto;
 import com.moaguide.dto.NewDto.customDto.HanwooFarmDto;
