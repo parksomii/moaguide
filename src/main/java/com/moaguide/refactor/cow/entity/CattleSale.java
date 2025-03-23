@@ -1,4 +1,4 @@
-package com.moaguide.domain.hanwoo;
+package com.moaguide.refactor.cow.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "cattle_transaction")
-public class CattlePrice {
+@Table(name = "cattle_sale")
+public class CattleSale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,4 +1,4 @@
-package com.moaguide.domain.hanwoo;
+package com.moaguide.refactor.cow.entity;
 
 import com.moaguide.dto.NewDto.customDto.CattleFarmDto;
 import org.springframework.data.jpa.repository.JpaRepository;
