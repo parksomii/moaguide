@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.article.controller;
 
 
 import com.moaguide.service.FileService;
