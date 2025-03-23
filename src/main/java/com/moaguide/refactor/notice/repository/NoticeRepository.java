@@ -1,7 +1,8 @@
-package com.moaguide.domain.notice;
+package com.moaguide.refactor.notice.repository;
 
 
 import com.moaguide.dto.NewDto.customDto.NoticeDto;
+import com.moaguide.refactor.notice.entity.Notice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
