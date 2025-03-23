@@ -1,4 +1,4 @@
-package com.moaguide.controller;
+package com.moaguide.refactor.contents.controller;
 
 
 import com.moaguide.refactor.contents.entity.movie.MoviePeople;
