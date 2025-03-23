@@ -1,4 +1,4 @@
-package com.moaguide.domain.emailhistory;
+package com.moaguide.refactor.user.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

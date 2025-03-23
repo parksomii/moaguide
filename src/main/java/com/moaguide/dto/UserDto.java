@@ -1,7 +1,7 @@
 package com.moaguide.dto;
 
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.domain.user.User;
+import com.moaguide.refactor.user.entity.User;
 import lombok.*;
 
 import java.sql.Date;
@@ -12,33 +12,34 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private Long customNumber;
-    private String email;
-    private String name;
-    private String password;
-    private Role role;
-    private String nickname;
-    private Date birthDate;
-    private String investmentExperience;
-    private Integer marketingConsent;
-    private String loginType;
 
-    public User toUser() {
-        return new User(
-            this.email,
-            this.name,
-            this.password,
-            this.role,
-            this.nickname,
-            this.birthDate,
-            this.investmentExperience,
-            this.marketingConsent,
-            this.loginType
-        );
-    }
+	private Long customNumber;
+	private String email;
+	private String name;
+	private String password;
+	private Role role;
+	private String nickname;
+	private Date birthDate;
+	private String investmentExperience;
+	private Integer marketingConsent;
+	private String loginType;
 
-    public UserDto(String email,String password) {
-        this.email = email;
-        this.password = password;
-    }
+	public User toUser() {
+		return new User(
+			this.email,
+			this.name,
+			this.password,
+			this.role,
+			this.nickname,
+			this.birthDate,
+			this.investmentExperience,
+			this.marketingConsent,
+			this.loginType
+		);
+	}
+
+	public UserDto(String email, String password) {
+		this.email = email;
+		this.password = password;
+	}
 }

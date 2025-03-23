@@ -1,7 +1,7 @@
 package com.moaguide.refactor.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moaguide.domain.user.User;
+import com.moaguide.refactor.user.entity.User;
 import com.moaguide.dto.NewDto.oauth.CustomOAuth2User;
 import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.CookieService;

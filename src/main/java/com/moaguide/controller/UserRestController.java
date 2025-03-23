@@ -1,6 +1,6 @@
 package com.moaguide.controller;
 
-import com.moaguide.domain.user.User;
+import com.moaguide.refactor.user.entity.User;
 import com.moaguide.dto.NewDto.customDto.mailDto;
 import com.moaguide.dto.UserDto;
 import com.moaguide.refactor.security.jwt.JWTUtil;

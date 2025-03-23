@@ -1,6 +1,6 @@
 package com.moaguide.dto;
 
-import com.moaguide.domain.user.User;
+import com.moaguide.refactor.user.entity.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,54 +11,57 @@ import java.util.List;
 
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    private final User user;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getRole().name()));
-    }
+	private final User user;
 
-    @Override
-    public String getPassword() {
-        return user.getPassword();
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority(user.getRole().name()));
+	}
 
-    @Override
-    public String getUsername() {
-        return user.getNickname();
-    }
+	@Override
+	public String getPassword() {
+		return user.getPassword();
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
+	@Override
+	public String getUsername() {
+		return user.getNickname();
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return UserDetails.super.isAccountNonExpired();
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return UserDetails.super.isAccountNonLocked();
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return UserDetails.super.isCredentialsNonExpired();
+	}
 
-    public String getLoginType() {
-        return user.getLoginType();
-    }
+	@Override
+	public boolean isEnabled() {
+		return UserDetails.super.isEnabled();
+	}
 
-    public String getNickname(){return user.getNickname();}
+	public String getLoginType() {
+		return user.getLoginType();
+	}
 
-    public String getemail(){
-        return user.getEmail();
-    }
+	public String getNickname() {
+		return user.getNickname();
+	}
 
-    public int getMarketing() {
-        return user.getMarketingConsent();
-    }
+	public String getemail() {
+		return user.getEmail();
+	}
+
+	public int getMarketing() {
+		return user.getMarketingConsent();
+	}
 }

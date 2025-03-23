@@ -2,7 +2,7 @@ package com.moaguide.controller.local;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moaguide.domain.user.User;
+import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.service.LocalBillingService;
 import org.springframework.beans.factory.annotation.Value;

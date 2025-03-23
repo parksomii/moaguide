@@ -1,6 +1,6 @@
 package com.moaguide.refactor.article.entity;
 
-import com.moaguide.domain.user.User;
+import com.moaguide.refactor.user.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,27 +22,27 @@ import org.hibernate.annotations.CreationTimestamp;
 @AllArgsConstructor
 @Entity
 @Table(name = "Article_Like",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"article_id", "user_id"})) // 중복 좋아요 방지
+	uniqueConstraints = @UniqueConstraint(columnNames = {"article_id", "user_id"})) // 중복 좋아요 방지
 public class ArticleLike {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "article_id", nullable = false)
-  private ArticleContent article;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "article_id", nullable = false)
+	private ArticleContent article;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
-  @Column(name = "created_at", nullable = false, updatable = false)
-  @CreationTimestamp
-  private Timestamp createdAt;
+	@Column(name = "created_at", nullable = false, updatable = false)
+	@CreationTimestamp
+	private Timestamp createdAt;
 
-  public ArticleLike(ArticleContent article, User user) {
-    this.article = article;
-    this.user = user;
-  }
+	public ArticleLike(ArticleContent article, User user) {
+		this.article = article;
+		this.user = user;
+	}
 }
