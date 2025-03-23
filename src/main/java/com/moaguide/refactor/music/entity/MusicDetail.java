@@ -1,4 +1,4 @@
-package com.moaguide.domain.detail;
+package com.moaguide.refactor.music.entity;
 
 import com.moaguide.domain.product.Product;
 import com.moaguide.dto.NewDto.customDto.MusicReponseDto;

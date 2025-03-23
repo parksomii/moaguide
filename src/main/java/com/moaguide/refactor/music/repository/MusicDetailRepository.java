@@ -1,7 +1,8 @@
-package com.moaguide.domain.detail;
+package com.moaguide.refactor.music.repository;
 
 import com.moaguide.dto.NewDto.MusicSubResponseDto;
 import com.moaguide.dto.NewDto.customDto.MusicReponseDto;
+import com.moaguide.refactor.music.entity.MusicDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
