@@ -8,7 +8,7 @@ import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.refactor.config.handler.CustomAccessDeniedHandler;
 import com.moaguide.refactor.config.handler.CustomLogoutSuccessHandler;
 import com.moaguide.refactor.config.handler.OAuth2SuccessHandler;
-import com.moaguide.security.LoginFilter;
+import com.moaguide.refactor.security.login.LoginFilter;
 import com.moaguide.service.CookieService;
 import com.moaguide.service.CustomOAuth2UserService;
 import java.util.Arrays;
