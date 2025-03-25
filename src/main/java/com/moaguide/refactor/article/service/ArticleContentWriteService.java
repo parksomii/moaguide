@@ -1,6 +1,6 @@
 package com.moaguide.refactor.article.service;
 
-import com.moaguide.dto.NewDto.ArticleContentDto.ArticleContentWriteRequestDto;
+import com.moaguide.refactor.article.dto.ArticleContentWriteRequestDto;
 import com.moaguide.refactor.article.entity.ArticleContent;
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.refactor.product.entity.CategoryContent.CategoryContent;

@@ -1,6 +1,6 @@
 package com.moaguide.refactor.article.controller;
 
-import com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto;
+import com.moaguide.refactor.article.dto.ArticleOverviewDto;
 import com.moaguide.refactor.article.service.ArticleLikeService;
 import com.moaguide.refactor.article.service.ArticleOverviewService;
 import com.moaguide.refactor.product.entity.CategoryContent.Category;

@@ -1,8 +1,8 @@
 package com.moaguide.refactor.article.service;
 
-import com.moaguide.dto.NewDto.ArticleContentDto.ArticleNonSubscriberDto;
-import com.moaguide.dto.NewDto.ArticleContentDto.ArticleSubscriberDto;
-import com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto;
+import com.moaguide.refactor.article.dto.ArticleNonSubscriberDto;
+import com.moaguide.refactor.article.dto.ArticleSubscriberDto;
+import com.moaguide.refactor.article.dto.RelatedContentDto;
 import com.moaguide.refactor.article.entity.ArticleContent;
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.refactor.article.repository.ArticleLikeRepository;

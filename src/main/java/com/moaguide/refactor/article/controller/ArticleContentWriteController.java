@@ -1,6 +1,6 @@
 package com.moaguide.refactor.article.controller;
 
-import com.moaguide.dto.NewDto.ArticleContentDto.ArticleContentWriteRequestDto;
+import com.moaguide.refactor.article.dto.ArticleContentWriteRequestDto;
 import com.moaguide.refactor.article.service.ArticleContentWriteService;
 import com.moaguide.refactor.enums.Role;
 import com.moaguide.refactor.security.jwt.JWTUtil;

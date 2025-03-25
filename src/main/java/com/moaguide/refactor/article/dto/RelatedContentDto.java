@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.ArticleContentDto;
+package com.moaguide.refactor.article.dto;
 
 import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
