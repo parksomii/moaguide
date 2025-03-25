@@ -4,22 +4,16 @@ package com.moaguide.refactor.payments.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.refactor.coupon.repository.CouponUserRepository;
-import com.moaguide.refactor.notice.entity.Notification;
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.refactor.user.repository.UserRepository;
-import com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer;
-import com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto;
-import com.moaguide.refactor.payments.entity.PaymentLog;
-import com.moaguide.refactor.payments.repository.PaymentLogRepository;
-import com.moaguide.refactor.payments.entity.PaymentRequest;
-import com.moaguide.refactor.payments.repository.PaymentRequestRepository;
+import com.moaguide.refactor.notice.entity.Notification;
 import com.moaguide.refactor.notice.service.NotificationService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.moaguide.refactor.payments.dto.BillingCouponUSer;
+import com.moaguide.refactor.payments.dto.PaymentDto;
+import com.moaguide.refactor.payments.entity.PaymentLog;
+import com.moaguide.refactor.payments.entity.PaymentRequest;
+import com.moaguide.refactor.payments.repository.PaymentLogRepository;
+import com.moaguide.refactor.payments.repository.PaymentRequestRepository;
+import com.moaguide.refactor.user.repository.UserRepository;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -31,6 +25,11 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Profile({"blue", "green"})

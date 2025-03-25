@@ -1,7 +1,7 @@
 package com.moaguide.refactor.user.repository;
 
-import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
 import com.moaguide.refactor.enums.Role;
+import com.moaguide.refactor.payments.dto.SubscriptDateDto;
 import com.moaguide.refactor.user.entity.User;
 import java.time.LocalDate;
 import java.util.List;

@@ -1,20 +1,29 @@
 package com.moaguide.refactor.payments.controller;
 
 
+import com.moaguide.refactor.payments.dto.LocalSubscriptDateDto;
+import com.moaguide.refactor.payments.dto.lastLogDto;
 import com.moaguide.refactor.payments.entity.PaymentLog;
-import com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto;
-import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
-import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.refactor.payments.service.LocalBillingService;
+import com.moaguide.refactor.security.jwt.JWTUtil;
+import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.jwt.JwtException;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/billing")

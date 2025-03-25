@@ -5,25 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.refactor.coupon.entity.CouponUser;
 import com.moaguide.refactor.coupon.repository.CouponUserRepository;
 import com.moaguide.refactor.enums.Role;
+import com.moaguide.refactor.payments.dto.SubscriptDateDto;
+import com.moaguide.refactor.payments.dto.lastLogDto;
+import com.moaguide.refactor.payments.entity.BillingInfo;
+import com.moaguide.refactor.payments.entity.PaymentLog;
+import com.moaguide.refactor.payments.entity.PaymentRequest;
+import com.moaguide.refactor.payments.repository.BillingInfoRepository;
+import com.moaguide.refactor.payments.repository.PaymentLogRepository;
+import com.moaguide.refactor.payments.repository.PaymentRequestRepository;
 import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.repository.UserRepository;
-import com.moaguide.dto.NewDto.customDto.billingDto.SubscriptDateDto;
-import com.moaguide.dto.NewDto.customDto.billingDto.lastLogDto;
-import com.moaguide.refactor.payments.entity.BillingInfo;
-import com.moaguide.refactor.payments.repository.BillingInfoRepository;
-import com.moaguide.refactor.payments.entity.PaymentLog;
-import com.moaguide.refactor.payments.repository.PaymentLogRepository;
-import com.moaguide.refactor.payments.entity.PaymentRequest;
-import com.moaguide.refactor.payments.repository.PaymentRequestRepository;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -35,6 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
