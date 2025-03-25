@@ -1,7 +1,7 @@
 package com.moaguide.refactor.building.entity.subway;
 
 
-import com.moaguide.dto.NewDto.BuildingDto.SubwayDto;
+import com.moaguide.refactor.building.dto.SubwayDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,35 +15,36 @@ import java.sql.Date;
 @NoArgsConstructor
 @Getter
 @SqlResultSetMapping(
-        name = "subwayDayMapping",
-        classes = @ConstructorResult(
-                targetClass = SubwayDto.class,
-                columns = {
-                        @ColumnResult(name = "day", type = Date.class),
-                        @ColumnResult(name = "boarding", type = Integer.class),
-                        @ColumnResult(name = "alighting", type = Integer.class)
-                }
-        )
+	name = "subwayDayMapping",
+	classes = @ConstructorResult(
+		targetClass = SubwayDto.class,
+		columns = {
+			@ColumnResult(name = "day", type = Date.class),
+			@ColumnResult(name = "boarding", type = Integer.class),
+			@ColumnResult(name = "alighting", type = Integer.class)
+		}
+	)
 )
 @NamedStoredProcedureQuery(
-        name = "SubwayDay",
-        procedureName = "GetSubwayDay",
-        resultSetMappings = "subwayDayMapping",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "productId", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "date", type = Date.class)
-        }
+	name = "SubwayDay",
+	procedureName = "GetSubwayDay",
+	resultSetMappings = "subwayDayMapping",
+	parameters = {
+		@StoredProcedureParameter(mode = ParameterMode.IN, name = "productId", type = String.class),
+		@StoredProcedureParameter(mode = ParameterMode.IN, name = "date", type = Date.class)
+	}
 )
 public class SubwayDay {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    private String keyword;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private Date day;
+	private String keyword;
 
-    private int boarding;
+	private Date day;
 
-    private int alighting;
+	private int boarding;
+
+	private int alighting;
 }

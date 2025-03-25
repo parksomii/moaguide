@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.BuildingDto;
+package com.moaguide.refactor.building.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,5 +6,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class NearBusDto {
-    private String node;
+
+	private String node;
 }

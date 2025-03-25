@@ -1,11 +1,23 @@
 package com.moaguide.refactor.building.controller;
 
 
-import com.moaguide.dto.LocationDto;
-import com.moaguide.dto.NewDto.*;
-import com.moaguide.dto.NewDto.BuildingDto.*;
-import com.moaguide.dto.NewDto.customDto.BuildingBaseDto;
-import com.moaguide.dto.NewDto.customDto.BuildingReponseDto;
+import com.moaguide.refactor.building.dto.BusinessAreaDto;
+import com.moaguide.refactor.building.dto.LocationDto;
+import com.moaguide.refactor.building.dto.BuildingBaseDto;
+import com.moaguide.refactor.building.dto.BuildingReponseDto;
+import com.moaguide.refactor.building.dto.BuildingBaseResponseDto;
+import com.moaguide.refactor.building.dto.BuildingSubResponseDto;
+import com.moaguide.refactor.building.dto.BuildingSubwayResponseDto;
+import com.moaguide.refactor.building.dto.LandDto;
+import com.moaguide.refactor.building.dto.LeaseDto;
+import com.moaguide.refactor.building.dto.NearBusDto;
+import com.moaguide.refactor.building.dto.NearSubwayDto;
+import com.moaguide.refactor.building.dto.PopulationDto;
+import com.moaguide.refactor.building.dto.RentDto;
+import com.moaguide.refactor.building.dto.StayDayDto;
+import com.moaguide.refactor.building.dto.StayRateDto;
+import com.moaguide.refactor.building.dto.TypeDto;
+import com.moaguide.refactor.building.dto.VacancyrateDto;
 import com.moaguide.refactor.building.service.BuildingService;
 import com.moaguide.refactor.building.service.BusinessAreaService;
 import com.moaguide.refactor.building.service.LandPriceService;

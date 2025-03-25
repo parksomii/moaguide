@@ -1,7 +1,7 @@
 package com.moaguide.refactor.building.repository;
 
 
-import com.moaguide.dto.NewDto.BusinessAreaDto;
+import com.moaguide.refactor.building.dto.BusinessAreaDto;
 import com.moaguide.refactor.building.entity.BusinessArea;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BusinessAreaRepository extends JpaRepository<BusinessArea, Long> {
 
-    @Query("SELECT new com.moaguide.dto.NewDto.BusinessAreaDto( b.cbd, b.cbdDistance , b.cbdCar , b.cbdSubway, b.gbd , b.gbdDistance , b.gbdCar , b.gbdSubway, b.ybd, b.ybdDistance, b.ybdCar, b.ybdSubway ) " +
-            "FROM BusinessArea b,BuildingDetail bd " +
-            "WHERE bd.productId.productId =  b.productId.productId and " +
-            "b.productId.productId = :id ")
-    BusinessAreaDto findByproductId(@Param("id") String product_Id);
+	@Query(
+		"SELECT new com.moaguide.dto.NewDto.BusinessAreaDto( b.cbd, b.cbdDistance , b.cbdCar , b.cbdSubway, b.gbd , b.gbdDistance , b.gbdCar , b.gbdSubway, b.ybd, b.ybdDistance, b.ybdCar, b.ybdSubway ) "
+			+
+			"FROM BusinessArea b,BuildingDetail bd " +
+			"WHERE bd.productId.productId =  b.productId.productId and " +
+			"b.productId.productId = :id ")
+	BusinessAreaDto findByproductId(@Param("id") String product_Id);
 }

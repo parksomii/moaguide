@@ -1,6 +1,6 @@
 package com.moaguide.refactor.building.repository.subway;
 
-import com.moaguide.dto.NewDto.BuildingDto.SubwayDto;
+import com.moaguide.refactor.building.dto.SubwayDto;
 import com.moaguide.refactor.building.entity.subway.SubwayMonth;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -13,6 +13,6 @@ import java.util.List;
 public interface SubwayMonthRepository extends JpaRepository<SubwayMonth, Long> {
 
 
-    @Procedure(name = "SubwayMonth")
-    List<SubwayDto> callSubwayMonthProcedure(@Param("productId") String productId);
+	@Procedure(name = "SubwayMonth")
+	List<SubwayDto> callSubwayMonthProcedure(@Param("productId") String productId);
 }

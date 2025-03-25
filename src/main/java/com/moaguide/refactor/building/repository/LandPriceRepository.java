@@ -1,6 +1,6 @@
 package com.moaguide.refactor.building.repository;
 
-import com.moaguide.dto.NewDto.BuildingDto.LandDto;
+import com.moaguide.refactor.building.dto.LandDto;
 import com.moaguide.refactor.building.entity.LandPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface LandPriceRepository extends JpaRepository<LandPrice, Long> {
 
-    @Query("SELECT  new com.moaguide.dto.NewDto.BuildingDto.LandDto(L.landPrice, L.baseYear) from LandPrice L WHERE L.productId.productId = :productId ORDER BY L.baseYear DESC, L.baseDay DESC")
-    List<LandDto> findAllByproductId(@Param("productId") String Id);
+	@Query("SELECT  new com.moaguide.dto.NewDto.BuildingDto.LandDto(L.landPrice, L.baseYear) from LandPrice L WHERE L.productId.productId = :productId ORDER BY L.baseYear DESC, L.baseDay DESC")
+	List<LandDto> findAllByproductId(@Param("productId") String Id);
 }

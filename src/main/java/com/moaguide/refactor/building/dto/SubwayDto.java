@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.BuildingDto;
+package com.moaguide.refactor.building.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,9 +13,9 @@ import java.sql.Date;
 @NoArgsConstructor
 public class SubwayDto {
 
-    private Date day;
+	private Date day;
 
-    private int boarding;
+	private int boarding;
 
-    private int alighting;
+	private int alighting;
 }

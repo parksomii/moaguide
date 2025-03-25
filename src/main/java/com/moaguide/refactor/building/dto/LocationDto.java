@@ -1,4 +1,4 @@
-package com.moaguide.dto;
+package com.moaguide.refactor.building.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 public class LocationDto {
 
-    private String name;
+	private String name;
 
-    private double longitude;
+	private double longitude;
 
-    private double latitude;
+	private double latitude;
 
-    private String location;
+	private String location;
 }

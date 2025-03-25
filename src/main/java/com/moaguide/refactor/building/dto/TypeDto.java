@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.BuildingDto;
+package com.moaguide.refactor.building.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class TypeDto {
-    private String type;
+
+	private String type;
 }
