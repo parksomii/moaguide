@@ -1,21 +1,29 @@
 package com.moaguide.refactor.music.controller;
 
-import com.moaguide.dto.NewDto.MusicBaseResponseDto;
-import com.moaguide.dto.NewDto.MusicSubResponseDto;
-import com.moaguide.dto.NewDto.customDto.*;
-import com.moaguide.dto.NewDto.musicDto.ConsertDto;
-import com.moaguide.dto.NewDto.musicDto.SearchDto;
-import com.moaguide.dto.NewDto.musicDto.ViewDto;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.music.dto.ConsertDto;
+import com.moaguide.refactor.music.dto.MaxAndMinDto;
+import com.moaguide.refactor.music.dto.MusicBaseResponseDto;
+import com.moaguide.refactor.music.dto.MusicDivideResponseDto;
+import com.moaguide.refactor.music.dto.MusicPublishDto;
+import com.moaguide.refactor.music.dto.MusicReponseDto;
+import com.moaguide.refactor.music.dto.MusicSongDto;
+import com.moaguide.refactor.music.dto.MusicSubResponseDto;
+import com.moaguide.refactor.music.dto.SearchDto;
+import com.moaguide.refactor.music.dto.ViewDto;
 import com.moaguide.refactor.music.service.MusicDetailService;
+import com.moaguide.refactor.security.jwt.JWTUtil;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor

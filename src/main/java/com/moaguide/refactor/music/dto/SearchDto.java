@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.musicDto;
+package com.moaguide.refactor.music.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class SearchDto {
-    private String value;  // 검색량
-    private String day;   // 검색날짜
+
+	private String value;  // 검색량
+	private String day;   // 검색날짜
 }
