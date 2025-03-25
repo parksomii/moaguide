@@ -1,10 +1,10 @@
 package com.moaguide.refactor.art.service;
 
-import com.moaguide.dto.NewDto.ArtBaseResponseDto;
-import com.moaguide.dto.NewDto.ArtDetailDto;
-import com.moaguide.dto.NewDto.customDto.ArtAuthorDto;
-import com.moaguide.dto.NewDto.customDto.ArtPublishDto;
-import com.moaguide.dto.NewDto.customDto.ArtWorkDto;
+import com.moaguide.refactor.art.dto.ArtAuthorDto;
+import com.moaguide.refactor.art.dto.ArtBaseResponseDto;
+import com.moaguide.refactor.art.dto.ArtDetailDto;
+import com.moaguide.refactor.art.dto.ArtPublishDto;
+import com.moaguide.refactor.art.dto.ArtWorkDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.PersistenceContext;

@@ -1,7 +1,7 @@
 package com.moaguide.refactor.art.controller;
 
-import com.moaguide.dto.NewDto.ArtBaseResponseDto;
-import com.moaguide.dto.NewDto.ArtDetailDto;
+import com.moaguide.refactor.art.dto.ArtBaseResponseDto;
+import com.moaguide.refactor.art.dto.ArtDetailDto;
 import com.moaguide.refactor.art.service.ArtService;
 import com.moaguide.refactor.security.jwt.JWTUtil;
 import java.util.HashMap;
