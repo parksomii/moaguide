@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.customDto;
+package com.moaguide.refactor.quiz.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class QuestionCheckResponseDto {
-    private Long questionId;
-    private Integer solution;
-    private Integer score;
+
+	private Long questionId;
+	private Integer solution;
+	private Integer score;
 }
