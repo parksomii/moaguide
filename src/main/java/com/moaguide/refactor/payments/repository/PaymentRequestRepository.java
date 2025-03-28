@@ -27,7 +27,7 @@ public interface PaymentRequestRepository extends JpaRepository<PaymentRequest, 
 	void deletebyNicknameAndDate(@Param("nickname") String nickname,
 		@Param("enddate") LocalDate enddate);
 
-	@Query("select new  com.moaguide.dto.NewDto.customDto.billingDto.PaymentDto(p.orderId,b.billingKey,b.customerKey,p.amount,p.nickname,p.failCount) FROM PaymentRequest p left join BillingInfo b on p.nickname = b.nickname where p.NextPaymentDate =:nowDate")
+	@Query("select new com.moaguide.refactor.payments.dto.PaymentDto(p.orderId,b.billingKey,b.customerKey,p.amount,p.nickname,p.failCount) FROM PaymentRequest p left join BillingInfo b on p.nickname = b.nickname where p.NextPaymentDate =:nowDate")
 	List<PaymentDto> findByNextPaymentDate(@Param("nowDate") LocalDate nowDate);
 
 	@Modifying

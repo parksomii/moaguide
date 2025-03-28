@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 @Profile("local")
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-	@Query("select new com.moaguide.dto.NewDto.customDto.billingDto.LocalSubscriptDateDto(c.subscriptionStartDate,c.subscriptionEndDate,p.NextPaymentDate) FROM Card c left join LocalPaymentRequest p on c.nickname=p.nickname and c.subscriptionEndDate=p.NextPaymentDate where c.nickname =:nickname ")
+	@Query("select new com.moaguide.refactor.payments.dto.LocalSubscriptDateDto(c.subscriptionStartDate,c.subscriptionEndDate,p.NextPaymentDate) FROM Card c left join LocalPaymentRequest p on c.nickname=p.nickname and c.subscriptionEndDate=p.NextPaymentDate where c.nickname =:nickname ")
 	Optional<LocalSubscriptDateDto> findDate(@Param("nickname") String nickname);
 
 

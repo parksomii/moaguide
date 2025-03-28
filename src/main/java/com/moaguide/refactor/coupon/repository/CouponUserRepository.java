@@ -36,7 +36,7 @@ public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
 		@Param("nickname") String nickname, @Param("couponId") Long couponId);
 
 	@Query(
-		"select new com.moaguide.dto.NewDto.customDto.billingDto.BillingCouponUSer( c.id, c.couponId, ca.name,c.nickname,ca.months) "
+		"select new com.moaguide.refactor.payments.dto.BillingCouponUSer( c.id, c.couponId, ca.name,c.nickname,ca.months) "
 			+
 			"FROM CouponUser c " +
 			"join CouponAdmin ca on c.couponId = ca.id " +
