@@ -1,91 +1,107 @@
 package com.moaguide.refactor.cow.service;
 
 
-import com.moaguide.refactor.cow.repository.*;
-import com.moaguide.dto.NewDto.customDto.*;
+import com.moaguide.refactor.cow.dto.AveragePriceDto;
+import com.moaguide.refactor.cow.dto.CattleFarmDto;
+import com.moaguide.refactor.cow.dto.CattlePopulationDto;
+import com.moaguide.refactor.cow.dto.CattleSaleDto;
+import com.moaguide.refactor.cow.dto.CattleTransactionDto;
+import com.moaguide.refactor.cow.dto.Grade1RateDto;
+import com.moaguide.refactor.cow.dto.ProductionCostDto;
+import com.moaguide.refactor.cow.repository.AveragePriceRepository;
+import com.moaguide.refactor.cow.repository.CattleFarmRepository;
+import com.moaguide.refactor.cow.repository.CattlePopulationRepository;
+import com.moaguide.refactor.cow.repository.CattlePriceRepository;
+import com.moaguide.refactor.cow.repository.CattleSaleRepository;
+import com.moaguide.refactor.cow.repository.Grade1RateRepository;
+import com.moaguide.refactor.cow.repository.ProductionCostRepository;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @AllArgsConstructor
 @Slf4j
 @Service
 public class HanwooPriceService {
-    private final AveragePriceRepository averagePriceRepository;
-    private final Grade1RateRepository grade1RateRepository;
-    private final ProductionCostRepository productionCostRepository;
-    private final CattlePopulationRepository cattlePopulationRepository;
-    private final CattleSaleRepository cattleSaleRepository;
-    private final CattleFarmRepository cattleFarmRepository;
-    private final CattlePriceRepository cattlePriceRepository;
 
-    public List<?> getHanwooPriceData(String category, int month) {
-        LocalDate startDate = LocalDate.now();
+	private final AveragePriceRepository averagePriceRepository;
+	private final Grade1RateRepository grade1RateRepository;
+	private final ProductionCostRepository productionCostRepository;
+	private final CattlePopulationRepository cattlePopulationRepository;
+	private final CattleSaleRepository cattleSaleRepository;
+	private final CattleFarmRepository cattleFarmRepository;
+	private final CattlePriceRepository cattlePriceRepository;
 
-        // 날짜 파라미터에 따라 startDate 설정
-        if (month == 1) {
-            startDate = startDate.minusYears(month);  // 1년 전
-        } else if (month == 3) {
-            startDate = startDate.minusYears(month);  // 3년 전
-        } else if (month == 5) {
-            startDate = startDate.minusYears(month);  // 5년 전
-        } else if (month == 100) {
-            startDate = startDate.minusYears(month);  // 전체 데이터
-        } else {
-            return null;  // 유효하지 않은 날짜 파라미터 처리
-        }
+	public List<?> getHanwooPriceData(String category, int month) {
+		LocalDate startDate = LocalDate.now();
 
+		// 날짜 파라미터에 따라 startDate 설정
+		if (month == 1) {
+			startDate = startDate.minusYears(month);  // 1년 전
+		} else if (month == 3) {
+			startDate = startDate.minusYears(month);  // 3년 전
+		} else if (month == 5) {
+			startDate = startDate.minusYears(month);  // 5년 전
+		} else if (month == 100) {
+			startDate = startDate.minusYears(month);  // 전체 데이터
+		} else {
+			return null;  // 유효하지 않은 날짜 파라미터 처리
+		}
 
-        if ("grade1Rate".equals(category)) {
-            List<Grade1RateDto> grade1Rate = grade1RateRepository.findGrade1Rate(startDate);
-            return grade1Rate;
-        } else if ("productionCost".equals(category)) {
-            int newStartYear = startDate.getYear();  // 연도로 변환
-            List<ProductionCostDto> productionCost = productionCostRepository.findProductionCost(newStartYear); // 2003년부터 2023년까지의 데이터
-            return productionCost;
-        } else if ("averagePrice".equals(category)) {
-            List<AveragePriceDto> averagePrice = averagePriceRepository.findAveragePrice("한우", startDate);
-            return averagePrice;
-        } else if ("cattlePrice".equals(category)) {
-            List<AveragePriceDto> averagePrice = averagePriceRepository.findAveragePrice("거세", startDate);
-            return averagePrice;
-        } else {
-            return null;
-        }
-    }
+		if ("grade1Rate".equals(category)) {
+			List<Grade1RateDto> grade1Rate = grade1RateRepository.findGrade1Rate(startDate);
+			return grade1Rate;
+		} else if ("productionCost".equals(category)) {
+			int newStartYear = startDate.getYear();  // 연도로 변환
+			List<ProductionCostDto> productionCost = productionCostRepository.findProductionCost(
+				newStartYear); // 2003년부터 2023년까지의 데이터
+			return productionCost;
+		} else if ("averagePrice".equals(category)) {
+			List<AveragePriceDto> averagePrice = averagePriceRepository.findAveragePrice("한우",
+				startDate);
+			return averagePrice;
+		} else if ("cattlePrice".equals(category)) {
+			List<AveragePriceDto> averagePrice = averagePriceRepository.findAveragePrice("거세",
+				startDate);
+			return averagePrice;
+		} else {
+			return null;
+		}
+	}
 
-    public List<?> findHanwooMarket(String category, int month) {
-        LocalDate startDate = LocalDate.now();
+	public List<?> findHanwooMarket(String category, int month) {
+		LocalDate startDate = LocalDate.now();
 
-        if (month == 1) {
-            startDate = startDate.minusYears(month);  // 1년 전
-        } else if (month == 3) {
-            startDate = startDate.minusYears(month);  // 3년 전
-        } else if (month == 5) {
-            startDate = startDate.minusYears(month);  // 5년 전
-        } else if (month == 100) {
-            startDate = startDate.minusYears(month);  // 전체 데이터
-        } else {
-            return null;  // 유효하지 않은 날짜 파라미터 처리
-        }
+		if (month == 1) {
+			startDate = startDate.minusYears(month);  // 1년 전
+		} else if (month == 3) {
+			startDate = startDate.minusYears(month);  // 3년 전
+		} else if (month == 5) {
+			startDate = startDate.minusYears(month);  // 5년 전
+		} else if (month == 100) {
+			startDate = startDate.minusYears(month);  // 전체 데이터
+		} else {
+			return null;  // 유효하지 않은 날짜 파라미터 처리
+		}
 
-        if ("cattlePopulation".equals(category)) {
-            List<CattlePopulationDto> cattlePopulation = cattlePopulationRepository.findCattlePopulation(startDate);
-            return cattlePopulation;
-        } else if ("cattleSale".equals(category)) {
-            List<CattleSaleDto> cattleSale = cattleSaleRepository.findCattleSale(startDate);
-            return cattleSale;
-        } else if ("cattleFarm".equals(category)) {
-            List<CattleFarmDto> cattleFarm = cattleFarmRepository.findCattleFarm(startDate);
-            return cattleFarm;
-        } else if ("cattleTransaction".equals(category)) {
-            List<CattleTransactionDto> cattleTransaction = cattlePriceRepository.findCattleTransaction(startDate);
-            return cattleTransaction;
-        } else {
-            return null;
-        }
-    }
+		if ("cattlePopulation".equals(category)) {
+			List<CattlePopulationDto> cattlePopulation = cattlePopulationRepository.findCattlePopulation(
+				startDate);
+			return cattlePopulation;
+		} else if ("cattleSale".equals(category)) {
+			List<CattleSaleDto> cattleSale = cattleSaleRepository.findCattleSale(startDate);
+			return cattleSale;
+		} else if ("cattleFarm".equals(category)) {
+			List<CattleFarmDto> cattleFarm = cattleFarmRepository.findCattleFarm(startDate);
+			return cattleFarm;
+		} else if ("cattleTransaction".equals(category)) {
+			List<CattleTransactionDto> cattleTransaction = cattlePriceRepository.findCattleTransaction(
+				startDate);
+			return cattleTransaction;
+		} else {
+			return null;
+		}
+	}
 }
