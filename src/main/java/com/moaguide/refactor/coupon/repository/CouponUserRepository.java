@@ -1,6 +1,6 @@
 package com.moaguide.refactor.coupon.repository;
 
-import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
+import com.moaguide.refactor.coupon.dto.CouponUserDto;
 import com.moaguide.refactor.coupon.entity.CouponUser;
 import com.moaguide.refactor.payments.dto.BillingCouponUSer;
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CouponUserRepository extends JpaRepository<CouponUser, Long> {
 
-	@Query("select new com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto(c.couponId,ca.name,ca.createdAt) FROM CouponUser c,CouponAdmin ca where c.couponId=ca.id and c.nickname =:nickname and c.redeemed =:redeemed order by c.id")
+	@Query("select new com.moaguide.refactor.coupon.dto.CouponUserDto(c.couponId,ca.name,ca.createdAt) FROM CouponUser c,CouponAdmin ca where c.couponId=ca.id and c.nickname =:nickname and c.redeemed =:redeemed order by c.id")
 	List<CouponUserDto> findByNickname(@Param("nickname") String nickname,
 		@Param("redeemed") boolean redeemed);
 

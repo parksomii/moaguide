@@ -1,15 +1,18 @@
 package com.moaguide.refactor.coupon.service;
 
 
+import com.moaguide.refactor.coupon.dto.CouponAdminDto;
+import com.moaguide.refactor.coupon.dto.CouponUserDto;
 import com.moaguide.refactor.coupon.entity.CouponAdmin;
-import com.moaguide.refactor.coupon.repository.CouponAdminRepository;
 import com.moaguide.refactor.coupon.entity.CouponUser;
+import com.moaguide.refactor.coupon.repository.CouponAdminRepository;
 import com.moaguide.refactor.coupon.repository.CouponUserRepository;
 import com.moaguide.refactor.user.repository.UserRepository;
-import com.moaguide.dto.NewDto.customDto.Coupon.CouponAdminDto;
-import com.moaguide.dto.NewDto.customDto.Coupon.CouponUserDto;
 import com.moaguide.refactor.user.service.EmailService;
 import jakarta.validation.ConstraintViolationException;
+import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,10 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
