@@ -1,4 +1,4 @@
-package com.moaguide.dto;
+package com.moaguide.refactor.search.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +12,9 @@ import org.springframework.context.annotation.Profile;
 @Setter
 @Profile({"blue", "green"})
 public class searchProductDto {
-    private String productId;
-    private String name;
-    private String platform;
-    private String category;
+
+	private String productId;
+	private String name;
+	private String platform;
+	private String category;
 }
