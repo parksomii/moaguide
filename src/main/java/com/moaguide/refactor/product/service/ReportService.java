@@ -2,7 +2,7 @@ package com.moaguide.refactor.product.service;
 
 import com.moaguide.domain.report.Report;
 import com.moaguide.domain.report.ReportRepository;
-import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
+import com.moaguide.refactor.product.dto.ReportCustomDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,53 +17,62 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class ReportService {
-    private final ReportRepository reportRepository;
 
-    // 디테일 리포트
-    public Page<ReportCustomDto> findBylist(String category, String subCategory, Pageable pageable) {
-        Page<ReportCustomDto> reportCustomDtos = reportRepository.findBydetail(category,subCategory,pageable);
-        return reportCustomDtos;
-    }
+	private final ReportRepository reportRepository;
 
-    // 메인 주요 리포트
-    public List<ReportCustomDto> getMainReport(Pageable pageable) {
-        List<ReportCustomDto> reportCustomDtos = reportRepository.findLatest(pageable);
-        return reportCustomDtos;
-    }
+	// 디테일 리포트
+	public Page<ReportCustomDto> findBylist(String category, String subCategory,
+		Pageable pageable) {
+		Page<ReportCustomDto> reportCustomDtos = reportRepository.findBydetail(category,
+			subCategory, pageable);
+		return reportCustomDtos;
+	}
 
-    // 요약 관련 리포트
-    public List<ReportCustomDto> getSummary(String category, Pageable pageable) {
-        if (category.equals("all")) {
-            List<ReportCustomDto> reportCustomDtos = reportRepository.findLatest(pageable);
-            return reportCustomDtos;
-        }
-        List<ReportCustomDto> reportCustomDtos = reportRepository.findCategoryLatest(category, pageable);
-        return reportCustomDtos;
-    }
+	// 메인 주요 리포트
+	public List<ReportCustomDto> getMainReport(Pageable pageable) {
+		List<ReportCustomDto> reportCustomDtos = reportRepository.findLatest(pageable);
+		return reportCustomDtos;
+	}
 
-    // 리포트 조회수
-    public Report findById(int reportId) {
-        return reportRepository.findById(reportId);
-    }
+	// 요약 관련 리포트
+	public List<ReportCustomDto> getSummary(String category, Pageable pageable) {
+		if (category.equals("all")) {
+			List<ReportCustomDto> reportCustomDtos = reportRepository.findLatest(pageable);
+			return reportCustomDtos;
+		}
+		List<ReportCustomDto> reportCustomDtos = reportRepository.findCategoryLatest(category,
+			pageable);
+		return reportCustomDtos;
+	}
 
-    // 리포트 상세
-    public ReportCustomDto getReportDetail(int reportId) {
-        return reportRepository.findReportDetail(reportId);
-    }
+	// 리포트 조회수
+	public Report findById(int reportId) {
+		return reportRepository.findById(reportId);
+	}
 
-    // 인기순
-    public Page<ReportCustomDto> getAllPopularBySubCategory(String category, String subcategory, int page, int size) {
-        if (category.equals("all")) {
-            return reportRepository.findAllByViews(subcategory, PageRequest.of(page - 1, size));
-        }
-        return reportRepository.findListByAllbyViews(category, subcategory, PageRequest.of(page - 1, size));
-    }
+	// 리포트 상세
+	public ReportCustomDto getReportDetail(int reportId) {
+		return reportRepository.findReportDetail(reportId);
+	}
 
-    // 최신순
-    public Page<ReportCustomDto> getAllLatestBySubCategory(String category, String subcategory, int page, int size) {
-        if (category.equals("all")) {
-            return reportRepository.findAllbyLatest(subcategory, PageRequest.of(page - 1, size, Sort.by("date").descending()));
-        }
-        return reportRepository.findListByAllbyLatest(category, subcategory, PageRequest.of(page - 1, size, Sort.by("date").descending()));
-    }
+	// 인기순
+	public Page<ReportCustomDto> getAllPopularBySubCategory(String category, String subcategory,
+		int page, int size) {
+		if (category.equals("all")) {
+			return reportRepository.findAllByViews(subcategory, PageRequest.of(page - 1, size));
+		}
+		return reportRepository.findListByAllbyViews(category, subcategory,
+			PageRequest.of(page - 1, size));
+	}
+
+	// 최신순
+	public Page<ReportCustomDto> getAllLatestBySubCategory(String category, String subcategory,
+		int page, int size) {
+		if (category.equals("all")) {
+			return reportRepository.findAllbyLatest(subcategory,
+				PageRequest.of(page - 1, size, Sort.by("date").descending()));
+		}
+		return reportRepository.findListByAllbyLatest(category, subcategory,
+			PageRequest.of(page - 1, size, Sort.by("date").descending()));
+	}
 }

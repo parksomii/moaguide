@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.customDto;
+package com.moaguide.refactor.product.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransactionDto {
-    private LocalDate day;
-    private long value;
+
+	private LocalDate day;
+	private long value;
 }

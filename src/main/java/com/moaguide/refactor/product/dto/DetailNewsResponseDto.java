@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.customDto;
+package com.moaguide.refactor.product.dto;
 
 import com.moaguide.refactor.news.dto.NewsCustomDto;
 import java.util.List;

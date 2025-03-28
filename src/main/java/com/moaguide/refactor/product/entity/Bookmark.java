@@ -1,6 +1,6 @@
 package com.moaguide.refactor.product.entity;
 
-import com.moaguide.dto.NewDto.customDto.BookmarkProductDto;
+import com.moaguide.refactor.product.dto.BookmarkProductDto;
 import com.moaguide.refactor.user.entity.User;
 import jakarta.persistence.ColumnResult;
 import jakarta.persistence.ConstructorResult;

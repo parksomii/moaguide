@@ -1,6 +1,7 @@
 package com.moaguide.dto.NewDto.customDto;
 
 import com.moaguide.refactor.news.dto.NewsCustomDto;
+import com.moaguide.refactor.product.dto.ArticleSummaryDto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

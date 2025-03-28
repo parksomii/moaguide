@@ -1,7 +1,7 @@
 package com.moaguide.refactor.product.service;
 
 import com.moaguide.refactor.product.repository.CategoryContentRepository;
-import com.moaguide.dto.CategoryDto;
+import com.moaguide.refactor.product.dto.CategoryDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -13,16 +13,16 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CategoryService {
 
-    private final CategoryContentRepository categoryContentRepository;
+	private final CategoryContentRepository categoryContentRepository;
 
-    public List<CategoryDto> getAllCategories() {
-        return categoryContentRepository.findAll()
-                .stream()
-                .map(category -> new CategoryDto(
-                        category.getCategoryId(),
-                        category.getName(),
-                        category.getDescription()
-                ))
-                .collect(Collectors.toList());
-    }
+	public List<CategoryDto> getAllCategories() {
+		return categoryContentRepository.findAll()
+			.stream()
+			.map(category -> new CategoryDto(
+				category.getCategoryId(),
+				category.getName(),
+				category.getDescription()
+			))
+			.collect(Collectors.toList());
+	}
 }

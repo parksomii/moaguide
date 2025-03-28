@@ -1,6 +1,6 @@
 package com.moaguide.refactor.product.controller;
 
-import com.moaguide.dto.CategoryDto;
+import com.moaguide.refactor.product.dto.CategoryDto;
 import com.moaguide.refactor.product.service.CategoryService;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/categories")
 public class CategoryController {
 
-    private final CategoryService categoryService;
+	private final CategoryService categoryService;
 
-    @GetMapping
-    public ResponseEntity<List<CategoryDto>> getAllCategories() {
-        List<CategoryDto> categories = categoryService.getAllCategories();
-        return ResponseEntity.ok(categories);
-    }
+	@GetMapping
+	public ResponseEntity<List<CategoryDto>> getAllCategories() {
+		List<CategoryDto> categories = categoryService.getAllCategories();
+		return ResponseEntity.ok(categories);
+	}
 }

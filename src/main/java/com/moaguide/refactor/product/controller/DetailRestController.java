@@ -1,16 +1,16 @@
 package com.moaguide.refactor.product.controller;
 
-import com.moaguide.dto.NewDto.DetailDivideResponseDto;
-import com.moaguide.dto.NewDto.DetailNoticeResponseDto;
-import com.moaguide.dto.NewDto.DetailReportResponseDto;
-import com.moaguide.dto.NewDto.DetailTransactionResponseDto;
-import com.moaguide.dto.NewDto.customDto.DetailNewsResponseDto;
-import com.moaguide.dto.NewDto.customDto.DivideCustomDto;
-import com.moaguide.dto.NewDto.customDto.DivideGraphDto;
-import com.moaguide.dto.NewDto.customDto.NoticeDto;
-import com.moaguide.dto.NewDto.customDto.ReportCustomDto;
 import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.service.NewsService;
+import com.moaguide.refactor.product.dto.DetailDivideResponseDto;
+import com.moaguide.refactor.product.dto.DetailNewsResponseDto;
+import com.moaguide.refactor.product.dto.DetailNoticeResponseDto;
+import com.moaguide.refactor.product.dto.DetailReportResponseDto;
+import com.moaguide.refactor.product.dto.DetailTransactionResponseDto;
+import com.moaguide.refactor.product.dto.DivideCustomDto;
+import com.moaguide.refactor.product.dto.DivideGraphDto;
+import com.moaguide.refactor.product.dto.NoticeDto;
+import com.moaguide.refactor.product.dto.ReportCustomDto;
 import com.moaguide.refactor.product.service.CurrentDivideService;
 import com.moaguide.refactor.product.service.DivideService;
 import com.moaguide.refactor.product.service.ReportService;

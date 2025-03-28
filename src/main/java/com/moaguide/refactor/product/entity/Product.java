@@ -1,7 +1,16 @@
 package com.moaguide.refactor.product.entity;
 
-import com.moaguide.dto.NewDto.customDto.SummaryCustomDto;
-import jakarta.persistence.*;
+import com.moaguide.refactor.product.dto.SummaryCustomDto;
+import jakarta.persistence.Column;
+import jakarta.persistence.ColumnResult;
+import jakarta.persistence.ConstructorResult;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SqlResultSetMapping;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,44 +23,50 @@ import lombok.Setter;
 @Entity
 @Setter
 @SqlResultSetMapping(
-        name = "SummaryCustomDtoMapping",
-        classes = @ConstructorResult(
-                targetClass = SummaryCustomDto.class,
-                columns = {
-                        @ColumnResult(name = "product_Id", type = String.class),
-                        @ColumnResult(name = "name", type = String.class),
-                        @ColumnResult(name = "totalprice", type = Long.class),
-                        @ColumnResult(name = "price", type = Integer.class),
-                        @ColumnResult(name = "priceRate", type = Double.class),
-                        @ColumnResult(name = "lastDivide_rate", type = Double.class),
-                        @ColumnResult(name = "category", type = String.class),
-                        @ColumnResult(name = "platform", type = String.class),
-                        @ColumnResult(name = "bookmark", type = Boolean.class),
-                        @ColumnResult(name = "sale", type = Boolean.class)
-                }
-        )
+	name = "SummaryCustomDtoMapping",
+	classes = @ConstructorResult(
+		targetClass = SummaryCustomDto.class,
+		columns = {
+			@ColumnResult(name = "product_Id", type = String.class),
+			@ColumnResult(name = "name", type = String.class),
+			@ColumnResult(name = "totalprice", type = Long.class),
+			@ColumnResult(name = "price", type = Integer.class),
+			@ColumnResult(name = "priceRate", type = Double.class),
+			@ColumnResult(name = "lastDivide_rate", type = Double.class),
+			@ColumnResult(name = "category", type = String.class),
+			@ColumnResult(name = "platform", type = String.class),
+			@ColumnResult(name = "bookmark", type = Boolean.class),
+			@ColumnResult(name = "sale", type = Boolean.class)
+		}
+	)
 )
 public class Product {
-    @Id
-    @Column(name = "Product_Id")
-    private String productId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="Platform_Id", referencedColumnName="Platform_Id")
-    private Platform PlatformId;
+	@Id
+	@Column(name = "Product_Id")
+	private String productId;
 
-    private String name;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "Platform_Id", referencedColumnName = "Platform_Id")
+	private Platform PlatformId;
 
-    private Integer piece;
+	private String name;
 
-    private Integer views;
+	private Integer piece;
 
-    @Column(name="now_piece")
-    private Integer nowPiece;
+	private Integer views;
 
-    private String link;
+	@Column(name = "now_piece")
+	private Integer nowPiece;
 
-    public String getCategory(){return PlatformId.getCategory();}
-    public String getPlatform(){return PlatformId.getPlatform();}
+	private String link;
+
+	public String getCategory() {
+		return PlatformId.getCategory();
+	}
+
+	public String getPlatform() {
+		return PlatformId.getPlatform();
+	}
 
 }

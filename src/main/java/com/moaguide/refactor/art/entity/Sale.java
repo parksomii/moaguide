@@ -1,7 +1,7 @@
 package com.moaguide.refactor.art.entity;
 
 import com.moaguide.refactor.product.entity.Product;
-import com.moaguide.dto.NewDto.customDto.finishCustomDto;
+import com.moaguide.refactor.product.dto.finishCustomDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.ColumnResult;
 import jakarta.persistence.ConstructorResult;
