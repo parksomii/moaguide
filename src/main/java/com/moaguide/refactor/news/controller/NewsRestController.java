@@ -1,7 +1,7 @@
 package com.moaguide.refactor.news.controller;
 
 
-import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
+import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.service.NewsService;
 import com.moaguide.refactor.security.jwt.JWTUtil;
 import java.util.HashMap;

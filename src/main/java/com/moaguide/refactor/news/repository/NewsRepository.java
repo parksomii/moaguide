@@ -1,6 +1,6 @@
 package com.moaguide.refactor.news.repository;
 
-import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
+import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.entity.News;
 import jakarta.transaction.Transactional;
 import java.util.List;

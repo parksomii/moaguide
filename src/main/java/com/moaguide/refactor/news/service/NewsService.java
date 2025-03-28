@@ -1,7 +1,7 @@
 package com.moaguide.refactor.news.service;
 
-import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
-import com.moaguide.dto.PageRequestDTO;
+import com.moaguide.refactor.news.dto.NewsCustomDto;
+import com.moaguide.refactor.news.dto.PageRequestDTO;
 import com.moaguide.refactor.news.entity.News;
 import com.moaguide.refactor.news.repository.NewsRepository;
 import jakarta.transaction.Transactional;

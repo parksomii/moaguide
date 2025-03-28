@@ -1,15 +1,16 @@
 package com.moaguide.dto.NewDto.customDto;
 
+import com.moaguide.refactor.news.dto.NewsCustomDto;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReportAndNewsDto {
-    private List<ArticleSummaryDto> mainReport; // 주요 리포트
-    private List<NewsCustomDto> mainNews; // 최신 이슈
+
+	private List<ArticleSummaryDto> mainReport; // 주요 리포트
+	private List<NewsCustomDto> mainNews; // 최신 이슈
 }

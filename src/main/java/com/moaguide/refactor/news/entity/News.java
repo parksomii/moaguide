@@ -1,6 +1,6 @@
 package com.moaguide.refactor.news.entity;
 
-import com.moaguide.dto.NewDto.customDto.NewsCustomDto;
+import com.moaguide.refactor.news.dto.NewsCustomDto;
 import jakarta.persistence.ColumnResult;
 import jakarta.persistence.ConstructorResult;
 import jakarta.persistence.Entity;
