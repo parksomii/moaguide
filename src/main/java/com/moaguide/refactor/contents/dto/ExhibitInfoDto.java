@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.customDto;
+package com.moaguide.refactor.contents.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class ExhibitInfoDto {
-    private String place;
-    private String period;
+
+	private String place;
+	private String period;
 }
