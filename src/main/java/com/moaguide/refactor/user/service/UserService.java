@@ -1,11 +1,11 @@
 package com.moaguide.refactor.user.service;
 
 import com.moaguide.refactor.coupon.service.CouponService;
-import com.moaguide.refactor.user.entity.User;
-import com.moaguide.refactor.user.repository.UserRepository;
-import com.moaguide.dto.UserDto;
+import com.moaguide.refactor.user.dto.UserDto;
 import com.moaguide.refactor.user.entity.EmailHistory;
+import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.repository.EmailHistoryRepository;
+import com.moaguide.refactor.user.repository.UserRepository;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

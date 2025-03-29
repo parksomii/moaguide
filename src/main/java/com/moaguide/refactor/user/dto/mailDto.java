@@ -1,4 +1,4 @@
-package com.moaguide.dto.NewDto.customDto;
+package com.moaguide.refactor.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class mailDto {
-    private String email;
-    private String code;
+
+	private String email;
+	private String code;
 }

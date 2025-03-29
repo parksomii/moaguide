@@ -1,10 +1,13 @@
-package com.moaguide.dto;
+package com.moaguide.refactor.user.dto;
 
 import com.moaguide.refactor.enums.Role;
 import com.moaguide.refactor.user.entity.User;
-import lombok.*;
-
 import java.sql.Date;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @ToString

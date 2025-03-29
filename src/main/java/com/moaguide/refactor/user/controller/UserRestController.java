@@ -1,11 +1,11 @@
 package com.moaguide.refactor.user.controller;
 
-import com.moaguide.dto.NewDto.customDto.mailDto;
-import com.moaguide.dto.UserDto;
-import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.product.service.BookmarkService;
+import com.moaguide.refactor.security.jwt.JWTUtil;
 import com.moaguide.refactor.security.service.CookieService;
+import com.moaguide.refactor.user.dto.UserDto;
+import com.moaguide.refactor.user.dto.mailDto;
+import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.service.EmailService;
 import com.moaguide.refactor.user.service.UserService;
 import jakarta.servlet.http.Cookie;
