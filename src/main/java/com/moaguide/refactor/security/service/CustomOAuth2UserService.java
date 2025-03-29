@@ -1,11 +1,11 @@
 package com.moaguide.refactor.security.service;
 
+import com.moaguide.refactor.security.oauth.CustomOAuth2User;
+import com.moaguide.refactor.security.oauth.GoogleResponse;
+import com.moaguide.refactor.security.oauth.NaverResponse;
+import com.moaguide.refactor.security.oauth.OAuth2ResponseDto;
 import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.repository.UserRepository;
-import com.moaguide.dto.NewDto.oauth.CustomOAuth2User;
-import com.moaguide.dto.NewDto.oauth.GoogleResponse;
-import com.moaguide.dto.NewDto.oauth.NaverResponse;
-import com.moaguide.dto.NewDto.oauth.OAuth2ResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

@@ -1,12 +1,11 @@
-package com.moaguide.dto.NewDto.oauth;
+package com.moaguide.refactor.security.oauth;
 
 import com.moaguide.refactor.user.entity.User;
+import java.util.Collection;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import java.util.Collection;
-import java.util.Map;
 
 @AllArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
