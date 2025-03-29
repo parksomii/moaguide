@@ -1,18 +1,17 @@
 package com.moaguide.refactor.notice.service;
 
+import com.moaguide.refactor.notice.dto.NotificationDto;
 import com.moaguide.refactor.notice.entity.Notification;
 import com.moaguide.refactor.notice.repository.NotificationRepository;
 import com.moaguide.refactor.user.repository.UserRepository;
-import com.moaguide.dto.NewDto.customDto.NotificationDto;
+import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
 @AllArgsConstructor

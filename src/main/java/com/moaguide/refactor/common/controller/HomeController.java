@@ -1,11 +1,11 @@
 package com.moaguide.refactor.common.controller;
 
-import com.moaguide.dto.NewDto.customDto.AnnouncementDto;
-import com.moaguide.dto.NewDto.customDto.NotificationDto;
 import com.moaguide.dto.NewDto.customDto.ReportAndNewsDto;
 import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.service.NewsService;
 import com.moaguide.refactor.news.service.NewsViewService;
+import com.moaguide.refactor.notice.dto.AnnouncementDto;
+import com.moaguide.refactor.notice.dto.NotificationDto;
 import com.moaguide.refactor.notice.service.AnnouncementService;
 import com.moaguide.refactor.notice.service.NotificationService;
 import com.moaguide.refactor.product.dto.ArticleSummaryDto;

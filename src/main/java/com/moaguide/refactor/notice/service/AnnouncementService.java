@@ -1,7 +1,7 @@
 package com.moaguide.refactor.notice.service;
 
+import com.moaguide.refactor.notice.dto.AnnouncementDto;
 import com.moaguide.refactor.notice.repository.AnnouncementRepository;
-import com.moaguide.dto.NewDto.customDto.AnnouncementDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -12,14 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class AnnouncementService {
-    private final AnnouncementRepository announcementRepository;
 
-    public Page<AnnouncementDto> getNotice(Pageable pageable) {
+	private final AnnouncementRepository announcementRepository;
 
-        return announcementRepository.findAllNotice(pageable);
-    }
+	public Page<AnnouncementDto> getNotice(Pageable pageable) {
 
-    public AnnouncementDto getNoticeDetail(Long id) {
-        return announcementRepository.findNoticeDetail(id);
-    }
+		return announcementRepository.findAllNotice(pageable);
+	}
+
+	public AnnouncementDto getNoticeDetail(Long id) {
+		return announcementRepository.findNoticeDetail(id);
+	}
 }
