@@ -2,11 +2,9 @@ package com.moaguide.refactor.building.dto;
 
 
 import com.moaguide.refactor.building.entity.LandRegistry;
-import com.moaguide.dto.NewDto.customDto.CurrentDivideDto;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.List;
 
 @AllArgsConstructor
 @Getter
