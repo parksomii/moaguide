@@ -15,8 +15,9 @@ public interface MusicDetailRepository extends JpaRepository<MusicDetail, Long> 
 	MusicReponseDto findMusicDetail(@Param("in_Product_Id") String productId,
 		@Param("nickname") String nickname, @Param("year") int year);
 
-	@Query("SELECT new com.moaguide.dto.NewDto.MusicSubResponseDto(md.youtubeUrl, p.name) " +
-		"FROM MusicDetail md, Product p " +
-		"WHERE md.productId.productId = p.productId and md.productId.productId = :productId")
+	@Query(
+		"SELECT new com.moaguide.refactor.music.dto.MusicSubResponseDto(md.youtubeUrl, p.name) " +
+			"FROM MusicDetail md, Product p " +
+			"WHERE md.productId.productId = p.productId and md.productId.productId = :productId")
 	MusicSubResponseDto findYoutube(@Param("productId") String productId);
 }
