@@ -18,6 +18,6 @@ public interface QuizResponseRepository extends JpaRepository<QuizResponse, Long
 	@Query("delete FROM QuizResponse q where q.nickname=:nickname")
 	void deleteByNickname(@Param("nickname") String nickname);
 
-	@Query("SELECT new com.moaguide.dto.NewDto.customDto.QuizResponseDto(q.quizId,q.type,q.failList,q.failAnswer) FROM QuizResponse q where q.nickname =:nickname")
+	@Query("SELECT new com.moaguide.refactor.quiz.dto.QuizResponseDto(q.quizId,q.type,q.failList,q.failAnswer) FROM QuizResponse q where q.nickname =:nickname")
 	Optional<QuizResponseDto> findbyNickname(@Param("nickname") String nickname);
 }
