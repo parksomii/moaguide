@@ -2,7 +2,6 @@ package com.moaguide.refactor.security.service;
 
 import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.repository.UserRepository;
-import com.moaguide.dto.CustomUserDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
