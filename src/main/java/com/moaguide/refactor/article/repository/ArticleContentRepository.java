@@ -38,7 +38,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 
 	// 최신 기준 데이터 가져오기
 	@Query(
-		"SELECT new com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, "
+		"SELECT new com.moaguide.refactor.article.dto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, "
 			+
 			"CASE WHEN LENGTH(c.paywallUp) > 150 THEN CONCAT(SUBSTRING(c.paywallUp, 1, 150), '...') ELSE c.paywallUp END, "
 			+
@@ -52,7 +52,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 
 	// 인기 기준 데이터 가져오기
 	@Query(
-		"SELECT new com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, "
+		"SELECT new com.moaguide.refactor.article.dto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, "
 			+
 			"CASE WHEN LENGTH(c.paywallUp) > 150 THEN CONCAT(SUBSTRING(c.paywallUp, 1, 150), '...') ELSE c.paywallUp END, "
 			+
@@ -66,7 +66,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 
 	// 카테고리 필터 추가된 최신 데이터 가져오기
 	@Query(
-		"SELECT new com.moaguide.dto.NewDto.ArticleContentDto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, "
+		"SELECT new com.moaguide.refactor.article.dto.ArticleOverviewDto(c.articleId, c.title, c.type, c.isPremium, "
 			+
 			"CASE WHEN LENGTH(c.paywallUp) > 150 THEN CONCAT(SUBSTRING(c.paywallUp, 1, 150), '...') ELSE c.paywallUp END, "
 			+
@@ -80,7 +80,7 @@ public interface ArticleContentRepository extends JpaRepository<ArticleContent, 
 
 	// 랜덤으로 3개의 관련 아티클 가져오기
 	@Query(
-		"SELECT new com.moaguide.dto.NewDto.ArticleContentDto.RelatedContentDto(c.articleId, c.title, c.imgLink, c.createdAt, c.views, "
+		"SELECT new com.moaguide.refactor.article.dto.RelatedContentDto(c.articleId, c.title, c.imgLink, c.createdAt, c.views, "
 			+
 			"(SELECT CAST(COUNT(al) AS long) FROM ArticleLike al WHERE al.article.articleId = c.articleId)) "
 			+
