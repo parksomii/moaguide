@@ -5,6 +5,7 @@ import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.service.NewsService;
 import com.moaguide.refactor.product.dto.DetailNewsResponseDto;
 import com.moaguide.refactor.product.service.ProductDetailService;
+import com.moaguide.refactor.util.JwtCheckUtil;
 import java.util.HashMap;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class ProductDetailController {
 
 	private final NewsService newsService;
 	private final ProductDetailService productDetailService;
+	private final JwtCheckUtil jwtCheckUtil;
 
 	@GetMapping("/news/{product_Id}")
 	public ResponseEntity<Object> news(@PathVariable String product_Id, @RequestParam int page,
@@ -35,7 +37,7 @@ public class ProductDetailController {
 	public ResponseEntity<Object> Topdetail(@PathVariable String category,
 		@PathVariable String product_Id,
 		@RequestHeader(value = "Authorization", required = false) String jwt) {
-
+		String nickname = jwtCheckUtil.extractNickname(jwt);
 		try{
 		switch (category) {
 			case "building":
