@@ -3,7 +3,7 @@ package com.moaguide.refactor.article.controller;
 import com.moaguide.refactor.article.dto.ArticleContentWriteRequestDto;
 import com.moaguide.refactor.article.service.ArticleContentWriteService;
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import java.util.HashMap;

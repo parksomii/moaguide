@@ -12,7 +12,7 @@ import com.moaguide.refactor.product.dto.ArticleSummaryDto;
 import com.moaguide.refactor.product.dto.SummaryCustomDto;
 import com.moaguide.refactor.product.service.ProductService;
 import com.moaguide.refactor.product.service.ProductViewService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import com.moaguide.service.StudyService;
 import java.util.HashMap;
 import java.util.List;

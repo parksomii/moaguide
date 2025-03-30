@@ -17,7 +17,7 @@ import com.moaguide.refactor.contents.entity.movie.MovieSchedule;
 import com.moaguide.refactor.contents.service.ContentService;
 import com.moaguide.refactor.contents.service.ContentSubService;
 import com.moaguide.refactor.contents.service.MovieService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

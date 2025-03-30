@@ -5,7 +5,7 @@ import com.moaguide.refactor.payments.dto.LocalSubscriptDateDto;
 import com.moaguide.refactor.payments.dto.lastLogDto;
 import com.moaguide.refactor.payments.entity.PaymentLog;
 import com.moaguide.refactor.payments.service.LocalBillingService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.HashMap;

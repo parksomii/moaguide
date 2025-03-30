@@ -31,7 +31,7 @@ import com.moaguide.refactor.building.service.RentService;
 import com.moaguide.refactor.building.service.StayService;
 import com.moaguide.refactor.building.service.SubwayService;
 import com.moaguide.refactor.building.service.VacancyRateService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

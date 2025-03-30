@@ -3,7 +3,7 @@ package com.moaguide.refactor.news.controller;
 
 import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.service.NewsService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.HashMap;
 import java.util.List;
 import lombok.AllArgsConstructor;

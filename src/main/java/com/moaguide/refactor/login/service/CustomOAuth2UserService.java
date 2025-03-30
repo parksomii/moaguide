@@ -1,9 +1,9 @@
-package com.moaguide.refactor.security.service;
+package com.moaguide.refactor.login.service;
 
-import com.moaguide.refactor.security.oauth.CustomOAuth2User;
-import com.moaguide.refactor.security.oauth.GoogleResponse;
-import com.moaguide.refactor.security.oauth.NaverResponse;
-import com.moaguide.refactor.security.oauth.OAuth2ResponseDto;
+import com.moaguide.refactor.login.oauth.CustomOAuth2User;
+import com.moaguide.refactor.login.oauth.GoogleResponse;
+import com.moaguide.refactor.login.oauth.NaverResponse;
+import com.moaguide.refactor.login.oauth.OAuth2ResponseDto;
 import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.repository.UserRepository;
 import lombok.AllArgsConstructor;

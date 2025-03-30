@@ -4,7 +4,7 @@ import com.moaguide.refactor.article.dto.RelatedContentDto;
 import com.moaguide.refactor.article.service.ArticleDetailService;
 import com.moaguide.refactor.article.service.ArticleLikeService;
 import com.moaguide.refactor.article.service.ArticleViewService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

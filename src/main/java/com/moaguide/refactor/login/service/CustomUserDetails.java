@@ -1,4 +1,4 @@
-package com.moaguide.refactor.security.service;
+package com.moaguide.refactor.login.service;
 
 import com.moaguide.refactor.user.entity.User;
 import java.util.Collection;

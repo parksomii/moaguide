@@ -1,8 +1,8 @@
 package com.moaguide.refactor.user.controller;
 
 import com.moaguide.refactor.product.service.BookmarkService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.refactor.security.service.CookieService;
+import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.login.service.CookieService;
 import com.moaguide.refactor.user.dto.UserDto;
 import com.moaguide.refactor.user.dto.mailDto;
 import com.moaguide.refactor.user.entity.User;

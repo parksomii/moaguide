@@ -1,4 +1,4 @@
-package com.moaguide.refactor.security.oauth;
+package com.moaguide.refactor.login.oauth;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;

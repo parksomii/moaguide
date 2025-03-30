@@ -11,7 +11,7 @@ import com.moaguide.refactor.music.dto.MusicSubResponseDto;
 import com.moaguide.refactor.music.dto.SearchDto;
 import com.moaguide.refactor.music.dto.ViewDto;
 import com.moaguide.refactor.music.service.MusicDetailService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;

@@ -3,7 +3,7 @@ package com.moaguide.refactor.payments.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.refactor.user.entity.User;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import com.moaguide.refactor.payments.service.BillingService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;

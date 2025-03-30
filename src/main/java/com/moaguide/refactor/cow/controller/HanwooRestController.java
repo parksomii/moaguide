@@ -4,7 +4,7 @@ import com.moaguide.refactor.cow.dto.HanwooBaseResponseDto;
 import com.moaguide.refactor.cow.dto.HanwooDetailDto;
 import com.moaguide.refactor.cow.service.HanwooPriceService;
 import com.moaguide.refactor.cow.service.HanwooService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

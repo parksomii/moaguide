@@ -1,7 +1,8 @@
-package com.moaguide.refactor.security.jwt;
+package com.moaguide.refactor.jwt.filter;
 
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.refactor.security.service.CustomUserDetails;
+import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.login.service.CustomUserDetails;
 import com.moaguide.refactor.user.entity.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;

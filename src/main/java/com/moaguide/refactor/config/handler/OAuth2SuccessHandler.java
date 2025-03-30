@@ -1,9 +1,9 @@
 package com.moaguide.refactor.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moaguide.refactor.security.jwt.JWTUtil;
-import com.moaguide.refactor.security.oauth.CustomOAuth2User;
-import com.moaguide.refactor.security.service.CookieService;
+import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.login.oauth.CustomOAuth2User;
+import com.moaguide.refactor.login.service.CookieService;
 import com.moaguide.refactor.user.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

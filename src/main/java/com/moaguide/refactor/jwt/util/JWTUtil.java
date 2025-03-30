@@ -1,4 +1,4 @@
-package com.moaguide.refactor.security.jwt;
+package com.moaguide.refactor.jwt.util;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;

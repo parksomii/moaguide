@@ -10,7 +10,7 @@ import com.moaguide.refactor.quiz.dto.QuizResponseDto;
 import com.moaguide.refactor.quiz.entity.Quiz;
 import com.moaguide.refactor.quiz.entity.QuizHistory;
 import com.moaguide.refactor.quiz.service.QuizService;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

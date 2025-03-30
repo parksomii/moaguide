@@ -4,7 +4,7 @@ import com.moaguide.refactor.coupon.dto.CouponAdminDto;
 import com.moaguide.refactor.coupon.dto.CouponUserDto;
 import com.moaguide.refactor.coupon.service.CouponService;
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.refactor.security.jwt.JWTUtil;
+import com.moaguide.refactor.jwt.util.JWTUtil;
 import io.jsonwebtoken.JwtException;
 import java.util.ArrayList;
 import java.util.HashMap;
