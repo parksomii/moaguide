@@ -39,25 +39,22 @@ public class ProductDetailController {
 		@RequestHeader(value = "Authorization", required = false) String jwt) {
 		String nickname = jwtCheckUtil.extractNickname(jwt);
 		try{
-		switch (category) {
-			case "building":
-				return productDetailService.buildingDetail(product_Id, nickname);
-			case "music":
-				return productDetailService.musicDetail(product_Id, nickname);
-			case "contents":
-				return productDetailService.contentsDetail(product_Id, nickname);
-			case "art":
-				return productDetailService.artDetail(product_Id, nickname);
-			case "cow":
-				return productDetailService.cowDetail(product_Id, nickname);
-			default:
-				return ResponseEntity.ok(new HashMap<>());
-		}
-		}catch (NullPointerException e){
-			return ResponseEntity.ok(new HashMap<>());
-		}
-		catch (Exception e){
-			return "내부 서버 에러 Exception 추가";
+			switch (category) {
+				case "building":
+					return productDetailService.buildingDetail(product_Id, nickname);
+				case "music":
+					return productDetailService.musicDetail(product_Id, nickname);
+				case "contents":
+					return productDetailService.contentsDetail(product_Id, nickname);
+				case "art":
+					return productDetailService.artDetail(product_Id, nickname);
+				case "cow":
+					return productDetailService.cowDetail(product_Id, nickname);
+				default:
+					return ResponseEntity.internalServerError().body(new HashMap<>());
+			}
+		} catch (Exception e){
+			return ResponseEntity.internalServerError().body(new HashMap<>());
 		}
 	}
 }

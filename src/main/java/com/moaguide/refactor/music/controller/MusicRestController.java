@@ -6,7 +6,6 @@ import com.moaguide.refactor.music.dto.MaxAndMinDto;
 import com.moaguide.refactor.music.dto.MusicBaseResponseDto;
 import com.moaguide.refactor.music.dto.MusicDivideResponseDto;
 import com.moaguide.refactor.music.dto.MusicPublishDto;
-import com.moaguide.refactor.music.dto.MusicReponseDto;
 import com.moaguide.refactor.music.dto.MusicSongDto;
 import com.moaguide.refactor.music.dto.MusicSubResponseDto;
 import com.moaguide.refactor.music.dto.SearchDto;
@@ -16,11 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,23 +30,6 @@ public class MusicRestController {
 
 	private final MusicDetailService musicService;
 	private final JwtUtil jwtUtil;
-
-	// 최상단 기본정보
-	@GetMapping("{product_Id}")
-	public ResponseEntity<?> product(@PathVariable String product_Id,
-		@RequestHeader(value = "Authorization", required = false) String jwt) {
-		String Nickname;
-		if (jwt != null && jwt.startsWith("Bearer ")) {
-			if (jwtUtil.isExpired(jwt.substring(7))) {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-			}
-			Nickname = jwtUtil.getNickname(jwt.substring(7));
-		} else {
-			Nickname = "null";
-		}
-		MusicReponseDto music = musicService.findBydetail(product_Id, Nickname);
-		return ResponseEntity.ok(music);
-	}
 
 	// 기본정보
 	@GetMapping("base/{product_Id}")

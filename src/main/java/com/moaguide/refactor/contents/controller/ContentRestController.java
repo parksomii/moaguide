@@ -3,9 +3,7 @@ package com.moaguide.refactor.contents.controller;
 
 import com.moaguide.refactor.contents.dto.BroadcastInfoDto;
 import com.moaguide.refactor.contents.dto.ContentBaseDto;
-import com.moaguide.refactor.contents.dto.ContentDetailDto;
 import com.moaguide.refactor.contents.dto.ContentResponseDto;
-import com.moaguide.refactor.contents.dto.ContentTopResponseDto;
 import com.moaguide.refactor.contents.dto.ContentsSubResponseDto;
 import com.moaguide.refactor.contents.dto.ExhibitInfoDto;
 import com.moaguide.refactor.contents.dto.MovieInfoDto;
@@ -24,11 +22,9 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,23 +39,6 @@ public class ContentRestController {
 	private final MovieService movieService;
 	private final ContentSubService contentSubService;
 	private final JwtUtil jwtUtil;
-
-
-	@GetMapping("/{product_Id}")
-	public ResponseEntity<?> getContent(@PathVariable String product_Id,
-		@RequestHeader(value = "Authorization", required = false) String jwt) {
-		String Nickname;
-		if (jwt != null && jwt.startsWith("Bearer ")) {
-			if (jwtUtil.isExpired(jwt.substring(7))) {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-			}
-			Nickname = jwtUtil.getNickname(jwt.substring(7));
-		} else {
-			Nickname = "null";
-		}
-		ContentDetailDto contentDetailDto = contentService.findDetail(product_Id, Nickname);
-		return ResponseEntity.ok(new ContentTopResponseDto(contentDetailDto));
-	}
 
 	@GetMapping("/base/{product_Id}")
 	public ResponseEntity<?> base(@PathVariable String product_Id, @RequestParam String genre) {

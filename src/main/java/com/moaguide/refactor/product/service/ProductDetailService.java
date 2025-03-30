@@ -14,10 +14,10 @@ import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
 import java.math.BigDecimal;
 import java.sql.Date;
-import org.joda.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import org.joda.time.LocalDate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +56,7 @@ public class ProductDetailService {
 			(Double) result[8],
 			(Integer) result[9],
 			(String) result[10],
-			(Boolean) result[11]
+			((Long) result[11]) == 1
 		);
 
 		return ResponseEntity.ok().body(building);
