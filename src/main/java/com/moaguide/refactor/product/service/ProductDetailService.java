@@ -2,6 +2,7 @@ package com.moaguide.refactor.product.service;
 
 
 import static com.moaguide.refactor.util.EmptyCheckUtil.isListEmpty;
+import static com.moaguide.refactor.util.TimeUtil.getMinusLocalDate;
 
 import com.moaguide.refactor.art.dto.ArtDetailDto;
 import com.moaguide.refactor.building.dto.BuildingReponseDto;
@@ -10,7 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
 import jakarta.persistence.StoredProcedureQuery;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import org.joda.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -59,7 +60,7 @@ public class ProductDetailService {
 	}
 
 	public ResponseEntity<Object> musicDetail(String productId, String nickname) {
-        LocalDate localDate = LocalDate.now().minusYears(1);
+		LocalDate year = getMinusLocalDate(1);
         StoredProcedureQuery query = entityManager
             .createStoredProcedureQuery("music_detail")
             .registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
@@ -67,7 +68,7 @@ public class ProductDetailService {
             .registerStoredProcedureParameter("year", int.class, ParameterMode.IN)
             .setParameter("in_Product_Id", productId)
             .setParameter("nickname", nickname)
-            .setParameter("year", localDate.getYear());
+            .setParameter("year", year);
 
         List<Object[]> resultList = query.getResultList();
 
