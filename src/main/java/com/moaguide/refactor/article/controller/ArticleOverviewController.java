@@ -3,7 +3,7 @@ package com.moaguide.refactor.article.controller;
 import com.moaguide.refactor.article.dto.ArticleOverviewDto;
 import com.moaguide.refactor.article.service.ArticleLikeService;
 import com.moaguide.refactor.article.service.ArticleOverviewService;
-import com.moaguide.refactor.product.entity.CategoryContent.Category;
+import com.moaguide.refactor.enums.ArticleCategory;
 import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +42,8 @@ public class ArticleOverviewController {
 		List<ArticleOverviewDto> popularContents = articleOverviewService.getPopularContents(
 			popularLimit);
 		// 최신 뉴스 클리핑 가져오기 (카테고리 = NEWS)
-		List<ArticleOverviewDto> latestNews = articleOverviewService.getNewsContents(Category.NEWS,
+		List<ArticleOverviewDto> latestNews = articleOverviewService.getNewsContents(
+			ArticleCategory.NEWS,
 			newsLimit);
 
 		// JWT를 통해 좋아요 여부 설정

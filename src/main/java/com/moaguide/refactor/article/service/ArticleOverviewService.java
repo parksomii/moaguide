@@ -2,7 +2,7 @@ package com.moaguide.refactor.article.service;
 
 import com.moaguide.refactor.article.dto.ArticleOverviewDto;
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
-import com.moaguide.refactor.product.entity.CategoryContent.Category;
+import com.moaguide.refactor.enums.ArticleCategory;
 import com.moaguide.refactor.util.TimeServie;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -36,10 +36,11 @@ public class ArticleOverviewService {
 	}
 
 	// 최신 뉴스 클리핑 (최신 날짜 기준 정렬)
-	public List<ArticleOverviewDto> getNewsContents(Category category, int newsLimit) {
+	public List<ArticleOverviewDto> getNewsContents(ArticleCategory articleCategory,
+		int newsLimit) {
 		Pageable pageable = PageRequest.of(0, newsLimit, Sort.by(Sort.Direction.DESC, "createdAt"));
 
-		return articleContentRepository.findByCategory(category.getId(), pageable,
+		return articleContentRepository.findByCategory(articleCategory.getId(), pageable,
 				TimeServie.getNowTimestamp())
 			.getContent();
 	}

@@ -3,7 +3,7 @@ package com.moaguide.refactor.article.controller;
 import com.moaguide.refactor.article.dto.ArticleQueryDto;
 import com.moaguide.refactor.article.service.ArticleLikeService;
 import com.moaguide.refactor.article.service.ArticleQueryService;
-import com.moaguide.refactor.product.entity.CategoryContent.Category;
+import com.moaguide.refactor.enums.ArticleCategory;
 import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,9 +62,9 @@ public class ArticleQueryController {
 		Page<ArticleQueryDto> contents;
 
 		// Category Enum으로 변환
-		Category categoryEnum;
+		ArticleCategory articleCategoryEnum;
 		try {
-			categoryEnum = Category.fromName(category);
+			articleCategoryEnum = ArticleCategory.fromName(category);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest()
 				.body(Map.of("error", "Invalid category: " + category));
@@ -72,11 +72,11 @@ public class ArticleQueryController {
 
 		// type에 따라 서비스 호출
 		if (type.equals("all")) {
-			contents = articleQueryService.getContentsByAll(categoryEnum, page);
+			contents = articleQueryService.getContentsByAll(articleCategoryEnum, page);
 		} else if (type.equals("article")) {
-			contents = articleQueryService.getContentsByType("article", categoryEnum, page);
+			contents = articleQueryService.getContentsByType("article", articleCategoryEnum, page);
 		} else if (type.equals("video")) {
-			contents = articleQueryService.getContentsByType("영상", categoryEnum, page);
+			contents = articleQueryService.getContentsByType("영상", articleCategoryEnum, page);
 		} else {
 			return ResponseEntity.badRequest().body(Map.of("error", "Invalid type: " + type));
 		}

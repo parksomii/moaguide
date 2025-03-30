@@ -4,7 +4,7 @@ import com.moaguide.refactor.article.dto.ArticleQueryDto;
 import com.moaguide.refactor.article.entity.ArticleContent;
 import com.moaguide.refactor.article.repository.ArticleContentRepository;
 import com.moaguide.refactor.article.repository.ArticleLikeRepository;
-import com.moaguide.refactor.product.entity.CategoryContent.Category;
+import com.moaguide.refactor.enums.ArticleCategory;
 import com.moaguide.refactor.util.TimeServie;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,27 +32,28 @@ public class ArticleQueryService {
 	}
 
 	// 전체 콘텐츠 조회
-	public Page<ArticleQueryDto> getContentsByAll(Category category, int page) {
+	public Page<ArticleQueryDto> getContentsByAll(ArticleCategory articleCategory, int page) {
 		Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
-		if (category == Category.ALL) {
+		if (articleCategory == ArticleCategory.ALL) {
 			return articleContentRepository.findAllContent(pageable, TimeServie.getNowTimestamp())
 				.map(this::mapToContentDto);
 		} else {
-			return articleContentRepository.findByCategoryId(category.getId(), pageable,
+			return articleContentRepository.findByCategoryId(articleCategory.getId(), pageable,
 					TimeServie.getNowTimestamp())
 				.map(this::mapToContentDto);
 		}
 	}
 
 	// 타입별 조회
-	public Page<ArticleQueryDto> getContentsByType(String type, Category category, int page) {
+	public Page<ArticleQueryDto> getContentsByType(String type, ArticleCategory articleCategory,
+		int page) {
 		Pageable pageable = PageRequest.of(page - 1, 5, Sort.by(Sort.Direction.DESC, "createdAt"));
-		if (category == Category.ALL) {
+		if (articleCategory == ArticleCategory.ALL) {
 			return articleContentRepository.findByTypeContent(type, pageable,
 					TimeServie.getNowTimestamp())
 				.map(this::mapToContentDto);
 		} else {
-			return articleContentRepository.findByTypeAndCategoryId(type, category.getId(),
+			return articleContentRepository.findByTypeAndCategoryId(type, articleCategory.getId(),
 					pageable, TimeServie.getNowTimestamp())
 				.map(this::mapToContentDto);
 		}
