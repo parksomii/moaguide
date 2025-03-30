@@ -23,7 +23,7 @@ public class DivideService {
 	private final EntityManager entityManager;
 
 	// 지급주기별 저작권료 & 시가저작권료 조회
-	public DivideGraphDto getGraphData(String productId, int month) {
+	public DivideGraphDto getDivideData(String productId, int month) {
 		List<DivideCustomDto> divideList = new ArrayList<>();
 		double max_rate = 0.0;
 		double min_rate = 0.0;

@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+/**
+ * 상품 가격 관련 컨트롤러
+ * divide는 배당금 관련 컨트롤러
+ * transaction은 주가 관련 컨트롤러
+ * @author 이준호
+ */
 @RequestMapping("/detail")
 @AllArgsConstructor
 public class ProductPriceController {
@@ -25,26 +31,22 @@ public class ProductPriceController {
 
 	@GetMapping("/divide/{product_Id}")
 	public ResponseEntity<Object> divide(@PathVariable String product_Id, @RequestParam int month) {
-		DivideGraphDto divideCustomDtos = divideService.getGraphData(product_Id,
-			month);
-		// null 체크
+		DivideGraphDto divideCustomDtos = divideService.getDivideData(product_Id, month);
+
 		if (isEmpty(divideCustomDtos) || isListEmpty(divideCustomDtos.getDivide())) {
 			return ResponseEntity.ok(createEmptyHashMap("divide"));
 		}
-		// 정상적인 경우 데이터 반환
+
 		return ResponseEntity.ok().body(divideCustomDtos);
 	}
 
 	@GetMapping("/transaction/{product_Id}")
 	public ResponseEntity<Object> transaction(@PathVariable String product_Id,
 		@RequestParam int month) {
-		DetailTransactionResponseDto transaction = transactionService.findbymonth(product_Id,
-			month);
+		DetailTransactionResponseDto transaction = transactionService.getTransactionData(product_Id, month);
 		if (isEmpty(transaction) || isEmpty(transaction.getTransaction())) {
 			return ResponseEntity.ok(createEmptyHashMap("transaction"));
 		}
-
-
 		return ResponseEntity.ok().body(transaction);
 	}
 }

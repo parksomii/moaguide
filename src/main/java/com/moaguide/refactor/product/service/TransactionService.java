@@ -22,7 +22,7 @@ public class TransactionService {
 	private final HistoryRepository historyRepository;
 	private final EntityManager entityManager;
 
-	public DetailTransactionResponseDto findbymonth(String productId, int month) {
+	public DetailTransactionResponseDto getTransactionData(String productId, int month) {
 		if (month <= 12) {
 
 			LocalDate day = LocalDate.now().minusMonths(month);
