@@ -2,13 +2,9 @@ package com.moaguide.refactor.product.controller;
 
 import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.service.NewsService;
-import com.moaguide.refactor.product.dto.DetailDivideResponseDto;
 import com.moaguide.refactor.product.dto.DetailNewsResponseDto;
 import com.moaguide.refactor.product.dto.DetailNoticeResponseDto;
 import com.moaguide.refactor.product.dto.DetailReportResponseDto;
-import com.moaguide.refactor.product.dto.DetailTransactionResponseDto;
-import com.moaguide.refactor.product.dto.DivideCustomDto;
-import com.moaguide.refactor.product.dto.DivideGraphDto;
 import com.moaguide.refactor.product.dto.NoticeDto;
 import com.moaguide.refactor.product.dto.ReportCustomDto;
 import com.moaguide.refactor.product.service.CurrentDivideService;
@@ -16,10 +12,7 @@ import com.moaguide.refactor.product.service.DivideService;
 import com.moaguide.refactor.product.service.ReportService;
 import com.moaguide.refactor.product.service.TransactionService;
 import com.moaguide.service.NoticeService;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -59,57 +52,6 @@ public class DetailRestController {
 		List<NewsCustomDto> newsDtos = newsService.findBydetail(product_Id, page - 1, size);
 		int total = newsService.findByDetailCount(product_Id);
 		return ResponseEntity.ok(new DetailNewsResponseDto(newsDtos, page, size, total));
-	}
-
-	@GetMapping("/divide/{product_Id}")
-	public ResponseEntity<Object> divide(@PathVariable String product_Id, @RequestParam int month) {
-		List<DivideCustomDto> divideCustomDtos = divideService.getAllProductIdByDate(product_Id,
-			month);
-		// null 체크
-		if (divideCustomDtos == null) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("divide", new ArrayList<>());
-			return ResponseEntity.ok(response);
-		}
-
-		// 빈 리스트 체크
-		if (divideCustomDtos.isEmpty()) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("divide", new ArrayList<>());
-			return ResponseEntity.ok(response);
-		}
-
-		// 정상적인 경우 데이터 반환
-		return ResponseEntity.ok().body(new DetailDivideResponseDto(divideCustomDtos));
-	}
-
-	@GetMapping("/divides/{product_Id}")
-	public ResponseEntity<Object> new_divide(@PathVariable String product_Id,
-		@RequestParam int month) {
-		DivideGraphDto divideCustomDtos = divideService.getGraphData(product_Id, month);
-		// 정상적인 경우 데이터 반환
-		return ResponseEntity.ok().body(divideCustomDtos);
-	}
-
-	@GetMapping("/transaction/{product_Id}")
-	public ResponseEntity<Object> transaction(@PathVariable String product_Id,
-		@RequestParam int month) {
-		DetailTransactionResponseDto transaction = transactionService.findbymonth(product_Id,
-			month);
-		if (transaction.getTransaction() == null) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("transaction", new ArrayList<>());
-			return ResponseEntity.ok(response);
-		}
-
-		// 빈 리스트 체크
-		if (transaction.getTransaction().isEmpty()) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("transaction", new ArrayList<>());
-			return ResponseEntity.ok(response);
-		}
-
-		return ResponseEntity.ok().body(transaction);
 	}
 
 	@GetMapping("/notice/list/{product_Id}")
