@@ -74,19 +74,4 @@ public class DivideService {
 		return new DivideGraphDto(divideList, max_value, min_value, max_rate, min_rate);
 	}
 
-	// 지급주기별 저작권료 & 시가저작권료 조회
-	public List<DivideCustomDto> getAllProductIdByDate(String id, int month) {
-
-		List<DivideCustomDto> divideList = new ArrayList<>();
-		if (month <= 12) {
-			divideList = divideRepository.findAllByDate(id,
-				Date.valueOf(LocalDate.now().minusMonths(month)));
-		} else if (month == 100) {
-			divideList = divideRepository.findAllByDate(id,
-				Date.valueOf(LocalDate.now().minusMonths(month)));
-		} else {
-			divideList = null;
-		}
-		return divideList;
-	}
 }
