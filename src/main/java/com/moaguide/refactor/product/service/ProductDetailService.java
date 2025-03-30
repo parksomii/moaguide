@@ -7,6 +7,7 @@ import static com.moaguide.refactor.util.TimeUtil.getMinusLocalDate;
 import com.moaguide.refactor.art.dto.ArtDetailDto;
 import com.moaguide.refactor.building.dto.BuildingReponseDto;
 import com.moaguide.refactor.contents.dto.ContentDetailDto;
+import com.moaguide.refactor.cow.dto.HanwooDetailDto;
 import com.moaguide.refactor.music.dto.MusicReponseDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
@@ -172,5 +173,37 @@ public class ProductDetailService {
 	}
 
 	public ResponseEntity<Object> cowDetail(String productId, String nickname) {
+		StoredProcedureQuery query = entityManager
+			.createStoredProcedureQuery("hanwoo_detail")
+			.registerStoredProcedureParameter("in_Product_Id", String.class, ParameterMode.IN)
+			.registerStoredProcedureParameter("nickname", String.class, ParameterMode.IN)
+			.setParameter("in_Product_Id", productId)
+			.setParameter("nickname", nickname);
+
+		// 프로시저 실행
+		List<Object[]> resultList = query.getResultList();
+
+		if (isListEmpty(resultList)) {
+			return ResponseEntity.ok(new HashMap<>());
+		}
+
+		Object[] result = resultList.get(0);  // 첫 번째 결과만 사용
+
+		HanwooDetailDto cow = new HanwooDetailDto(
+			(String) result[0],  // productId
+			(String) result[1],  // category
+			(String) result[2],  // platform
+			(String) result[3],  // title
+			(String) result[4],  // name
+			((Long) result[5]),  // recruitmentPrice (Integer 그대로 사용)
+			((BigDecimal) result[6]).doubleValue(),  // recruitmentRate (Double 그대로 사용)
+			((Long) result[7]),  // totalPrice
+			((Date) result[8]).toLocalDate(),  // paymentDate
+			((Integer) result[9]),  // minInvestment
+			(String) result[10], // link
+			((Long) result[11]) == 1 // isBookmarked: Long 값을 Boolean으로 변환
+		);
+
+		return ResponseEntity.ok().body(cow);
 	}
 }
