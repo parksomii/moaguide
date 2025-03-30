@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - refactor
 
 jobs:
   build_and_deploy:
