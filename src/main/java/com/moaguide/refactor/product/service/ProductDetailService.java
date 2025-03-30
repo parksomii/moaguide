@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class ProductDetailService {
+
 	private final EntityManager entityManager;
 
 	public ResponseEntity<Object> buildingDetail(String productId, String nickname) {
@@ -32,17 +33,27 @@ public class ProductDetailService {
 		List<Object[]> resultList = query.getResultList();
 
 		if (isListEmpty(resultList)) {
-			ResponseEntity.ok(new HashMap<>());
+			return ResponseEntity.ok(new HashMap<>());
 		}
 
 		Object[] result = resultList.get(0);  // 첫 번째 결과만 사용
 
-
 		BuildingReponseDto building = new BuildingReponseDto(
 			(String) result[0],
 			(String) result[1],
-			()
-		)
+			(String) result[2],
+			(String) result[3],
+			(Integer) result[4],
+			(Double) result[5],
+			(Long) result[6],
+			(Double) result[7],
+			(Double) result[8],
+			(Integer) result[9],
+			(String) result[10],
+			(Boolean) result[11]
+		);
+
+		return ResponseEntity.ok().body(building);
 	}
 
 	public ResponseEntity<Object> musicDetail(String productId, String nickname) {
@@ -64,7 +75,7 @@ public class ProductDetailService {
 
 		// 결과가 없을 경우 null 리턴
 		if (isListEmpty(resultList)) {
-			ResponseEntity.ok(new HashMap<>());
+			return ResponseEntity.ok(new HashMap<>());
 		}
 
 		// 결과값을 DTO에 매핑
