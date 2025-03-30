@@ -1,12 +1,13 @@
 package com.moaguide.refactor.product.controller;
 
+import static com.moaguide.refactor.util.EmptyCheckUtil.isEmpty;
+import static com.moaguide.refactor.util.EmptyCheckUtil.isListEmpty;
+import static com.moaguide.refactor.util.HashMapUtil.createEmptyHashMap;
+
 import com.moaguide.refactor.product.dto.DetailTransactionResponseDto;
 import com.moaguide.refactor.product.dto.DivideGraphDto;
 import com.moaguide.refactor.product.service.DivideService;
 import com.moaguide.refactor.product.service.TransactionService;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,19 +28,9 @@ public class ProductPriceController {
 		DivideGraphDto divideCustomDtos = divideService.getGraphData(product_Id,
 			month);
 		// null 체크
-		if (divideCustomDtos == null) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("divide", new ArrayList<>());
-			return ResponseEntity.ok(response);
+		if (isEmpty(divideCustomDtos) || isListEmpty(divideCustomDtos.getDivide())) {
+			return ResponseEntity.ok(createEmptyHashMap("divide"));
 		}
-
-		// 빈 리스트 체크
-		if (divideCustomDtos.getDivide().isEmpty()) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("divide", new ArrayList<>());
-			return ResponseEntity.ok(response);
-		}
-
 		// 정상적인 경우 데이터 반환
 		return ResponseEntity.ok().body(divideCustomDtos);
 	}
@@ -49,18 +40,10 @@ public class ProductPriceController {
 		@RequestParam int month) {
 		DetailTransactionResponseDto transaction = transactionService.findbymonth(product_Id,
 			month);
-		if (transaction.getTransaction() == null) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("transaction", new ArrayList<>());
-			return ResponseEntity.ok(response);
+		if (isEmpty(transaction) || isEmpty(transaction.getTransaction())) {
+			return ResponseEntity.ok(createEmptyHashMap("transaction"));
 		}
 
-		// 빈 리스트 체크
-		if (transaction.getTransaction().isEmpty()) {
-			Map<String, Object> response = new HashMap<>();
-			response.put("transaction", new ArrayList<>());
-			return ResponseEntity.ok(response);
-		}
 
 		return ResponseEntity.ok().body(transaction);
 	}

@@ -1,6 +1,7 @@
 package com.moaguide.refactor.util;
 
 
+import java.util.List;
 
 public class EmptyCheckUtil {
 
@@ -12,8 +13,8 @@ public class EmptyCheckUtil {
 		}
 	}
 
-	public static boolean isListEmpty(Object[] list) {
-		if (list == null || list.length == 0) {
+	public static boolean isListEmpty(List<?> list) {
+		if (list == null) {
 			return true;
 		}else {
 			return false;
