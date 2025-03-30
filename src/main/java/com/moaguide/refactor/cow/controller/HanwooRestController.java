@@ -1,7 +1,6 @@
 package com.moaguide.refactor.cow.controller;
 
 import com.moaguide.refactor.cow.dto.HanwooBaseResponseDto;
-import com.moaguide.refactor.cow.dto.HanwooDetailDto;
 import com.moaguide.refactor.cow.service.HanwooPriceService;
 import com.moaguide.refactor.cow.service.HanwooService;
 import com.moaguide.refactor.jwt.util.JwtUtil;
@@ -11,11 +10,9 @@ import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,21 +27,6 @@ public class HanwooRestController {
 	private final HanwooPriceService hanwooPriceService;
 	private final JwtUtil jwtUtil;
 
-	@GetMapping("{product_Id}")
-	public ResponseEntity<Object> detail(@PathVariable String product_Id,
-		@RequestHeader(value = "Authorization", required = false) String jwt) {
-		String Nickname;
-		if (jwt != null && jwt.startsWith("Bearer ")) {
-			if (jwtUtil.isExpired(jwt.substring(7))) {
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-			}
-			Nickname = jwtUtil.getNickname(jwt.substring(7));
-		} else {
-			Nickname = "null";
-		}
-		HanwooDetailDto hanwooDetail = hanwooService.findHanwooDetail(product_Id, Nickname);
-		return ResponseEntity.ok().body(hanwooDetail);
-	}
 
 	@GetMapping("base/{product_Id}")
 	public ResponseEntity<Object> Base(@PathVariable String product_Id) {
