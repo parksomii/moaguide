@@ -34,7 +34,7 @@ public class ProductDetailController {
 		return ResponseEntity.ok(new DetailNewsResponseDto(newsDtos, page, size, total));
 	}
 
-	public ResponseEntity<Object> Topdetail(@PathVariable String category,
+	public ResponseEntity<Object> topDetail(@PathVariable String category,
 		@PathVariable String product_Id,
 		@RequestHeader(value = "Authorization", required = false) String jwt) {
 		String nickname = jwtCheckUtil.extractNickname(jwt);
