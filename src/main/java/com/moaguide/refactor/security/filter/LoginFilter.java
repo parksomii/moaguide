@@ -1,4 +1,4 @@
-package com.moaguide.refactor.security.login;
+package com.moaguide.refactor.security.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Iterator;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,15 +23,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Profile("local")
-@Slf4j
-public class LocalLoginFilter extends UsernamePasswordAuthenticationFilter {
+@Profile({"blue", "green"})
+public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final AuthenticationManager authenticationManager;
 	private final JWTUtil jwtUtil;
 	private final CookieService cookieService;
 
-	public LocalLoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
+	public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
 		CookieService cookieService) {
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;
@@ -70,6 +68,14 @@ public class LocalLoginFilter extends UsernamePasswordAuthenticationFilter {
 		Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
 		GrantedAuthority auth = iterator.next();
 		String role = auth.getAuthority();
+		// 토큰 생성 - rememberMe에 따라 리프레시 토큰의 만료 시간 설정
+		String accessToken = jwtUtil.createJwt("access", userDetails.getNickname(), role,
+			24 * 60 * 60 * 1000L);//1시간
+		long refreshTokenValidity =
+			rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
+		String refreshToken = jwtUtil.createJwt("refresh", userDetails.getNickname(), role,
+			refreshTokenValidity);
+
 		ProfileDto user;
 		if (role.equals("VIP")) {
 			user = new ProfileDto(username, userDetails.getemail(), userDetails.getLoginType(),
@@ -78,22 +84,13 @@ public class LocalLoginFilter extends UsernamePasswordAuthenticationFilter {
 			user = new ProfileDto(username, userDetails.getemail(), userDetails.getLoginType(),
 				userDetails.getMarketing(), false);
 		}
-
-		// 토큰 생성 - rememberMe에 따라 리프레시 토큰의 만료 시간 설정
-		String accessToken = jwtUtil.createJwt("access", userDetails.getNickname(), role,
-			3 * 24 * 60 * 60 * 1000L);//1시간
-		long refreshTokenValidity =
-			rememberMe ? 6 * 30 * 24 * 60 * 60 * 1000L : 24 * 60 * 60 * 1000L; // 6달 또는 5시간
-		String refreshToken = jwtUtil.createJwt("refresh", userDetails.getNickname(), role,
-			refreshTokenValidity);
-
 		//응답 설정
 		response.setHeader("Authorization", "Bearer " + accessToken);
-		Cookie refreshCookie = cookieService.createLocalCookie("refresh", refreshToken,
+		Cookie refreshCookie = cookieService.createCookie("refresh", refreshToken,
 			refreshTokenValidity);
+		refreshCookie.setPath("/");
 		response.addCookie(refreshCookie);
-		response.addCookie(
-			cookieService.createLocalRememberMeCookie(rememberMe, refreshTokenValidity));
+		response.addCookie(cookieService.createRememberMeCookie(rememberMe, refreshTokenValidity));
 		response.setStatus(HttpStatus.OK.value());
 		response.setContentType("application/json;charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
