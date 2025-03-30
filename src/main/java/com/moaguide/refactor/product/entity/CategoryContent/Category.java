@@ -1,6 +1,6 @@
 package com.moaguide.refactor.product.entity.CategoryContent;
 
-import com.moaguide.util.EnumUtils;
+import com.moaguide.refactor.util.EnumUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.moaguide.util;
+package com.moaguide.refactor.util;
 
 import java.util.Arrays;
 
