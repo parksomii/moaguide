@@ -1,5 +1,6 @@
 package com.moaguide.refactor.quiz.controller;
 
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.quiz.dto.QuestionCheckResponseDto;
 import com.moaguide.refactor.quiz.dto.QuestionDto;
 import com.moaguide.refactor.quiz.dto.QuestionLinkDto;
@@ -10,7 +11,6 @@ import com.moaguide.refactor.quiz.dto.QuizResponseDto;
 import com.moaguide.refactor.quiz.entity.Quiz;
 import com.moaguide.refactor.quiz.entity.QuizHistory;
 import com.moaguide.refactor.quiz.service.QuizService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuizController {
 
 	private final QuizService quizService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	@GetMapping()
 	public ResponseEntity<?> quiz() {

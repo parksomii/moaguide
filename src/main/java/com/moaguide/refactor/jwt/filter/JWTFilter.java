@@ -1,7 +1,7 @@
 package com.moaguide.refactor.jwt.filter;
 
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.login.service.CustomUserDetails;
 import com.moaguide.refactor.user.entity.User;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -24,7 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @AllArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
 
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

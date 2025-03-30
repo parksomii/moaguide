@@ -1,7 +1,7 @@
 package com.moaguide.refactor.jwt.controller;
 
 
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.login.service.CookieService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Profile("local")
 public class LocalTokenRestController {
 
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final CookieService cookieService;
 
 	@PostMapping("/token/refresh")

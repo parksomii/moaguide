@@ -3,7 +3,7 @@ package com.moaguide.refactor.login.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moaguide.dto.ProfileDto;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.login.service.CookieService;
 import com.moaguide.refactor.login.service.CustomUserDetails;
 import jakarta.servlet.FilterChain;
@@ -27,10 +27,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 	private final AuthenticationManager authenticationManager;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final CookieService cookieService;
 
-	public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil,
+	public LoginFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil,
 		CookieService cookieService) {
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;

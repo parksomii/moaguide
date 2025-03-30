@@ -4,7 +4,7 @@ import com.moaguide.refactor.article.dto.ArticleOverviewDto;
 import com.moaguide.refactor.article.service.ArticleLikeService;
 import com.moaguide.refactor.article.service.ArticleOverviewService;
 import com.moaguide.refactor.enums.ArticleCategory;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +26,7 @@ public class ArticleOverviewController {
 
 	private final ArticleOverviewService articleOverviewService;
 	private final ArticleLikeService articleLikeService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	@GetMapping("/overview")
 	public ResponseEntity<Map<String, Object>> getContentsOverview(

@@ -1,6 +1,6 @@
 package com.moaguide.refactor.user.controller;
 
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.user.dto.UserDto;
 import com.moaguide.refactor.user.entity.User;
 import com.moaguide.refactor.user.service.UserService;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminRestController {
 
 	private final UserService userService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	@PostMapping("/login")
 	public ResponseEntity adminlogin(@RequestBody UserDto user, HttpServletResponse response,

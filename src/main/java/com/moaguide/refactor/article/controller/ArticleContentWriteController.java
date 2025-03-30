@@ -3,7 +3,7 @@ package com.moaguide.refactor.article.controller;
 import com.moaguide.refactor.article.dto.ArticleContentWriteRequestDto;
 import com.moaguide.refactor.article.service.ArticleContentWriteService;
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import jakarta.validation.Valid;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleContentWriteController {
 
 	private final ArticleContentWriteService articleContentWriteService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	/**
 	 * 아티클 저장 API

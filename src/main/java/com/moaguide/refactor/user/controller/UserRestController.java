@@ -1,8 +1,8 @@
 package com.moaguide.refactor.user.controller;
 
-import com.moaguide.refactor.product.service.BookmarkService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.login.service.CookieService;
+import com.moaguide.refactor.product.service.BookmarkService;
 import com.moaguide.refactor.user.dto.UserDto;
 import com.moaguide.refactor.user.dto.mailDto;
 import com.moaguide.refactor.user.entity.User;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestController {
 
 	private final UserService userService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final CookieService cookieService;
 	private final EmailService emailService;
 	private final BookmarkService bookmarkService;

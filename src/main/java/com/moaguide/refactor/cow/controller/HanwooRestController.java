@@ -4,7 +4,7 @@ import com.moaguide.refactor.cow.dto.HanwooBaseResponseDto;
 import com.moaguide.refactor.cow.dto.HanwooDetailDto;
 import com.moaguide.refactor.cow.service.HanwooPriceService;
 import com.moaguide.refactor.cow.service.HanwooService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public class HanwooRestController {
 
 	private final HanwooService hanwooService;
 	private final HanwooPriceService hanwooPriceService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	@GetMapping("{product_Id}")
 	public ResponseEntity<Object> detail(@PathVariable String product_Id,

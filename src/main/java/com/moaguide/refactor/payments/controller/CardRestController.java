@@ -2,17 +2,9 @@ package com.moaguide.refactor.payments.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moaguide.refactor.user.entity.User;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.payments.service.BillingService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.jwt.JwtException;
-import org.springframework.web.bind.annotation.*;
-
+import com.moaguide.refactor.user.entity.User;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -20,19 +12,33 @@ import java.net.http.HttpResponse;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.JwtException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/card")
 @Profile({"blue", "green"})
 public class CardRestController {
 
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final BillingService billingService;
 
 	@Value("${toss.secretkey}")
 	private String secretkey;
 
-	public CardRestController(JWTUtil jwtUtil, BillingService billingService) {
+	public CardRestController(JwtUtil jwtUtil, BillingService billingService) {
 		this.jwtUtil = jwtUtil;
 		this.billingService = billingService;
 	}

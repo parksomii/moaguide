@@ -1,11 +1,11 @@
 package com.moaguide.refactor.payments.controller;
 
 
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.payments.dto.LocalSubscriptDateDto;
 import com.moaguide.refactor.payments.dto.lastLogDto;
 import com.moaguide.refactor.payments.entity.PaymentLog;
 import com.moaguide.refactor.payments.service.LocalBillingService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.HashMap;
@@ -30,13 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Profile("local")
 public class LocalBillingRestController {
 
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final LocalBillingService LocalbillingService;
 	private final LocalBillingService localBillingService;
 	@Value("${toss.secretkey}")
 	private String secretkey;
 
-	public LocalBillingRestController(JWTUtil jwtUtil, LocalBillingService LocalbillingService,
+	public LocalBillingRestController(JwtUtil jwtUtil, LocalBillingService LocalbillingService,
 		LocalBillingService localBillingService) {
 		this.jwtUtil = jwtUtil;
 		this.LocalbillingService = LocalbillingService;

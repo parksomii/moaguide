@@ -1,6 +1,7 @@
 package com.moaguide.refactor.common.controller;
 
 import com.moaguide.dto.NewDto.customDto.ReportAndNewsDto;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.service.NewsService;
 import com.moaguide.refactor.news.service.NewsViewService;
@@ -12,7 +13,6 @@ import com.moaguide.refactor.product.dto.ArticleSummaryDto;
 import com.moaguide.refactor.product.dto.SummaryCustomDto;
 import com.moaguide.refactor.product.service.ProductService;
 import com.moaguide.refactor.product.service.ProductViewService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
 import com.moaguide.service.StudyService;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +42,7 @@ public class HomeController {
 	private final NewsService newsService;
 	private final StudyService articleService;
 	private final NotificationService notificationService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final ProductService productService;
 	private final ProductViewService productViewService;
 	private final NewsViewService newsViewService;

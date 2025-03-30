@@ -3,7 +3,7 @@ package com.moaguide.refactor.art.controller;
 import com.moaguide.refactor.art.dto.ArtBaseResponseDto;
 import com.moaguide.refactor.art.dto.ArtDetailDto;
 import com.moaguide.refactor.art.service.ArtService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.HashMap;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArtRestController {
 
 	private final ArtService artService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 
 	@GetMapping("/{product_Id}")

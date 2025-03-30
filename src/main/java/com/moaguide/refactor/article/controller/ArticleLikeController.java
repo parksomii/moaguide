@@ -1,7 +1,7 @@
 package com.moaguide.refactor.article.controller;
 
 import com.moaguide.refactor.article.service.ArticleLikeService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleLikeController {
 
 	private final ArticleLikeService articleLikeService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	@PostMapping("/{articleId}/like")
 	public ResponseEntity<Object> toggleLike(

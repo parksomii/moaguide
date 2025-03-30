@@ -3,10 +3,10 @@ package com.moaguide.refactor.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.moaguide.refactor.jwt.filter.JWTFilter;
-import com.moaguide.refactor.jwt.util.JWTUtil;
 import com.moaguide.refactor.config.handler.CustomAccessDeniedHandler;
 import com.moaguide.refactor.config.handler.CustomLogoutSuccessHandler;
+import com.moaguide.refactor.jwt.filter.JWTFilter;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.login.filter.LocalLoginFilter;
 import com.moaguide.refactor.login.service.CookieService;
 import com.moaguide.refactor.login.service.CustomOAuth2UserService;
@@ -38,7 +38,7 @@ import org.springframework.web.filter.CorsFilter;
 public class LocalSecurityConfig {
 
 	private final AuthenticationConfiguration authenticationConfiguration;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final CookieService cookieService;
 	private final CustomOAuth2UserService customOAuth2UserService;
 

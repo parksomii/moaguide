@@ -1,9 +1,9 @@
 package com.moaguide.refactor.news.controller;
 
 
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.news.dto.NewsCustomDto;
 import com.moaguide.refactor.news.service.NewsService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.HashMap;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class NewsRestController {
 
 	private final NewsService newsService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	// 뉴스 홈페이지
 	@GetMapping("/content/news/")

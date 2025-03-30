@@ -1,7 +1,7 @@
 package com.moaguide.refactor.config.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.login.oauth.CustomOAuth2User;
 import com.moaguide.refactor.login.service.CookieService;
 import com.moaguide.refactor.user.entity.User;
@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @AllArgsConstructor
 public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final CookieService cookieService;
 
 

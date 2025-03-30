@@ -1,20 +1,19 @@
 package com.moaguide.refactor.jwt.util;
 
 import io.jsonwebtoken.Jwts;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-
 @Component
-public class JWTUtil {
+public class JwtUtil {
 
 	private final SecretKey secretKey;
 
-	public JWTUtil(@Value("${spring.jwt.secret}") String secret) {
+	public JwtUtil(@Value("${spring.jwt.secret}") String secret) {
 		secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8),
 			Jwts.SIG.HS256.key().build().getAlgorithm());
 	}

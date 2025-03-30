@@ -1,8 +1,5 @@
 package com.moaguide.refactor.product.controller;
 
-import com.moaguide.refactor.news.dto.NewsCustomDto;
-import com.moaguide.refactor.news.service.NewsService;
-import com.moaguide.refactor.product.dto.DetailNewsResponseDto;
 import com.moaguide.refactor.product.dto.DetailNoticeResponseDto;
 import com.moaguide.refactor.product.dto.DetailReportResponseDto;
 import com.moaguide.refactor.product.dto.NoticeDto;
@@ -12,7 +9,6 @@ import com.moaguide.refactor.product.service.DivideService;
 import com.moaguide.refactor.product.service.ReportService;
 import com.moaguide.refactor.product.service.TransactionService;
 import com.moaguide.service.NoticeService;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -32,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DetailRestController {
 
 	private final ReportService reportService;
-	private final NewsService newsService;
 	private final DivideService divideService;
 	private final TransactionService transactionService;
 	private final NoticeService noticeService;
@@ -46,13 +41,7 @@ public class DetailRestController {
 		return ResponseEntity.ok(new DetailReportResponseDto(report));
 	}
 
-	@GetMapping("/news/{product_Id}")
-	public ResponseEntity<Object> news(@PathVariable String product_Id, @RequestParam int page,
-		@RequestParam int size) {
-		List<NewsCustomDto> newsDtos = newsService.findBydetail(product_Id, page - 1, size);
-		int total = newsService.findByDetailCount(product_Id);
-		return ResponseEntity.ok(new DetailNewsResponseDto(newsDtos, page, size, total));
-	}
+
 
 	@GetMapping("/notice/list/{product_Id}")
 	public ResponseEntity<Object> notice(@PathVariable String product_Id, @RequestParam int page,

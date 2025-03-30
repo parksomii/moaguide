@@ -17,7 +17,7 @@ import com.moaguide.refactor.contents.entity.movie.MovieSchedule;
 import com.moaguide.refactor.contents.service.ContentService;
 import com.moaguide.refactor.contents.service.ContentSubService;
 import com.moaguide.refactor.contents.service.MovieService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ContentRestController {
 	private final ContentService contentService;
 	private final MovieService movieService;
 	private final ContentSubService contentSubService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 
 	@GetMapping("/{product_Id}")

@@ -4,7 +4,7 @@ import com.moaguide.refactor.coupon.dto.CouponAdminDto;
 import com.moaguide.refactor.coupon.dto.CouponUserDto;
 import com.moaguide.refactor.coupon.service.CouponService;
 import com.moaguide.refactor.enums.Role;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CouponRestController {
 
 	private final CouponService couponService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	//쿠폰 발급 API
 	@PostMapping("/issue")

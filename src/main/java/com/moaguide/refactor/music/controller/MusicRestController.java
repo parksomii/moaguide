@@ -1,5 +1,6 @@
 package com.moaguide.refactor.music.controller;
 
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import com.moaguide.refactor.music.dto.ConsertDto;
 import com.moaguide.refactor.music.dto.MaxAndMinDto;
 import com.moaguide.refactor.music.dto.MusicBaseResponseDto;
@@ -11,7 +12,6 @@ import com.moaguide.refactor.music.dto.MusicSubResponseDto;
 import com.moaguide.refactor.music.dto.SearchDto;
 import com.moaguide.refactor.music.dto.ViewDto;
 import com.moaguide.refactor.music.service.MusicDetailService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MusicRestController {
 
 	private final MusicDetailService musicService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	// 최상단 기본정보
 	@GetMapping("{product_Id}")

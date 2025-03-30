@@ -4,7 +4,7 @@ import com.moaguide.refactor.article.dto.ArticleQueryDto;
 import com.moaguide.refactor.article.service.ArticleLikeService;
 import com.moaguide.refactor.article.service.ArticleQueryService;
 import com.moaguide.refactor.enums.ArticleCategory;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +27,7 @@ public class ArticleQueryController {
 
 	private final ArticleQueryService articleQueryService;
 	private final ArticleLikeService articleLikeService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 
 	@GetMapping
 	public ResponseEntity<Map<String, Object>> getContentsByCategory(

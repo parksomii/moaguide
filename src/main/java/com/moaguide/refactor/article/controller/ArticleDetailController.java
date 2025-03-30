@@ -4,7 +4,7 @@ import com.moaguide.refactor.article.dto.RelatedContentDto;
 import com.moaguide.refactor.article.service.ArticleDetailService;
 import com.moaguide.refactor.article.service.ArticleLikeService;
 import com.moaguide.refactor.article.service.ArticleViewService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ArticleDetailController {
 
 	private final ArticleDetailService articleDetailService;
 	private final ArticleViewService articleViewService; // 조회 기록 서비스
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final ArticleLikeService articleLikeService;
 
 	@GetMapping("/{articleId}")

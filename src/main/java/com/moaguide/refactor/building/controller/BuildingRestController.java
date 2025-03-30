@@ -1,15 +1,15 @@
 package com.moaguide.refactor.building.controller;
 
 
-import com.moaguide.refactor.building.dto.BusinessAreaDto;
-import com.moaguide.refactor.building.dto.LocationDto;
 import com.moaguide.refactor.building.dto.BuildingBaseDto;
-import com.moaguide.refactor.building.dto.BuildingReponseDto;
 import com.moaguide.refactor.building.dto.BuildingBaseResponseDto;
+import com.moaguide.refactor.building.dto.BuildingReponseDto;
 import com.moaguide.refactor.building.dto.BuildingSubResponseDto;
 import com.moaguide.refactor.building.dto.BuildingSubwayResponseDto;
+import com.moaguide.refactor.building.dto.BusinessAreaDto;
 import com.moaguide.refactor.building.dto.LandDto;
 import com.moaguide.refactor.building.dto.LeaseDto;
+import com.moaguide.refactor.building.dto.LocationDto;
 import com.moaguide.refactor.building.dto.NearBusDto;
 import com.moaguide.refactor.building.dto.NearSubwayDto;
 import com.moaguide.refactor.building.dto.PopulationDto;
@@ -31,17 +31,21 @@ import com.moaguide.refactor.building.service.RentService;
 import com.moaguide.refactor.building.service.StayService;
 import com.moaguide.refactor.building.service.SubwayService;
 import com.moaguide.refactor.building.service.VacancyRateService;
-import com.moaguide.refactor.jwt.util.JWTUtil;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
@@ -61,7 +65,7 @@ public class BuildingRestController {
 	private final PopulationService populationService;
 	private final VacancyRateService vacancyRateService;
 	private final LandRegistryService landRegistryService;
-	private final JWTUtil jwtUtil;
+	private final JwtUtil jwtUtil;
 	private final NearBusService nearBusService;
 
 
