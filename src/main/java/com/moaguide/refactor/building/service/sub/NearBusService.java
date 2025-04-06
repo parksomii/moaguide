@@ -1,12 +1,11 @@
-package com.moaguide.refactor.building.service;
+package com.moaguide.refactor.building.service.sub;
 
-import com.moaguide.refactor.building.repository.near.NearBusRepository;
 import com.moaguide.refactor.building.dto.NearBusDto;
+import com.moaguide.refactor.building.repository.near.NearBusRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
