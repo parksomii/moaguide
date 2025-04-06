@@ -1,11 +1,10 @@
-package com.moaguide.refactor.building.service;
+package com.moaguide.refactor.building.service.base;
 
-import com.moaguide.refactor.building.repository.LeaseRepository;
 import com.moaguide.refactor.building.dto.LeaseDto;
+import com.moaguide.refactor.building.repository.LeaseRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @AllArgsConstructor
