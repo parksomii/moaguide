@@ -1,31 +1,19 @@
 package com.moaguide.refactor.building.controller;
 
 
-import com.moaguide.refactor.building.dto.BuildingSubResponseDto;
 import com.moaguide.refactor.building.dto.BuildingSubwayResponseDto;
-import com.moaguide.refactor.building.dto.BusinessAreaDto;
 import com.moaguide.refactor.building.dto.LandDto;
-import com.moaguide.refactor.building.dto.NearBusDto;
-import com.moaguide.refactor.building.dto.NearSubwayDto;
 import com.moaguide.refactor.building.dto.PopulationDto;
 import com.moaguide.refactor.building.dto.RentDto;
 import com.moaguide.refactor.building.dto.StayDayDto;
 import com.moaguide.refactor.building.dto.StayRateDto;
 import com.moaguide.refactor.building.dto.VacancyrateDto;
-import com.moaguide.refactor.building.service.BuildingService;
-import com.moaguide.refactor.building.service.BusinessAreaService;
 import com.moaguide.refactor.building.service.LandPriceService;
-import com.moaguide.refactor.building.service.LandRegistryService;
-import com.moaguide.refactor.building.service.LeaseService;
-import com.moaguide.refactor.building.service.LocationService;
-import com.moaguide.refactor.building.service.NearBusService;
-import com.moaguide.refactor.building.service.NearSubwayService;
 import com.moaguide.refactor.building.service.PopulationService;
 import com.moaguide.refactor.building.service.RentService;
 import com.moaguide.refactor.building.service.StayService;
 import com.moaguide.refactor.building.service.SubwayService;
 import com.moaguide.refactor.building.service.VacancyRateService;
-import com.moaguide.refactor.jwt.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,30 +34,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class BuildingRestController {
 
 	private final RentService rentService;
-	private final BuildingService buildingService;
-	private final LeaseService leaseService;
-	private final LocationService locationService;
-	private final BusinessAreaService businessAreaService;
-	private final NearSubwayService nearSubwayService;
 	private final LandPriceService landPriceService;
 	private final StayService stayService;
 	private final SubwayService subwayService;
 	private final PopulationService populationService;
 	private final VacancyRateService vacancyRateService;
-	private final LandRegistryService landRegistryService;
-	private final JwtUtil jwtUtil;
-	private final NearBusService nearBusService;
 
-
-	@GetMapping("/sub/{product_Id}")
-	public ResponseEntity<Object> add(@PathVariable String product_Id) {
-		BusinessAreaDto businessArea = businessAreaService.findBase(product_Id);
-		List<NearBusDto> bus = nearBusService.findNearBus(product_Id);
-		List<NearSubwayDto> nearSubway = nearSubwayService.findBykeyword(product_Id);
-		BuildingSubResponseDto buildingSubResponseDto = new BuildingSubResponseDto(businessArea,
-			nearSubway, bus);
-		return ResponseEntity.ok(buildingSubResponseDto);
-	}
 
 	@GetMapping("/land/{product_Id}")
 	public ResponseEntity<Object> land(@PathVariable String product_Id) {
@@ -83,7 +53,7 @@ public class BuildingRestController {
 		response.put("lands", landPrice);
 		return ResponseEntity.ok(response);
 	}
-	
+
 	@GetMapping("/subway/{productId}")
 	public ResponseEntity<Object> subway(@PathVariable String productId) {
 		BuildingSubwayResponseDto subwayResponseDto = subwayService.findByProductId(productId);
