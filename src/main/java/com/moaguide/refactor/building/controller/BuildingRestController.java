@@ -1,14 +1,10 @@
 package com.moaguide.refactor.building.controller;
 
 
-import com.moaguide.refactor.building.dto.BuildingBaseDto;
-import com.moaguide.refactor.building.dto.BuildingBaseResponseDto;
 import com.moaguide.refactor.building.dto.BuildingSubResponseDto;
 import com.moaguide.refactor.building.dto.BuildingSubwayResponseDto;
 import com.moaguide.refactor.building.dto.BusinessAreaDto;
 import com.moaguide.refactor.building.dto.LandDto;
-import com.moaguide.refactor.building.dto.LeaseDto;
-import com.moaguide.refactor.building.dto.LocationDto;
 import com.moaguide.refactor.building.dto.NearBusDto;
 import com.moaguide.refactor.building.dto.NearSubwayDto;
 import com.moaguide.refactor.building.dto.PopulationDto;
@@ -64,20 +60,6 @@ public class BuildingRestController {
 	private final JwtUtil jwtUtil;
 	private final NearBusService nearBusService;
 
-	@GetMapping("/base/{product_Id}")
-	public ResponseEntity<Object> Base(@PathVariable String product_Id) {
-		BuildingBaseDto building = landRegistryService.findbase(product_Id);
-		List<LeaseDto> leaseDtos = leaseService.detail(product_Id);
-		// null 처리
-		if (building == null) {
-			return ResponseEntity.ok(new HashMap<>());
-		}
-		// 빈 리스트 처리
-		if (leaseDtos.isEmpty()) {
-			return ResponseEntity.ok(new HashMap<>());
-		}
-		return ResponseEntity.ok(new BuildingBaseResponseDto(building, leaseDtos));
-	}
 
 	@GetMapping("/sub/{product_Id}")
 	public ResponseEntity<Object> add(@PathVariable String product_Id) {
@@ -101,13 +83,7 @@ public class BuildingRestController {
 		response.put("lands", landPrice);
 		return ResponseEntity.ok(response);
 	}
-
-	@GetMapping("/area/{product_Id}")
-	public ResponseEntity<Object> area(@PathVariable String product_Id) {
-		LocationDto location = locationService.locate(product_Id);
-		return ResponseEntity.ok(location);
-	}
-
+	
 	@GetMapping("/subway/{productId}")
 	public ResponseEntity<Object> subway(@PathVariable String productId) {
 		BuildingSubwayResponseDto subwayResponseDto = subwayService.findByProductId(productId);
