@@ -1,11 +1,10 @@
-package com.moaguide.refactor.building.service;
+package com.moaguide.refactor.building.service.graph;
 
-import com.moaguide.refactor.building.repository.LandPriceRepository;
 import com.moaguide.refactor.building.dto.LandDto;
+import com.moaguide.refactor.building.repository.LandPriceRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @AllArgsConstructor
 @Service
